@@ -10,6 +10,7 @@ from docx import Document
 from src.config.settings import INPUT_DIR, OUTPUT_DIR
 from src.extractors.schema import SCHEMA_VERSION
 from src.normalizers.extraction_normalizer import normalize_extraction
+from src.tools.io import atomic_write_text
 from src.validators.extraction_validator import validate_or_raise
 
 SUPPORTED_EXTENSIONS = {".docx"}
@@ -106,8 +107,8 @@ def run_ingestion() -> IngestionResult:
             data = normalize_extraction(data)
             validate_or_raise(data)
             out_path = OUTPUT_DIR / f"{docx_path.stem}.json"
-            out_path.write_text(
-                json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
+            atomic_write_text(
+                out_path, json.dumps(data, indent=2, ensure_ascii=False)
             )
             print(f"  {docx_path.name} -> {out_path.name}")
             result.succeeded.append(out_path)
