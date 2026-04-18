@@ -8,6 +8,7 @@ from docx import Document
 
 from src.config.settings import INPUT_DIR, OUTPUT_DIR
 from src.extractors.schema import SCHEMA_VERSION
+from src.normalizers.extraction_normalizer import normalize_extraction
 from src.validators.extraction_validator import validate_or_raise
 
 SUPPORTED_EXTENSIONS = {".docx"}
@@ -69,6 +70,7 @@ def run_ingestion() -> list[Path]:
     written: list[Path] = []
     for docx_path in docx_files:
         result = extract_docx(docx_path)
+        result = normalize_extraction(result)
         validate_or_raise(result)
         out_path = OUTPUT_DIR / f"{docx_path.stem}.json"
         out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
