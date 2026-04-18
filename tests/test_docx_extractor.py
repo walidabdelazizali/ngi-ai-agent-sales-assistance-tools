@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from src.extractors.docx_extractor import (
+    ExtractionError,
     extract_docx,
     run_ingestion,
 )
@@ -47,6 +48,33 @@ def test_extract_docx_unsupported_extension(tmp_path):
     txt_file.write_text("hello")
     with pytest.raises(ValueError, match="Unsupported file type"):
         extract_docx(txt_file)
+
+
+# --- corrupted / unreadable .docx ---
+
+
+def test_extract_docx_corrupted_file(tmp_path):
+    bad_file = tmp_path / "corrupted.docx"
+    bad_file.write_bytes(b"this is not a valid docx")
+    with pytest.raises(ExtractionError, match="corrupted.docx") as exc_info:
+        extract_docx(bad_file)
+    assert exc_info.value.path == bad_file
+    assert exc_info.value.reason  # non-empty reason string
+
+
+def test_extract_docx_empty_file(tmp_path):
+    empty_file = tmp_path / "empty.docx"
+    empty_file.write_bytes(b"")
+    with pytest.raises(ExtractionError, match="empty.docx"):
+        extract_docx(empty_file)
+
+
+def test_extract_docx_truncated_zip(tmp_path):
+    """A file that starts like a ZIP but is truncated."""
+    truncated = tmp_path / "truncated.docx"
+    truncated.write_bytes(b"PK\x03\x04" + b"\x00" * 20)
+    with pytest.raises(ExtractionError, match="truncated.docx"):
+        extract_docx(truncated)
 
 
 # --- run_ingestion integration tests ---

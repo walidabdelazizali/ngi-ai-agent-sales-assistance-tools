@@ -14,6 +14,15 @@ from src.validators.extraction_validator import validate_or_raise
 SUPPORTED_EXTENSIONS = {".docx"}
 
 
+class ExtractionError(Exception):
+    """Raised when a .docx file cannot be parsed."""
+
+    def __init__(self, path: Path, reason: str) -> None:
+        self.path = path
+        self.reason = reason
+        super().__init__(f"Failed to extract {path.name}: {reason}")
+
+
 def extract_paragraphs(doc: Document) -> list[str]:
     """Return non-empty paragraph texts."""
     return [p.text for p in doc.paragraphs if p.text.strip()]
@@ -37,7 +46,11 @@ def extract_docx(file_path: Path) -> dict[str, Any]:
     if file_path.suffix.lower() not in SUPPORTED_EXTENSIONS:
         raise ValueError(f"Unsupported file type: {file_path.suffix}")
 
-    doc = Document(str(file_path))
+    try:
+        doc = Document(str(file_path))
+    except Exception as exc:
+        raise ExtractionError(file_path, str(exc)) from exc
+
     paragraphs = extract_paragraphs(doc)
     tables = extract_tables(doc)
 
