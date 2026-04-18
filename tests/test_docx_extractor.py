@@ -28,6 +28,22 @@ def test_extract_docx_returns_expected_fields():
     assert result["table_count"] == 1
 
 
+def test_extract_docx_source_path_relative_when_inside_input_dir(tmp_path, monkeypatch):
+    """source_path is relative to INPUT_DIR for files inside it."""
+    input_dir = tmp_path / "input_docs"
+    input_dir.mkdir()
+    shutil.copy(SAMPLE_DOCX, input_dir / "demo.docx")
+    monkeypatch.setattr("src.extractors.docx_extractor.INPUT_DIR", input_dir)
+    result = extract_docx(input_dir / "demo.docx")
+    assert result["source_path"] == "demo.docx"
+
+
+def test_extract_docx_source_path_absolute_when_outside_input_dir():
+    """source_path falls back to absolute for files outside INPUT_DIR."""
+    result = extract_docx(SAMPLE_DOCX)
+    assert result["source_path"] == str(SAMPLE_DOCX)
+
+
 def test_extract_docx_paragraphs_content():
     result = extract_docx(SAMPLE_DOCX)
     assert result["paragraphs"] == ["First paragraph.", "Second paragraph."]
@@ -100,6 +116,7 @@ def test_run_ingestion_produces_json(tmp_path, monkeypatch):
     data = json.loads(result.succeeded[0].read_text(encoding="utf-8"))
     assert data["schema_version"] == "1.0"
     assert data["source_filename"] == "sample.docx"
+    assert data["source_path"] == "sample.docx"  # relative to INPUT_DIR
     assert data["paragraph_count"] == 2
     assert data["table_count"] == 1
 

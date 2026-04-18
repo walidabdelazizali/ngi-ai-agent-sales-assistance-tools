@@ -59,6 +59,14 @@ def extract_tables(doc: Document) -> list[list[list[str]]]:
     return tables
 
 
+def _relative_source_path(file_path: Path) -> str:
+    """Return *file_path* relative to INPUT_DIR when possible, else absolute."""
+    try:
+        return str(file_path.relative_to(INPUT_DIR))
+    except ValueError:
+        return str(file_path)
+
+
 def extract_docx(file_path: Path) -> dict[str, Any]:
     """Extract paragraphs and tables from a single .docx file."""
     if not file_path.exists():
@@ -77,7 +85,7 @@ def extract_docx(file_path: Path) -> dict[str, Any]:
     return {
         "schema_version": SCHEMA_VERSION,
         "source_filename": file_path.name,
-        "source_path": str(file_path),
+        "source_path": _relative_source_path(file_path),
         "paragraph_count": len(paragraphs),
         "table_count": len(tables),
         "paragraphs": paragraphs,
