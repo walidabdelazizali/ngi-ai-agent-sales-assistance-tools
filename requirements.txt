@@ -1,1 +1,4 @@
-# add project dependencies here later
+pandas
+openpyxl
+python-docx
+pytest
