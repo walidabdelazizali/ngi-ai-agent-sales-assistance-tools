@@ -5,7 +5,11 @@ from pathlib import Path
 
 import pytest
 
-from src.parsers.remedy_parser import detect_sections, parse_remedy_plan
+from src.parsers.remedy_parser import (
+    _clean_scalar,
+    detect_sections,
+    parse_remedy_plan,
+)
 
 # ---------------------------------------------------------------------------
 # Fixture: realistic extraction payload based on HN-REMEDY-2
@@ -68,6 +72,7 @@ class TestRemedyHappyPath:
         aoc = self.result["area_of_coverage"]
         assert aoc is not None
         assert "UAE" in aoc
+        assert "\n" not in aoc, "newlines should be collapsed"
 
     def test_annual_limit(self):
         limit = self.result["annual_limit"]
@@ -87,11 +92,41 @@ class TestRemedyHappyPath:
         mc = self.result["maternity_cover"]
         assert mc is not None
         assert "co-pay" in mc.lower() or "delivery" in mc.lower()
+        assert "\n" not in mc, "newlines should be collapsed"
 
     def test_key_exclusions_populated(self):
         excl = self.result["key_exclusions"]
         assert isinstance(excl, list)
         assert len(excl) > 10  # HN-REMEDY-2 has 40+ exclusions
+
+    def test_exclusions_no_artifact_fragments(self):
+        """No exclusion should contain broken extraction artifacts.
+
+        The artifact pattern is the orphan fragment ``rror of whatever type.``
+        appearing at a word boundary — not as part of the word 'terror'.
+        """
+        import re
+        artifact = re.compile(r"(?<!te)rror of whatever type\.")
+        for item in self.result["key_exclusions"]:
+            assert not artifact.search(item), (
+                f"artifact fragment found: {item!r}"
+            )
+
+    def test_exclusions_military_operations(self):
+        """The military operations exclusion must be present and clean."""
+        expected = (
+            "Injuries or illnesses suffered by the Insured Person "
+            "as a result of military operations of whatever type."
+        )
+        assert expected in self.result["key_exclusions"]
+
+    def test_exclusions_wars_or_terror(self):
+        """The wars/terror exclusion must be present and clean."""
+        expected = (
+            "Injuries or illnesses suffered by the Insured Person "
+            "as a result of wars or acts of terror of whatever type."
+        )
+        assert expected in self.result["key_exclusions"]
 
     def test_exclusions_are_strings(self):
         for item in self.result["key_exclusions"]:
@@ -246,3 +281,121 @@ class TestNoHallucination:
         ext = _minimal_extraction(paragraphs=["General text."], tables=[])
         result = parse_remedy_plan(ext)
         assert result["referral_required"] is None
+
+
+# ===================================================================
+# Scalar text cleaning
+# ===================================================================
+
+
+class TestCleanScalar:
+    """Unit tests for ``_clean_scalar``."""
+
+    def test_collapses_newlines(self):
+        assert _clean_scalar("hello\nworld") == "hello world"
+
+    def test_collapses_tabs_and_spaces(self):
+        assert _clean_scalar("hello  \t  world") == "hello world"
+
+    def test_strips_leading_trailing(self):
+        assert _clean_scalar("  spaced  ") == "spaced"
+
+    def test_none_passthrough(self):
+        assert _clean_scalar(None) is None
+
+    def test_empty_becomes_none(self):
+        assert _clean_scalar("") is None
+
+    def test_whitespace_only_becomes_none(self):
+        assert _clean_scalar("   \n  ") is None
+
+    def test_mixed_newlines_and_spaces(self):
+        assert _clean_scalar("a\n  b\r\nc") == "a b c"
+
+
+# ===================================================================
+# Structural exclusion extraction
+# ===================================================================
+
+
+class TestExclusionStructural:
+    """Verify the structural numbered-item parser for exclusions."""
+
+    def test_concatenated_paragraph_splits_items(self):
+        """Two numbered items in one paragraph must produce two exclusions."""
+        ext = _minimal_extraction(paragraphs=[
+            "Standard Policy Exclusions",
+            (
+                "1 . Injuries or illnesses suffered by the Insured Person "
+                "as a result of military operations of whatever type.\n"
+                "2 . Injuries or illnesses suffered by the Insured Person "
+                "as a result of wars or acts of terror of whatever type."
+            ),
+        ])
+        result = parse_remedy_plan(ext)
+        excl = result["key_exclusions"]
+        assert len(excl) == 2
+        assert "military operations" in excl[0]
+        assert "wars or acts of terror" in excl[1]
+
+    def test_no_artifact_from_concatenation(self):
+        """Artifact fragment must not leak into exclusion text."""
+        ext = _minimal_extraction(paragraphs=[
+            "Standard Policy Exclusions",
+            (
+                "41 . Injuries or illnesses suffered as a result of "
+                "military operations of whatever type.\n"
+                "rror of whatever type.\n"
+                "42 . Healthcare services for nuclear contamination."
+            ),
+        ])
+        result = parse_remedy_plan(ext)
+        excl = result["key_exclusions"]
+        # The non-numbered fragment attaches to item 41 as continuation.
+        assert len(excl) == 2
+        assert "rror of whatever type." not in excl[1]
+
+    def test_continuation_lines_merged(self):
+        """Non-numbered lines are appended to the current item."""
+        ext = _minimal_extraction(paragraphs=[
+            "Standard Policy Exclusions",
+            "1 . First part of the exclusion",
+            "which continues on the next line.",
+            "2 . Second exclusion item.",
+        ])
+        result = parse_remedy_plan(ext)
+        excl = result["key_exclusions"]
+        assert len(excl) == 2
+        assert excl[0] == (
+            "First part of the exclusion which continues on the next line."
+        )
+        assert excl[1] == "Second exclusion item."
+
+    def test_non_numbered_paragraph_ignored(self):
+        """Paragraphs without a numbered prefix before any item are skipped."""
+        ext = _minimal_extraction(paragraphs=[
+            "Standard Policy Exclusions",
+            "This is a preamble, not an exclusion.",
+            "1. Actual exclusion here.",
+        ])
+        result = parse_remedy_plan(ext)
+        assert result["key_exclusions"] == ["Actual exclusion here."]
+
+    def test_no_hallucinated_exclusions(self):
+        """Parser must not invent exclusions from non-numbered content."""
+        ext = _minimal_extraction(paragraphs=[
+            "Standard Policy Exclusions",
+            "This paragraph has no numbers at all.",
+            "Another unnumbered paragraph.",
+        ])
+        result = parse_remedy_plan(ext)
+        assert result["key_exclusions"] == []
+
+    def test_whitespace_collapsed_in_exclusions(self):
+        """Internal whitespace in exclusion text is collapsed."""
+        ext = _minimal_extraction(paragraphs=[
+            "Standard Policy Exclusions",
+            "1 .   Extra   spaces    everywhere  .",
+        ])
+        result = parse_remedy_plan(ext)
+        assert result["key_exclusions"] == ["Extra spaces everywhere ."]

@@ -75,6 +75,21 @@ def detect_sections(paragraphs: list[str]) -> dict[str, list[str]]:
 
 
 # ---------------------------------------------------------------------------
+# Text cleaning
+# ---------------------------------------------------------------------------
+
+_RE_WHITESPACE = re.compile(r"\s+")
+
+
+def _clean_scalar(value: Optional[str]) -> Optional[str]:
+    """Collapse newlines and repeated whitespace into single spaces."""
+    if value is None:
+        return None
+    cleaned = _RE_WHITESPACE.sub(" ", value).strip()
+    return cleaned if cleaned else None
+
+
+# ---------------------------------------------------------------------------
 # Table helpers
 # ---------------------------------------------------------------------------
 
@@ -232,19 +247,44 @@ def _extract_maternity_cover(tables: list[list[list[str]]]) -> Optional[str]:
     return None
 
 
-_RE_EXCLUSION_NUM = re.compile(r"^\d{1,2}\s*\.\s*")
+_RE_ITEM_START = re.compile(r"^\s*(\d+)\s*\.\s*(.+)$")
 
 
 def _extract_exclusions(sections: dict[str, list[str]]) -> list[str]:
-    """Pull numbered exclusion items from detected exclusion sections."""
+    """Parse numbered exclusion items structurally from section content.
+
+    Each paragraph is split into lines.  A line matching ``N . text``
+    starts a new exclusion item; subsequent non-numbered lines are
+    appended as continuations of the current item.  Final items are
+    whitespace-collapsed and stripped of their leading number.
+    """
     exclusions: list[str] = []
+    current: list[str] = []
+
+    def _flush() -> None:
+        if current:
+            merged = _RE_WHITESPACE.sub(" ", " ".join(current)).strip()
+            if merged:
+                exclusions.append(merged)
+            current.clear()
+
     for key in ("standard_exclusions", "out_of_scope_exclusions"):
         for para in sections.get(key, []):
-            if _RE_EXCLUSION_NUM.match(para):
-                # Strip the leading number + period.
-                text = _RE_EXCLUSION_NUM.sub("", para).strip()
-                if text:
-                    exclusions.append(text)
+            for line in para.split("\n"):
+                line = line.strip()
+                if not line:
+                    continue
+                m = _RE_ITEM_START.match(line)
+                if m:
+                    _flush()
+                    # Start new item with the text after the number.
+                    current.append(m.group(2).strip())
+                elif current:
+                    # Continuation of the current numbered item.
+                    current.append(line)
+        # Flush at section boundary so items don't bleed across sections.
+        _flush()
+
     return exclusions
 
 
@@ -275,16 +315,16 @@ def parse_remedy_plan(extraction: dict[str, Any]) -> dict[str, Any]:
         extraction.get("source_filename", ""), plan_name)
 
     return {
-        "plan_name": plan_name,
+        "plan_name": _clean_scalar(plan_name),
         "plan_code": plan_code,
-        "insurer_name": _extract_insurer_name(paragraphs),
-        "network_name": _extract_network_name(tables),
-        "area_of_coverage": _extract_area_of_coverage(tables),
-        "annual_limit": _extract_annual_limit(tables),
+        "insurer_name": _clean_scalar(_extract_insurer_name(paragraphs)),
+        "network_name": _clean_scalar(_extract_network_name(tables)),
+        "area_of_coverage": _clean_scalar(_extract_area_of_coverage(tables)),
+        "annual_limit": _clean_scalar(_extract_annual_limit(tables)),
         "direct_billing": _extract_direct_billing(paragraphs),
         "reimbursement_allowed": _extract_reimbursement_allowed(paragraphs),
         "referral_required": _extract_referral_required(paragraphs, tables),
-        "maternity_cover": _extract_maternity_cover(tables),
+        "maternity_cover": _clean_scalar(_extract_maternity_cover(tables)),
         "key_exclusions": _extract_exclusions(sections),
         "raw_section_map": sections,
     }
