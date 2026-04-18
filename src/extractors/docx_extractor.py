@@ -1,6 +1,7 @@
 """Extract structured data from .docx files."""
 
 import json
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,24 @@ class ExtractionError(Exception):
         self.path = path
         self.reason = reason
         super().__init__(f"Failed to extract {path.name}: {reason}")
+
+
+@dataclass
+class IngestionResult:
+    """Summary of a batch ingestion run."""
+
+    succeeded: list[Path] = field(default_factory=list)
+    failed: list[tuple[Path, str]] = field(default_factory=list)
+
+    @property
+    def total(self) -> int:
+        return len(self.succeeded) + len(self.failed)
+
+    def print_summary(self) -> None:
+        print(f"\nIngestion summary: {len(self.succeeded)} succeeded, "
+              f"{len(self.failed)} failed, {self.total} total.")
+        for path, reason in self.failed:
+            print(f"  FAILED: {path.name} — {reason}")
 
 
 def extract_paragraphs(doc: Document) -> list[str]:
@@ -65,10 +84,10 @@ def extract_docx(file_path: Path) -> dict[str, Any]:
     }
 
 
-def run_ingestion() -> list[Path]:
+def run_ingestion() -> IngestionResult:
     """Process all .docx files in INPUT_DIR, write JSON to OUTPUT_DIR.
 
-    Returns list of output file paths written.
+    Returns an IngestionResult with per-file success/failure details.
     """
     if not INPUT_DIR.is_dir():
         raise FileNotFoundError(f"Input directory missing: {INPUT_DIR}")
@@ -76,18 +95,24 @@ def run_ingestion() -> list[Path]:
     docx_files = sorted(INPUT_DIR.glob("*.docx"))
     if not docx_files:
         print(f"No .docx files found in {INPUT_DIR}")
-        return []
+        return IngestionResult()
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    written: list[Path] = []
+    result = IngestionResult()
     for docx_path in docx_files:
-        result = extract_docx(docx_path)
-        result = normalize_extraction(result)
-        validate_or_raise(result)
-        out_path = OUTPUT_DIR / f"{docx_path.stem}.json"
-        out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
-        print(f"  {docx_path.name} -> {out_path.name}")
-        written.append(out_path)
+        try:
+            data = extract_docx(docx_path)
+            data = normalize_extraction(data)
+            validate_or_raise(data)
+            out_path = OUTPUT_DIR / f"{docx_path.stem}.json"
+            out_path.write_text(
+                json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
+            )
+            print(f"  {docx_path.name} -> {out_path.name}")
+            result.succeeded.append(out_path)
+        except Exception as exc:
+            print(f"  {docx_path.name} FAILED: {exc}")
+            result.failed.append((docx_path, str(exc)))
 
-    return written
+    return result

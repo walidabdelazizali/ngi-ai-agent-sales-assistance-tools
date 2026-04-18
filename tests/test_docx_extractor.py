@@ -8,6 +8,7 @@ import pytest
 
 from src.extractors.docx_extractor import (
     ExtractionError,
+    IngestionResult,
     extract_docx,
     run_ingestion,
 )
@@ -91,11 +92,12 @@ def test_run_ingestion_produces_json(tmp_path, monkeypatch):
     monkeypatch.setattr("src.extractors.docx_extractor.INPUT_DIR", input_dir)
     monkeypatch.setattr("src.extractors.docx_extractor.OUTPUT_DIR", output_dir)
 
-    written = run_ingestion()
-    assert len(written) == 1
-    assert written[0].name == "sample.json"
+    result = run_ingestion()
+    assert len(result.succeeded) == 1
+    assert result.succeeded[0].name == "sample.json"
+    assert result.failed == []
 
-    data = json.loads(written[0].read_text(encoding="utf-8"))
+    data = json.loads(result.succeeded[0].read_text(encoding="utf-8"))
     assert data["schema_version"] == "1.0"
     assert data["source_filename"] == "sample.docx"
     assert data["paragraph_count"] == 2
@@ -107,11 +109,89 @@ def test_run_ingestion_empty_dir(tmp_path, monkeypatch):
     input_dir.mkdir()
     monkeypatch.setattr("src.extractors.docx_extractor.INPUT_DIR", input_dir)
 
-    written = run_ingestion()
-    assert written == []
+    result = run_ingestion()
+    assert result.succeeded == []
+    assert result.failed == []
+    assert result.total == 0
 
 
 def test_run_ingestion_missing_input_dir(tmp_path, monkeypatch):
     monkeypatch.setattr("src.extractors.docx_extractor.INPUT_DIR", tmp_path / "nope")
     with pytest.raises(FileNotFoundError):
         run_ingestion()
+
+
+# --- batch error reporting ---
+
+
+def _setup_batch(tmp_path, monkeypatch, valid_names=(), corrupt_names=()):
+    """Helper: populate temp input dir with valid copies and corrupt files."""
+    input_dir = tmp_path / "input_docs"
+    output_dir = tmp_path / "output"
+    input_dir.mkdir()
+    monkeypatch.setattr("src.extractors.docx_extractor.INPUT_DIR", input_dir)
+    monkeypatch.setattr("src.extractors.docx_extractor.OUTPUT_DIR", output_dir)
+    for name in valid_names:
+        shutil.copy(SAMPLE_DOCX, input_dir / name)
+    for name in corrupt_names:
+        (input_dir / name).write_bytes(b"not a docx")
+    return input_dir, output_dir
+
+
+def test_batch_mixed_valid_and_corrupted(tmp_path, monkeypatch):
+    _setup_batch(
+        tmp_path, monkeypatch,
+        valid_names=["good1.docx", "good2.docx"],
+        corrupt_names=["bad.docx"],
+    )
+    result = run_ingestion()
+    assert len(result.succeeded) == 2
+    assert len(result.failed) == 1
+    assert result.failed[0][0].name == "bad.docx"
+    assert result.failed[0][1]  # non-empty reason
+    assert result.total == 3
+
+
+def test_batch_all_corrupted(tmp_path, monkeypatch):
+    _setup_batch(
+        tmp_path, monkeypatch,
+        corrupt_names=["bad1.docx", "bad2.docx"],
+    )
+    result = run_ingestion()
+    assert result.succeeded == []
+    assert len(result.failed) == 2
+
+
+def test_batch_all_valid(tmp_path, monkeypatch):
+    _setup_batch(
+        tmp_path, monkeypatch,
+        valid_names=["a.docx", "b.docx", "c.docx"],
+    )
+    result = run_ingestion()
+    assert len(result.succeeded) == 3
+    assert result.failed == []
+
+
+def test_batch_valid_files_still_written_when_others_fail(tmp_path, monkeypatch):
+    _, output_dir = _setup_batch(
+        tmp_path, monkeypatch,
+        valid_names=["good.docx"],
+        corrupt_names=["bad.docx"],
+    )
+    result = run_ingestion()
+    assert (output_dir / "good.json").exists()
+    assert not (output_dir / "bad.json").exists()
+    assert len(result.succeeded) == 1
+    assert len(result.failed) == 1
+
+
+def test_ingestion_result_print_summary(capsys):
+    r = IngestionResult(
+        succeeded=[Path("a.json")],
+        failed=[(Path("b.docx"), "corrupt")],
+    )
+    r.print_summary()
+    out = capsys.readouterr().out
+    assert "1 succeeded" in out
+    assert "1 failed" in out
+    assert "b.docx" in out
