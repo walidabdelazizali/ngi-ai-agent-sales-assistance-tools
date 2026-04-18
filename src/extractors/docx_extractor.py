@@ -7,6 +7,8 @@ from typing import Any
 from docx import Document
 
 from src.config.settings import INPUT_DIR, OUTPUT_DIR
+from src.extractors.schema import SCHEMA_VERSION
+from src.validators.extraction_validator import validate_or_raise
 
 SUPPORTED_EXTENSIONS = {".docx"}
 
@@ -39,6 +41,7 @@ def extract_docx(file_path: Path) -> dict[str, Any]:
     tables = extract_tables(doc)
 
     return {
+        "schema_version": SCHEMA_VERSION,
         "source_filename": file_path.name,
         "source_path": str(file_path),
         "paragraph_count": len(paragraphs),
@@ -66,6 +69,7 @@ def run_ingestion() -> list[Path]:
     written: list[Path] = []
     for docx_path in docx_files:
         result = extract_docx(docx_path)
+        validate_or_raise(result)
         out_path = OUTPUT_DIR / f"{docx_path.stem}.json"
         out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"  {docx_path.name} -> {out_path.name}")

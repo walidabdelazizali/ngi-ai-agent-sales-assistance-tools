@@ -20,6 +20,7 @@ SAMPLE_DOCX = FIXTURES_DIR / "sample.docx"
 
 def test_extract_docx_returns_expected_fields():
     result = extract_docx(SAMPLE_DOCX)
+    assert result["schema_version"] == "1.0"
     assert result["source_filename"] == "sample.docx"
     assert result["paragraph_count"] == 2
     assert result["table_count"] == 1
@@ -67,6 +68,7 @@ def test_run_ingestion_produces_json(tmp_path, monkeypatch):
     assert written[0].name == "sample.json"
 
     data = json.loads(written[0].read_text(encoding="utf-8"))
+    assert data["schema_version"] == "1.0"
     assert data["source_filename"] == "sample.docx"
     assert data["paragraph_count"] == 2
     assert data["table_count"] == 1
