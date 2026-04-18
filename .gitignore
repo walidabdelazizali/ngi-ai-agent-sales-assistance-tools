@@ -6,3 +6,12 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
+.pytest_cache/
+
+# Runtime artifacts (keep .gitkeep)
+output/*
+!output/.gitkeep
+runtime_data/csv/*
+!runtime_data/csv/.gitkeep
+runtime_data/workbook/*
+!runtime_data/workbook/.gitkeep
