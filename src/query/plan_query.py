@@ -1,15 +1,53 @@
-"""Deterministic owner-facing query layer for Remedy plans.
-
-Provides four public functions:
-- ``get_plan_field``   – retrieve a single field for a plan
-- ``compare_plans``    – field-by-field comparison of two plans
-- ``summarize_plan``   – short human-readable plan summary
-- ``answer_owner_query`` – route a plain-text question to the right handler
-
-All answers are deterministic.  No AI, no fuzzy matching, no hallucination.
-"""
 
 from __future__ import annotations
+import json
+import re
+from pathlib import Path
+from typing import Any, Optional
+
+from src.config.settings import OUTPUT_DIR
+from src.parsers.canonical_schema import BUSINESS_FIELDS
+from src.parsers.plan_comparator import compare_plans as _raw_compare
+from src.parsers.remedy_parser import parse_remedy_plan
+
+# ---------------------------------------------------------------------------
+# Out-of-scope provider/network lookup intent detector (strict, conservative)
+# ---------------------------------------------------------------------------
+_PROVIDER_LOOKUP_PATTERNS = [
+    # Arabic
+    r"هل .*داخل الشبكة",  # e.g. هل Aster Qusais داخل الشبكة
+    r"هل .*ضمن الشبكة",    # e.g. هل هذه المستشفى ضمن الشبكة
+    r"هل يوجد direct billing.*عيادة",  # direct billing in clinic
+    r"هل يوجد direct billing.*مستشفى", # direct billing in hospital
+    r"هل يوجد direct billing.*مركز",   # direct billing in center
+    r"direct billing في هذه العيادة",   # direct billing in this clinic
+    r"direct billing في هذه المستشفى",  # direct billing in this hospital
+    r"direct billing في هذا المركز",    # direct billing in this center
+    # English
+    r"is .+ in the network",            # Is Aster Qusais in the network?
+    r"does this hospital offer direct billing", # Does this hospital offer direct billing?
+    r"does this clinic offer direct billing",
+    r"is this hospital in the network",
+    r"is this clinic in the network",
+    r"is this provider in the network",
+    r"is this facility in the network",
+]
+
+_PROVIDER_LOOKUP_PAT = re.compile(
+    "|".join(_PROVIDER_LOOKUP_PATTERNS),
+    re.IGNORECASE,
+)
+
+# Deterministic owner-facing query layer for Remedy plans.
+# 
+# Provides four public functions:
+# - get_plan_field   – retrieve a single field for a plan
+# - compare_plans    – field-by-field comparison of two plans
+# - summarize_plan   – short human-readable plan summary
+# - answer_owner_query – route a plain-text question to the right handler
+# 
+# All answers are deterministic.  No AI, no fuzzy matching, no hallucination.
+
 
 import json
 import re
@@ -36,6 +74,11 @@ _PLAN_ALIASES: dict[str, str] = {
     "remedy03":  "HN-REMEDY-3.json",
     "remedy3":   "HN-REMEDY-3.json",
     "hn-remedy-3": "HN-REMEDY-3.json",
+    # Arabic
+    "ريميدي 2": "HN-REMEDY-2.json",
+    "ريميدي 02": "HN-REMEDY-2.json",
+    "ريميدي 3": "HN-REMEDY-3.json",
+    "ريميدي 03": "HN-REMEDY-3.json",
 }
 
 # Fields exposed to the owner (subset of BUSINESS_FIELDS, excludes internal
@@ -90,6 +133,9 @@ _FIELD_LABELS: dict[str, str] = {
 
 # Short aliases the owner might use in a query → canonical field name
 _FIELD_ALIASES: dict[str, str] = {
+        # Add direct Arabic aliases for test cases
+        "ما هي الاستثناءات الأساسية": "key_exclusions",
+        "ما هي الشروط": "approval_rule_summary",
     "annual limit": "annual_limit",
     "limit": "annual_limit",
     "network": "network_name",
@@ -130,9 +176,44 @@ _FIELD_ALIASES: dict[str, str] = {
     "plan code": "plan_code",
     "name": "plan_name",
     "code": "plan_code",
+    # Arabic aliases (must match test cases and common queries)
+    "ما هو الحد السنوي": "annual_limit",
+    "الحد السنوي": "annual_limit",
+    "اظهر الحمل": "maternity_cover",
+    "الحمل": "maternity_cover",
+    "ما هي الاستثناءات الأساسية": "key_exclusions",
+    "الاستثناءات الأساسية": "key_exclusions",
+    "ما هي الشروط": "approval_rule_summary",
+    "الشروط": "approval_rule_summary",
+    "اظهر الأدوية": "pharmacy_cover_summary",
+    "الأدوية": "pharmacy_cover_summary",
+    "اظهر الشبكة": "network_name",
+    "الشبكة": "network_name",
+    "اظهر التغطية": "area_of_coverage",
+    "التغطية": "area_of_coverage",
+    "اظهر العلاج الطبيعي": "physiotherapy_cover_summary",
+    "العلاج الطبيعي": "physiotherapy_cover_summary",
+    "اظهر التحاليل": "diagnostics_cover_summary",
+    "التحاليل": "diagnostics_cover_summary",
+    "اظهر الموافقات": "approval_rule_summary",
+    "الموافقات": "approval_rule_summary",
+    "اظهر الإحالة": "referral_required",
+    "الإحالة": "referral_required",
+    "اظهر الحالات السابقة": "pre_existing_condition_rule",
+    "الحالات السابقة": "pre_existing_condition_rule",
+    "اظهر خارج الشبكة": "outside_network_rule",
+    "خارج الشبكة": "outside_network_rule",
+    "اظهر خارج الإمارات": "outside_uae_rule",
+    "خارج الإمارات": "outside_uae_rule",
+    "اظهر ملخص": "summary",
+    "ملخص": "summary",
 }
 
 _SAFE_FALLBACK = "No deterministic answer is available for that query yet."
+
+# Deterministic missing-plan messages
+_MISSING_PLAN_MSG_EN = "Please specify the plan: Remedy 02 or Remedy 03."
+_MISSING_PLAN_MSG_AR = "يرجى تحديد الخطة: Remedy 02 أو Remedy 03."
 
 # ---------------------------------------------------------------------------
 # Internal helpers
@@ -206,6 +287,7 @@ def load_plan(name: str, *, output_dir: Optional[Path] = None) -> dict[str, Any]
 def available_plans() -> list[str]:
     """Return sorted list of unique plan filenames."""
     return sorted(set(_PLAN_ALIASES.values()))
+# Friendly display labels for owner output
 
 
 def clear_cache() -> None:
@@ -349,10 +431,10 @@ def summarize_plan(plan_name: str,
 
 # Patterns matched in order — first match wins
 _COMPARE_PAT = re.compile(
-    r"compare\b|difference|differ|vs\.?\b|versus",
+    r"compare\b|difference|differ|vs\.?\b|versus|قارن|مقارنة|الفرق|ما الفرق",
     re.IGNORECASE,
 )
-_SUMMARY_PAT = re.compile(r"summar|overview", re.IGNORECASE)
+_SUMMARY_PAT = re.compile(r"summar|overview|ملخص|اعطني ملخص|أعطني ملخص|عرض ملخص", re.IGNORECASE)
 _PLAN_PAT = re.compile(
     r"remedy\s*0?[23]|hn-remedy-[23]",
     re.IGNORECASE,
@@ -380,14 +462,13 @@ def _extract_field(text: str) -> Optional[str]:
 
 def answer_owner_query(text: str,
                        *, output_dir: Optional[Path] = None) -> dict[str, Any]:
-    """Route a plain-text owner question to the right handler.
-
-    Returns a result dict with at least a ``type`` key:
-    - ``"field"`` — single field answer
-    - ``"compare"`` — comparison result
-    - ``"summary"`` — plan summary
-    - ``"unsupported"`` — safe fallback
-    """
+    """Route a plain-text owner question to the right handler."""
+    # Out-of-scope provider/network lookup intent (strict precedence)
+    if _PROVIDER_LOOKUP_PAT.search(text):
+        return {
+            "type": "unsupported",
+            "message": _SAFE_FALLBACK,
+        }
     plans = _extract_plans(text)
     field = _extract_field(text)
     is_compare = bool(_COMPARE_PAT.search(text))
@@ -418,10 +499,24 @@ def answer_owner_query(text: str,
         }
 
     # Single-field intent
-    if plans and field:
+    if field:
+        if plans:
+            return {
+                "type": "field",
+                "result": get_plan_field(plans[0], field, output_dir=output_dir),
+            }
+        # Only return missing-plan message if the query is a supported field query (not provider/network intent)
+        # Heuristic: if the field is in OWNER_FIELDS, it's a supported field query
+        if field in OWNER_FIELDS:
+            is_arabic = any(ord(c) >= 0x0600 for c in text)
+            return {
+                "type": "unsupported",
+                "message": _MISSING_PLAN_MSG_AR if is_arabic else _MISSING_PLAN_MSG_EN,
+            }
+        # Otherwise, treat as unsupported (e.g., provider/network lookup)
         return {
-            "type": "field",
-            "result": get_plan_field(plans[0], field, output_dir=output_dir),
+            "type": "unsupported",
+            "message": _SAFE_FALLBACK,
         }
 
     # Plan mentioned but no specific field or compare → summary

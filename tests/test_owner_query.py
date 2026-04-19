@@ -1,3 +1,9 @@
+
+# Field queries with no plan reference should return deterministic missing-plan message
+def test_field_query_no_plan_english():
+    result = answer_owner_query("What is the annual limit?")
+    assert result["type"] == "unsupported"
+    assert result["message"] == "Please specify the plan: Remedy 02 or Remedy 03."
 """Tests for the owner-facing query and comparison layer.
 
 Covers:
