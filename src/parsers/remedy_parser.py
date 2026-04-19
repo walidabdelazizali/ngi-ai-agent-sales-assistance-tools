@@ -575,6 +575,12 @@ def parse_remedy_plan(extraction: dict[str, Any]) -> dict[str, Any]:
             "annual_limit": extraction.get("annual_limit"),
             "direct_billing": extraction.get("direct_billing"),
             "reimbursement_allowed": extraction.get("reimbursement_allowed"),
+            "reimbursement_scope": extraction.get("reimbursement_scope"),
+            "outside_network_reimbursement": extraction.get("outside_network_reimbursement"),
+            "outside_uae_reimbursement": extraction.get("outside_uae_reimbursement"),
+            "reimbursement_basis": extraction.get("reimbursement_basis"),
+            "reimbursement_conditions": extraction.get("reimbursement_conditions"),
+            "reimbursement_documents_required": extraction.get("reimbursement_documents_required"),
             "referral_required": extraction.get("referral_required"),
             "maternity_cover": extraction.get("maternity_cover"),
             "inpatient_cover_summary": extraction.get("inpatient_cover_summary"),
@@ -603,55 +609,61 @@ def parse_remedy_plan(extraction: dict[str, Any]) -> dict[str, Any]:
     plan_code = _extract_plan_code(
         extraction.get("source_filename", ""), plan_name)
 
-    return {
-        # Identity
-        "plan_name": _clean_scalar(plan_name),
-        "plan_code": plan_code,
-        "insurer_name": _clean_scalar(_extract_insurer_name(paragraphs)),
-        "network_name": _clean_scalar(_extract_network_name(tables)),
-        # Coverage core
-        "area_of_coverage": _clean_scalar(_extract_area_of_coverage(tables)),
-        "annual_limit": _clean_scalar(_extract_annual_limit(tables)),
-        "direct_billing": _extract_direct_billing(paragraphs),
-        "reimbursement_allowed": _extract_reimbursement_allowed(paragraphs),
-        "referral_required": _extract_referral_required(paragraphs, tables),
-        # Benefit summaries
-        "maternity_cover": _clean_scalar(_extract_maternity_cover(tables)),
-        "inpatient_cover_summary": _clean_scalar(
-            _extract_inpatient_summary(tables)),
-        "outpatient_cover_summary": _clean_scalar(
-            _extract_outpatient_summary(tables)),
-        "pharmacy_cover_summary": _clean_scalar(
-            _extract_pharmacy_summary(tables)),
-        "diagnostics_cover_summary": _clean_scalar(
-            _extract_diagnostics_summary(tables)),
-        "physiotherapy_cover_summary": _clean_scalar(
-            _extract_physiotherapy_summary(tables)),
-        # Rules
-        "pre_existing_condition_rule": _clean_scalar(
-            _extract_pre_existing_rule(tables)),
-        "chronic_condition_rule": _clean_scalar(
-            _extract_chronic_condition_rule(tables)),
-        "outside_network_rule": _clean_scalar(
-            _extract_outside_network_rule(tables)),
-        "outside_uae_rule": _clean_scalar(
-            _extract_outside_uae_rule(tables)),
-        "approval_rule_summary": _clean_scalar(
-            _extract_approval_rule_summary(tables)),
-        # Exclusions
-        "key_exclusions": _extract_exclusions(sections),
-        # Network prep fields (capture only)
-        "network_access_notes": _clean_scalar(
-            _extract_network_access_notes(tables)),
-        "clinic_only_flag": _extract_clinic_only_flag(tables),
-        "hospital_access_notes": _clean_scalar(
-            _extract_hospital_access_notes(tables)),
-        "direct_access_hospitals_raw": _extract_direct_access_hospitals_raw(
-            tables),
-        "direct_billing_notes": _clean_scalar(
-            _extract_direct_billing_notes(paragraphs)),
-        "referral_behavior_notes": _clean_scalar(
-            _extract_referral_behavior_notes(tables)),
-        # Internal
-        "raw_section_map": sections,
-    }
+    # Always pass through all fields in CANONICAL_FIELDS from extraction dict if present
+    from src.parsers.canonical_schema import CANONICAL_FIELDS
+    parsed = {}
+    # Use the existing extraction logic for known fields, but always override with extraction dict if present
+    # Identity
+    parsed["plan_name"] = _clean_scalar(plan_name)
+    parsed["plan_code"] = plan_code
+    parsed["insurer_name"] = _clean_scalar(_extract_insurer_name(paragraphs))
+    parsed["network_name"] = _clean_scalar(_extract_network_name(tables))
+    # Coverage core
+    parsed["area_of_coverage"] = _clean_scalar(_extract_area_of_coverage(tables))
+    parsed["annual_limit"] = _clean_scalar(_extract_annual_limit(tables))
+    parsed["direct_billing"] = _extract_direct_billing(paragraphs)
+    parsed["reimbursement_allowed"] = extraction.get("reimbursement_allowed", _extract_reimbursement_allowed(paragraphs))
+    # Explicit passthrough for reimbursement fields (fixes Remedy 04 drop)
+    parsed["reimbursement_scope"] = extraction.get("reimbursement_scope")
+    parsed["outside_network_reimbursement"] = extraction.get("outside_network_reimbursement")
+    parsed["outside_uae_reimbursement"] = extraction.get("outside_uae_reimbursement")
+    parsed["reimbursement_basis"] = extraction.get("reimbursement_basis")
+    parsed["reimbursement_conditions"] = extraction.get("reimbursement_conditions")
+    parsed["reimbursement_documents_required"] = extraction.get("reimbursement_documents_required")
+    parsed["referral_required"] = _extract_referral_required(paragraphs, tables)
+    # Benefit summaries
+    parsed["maternity_cover"] = _clean_scalar(_extract_maternity_cover(tables))
+    parsed["inpatient_cover_summary"] = _clean_scalar(_extract_inpatient_summary(tables))
+    parsed["outpatient_cover_summary"] = _clean_scalar(_extract_outpatient_summary(tables))
+    parsed["pharmacy_cover_summary"] = _clean_scalar(_extract_pharmacy_summary(tables))
+    parsed["diagnostics_cover_summary"] = _clean_scalar(_extract_diagnostics_summary(tables))
+    parsed["physiotherapy_cover_summary"] = _clean_scalar(_extract_physiotherapy_summary(tables))
+    # Rules
+    parsed["pre_existing_condition_rule"] = _clean_scalar(_extract_pre_existing_rule(tables))
+    parsed["chronic_condition_rule"] = _clean_scalar(_extract_chronic_condition_rule(tables))
+    parsed["outside_network_rule"] = _clean_scalar(_extract_outside_network_rule(tables))
+    parsed["outside_uae_rule"] = _clean_scalar(_extract_outside_uae_rule(tables))
+    parsed["approval_rule_summary"] = _clean_scalar(_extract_approval_rule_summary(tables))
+    # Exclusions
+    parsed["key_exclusions"] = _extract_exclusions(sections)
+    # Network prep fields (capture only)
+    parsed["network_access_notes"] = _clean_scalar(_extract_network_access_notes(tables))
+    parsed["clinic_only_flag"] = _extract_clinic_only_flag(tables)
+    parsed["hospital_access_notes"] = _clean_scalar(_extract_hospital_access_notes(tables))
+    parsed["direct_access_hospitals_raw"] = _extract_direct_access_hospitals_raw(tables)
+    parsed["direct_billing_notes"] = _clean_scalar(_extract_direct_billing_notes(paragraphs))
+    parsed["referral_behavior_notes"] = _clean_scalar(_extract_referral_behavior_notes(tables))
+    # Internal
+    parsed["raw_section_map"] = sections
+
+    # Always override with any field present in extraction dict (for passthrough fields like reimbursement_*)
+    for field in CANONICAL_FIELDS:
+        if field in extraction:
+            parsed[field] = extraction[field]
+
+    # Ensure all CANONICAL_FIELDS are present in the parsed dict (None if missing)
+    for field in CANONICAL_FIELDS:
+        if field not in parsed:
+            parsed[field] = None
+
+    return parsed
