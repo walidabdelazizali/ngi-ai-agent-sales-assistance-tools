@@ -87,6 +87,12 @@ CANONICAL_FIELDS: tuple[str, ...] = (
     "annual_limit",
     "direct_billing",
     "reimbursement_allowed",
+    "reimbursement_scope",
+    "outside_network_reimbursement",
+    "outside_uae_reimbursement",
+    "reimbursement_basis",
+    "reimbursement_conditions",
+    "reimbursement_documents_required",
     "referral_required",
     # Benefit summaries
     "maternity_cover",
