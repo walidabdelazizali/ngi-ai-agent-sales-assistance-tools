@@ -137,6 +137,8 @@ def cmd_ask(args: argparse.Namespace) -> int:
         _print_compare(result["result"])
     elif rtype == "summary":
         _print_summary(result["result"])
+    elif rtype == "network":
+        print(result["result"])
     else:
         print(result.get("message", "Unsupported query."))
     return 0
