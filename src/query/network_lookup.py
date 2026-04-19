@@ -169,55 +169,6 @@ class NetworkLookup:
             "available_network_tiers": tiers,
         }
 
-    def provider_details_for_network(self, provider_name, network_code):
-        # Alias for provider_in_network for clarity
-        return self.provider_in_network(provider_name, network_code)
-
-    def provider_details_for_network(self, provider_name, network_code):
-        # Alias for provider_in_network for clarity
-        return self.provider_in_network(provider_name, network_code)
-import pandas as pd
-from pathlib import Path
-import re
-
-NETWORK_CSV = Path("runtime_data/networks/network_list_normalized.csv")
-
-
-class NetworkLookup:
-    def __init__(self, csv_path=NETWORK_CSV):
-        self.df = pd.read_csv(csv_path, dtype=str, encoding='utf-8-sig').fillna("")
-        self.df.columns = [c.lower() for c in self.df.columns]
-        self.network_tier_cols = [
-            c for c in self.df.columns
-            if (
-                c.lower().startswith("hn ")
-                or c.lower().startswith("hn_")
-                or c.lower().startswith("essential")
-                or c.lower().endswith("plus")
-                or c.lower().endswith("basic")
-            )
-        ]
-        # Build lookup indexes
-        self.provider_name_idx = {}
-        self.google_name_idx = {}
-        for idx, row in self.df.iterrows():
-            pn = self._normalize(row.get("provider_name", ""))
-            gn = self._normalize(row.get("google_name", ""))
-            if pn:
-                self.provider_name_idx.setdefault(pn, []).append(idx)
-            if gn:
-                self.google_name_idx.setdefault(gn, []).append(idx)
-
-    @staticmethod
-    def _normalize(s):
-        if not isinstance(s, str):
-            s = str(s)
-        s = s.strip().lower()
-        s = re.sub(r"[؟?]$", "", s)
-        s = re.sub(r"[\s\t\n\r]+", " ", s)
-        s = re.sub(r"^[^\w\d]+|[^\w\d]+$", "", s)  # strip simple punctuation at ends
-        s = re.sub(r"[\.,;:!\-\(\)\[\]{}'\"]", "", s)  # remove simple punctuation inside
-        return s
 
     @staticmethod
     def extract_provider_from_query(query):

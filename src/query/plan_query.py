@@ -508,9 +508,9 @@ def answer_owner_query(text: str,
     else:
         lookup = get_network_lookup()
 
-    # Direct billing guardrail
-    direct_billing_pat = re.compile(r"direct billing|الدفع المباشر", re.IGNORECASE)
-    if direct_billing_pat.search(text):
+    # Direct billing guardrail (narrow: only block if direct billing is the main intent)
+    direct_billing_pat = re.compile(r"^(direct billing|الدفع المباشر)$", re.IGNORECASE)
+    if direct_billing_pat.match(text.strip()):
         is_arabic = any(ord(c) >= 0x0600 for c in text)
         msg = (
             "تأكيد الدفع المباشر غير متاح بشكل حتمي من بيانات النظام الحالية."
@@ -519,61 +519,84 @@ def answer_owner_query(text: str,
         )
         return {"type": "unsupported", "result": msg}
 
-    # Plan network identity intent
-    plan_network_pat = re.compile(r"(what is|which|ما هي|ما هو|ماهي) (the )?(network|شبكة) (for|of|الخاصة ب|ل)? ([\w\s\-]+)", re.IGNORECASE)
-    m = plan_network_pat.search(text)
-    if m:
-        plan_candidate = m.group(5).strip()
+    # English plan-network identity: require explicit 'for' or 'of'
+    plan_network_en_pat = re.compile(
+        r"(?P<prefix>what is|which)\s+(the\s+)?network\s+(for|of)\s+(?P<plan>[\w\s\-]+)\??$",
+        re.IGNORECASE)
+    m_en = plan_network_en_pat.search(text.strip())
+    if m_en:
+        plan_candidate = m_en.group('plan').strip()
         plan_info = resolve_plan_network(plan_candidate)
-        is_arabic = any(ord(c) >= 0x0600 for c in text)
         if plan_info.get("found") and plan_info.get("medical_network"):
-            if is_arabic:
-                result = f"[شبكة الخطة]\nالخطة: {plan_info['plan_name']}\nالشبكة الطبية: {plan_info['medical_network']}"
-            else:
-                result = f"[PLAN NETWORK]\nPlan: {plan_info['plan_name']}\nMedical Network: {plan_info['medical_network']}"
+            result = f"[PLAN NETWORK]\nPlan: {plan_info['plan_name']}\nMedical Network: {plan_info['medical_network']}"
             return {"type": "plan_network", "result": result}
         else:
-            msg = "تعذر العثور على شبكة الخطة المطلوبة." if is_arabic else "Plan network mapping not available."
-            return {"type": "plan_network", "result": msg}
+            return {"type": "plan_network", "result": "Plan network mapping not available."}
 
-    # Provider in plan network intent
-    provider_in_plan_pat = re.compile(r"is ([\w\s\-]+) in ([\w\s\-]+) network|هل ([\w\s\-]+) داخل شبكة ([\w\s\-]+)", re.IGNORECASE)
-    m = provider_in_plan_pat.search(text)
-    if m:
-        if m.group(1) and m.group(2):
-            provider = m.group(1).strip()
-            plan = m.group(2).strip()
+    # Arabic plan-network identity: ما هي شبكة <plan>؟
+    plan_network_ar_pat = re.compile(
+        r"ما هي شبكة\s+(?P<plan>[\w\s\-]+)\؟?$",
+        re.IGNORECASE)
+    m_ar = plan_network_ar_pat.search(text.strip())
+    if m_ar:
+        plan_candidate = m_ar.group('plan').strip()
+        plan_info = resolve_plan_network(plan_candidate)
+        if plan_info.get("found") and plan_info.get("medical_network"):
+            result = f"[شبكة الخطة]\nالخطة: {plan_info['plan_name']}\nالشبكة الطبية: {plan_info['medical_network']}"
+            return {"type": "plan_network", "result": result}
         else:
-            provider = m.group(3).strip()
-            plan = m.group(4).strip()
+            return {"type": "plan_network", "result": "تعذر العثور على شبكة الخطة المطلوبة."}
+
+    # Provider in plan network intent (named groups, English/Arabic, guardrail)
+    provider_in_plan_en_pat = re.compile(
+        r"is\s+(?P<provider>[\w\s\-]+)\s+in\s+(?P<plan>[\w\s\-]+)\s+network\??$",
+        re.IGNORECASE)
+    m_en = provider_in_plan_en_pat.search(text.strip())
+    if m_en:
+        provider = m_en.group('provider').strip()
+        plan = m_en.group('plan').strip()
         plan_info = resolve_plan_network(plan)
-        is_arabic = any(ord(c) >= 0x0600 for c in text)
         if plan_info.get("found") and plan_info.get("medical_network"):
             net_code = plan_info["medical_network"]
             details = lookup.provider_in_network(provider, net_code)
             if details.get("ambiguous"):
-                msg = "مزود غير محدد (Ambiguous provider match)." if is_arabic else "Ambiguous provider match."
-                return {"type": "network", "result": msg}
+                return {"type": "network", "result": "Ambiguous provider match."}
             if not details.get("found"):
-                msg = "المزود غير موجود (Provider not found)." if is_arabic else "Provider not found."
-                return {"type": "network", "result": msg}
+                return {"type": "network", "result": "Provider not found."}
             in_net = details.get("in_network")
-            if is_arabic:
-                status = "داخل الشبكة" if in_net else "خارج الشبكة"
-                result = (
-                    f"[الشبكة]\nالمزود: {details['provider_name']}\nالخطة: {plan_info['plan_name']}\n"
-                    f"الشبكة المطلوبة: {net_code}\nالحالة: {status}"
-                )
-            else:
-                status = "In network" if in_net else "Out of network"
-                result = (
-                    f"[NETWORK]\nProvider: {details['provider_name']}\nPlan: {plan_info['plan_name']}\n"
-                    f"Required Network: {net_code}\nStatus: {status}"
-                )
+            status = "In network" if in_net else "Out of network"
+            result = (
+                f"[NETWORK]\nProvider: {details['provider_name']}\nPlan: {plan_info['plan_name']}\n"
+                f"Required Network: {net_code}\nStatus: {status}"
+            )
             return {"type": "network", "result": result}
         else:
-            msg = "تعذر العثور على شبكة الخطة المطلوبة." if is_arabic else "Plan network mapping not available."
-            return {"type": "plan_network", "result": msg}
+            return {"type": "plan_network", "result": "Plan network mapping not available."}
+
+    provider_in_plan_ar_pat = re.compile(
+        r"هل\s+(?P<provider>[\w\s\-]+)\s+داخل شبكة\s+(?P<plan>[\w\s\-]+)\؟?$",
+        re.IGNORECASE)
+    m_ar = provider_in_plan_ar_pat.search(text.strip())
+    if m_ar:
+        provider = m_ar.group('provider').strip()
+        plan = m_ar.group('plan').strip()
+        plan_info = resolve_plan_network(plan)
+        if plan_info.get("found") and plan_info.get("medical_network"):
+            net_code = plan_info["medical_network"]
+            details = lookup.provider_in_network(provider, net_code)
+            if details.get("ambiguous"):
+                return {"type": "network", "result": "مزود غير محدد (Ambiguous provider match)."}
+            if not details.get("found"):
+                return {"type": "network", "result": "المزود غير موجود (Provider not found)."}
+            in_net = details.get("in_network")
+            status = "داخل الشبكة" if in_net else "خارج الشبكة"
+            result = (
+                f"[الشبكة]\nالمزود: {details['provider_name']}\nالخطة: {plan_info['plan_name']}\n"
+                f"الشبكة المطلوبة: {net_code}\nالحالة: {status}"
+            )
+            return {"type": "network", "result": result}
+        else:
+            return {"type": "plan_network", "result": "تعذر العثور على شبكة الخطة المطلوبة."}
 
     # Fallback: generic provider/network lookup
     network_intents = [
