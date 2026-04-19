@@ -106,11 +106,19 @@ _PLAN_ALIASES: dict[str, str] = {
     "remedy03":  "HN-REMEDY-3.json",
     "remedy3":   "HN-REMEDY-3.json",
     "hn-remedy-3": "HN-REMEDY-3.json",
+    # Batch 1 Expansion: Remedy 04
+    "remedy 04": "HN-REMEDY-4.json",
+    "remedy 4":  "HN-REMEDY-4.json",
+    "remedy04":  "HN-REMEDY-4.json",
+    "remedy4":   "HN-REMEDY-4.json",
+    "hn-remedy-4": "HN-REMEDY-4.json",
     # Arabic
     "ريميدي 2": "HN-REMEDY-2.json",
     "ريميدي 02": "HN-REMEDY-2.json",
     "ريميدي 3": "HN-REMEDY-3.json",
     "ريميدي 03": "HN-REMEDY-3.json",
+    "ريميدي 4": "HN-REMEDY-4.json",
+    "ريميدي 04": "HN-REMEDY-4.json",
 }
 
 # Fields exposed to the owner (subset of BUSINESS_FIELDS, excludes internal

@@ -564,6 +564,39 @@ def parse_remedy_plan(extraction: dict[str, Any]) -> dict[str, Any]:
     paragraphs: list[str] = extraction.get("paragraphs", [])
     tables: list[list[list[str]]] = extraction.get("tables", [])
 
+    # If no paragraphs/tables, treat as minimal stub and surface root fields
+    if not paragraphs and not tables:
+        return {
+            "plan_name": extraction.get("plan_name"),
+            "plan_code": extraction.get("plan_code"),
+            "insurer_name": None,
+            "network_name": extraction.get("medical_network") or extraction.get("network_name"),
+            "area_of_coverage": None,
+            "annual_limit": None,
+            "direct_billing": None,
+            "reimbursement_allowed": None,
+            "referral_required": None,
+            "maternity_cover": None,
+            "inpatient_cover_summary": None,
+            "outpatient_cover_summary": None,
+            "pharmacy_cover_summary": None,
+            "diagnostics_cover_summary": None,
+            "physiotherapy_cover_summary": None,
+            "pre_existing_condition_rule": None,
+            "chronic_condition_rule": None,
+            "outside_network_rule": None,
+            "outside_uae_rule": None,
+            "approval_rule_summary": None,
+            "key_exclusions": [],
+            "network_access_notes": None,
+            "clinic_only_flag": None,
+            "hospital_access_notes": None,
+            "direct_access_hospitals_raw": [],
+            "direct_billing_notes": None,
+            "referral_behavior_notes": None,
+            "raw_section_map": {},
+        }
+
     sections = detect_sections(paragraphs)
 
     plan_name = _extract_plan_name(tables)
