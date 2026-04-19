@@ -4,3 +4,4 @@ T002,✖,✔,✖,✖,✖,✖,✖,Test Provider Two,Test Google Two,Test City,Cli
 T003,✖,✖,✔,✖,✖,✖,✖,Test Provider Three,Test Google Three,Test City,Lab,Group3,789,Area3,Loc3
 T004,✔,✔,✔,✖,✖,✖,✖,Ambiguous Provider,Ambiguous Google,Test City,Hospital,Group4,000,Area4,Loc4
 T005,✔,✔,✔,✖,✖,✖,✖,Ambiguous Provider,Ambiguous Google,Test City,Clinic,Group5,111,Area5,Loc5
+T006,✖,✖,✖,✖,✖,✔,✖,Accuracy Plus Medical Laboratory,Accuracy Plus Medical Laboratory,Test City,Lab,Group6,222,Area6,Loc6
