@@ -112,6 +112,12 @@ _PLAN_ALIASES: dict[str, str] = {
     "remedy04":  "HN-REMEDY-4.json",
     "remedy4":   "HN-REMEDY-4.json",
     "hn-remedy-4": "HN-REMEDY-4.json",
+    # Batch 2B Expansion: Remedy 05
+    "remedy 05": "HN-REMEDY-5.json",
+    "remedy 5":  "HN-REMEDY-5.json",
+    "remedy05":  "HN-REMEDY-5.json",
+    "remedy5":   "HN-REMEDY-5.json",
+    "hn-remedy-5": "HN-REMEDY-5.json",
     # Arabic
     "ريميدي 2": "HN-REMEDY-2.json",
     "ريميدي 02": "HN-REMEDY-2.json",
