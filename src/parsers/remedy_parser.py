@@ -242,12 +242,268 @@ def _extract_maternity_cover(tables: list[list[list[str]]]) -> Optional[str]:
     pat = re.compile(r"in-patient\s+maternity", re.IGNORECASE)
     row_idx = _find_row(tbl, pat)
     if row_idx is not None:
-        # The coverage description is typically in col 2.
-        return _cell(tbl, row_idx, 2)
+        # Try col 2 first (Remedy 02 layout), fallback to col 1 (Remedy 03).
+        val = _cell(tbl, row_idx, 2)
+        if val is None:
+            val = _cell(tbl, row_idx, 1)
+        return val
     return None
 
 
 _RE_ITEM_START = re.compile(r"^\s*(\d+)\s*\.\s*(.+)$")
+
+# ---------------------------------------------------------------------------
+# Benefit summary patterns
+# ---------------------------------------------------------------------------
+
+_RE_INPATIENT_HEADER = re.compile(r"^IN-PATIENT", re.IGNORECASE)
+_RE_OUTPATIENT_HEADER = re.compile(r"^OUT-PATIENT", re.IGNORECASE)
+_RE_PHARMACY = re.compile(r"Prescribed\s+Drugs|Pharmacy", re.IGNORECASE)
+_RE_DIAGNOSTICS = re.compile(
+    r"Tests,?\s+diagnosis|Laboratory\s+tests|Radiology", re.IGNORECASE)
+_RE_PHYSIO = re.compile(r"Physiotherapy", re.IGNORECASE)
+
+# Rules patterns
+_RE_PRE_EXISTING = re.compile(r"Pre-existing\s+conditions", re.IGNORECASE)
+_RE_REIMBURSE_OUTSIDE_UAE = re.compile(
+    r"Reimbursement\s+Outside\s+UAE", re.IGNORECASE)
+
+
+def _extract_benefit_summary(tables: list[list[list[str]]],
+                             header_pat: re.Pattern[str],
+                             end_pat: Optional[re.Pattern[str]] = None,
+                             ) -> Optional[str]:
+    """Extract a summary from the benefits table section between headers."""
+    tbl = _find_table_with_row(tables, header_pat)
+    if tbl is None:
+        return None
+    start = _find_row(tbl, header_pat)
+    if start is None:
+        return None
+    # Collect benefit rows until end pattern or end of table
+    parts: list[str] = []
+    for i in range(start + 1, len(tbl)):
+        cell0 = _cell(tbl, i, 0) or ""
+        if end_pat and end_pat.search(cell0):
+            break
+        cell1 = _cell(tbl, i, 1)
+        if cell0 and cell1:
+            label = cell0.split("\n")[0].strip()
+            value = cell1.split("\n")[0].strip()
+            parts.append(f"{label}: {value}")
+        elif cell0:
+            label = cell0.split("\n")[0].strip()
+            parts.append(label)
+    return "; ".join(parts) if parts else None
+
+
+def _extract_inpatient_summary(tables: list[list[list[str]]]) -> Optional[str]:
+    return _extract_benefit_summary(tables, _RE_INPATIENT_HEADER,
+                                    end_pat=_RE_OUTPATIENT_HEADER)
+
+
+def _extract_outpatient_summary(tables: list[list[list[str]]]) -> Optional[str]:
+    return _extract_benefit_summary(tables, _RE_OUTPATIENT_HEADER)
+
+
+def _extract_pharmacy_summary(tables: list[list[list[str]]]) -> Optional[str]:
+    for tbl in tables:
+        row_idx = _find_row(tbl, _RE_PHARMACY)
+        if row_idx is not None:
+            val = _cell(tbl, row_idx, 1)
+            return val
+    return None
+
+
+def _extract_diagnostics_summary(tables: list[list[list[str]]]) -> Optional[str]:
+    """Extract diagnostic-related benefit rows."""
+    parts: list[str] = []
+    for tbl in tables:
+        for idx, row in enumerate(tbl):
+            cell0 = (row[0] if row else "").strip()
+            if re.search(r"Laboratory\s+tests", cell0, re.IGNORECASE):
+                val = _cell(tbl, idx, 1)
+                if val:
+                    parts.append(f"Lab tests: {val.split(chr(10))[0].strip()}")
+            elif re.search(r"Radiology", cell0, re.IGNORECASE):
+                val = _cell(tbl, idx, 1)
+                if val:
+                    parts.append(
+                        f"Radiology: {val.split(chr(10))[0].strip()}")
+    return "; ".join(parts) if parts else None
+
+
+def _extract_physiotherapy_summary(
+        tables: list[list[list[str]]]) -> Optional[str]:
+    for tbl in tables:
+        row_idx = _find_row(tbl, _RE_PHYSIO)
+        if row_idx is not None:
+            val = _cell(tbl, row_idx, 1)
+            return val
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Rules extractors
+# ---------------------------------------------------------------------------
+
+def _extract_pre_existing_rule(tables: list[list[list[str]]]) -> Optional[str]:
+    tbl = _find_table_with_row(tables, _RE_PRE_EXISTING)
+    if tbl is None:
+        return None
+    row_idx = _find_row(tbl, _RE_PRE_EXISTING)
+    if row_idx is None:
+        return None
+    val = _cell(tbl, row_idx, 1)
+    return val
+
+
+def _extract_chronic_condition_rule(
+        tables: list[list[list[str]]]) -> Optional[str]:
+    """Chronic rule is often on the row after the pre-existing row."""
+    tbl = _find_table_with_row(tables, _RE_PRE_EXISTING)
+    if tbl is None:
+        return None
+    row_idx = _find_row(tbl, _RE_PRE_EXISTING)
+    if row_idx is None:
+        return None
+    # Check for a second pre-existing row (renewal rule)
+    for i in range(row_idx + 1, len(tbl)):
+        cell0 = _cell(tbl, i, 0) or ""
+        if re.search(r"pre-existing", cell0, re.IGNORECASE):
+            return _cell(tbl, i, 1)
+    return None
+
+
+def _extract_outside_network_rule(
+        tables: list[list[list[str]]]) -> Optional[str]:
+    tbl = _find_table_with_row(tables, _RE_REIMBURSE_OUTSIDE)
+    if tbl is None:
+        return None
+    row_idx = _find_row(tbl, _RE_REIMBURSE_OUTSIDE)
+    if row_idx is None:
+        return None
+    return _cell(tbl, row_idx, 1)
+
+
+def _extract_outside_uae_rule(
+        tables: list[list[list[str]]]) -> Optional[str]:
+    tbl = _find_table_with_row(tables, _RE_REIMBURSE_OUTSIDE_UAE)
+    if tbl is None:
+        return None
+    row_idx = _find_row(tbl, _RE_REIMBURSE_OUTSIDE_UAE)
+    if row_idx is None:
+        return None
+    return _cell(tbl, row_idx, 1)
+
+
+def _extract_approval_rule_summary(
+        tables: list[list[list[str]]]) -> Optional[str]:
+    """Collect pre-approval requirements found in benefit descriptions."""
+    approvals: list[str] = []
+    pat = re.compile(r"pre-?approval\s+is\s+required", re.IGNORECASE)
+    for tbl in tables:
+        for row in tbl:
+            cell0 = (row[0] if row else "").strip()
+            if pat.search(cell0):
+                label = cell0.split("\n")[0].strip()
+                if label not in approvals:
+                    approvals.append(label)
+    return "; ".join(approvals) if approvals else None
+
+
+# ---------------------------------------------------------------------------
+# Network prep field extractors (capture only — NOT provider intelligence)
+# ---------------------------------------------------------------------------
+
+def _extract_network_access_notes(
+        tables: list[list[list[str]]]) -> Optional[str]:
+    """Full provider network cell text — raw capture."""
+    tbl = _find_table_with_row(tables, _RE_NETWORK)
+    if tbl is None:
+        return None
+    row_idx = _find_row(tbl, _RE_NETWORK)
+    if row_idx is None:
+        return None
+    return _cell(tbl, row_idx, 1)
+
+
+def _extract_clinic_only_flag(
+        tables: list[list[list[str]]]) -> Optional[bool]:
+    """Detect if OP access is restricted to clinics."""
+    tbl = _find_table_with_row(tables, _RE_NETWORK)
+    if tbl is None:
+        return None
+    row_idx = _find_row(tbl, _RE_NETWORK)
+    if row_idx is None:
+        return None
+    raw = _cell(tbl, row_idx, 1) or ""
+    if re.search(r"OP\s+Restricted\s+to\s+Clinics", raw, re.IGNORECASE):
+        return True
+    return False
+
+
+def _extract_hospital_access_notes(
+        tables: list[list[list[str]]]) -> Optional[str]:
+    """Extract direct hospital access mention from network cell."""
+    tbl = _find_table_with_row(tables, _RE_NETWORK)
+    if tbl is None:
+        return None
+    row_idx = _find_row(tbl, _RE_NETWORK)
+    if row_idx is None:
+        return None
+    raw = _cell(tbl, row_idx, 1) or ""
+    m = re.search(r"direct\s+access\s+to\s+below\s+hospitals\s+for\s+OP\s+Services",
+                  raw, re.IGNORECASE)
+    return m.group(0) if m else None
+
+
+def _extract_direct_access_hospitals_raw(
+        tables: list[list[list[str]]]) -> list[str]:
+    """Extract listed hospital names from the network cell."""
+    tbl = _find_table_with_row(tables, _RE_NETWORK)
+    if tbl is None:
+        return []
+    row_idx = _find_row(tbl, _RE_NETWORK)
+    if row_idx is None:
+        return []
+    raw = _cell(tbl, row_idx, 1) or ""
+    lines = raw.split("\n")
+    # Skip first line (network description) and last line (referral note)
+    hospitals: list[str] = []
+    for line in lines[1:]:
+        line = line.strip()
+        if not line:
+            continue
+        # Stop if we hit a referral/specialist note
+        if re.search(r"Specialist\s+Subject\s+to|Referral", line, re.IGNORECASE):
+            break
+        hospitals.append(line)
+    return hospitals
+
+
+def _extract_direct_billing_notes(paragraphs: list[str]) -> Optional[str]:
+    """Return paragraph text that mentions direct billing arrangements."""
+    for para in paragraphs:
+        if re.search(r"direct\s+billing", para, re.IGNORECASE):
+            return para.strip()
+    return None
+
+
+def _extract_referral_behavior_notes(
+        tables: list[list[list[str]]]) -> Optional[str]:
+    """Capture referral behavior text from the network cell."""
+    tbl = _find_table_with_row(tables, _RE_NETWORK)
+    if tbl is None:
+        return None
+    row_idx = _find_row(tbl, _RE_NETWORK)
+    if row_idx is None:
+        return None
+    raw = _cell(tbl, row_idx, 1) or ""
+    for line in raw.split("\n"):
+        if re.search(r"Specialist\s+Subject\s+to|Referral", line, re.IGNORECASE):
+            return line.strip()
+    return None
 
 
 def _extract_exclusions(sections: dict[str, list[str]]) -> list[str]:
@@ -315,16 +571,54 @@ def parse_remedy_plan(extraction: dict[str, Any]) -> dict[str, Any]:
         extraction.get("source_filename", ""), plan_name)
 
     return {
+        # Identity
         "plan_name": _clean_scalar(plan_name),
         "plan_code": plan_code,
         "insurer_name": _clean_scalar(_extract_insurer_name(paragraphs)),
         "network_name": _clean_scalar(_extract_network_name(tables)),
+        # Coverage core
         "area_of_coverage": _clean_scalar(_extract_area_of_coverage(tables)),
         "annual_limit": _clean_scalar(_extract_annual_limit(tables)),
         "direct_billing": _extract_direct_billing(paragraphs),
         "reimbursement_allowed": _extract_reimbursement_allowed(paragraphs),
         "referral_required": _extract_referral_required(paragraphs, tables),
+        # Benefit summaries
         "maternity_cover": _clean_scalar(_extract_maternity_cover(tables)),
+        "inpatient_cover_summary": _clean_scalar(
+            _extract_inpatient_summary(tables)),
+        "outpatient_cover_summary": _clean_scalar(
+            _extract_outpatient_summary(tables)),
+        "pharmacy_cover_summary": _clean_scalar(
+            _extract_pharmacy_summary(tables)),
+        "diagnostics_cover_summary": _clean_scalar(
+            _extract_diagnostics_summary(tables)),
+        "physiotherapy_cover_summary": _clean_scalar(
+            _extract_physiotherapy_summary(tables)),
+        # Rules
+        "pre_existing_condition_rule": _clean_scalar(
+            _extract_pre_existing_rule(tables)),
+        "chronic_condition_rule": _clean_scalar(
+            _extract_chronic_condition_rule(tables)),
+        "outside_network_rule": _clean_scalar(
+            _extract_outside_network_rule(tables)),
+        "outside_uae_rule": _clean_scalar(
+            _extract_outside_uae_rule(tables)),
+        "approval_rule_summary": _clean_scalar(
+            _extract_approval_rule_summary(tables)),
+        # Exclusions
         "key_exclusions": _extract_exclusions(sections),
+        # Network prep fields (capture only)
+        "network_access_notes": _clean_scalar(
+            _extract_network_access_notes(tables)),
+        "clinic_only_flag": _extract_clinic_only_flag(tables),
+        "hospital_access_notes": _clean_scalar(
+            _extract_hospital_access_notes(tables)),
+        "direct_access_hospitals_raw": _extract_direct_access_hospitals_raw(
+            tables),
+        "direct_billing_notes": _clean_scalar(
+            _extract_direct_billing_notes(paragraphs)),
+        "referral_behavior_notes": _clean_scalar(
+            _extract_referral_behavior_notes(tables)),
+        # Internal
         "raw_section_map": sections,
     }
