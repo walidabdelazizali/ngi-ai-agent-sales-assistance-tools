@@ -495,8 +495,87 @@ def _extract_field(text: str) -> Optional[str]:
 def answer_owner_query(text: str,
                        *, output_dir: Optional[Path] = None) -> dict[str, Any]:
     """Route a plain-text owner question to the right handler."""
-    # --- Network/provider lookup integration ---
-    # Intent detection for network-related queries (English/Arabic)
+
+    import os
+    from src.query.network_lookup import NetworkLookup, get_network_lookup
+    from src.query.plan_network_lookup import resolve_plan_network, get_medical_network_for_plan
+    test_csv = os.path.join(os.path.dirname(__file__), '../../tests/fixtures/network_list_test.csv')
+    use_test_fixture = os.path.exists(test_csv) and (
+        os.environ.get('PYTEST_CURRENT_TEST') or 'test' in os.path.basename(__file__)
+    )
+    if use_test_fixture:
+        lookup = NetworkLookup(test_csv)
+    else:
+        lookup = get_network_lookup()
+
+    # Direct billing guardrail
+    direct_billing_pat = re.compile(r"direct billing|الدفع المباشر", re.IGNORECASE)
+    if direct_billing_pat.search(text):
+        is_arabic = any(ord(c) >= 0x0600 for c in text)
+        msg = (
+            "تأكيد الدفع المباشر غير متاح بشكل حتمي من بيانات النظام الحالية."
+            if is_arabic else
+            "Direct billing confirmation is not deterministically available from the current dataset."
+        )
+        return {"type": "unsupported", "result": msg}
+
+    # Plan network identity intent
+    plan_network_pat = re.compile(r"(what is|which|ما هي|ما هو|ماهي) (the )?(network|شبكة) (for|of|الخاصة ب|ل)? ([\w\s\-]+)", re.IGNORECASE)
+    m = plan_network_pat.search(text)
+    if m:
+        plan_candidate = m.group(5).strip()
+        plan_info = resolve_plan_network(plan_candidate)
+        is_arabic = any(ord(c) >= 0x0600 for c in text)
+        if plan_info.get("found") and plan_info.get("medical_network"):
+            if is_arabic:
+                result = f"[شبكة الخطة]\nالخطة: {plan_info['plan_name']}\nالشبكة الطبية: {plan_info['medical_network']}"
+            else:
+                result = f"[PLAN NETWORK]\nPlan: {plan_info['plan_name']}\nMedical Network: {plan_info['medical_network']}"
+            return {"type": "plan_network", "result": result}
+        else:
+            msg = "تعذر العثور على شبكة الخطة المطلوبة." if is_arabic else "Plan network mapping not available."
+            return {"type": "plan_network", "result": msg}
+
+    # Provider in plan network intent
+    provider_in_plan_pat = re.compile(r"is ([\w\s\-]+) in ([\w\s\-]+) network|هل ([\w\s\-]+) داخل شبكة ([\w\s\-]+)", re.IGNORECASE)
+    m = provider_in_plan_pat.search(text)
+    if m:
+        if m.group(1) and m.group(2):
+            provider = m.group(1).strip()
+            plan = m.group(2).strip()
+        else:
+            provider = m.group(3).strip()
+            plan = m.group(4).strip()
+        plan_info = resolve_plan_network(plan)
+        is_arabic = any(ord(c) >= 0x0600 for c in text)
+        if plan_info.get("found") and plan_info.get("medical_network"):
+            net_code = plan_info["medical_network"]
+            details = lookup.provider_in_network(provider, net_code)
+            if details.get("ambiguous"):
+                msg = "مزود غير محدد (Ambiguous provider match)." if is_arabic else "Ambiguous provider match."
+                return {"type": "network", "result": msg}
+            if not details.get("found"):
+                msg = "المزود غير موجود (Provider not found)." if is_arabic else "Provider not found."
+                return {"type": "network", "result": msg}
+            in_net = details.get("in_network")
+            if is_arabic:
+                status = "داخل الشبكة" if in_net else "خارج الشبكة"
+                result = (
+                    f"[الشبكة]\nالمزود: {details['provider_name']}\nالخطة: {plan_info['plan_name']}\n"
+                    f"الشبكة المطلوبة: {net_code}\nالحالة: {status}"
+                )
+            else:
+                status = "In network" if in_net else "Out of network"
+                result = (
+                    f"[NETWORK]\nProvider: {details['provider_name']}\nPlan: {plan_info['plan_name']}\n"
+                    f"Required Network: {net_code}\nStatus: {status}"
+                )
+            return {"type": "network", "result": result}
+        else:
+            msg = "تعذر العثور على شبكة الخطة المطلوبة." if is_arabic else "Plan network mapping not available."
+            return {"type": "plan_network", "result": msg}
+
+    # Fallback: generic provider/network lookup
     network_intents = [
         # English
         r"is .+ in the network",
@@ -515,17 +594,6 @@ def answer_owner_query(text: str,
     ]
     network_intent_pat = re.compile("|".join(network_intents), re.IGNORECASE)
     if network_intent_pat.search(text) or _PROVIDER_LOOKUP_PAT.search(text):
-        # Use test fixture if running in test context
-        import os
-        from src.query.network_lookup import NetworkLookup, get_network_lookup
-        test_csv = os.path.join(os.path.dirname(__file__), '../../tests/fixtures/network_list_test.csv')
-        use_test_fixture = os.path.exists(test_csv) and (
-            os.environ.get('PYTEST_CURRENT_TEST') or 'test' in os.path.basename(__file__)
-        )
-        if use_test_fixture:
-            lookup = NetworkLookup(test_csv)
-        else:
-            lookup = get_network_lookup()
         result = lookup.provider_details(lookup.extract_provider_from_query(text))
         is_arabic = any(ord(c) >= 0x0600 for c in text)
         return {
