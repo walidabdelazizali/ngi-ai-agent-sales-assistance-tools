@@ -1,0 +1,6 @@
+hnm_code,hn_exclusive,hn_premier,hn_advantage,hn_standard_plus,hn_standard,hn_basic_plus,hn_basic,provider_name,google_name,city,type,group_name,tel_no,area,location
+T001,✔,✖,✖,✖,✖,✖,✖,Test Provider One,Test Google One,Test City,Hospital,Group1,123,Area1,Loc1
+T002,✖,✔,✖,✖,✖,✖,✖,Test Provider Two,Test Google Two,Test City,Clinic,Group2,456,Area2,Loc2
+T003,✖,✖,✔,✖,✖,✖,✖,Test Provider Three,Test Google Three,Test City,Lab,Group3,789,Area3,Loc3
+T004,✔,✔,✔,✖,✖,✖,✖,Ambiguous Provider,Ambiguous Google,Test City,Hospital,Group4,000,Area4,Loc4
+T005,✔,✔,✔,✖,✖,✖,✖,Ambiguous Provider,Ambiguous Google,Test City,Clinic,Group5,111,Area5,Loc5
