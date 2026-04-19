@@ -33,11 +33,12 @@ ARABIC_SUMMARY_CASES = [
 ]
 
 
-# Out-of-scope provider/network lookup queries (must return generic fallback)
+
+# Out-of-scope provider/network lookup queries (should return network type with not found message)
 ARABIC_UNSUPPORTED_CASES = [
-    ("هل Aster Qusais داخل الشبكة؟", "unsupported"),
-    ("هل هذه المستشفى ضمن الشبكة؟", "unsupported"),
-    ("هل يوجد direct billing في هذه العيادة؟", "unsupported"),
+    ("هل Aster Qusais داخل الشبكة؟", "network", "المزود غير موجود (Provider not found)."),
+    ("هل هذه المستشفى ضمن الشبكة؟", "network", "المزود غير موجود (Provider not found)."),
+    ("هل يوجد direct billing في هذه العيادة؟", "network", "المزود غير موجود (Provider not found)."),
 ]
 
 
@@ -70,9 +71,8 @@ def test_arabic_summary_queries(query, expected_type):
     assert result["type"] == expected_type
     assert "summary_text" in result["result"]
 
-@pytest.mark.parametrize("query,expected_type", ARABIC_UNSUPPORTED_CASES)
-def test_arabic_unsupported_queries(query, expected_type):
+@pytest.mark.parametrize("query,expected_type,expected_result", ARABIC_UNSUPPORTED_CASES)
+def test_arabic_unsupported_queries(query, expected_type, expected_result):
     result = answer_owner_query(query)
     assert result["type"] == expected_type
-    # Should not return missing-plan message for provider/network queries
-    assert result["message"] == _SAFE_FALLBACK, f"Got: {result['message']}"
+    assert result["result"] == expected_result
