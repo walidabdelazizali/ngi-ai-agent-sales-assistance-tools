@@ -7,11 +7,19 @@ from typing import Dict, Any, Optional
 from src.tool_contract import get_plan_core, get_reimbursement_rules, get_plan_summary
 
 SUPPORTED_PLANS = {
+    # Remedy 03
+    "remedy 03": "Remedy 03",
+    "remedy 3": "Remedy 03",
+    "hn-remedy-3": "Remedy 03",
+    "ريميدي 3": "Remedy 03",
+    "ريميدي 03": "Remedy 03",
+    # Remedy 04
     "remedy 04": "Remedy 04",
     "remedy 4": "Remedy 04",
     "hn-remedy-4": "Remedy 04",
     "ريميدي 4": "Remedy 04",
     "ريميدي 04": "Remedy 04",
+    # Remedy 05
     "remedy 05": "Remedy 05",
     "remedy 5": "Remedy 05",
     "hn-remedy-5": "Remedy 05",
@@ -73,7 +81,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 "plan_name": None,
                 "tool_name": None,
                 "data": None,
-                "message": "عذراً، النظام يدعم فقط الريميدي 04 والريميدي 05 حالياً."
+                "message": "عذراً، النظام يدعم فقط الريميدي 03 والريميدي 04 والريميدي 05 حالياً."
             }
         return {
             "ok": False,
@@ -81,7 +89,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             "plan_name": None,
             "tool_name": None,
             "data": None,
-            "message": "No supported plan and/or intent found in query. Supported plans: Remedy 04, Remedy 05. Supported intents: plan_core, reimbursement_rules, plan_summary."
+            "message": "No supported plan and/or intent found in query. Supported plans: Remedy 03, Remedy 04, Remedy 05. Supported intents: plan_core, reimbursement_rules, plan_summary."
         }
     if intent == "plan_core":
         try:

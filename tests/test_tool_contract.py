@@ -1,3 +1,29 @@
+# Remedy 03 tool contract tests
+def test_get_plan_core_remedy03():
+    result = get_plan_core("Remedy 03")
+    assert result["plan_code"] == "HN-REMEDY-3"
+    assert "Remedy 03" in result["plan_name"]
+    assert result["network_name"] in ("HN Basic Plus", "hn_basic")
+    assert "150,000" in result["annual_limit"]
+    assert "UAE" in result["area_of_coverage"]
+    assert result["direct_billing"] is True
+    assert result["referral_required"] is True
+
+def test_get_reimbursement_rules_remedy03():
+    result = get_reimbursement_rules("Remedy 03")
+    # Remedy 03 has no reimbursement (should be False or None)
+    assert result["reimbursement_allowed"] in (False, None)
+    # Scope fields should be None or empty
+    assert result["reimbursement_scope"] in (None, "")
+    assert result["outside_network_reimbursement"] in (None, "")
+    assert result["outside_uae_reimbursement"] in (None, "")
+
+def test_get_plan_summary_remedy03():
+    result = get_plan_summary("Remedy 03")
+    assert result["plan_code"] == "HN-REMEDY-3"
+    assert "Remedy 03" in result["plan_name"]
+    assert isinstance(result["summary_text"], str)
+    assert result["field_count"] > 0
 import pytest
 from src.tool_contract import get_plan_core, get_reimbursement_rules, get_plan_summary
 
