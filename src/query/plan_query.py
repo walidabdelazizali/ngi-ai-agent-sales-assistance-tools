@@ -494,6 +494,7 @@ def summarize_plan(plan_name: str,
     lines.append(f"Key Exclusions: {excl_count} listed")
 
     return {
+        "plan_name": plan.get("plan_name"),
         "plan_code": plan.get("plan_code"),
         "summary_text": "\n".join(lines),
         "field_count": len(summary_fields) + 1,
