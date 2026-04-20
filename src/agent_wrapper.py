@@ -63,8 +63,18 @@ def _intent_from_query(text: str) -> Optional[str]:
 def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
     plan_name = _extract_plan_name(user_query)
     intent = _intent_from_query(user_query)
+    is_arabic = any(c in user_query for c in 'اأإآبتثجحخدذرزسشصضطظعغفقكلمنهويءىة')
     # If no supported plan or no supported intent, always return unsupported envelope
     if not plan_name or intent not in ("plan_core", "reimbursement_rules", "plan_summary"):
+        if is_arabic:
+            return {
+                "ok": False,
+                "intent": "unsupported",
+                "plan_name": None,
+                "tool_name": None,
+                "data": None,
+                "message": "عذراً، النظام يدعم فقط الريميدي 04 والريميدي 05 حالياً."
+            }
         return {
             "ok": False,
             "intent": "unsupported",
@@ -76,60 +86,66 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
     if intent == "plan_core":
         try:
             data = get_plan_core(plan_name)
+            msg = "تم عرض معلومات الخطة الأساسية." if is_arabic else "Plan core fields returned."
             return {
                 "ok": True,
-                "intent": "plan_core",
+                "intent": intent,
                 "plan_name": plan_name,
                 "tool_name": "get_plan_core",
                 "data": data,
-                "message": "Plan core fields returned."
+                "message": msg
             }
         except Exception as e:
+            msg = f"حدث خطأ: {e}" if is_arabic else f"Error: {e}"
             return {
                 "ok": False,
-                "intent": "plan_core",
+                "intent": intent,
                 "plan_name": plan_name,
                 "tool_name": "get_plan_core",
                 "data": None,
-                "message": f"Error: {e}"
+                "message": msg
             }
-    elif intent == "reimbursement_rules":
+    if intent == "reimbursement_rules":
         try:
             data = get_reimbursement_rules(plan_name)
+            msg = "تم عرض قواعد التعويض." if is_arabic else "Reimbursement rules returned."
             return {
                 "ok": True,
-                "intent": "reimbursement_rules",
+                "intent": intent,
                 "plan_name": plan_name,
                 "tool_name": "get_reimbursement_rules",
                 "data": data,
-                "message": "Reimbursement rules returned."
+                "message": msg
             }
         except Exception as e:
+            msg = f"حدث خطأ: {e}" if is_arabic else f"Error: {e}"
             return {
                 "ok": False,
-                "intent": "reimbursement_rules",
+                "intent": intent,
                 "plan_name": plan_name,
                 "tool_name": "get_reimbursement_rules",
                 "data": None,
-                "message": f"Error: {e}"
+                "message": msg
             }
-    elif intent == "plan_summary":
+    if intent == "plan_summary":
         try:
             data = get_plan_summary(plan_name)
+            msg = "تم عرض ملخص الخطة." if is_arabic else "Plan summary returned."
             return {
                 "ok": True,
-                "intent": "plan_summary",
+                "intent": intent,
                 "plan_name": plan_name,
                 "tool_name": "get_plan_summary",
                 "data": data,
-                "message": "Plan summary returned."
+                "message": msg
             }
         except Exception as e:
+            msg = f"حدث خطأ: {e}" if is_arabic else f"Error: {e}"
             return {
                 "ok": False,
-                "intent": "plan_summary",
+                "intent": intent,
                 "plan_name": plan_name,
                 "tool_name": "get_plan_summary",
                 "data": None,
-                "message": f"Error: {e}"
+                "message": msg
             }

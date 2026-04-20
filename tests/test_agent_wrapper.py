@@ -18,6 +18,7 @@ def test_plan_core_arabic():
     assert out["tool_name"] == "get_plan_core"
     assert isinstance(out["data"], dict)
     assert out["data"]["annual_limit"] == "500,000"
+    assert "تم عرض معلومات الخطة" in out["message"]
 
 def test_reimbursement_rules_english():
     out = run_agent_wrapper("What are the reimbursement rules for Remedy 05?")
@@ -36,6 +37,7 @@ def test_reimbursement_rules_arabic():
     assert out["tool_name"] == "get_reimbursement_rules"
     assert isinstance(out["data"], dict)
     assert out["data"]["reimbursement_allowed"] is True
+    assert "تم عرض قواعد التعويض" in out["message"]
 
 def test_plan_summary_english():
     out = run_agent_wrapper("Give me a summary of Remedy 04")
@@ -54,6 +56,7 @@ def test_plan_summary_arabic():
     assert out["tool_name"] == "get_plan_summary"
     assert isinstance(out["data"], dict)
     assert "summary_text" in out["data"]
+    assert "تم عرض ملخص الخطة" in out["message"]
 
 def test_unsupported_intent():
     out = run_agent_wrapper("Show me the dental coverage for Remedy 04")
@@ -63,6 +66,14 @@ def test_unsupported_intent():
     assert out["tool_name"] is None
     assert out["data"] is None
     assert "not supported" in out["message"] or "supported plan" in out["message"]
+    # Arabic unsupported
+    out_ar = run_agent_wrapper("ما الفرق بين الريميدي 3 والريميدي 4؟")
+    assert out_ar["ok"] is False
+    assert out_ar["intent"] == "unsupported"
+    assert out_ar["plan_name"] is None
+    assert out_ar["tool_name"] is None
+    assert out_ar["data"] is None
+    assert "عذراً، النظام يدعم فقط الريميدي 04 والريميدي 05" in out_ar["message"]
 
 def test_unknown_plan():
     out = run_agent_wrapper("What is the annual limit for Remedy 99?")
