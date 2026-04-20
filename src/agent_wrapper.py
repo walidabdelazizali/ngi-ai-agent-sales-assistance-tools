@@ -42,7 +42,7 @@ REIMBURSEMENT_FIELDS = [
 ]
 
 SUMMARY_PATTERNS = [
-    "summary", "overview", "give me a summary", "plan summary", "tell me about", "ملخص", "اعطني ملخص", "أعطني ملخص", "عرض ملخص"
+    "summary", "overview", "give me a summary", "plan summary", "tell me about", "ملخص", "اعطني ملخص", "أعطني ملخص", "عرض ملخص", "لخص", "ملخص لخطة", "summary لخطة", "ملخص plan", "اعطني summary", "اعطني ملخص لخطة", "ملخص Remedy", "ملخص ريميدي"
 ]
 
 def _extract_plan_name(text: str) -> Optional[str]:
@@ -72,6 +72,13 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
     plan_name = _extract_plan_name(user_query)
     intent = _intent_from_query(user_query)
     is_arabic = any(c in user_query for c in 'اأإآبتثجحخدذرزسشصضطظعغفقكلمنهويءىة')
+    # Patch: Robust summary routing for mixed Arabic/English phrasing
+    # If summary pattern is present and plan_name is present, force plan_summary intent
+    if not intent and plan_name:
+        for pat in SUMMARY_PATTERNS:
+            if pat in user_query.lower():
+                intent = "plan_summary"
+                break
     # If no supported plan or no supported intent, always return unsupported envelope
     if not plan_name or intent not in ("plan_core", "reimbursement_rules", "plan_summary"):
         if is_arabic:
@@ -139,6 +146,56 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
         try:
             data = get_plan_summary(plan_name)
             msg = "تم عرض ملخص الخطة." if is_arabic else "Plan summary returned."
+            # Patch: Safe Arabic summary localization (labels and values)
+            if is_arabic and data and data.get("summary_text"):
+                ar_labels = {
+                    "Plan Name": "اسم الخطة",
+                    "Plan Code": "رمز الخطة",
+                    "Network": "الشبكة",
+                    "Annual Limit": "الحد السنوي",
+                    "Area of Coverage": "نطاق التغطية",
+                    "Direct Billing": "الدفع المباشر",
+                    "Referral Required": "الإحالة مطلوبة",
+                    "Maternity Cover": "تغطية الأمومة",
+                    "Inpatient Cover": "تغطية المرضى الداخليين",
+                    "Outpatient Cover": "تغطية العيادات الخارجية",
+                    "Pharmacy Cover": "تغطية الصيدلية",
+                    "Key Exclusions": "الاستثناءات الأساسية",
+                }
+                # Only replace full label lines, not substrings
+                summary_lines = data["summary_text"].split("\n")
+                localized_lines = []
+                for line in summary_lines:
+                    colon_idx = line.find(":")
+                    if colon_idx > 0:
+                        label = line[:colon_idx].strip()
+                        value = line[colon_idx+1:].strip()
+                        # Localize label if present
+                        label_ar = ar_labels.get(label, label)
+                        # Localize value if exact
+                        if value == "Yes":
+                            value_ar = "نعم"
+                        elif value == "No":
+                            value_ar = "لا"
+                        elif value in ("Not available", "None", "null", "None listed"):
+                            value_ar = "غير متوفر"
+                        elif value == "لا يوجد":
+                            value_ar = value
+                        else:
+                            value_ar = value
+                        localized_lines.append(f"{label_ar}: {value_ar}")
+                    else:
+                        # For lines like "Key Exclusions: 3 listed"
+                        for en, ar in ar_labels.items():
+                            if line.startswith(en):
+                                line = line.replace(en, ar, 1)
+                        # Patch for "listed" count
+                        if "listed" in line:
+                            line = line.replace("listed", "عنصر/عناصر")
+                        localized_lines.append(line)
+                summary_text = "\n".join(localized_lines)
+                data = dict(data)
+                data["summary_text"] = summary_text
             return {
                 "ok": True,
                 "intent": intent,
