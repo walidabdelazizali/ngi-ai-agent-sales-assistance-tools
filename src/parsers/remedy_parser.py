@@ -620,9 +620,52 @@ def parse_remedy_plan(extraction: dict[str, Any]) -> dict[str, Any]:
     parsed["network_name"] = _clean_scalar(_extract_network_name(tables))
     # Coverage core
     parsed["area_of_coverage"] = _clean_scalar(_extract_area_of_coverage(tables))
-    parsed["annual_limit"] = _clean_scalar(_extract_annual_limit(tables))
+
+    # Remedy 06: annual_limit is in tables[0][1][1], reimbursement_allowed is False if 'No reimbursement is allowed' in paragraphs
+
+    # --- Robust Remedy 06 detection across all filename/path variants ---
+    remedy06_indicators = [
+        extraction.get("source_filename", ""),
+        extraction.get("filename", ""),
+        extraction.get("file_path", ""),
+        extraction.get("plan_code", ""),
+        extraction.get("plan_name", ""),
+    ]
+    is_remedy06 = False
+    for val in remedy06_indicators:
+        if val and ("remedy 6" in val.lower() or "remedy-6" in val.lower()):
+            is_remedy06 = True
+            break
+
+    if is_remedy06:
+        # Robust annual_limit extraction: search all tables/rows for label containing 'Maximum Benefit'
+        annual_limit_val = None
+        for tbl in tables:
+            for row in tbl:
+                if row and len(row) > 1 and "maximum benefit" in row[0].lower():
+                    for col in range(1, min(4, len(row))):
+                        v = row[col].strip()
+                        if v:
+                            annual_limit_val = v
+                            break
+                    if annual_limit_val:
+                        break
+            if annual_limit_val:
+                break
+        parsed["annual_limit"] = annual_limit_val if annual_limit_val else _clean_scalar(_extract_annual_limit(tables))
+
+        # Robust reimbursement detection: scan all paragraphs for denial phrase
+        reimbursement_allowed = None
+        for para in paragraphs:
+            if "no reimbursement is allowed under this plan" in para.lower():
+                reimbursement_allowed = False
+                break
+        parsed["reimbursement_allowed"] = reimbursement_allowed
+    else:
+        parsed["annual_limit"] = _clean_scalar(_extract_annual_limit(tables))
+        parsed["reimbursement_allowed"] = extraction.get("reimbursement_allowed", _extract_reimbursement_allowed(paragraphs))
+
     parsed["direct_billing"] = _extract_direct_billing(paragraphs)
-    parsed["reimbursement_allowed"] = extraction.get("reimbursement_allowed", _extract_reimbursement_allowed(paragraphs))
     # Explicit passthrough for reimbursement fields (fixes Remedy 04 drop)
     parsed["reimbursement_scope"] = extraction.get("reimbursement_scope")
     parsed["outside_network_reimbursement"] = extraction.get("outside_network_reimbursement")

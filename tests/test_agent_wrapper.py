@@ -1,3 +1,49 @@
+def test_plan_comparison_english():
+    out = run_agent_wrapper("compare Remedy 02 and Remedy 04")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_comparison"
+    assert "Comparison between Remedy 02 and Remedy 04" in out["message"]
+    # Should show key fields
+    for label in ["Annual Limit", "Network", "Area of Coverage", "Direct Billing", "Reimbursement Allowed"]:
+        assert label in out["message"]
+        assert "Remedy 02" in out["message"] and "Remedy 04" in out["message"]
+
+def test_plan_comparison_arabic():
+    out = run_agent_wrapper("ما الفرق بين ريميدي 02 و ريميدي 04")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_comparison"
+    assert "مقارنة بين Remedy 02 و Remedy 04" in out["message"]
+    # Should show key Arabic labels
+    for label in ["الحد السنوي", "الشبكة", "نطاق التغطية", "الدفع المباشر", "التعويض"]:
+        assert label in out["message"]
+        assert "Remedy 02" in out["message"] and "Remedy 04" in out["message"]
+def test_plan_core_remedy02_english():
+    out = run_agent_wrapper("What is the annual limit for Remedy 02?")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_core"
+    assert out["plan_name"] == "Remedy 02"
+    assert out["tool_name"] == "get_plan_core"
+    assert isinstance(out["data"], dict)
+    assert "annual_limit" in out["data"]
+    assert out["data"]["annual_limit"] == "AED. 150,000"
+
+def test_plan_summary_remedy02_english():
+    out = run_agent_wrapper("Give me a summary of Remedy 02")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_summary"
+    assert out["plan_name"] == "Remedy 02"
+    assert out["tool_name"] == "get_plan_summary"
+    assert isinstance(out["data"], dict)
+    assert "summary_text" in out["data"]
+
+def test_reimbursement_rules_remedy02_english():
+    out = run_agent_wrapper("What are the reimbursement rules for Remedy 02?")
+    assert out["ok"] is True
+    assert out["intent"] == "reimbursement_rules"
+    assert out["plan_name"] == "Remedy 02"
+    assert out["tool_name"] == "get_reimbursement_rules"
+    assert isinstance(out["data"], dict)
+    assert out["data"]["reimbursement_allowed"] is False
 import pytest
 from src.agent_wrapper import run_agent_wrapper
 
@@ -189,3 +235,81 @@ def test_unknown_plan():
     assert out["tool_name"] is None
     assert out["data"] is None
     assert "supported plan" in out["message"] or "not supported" in out["message"]
+
+def test_normalized_field_exists():
+    out = run_agent_wrapper("What is the annual limit for Remedy 04?")
+    assert "normalized" in out
+    norm = out["normalized"]
+    assert set(norm.keys()) == {"status", "tool", "answer", "errors"}
+    assert norm["status"] == "ok"
+    assert norm["tool"] == "get_plan_core"
+    assert isinstance(norm["answer"], dict)
+    assert isinstance(norm["errors"], list)
+
+def test_plan_summary_business_friendly_formatting():
+    from src.agent_adapter import handle_user_query
+    # English summary query for Remedy 03
+    response = handle_user_query("Give me a summary of Remedy 03", output_mode="text")
+    # Should be non-empty, readable, and not raw/internal
+    assert response
+    assert "Plan:" in response
+    assert "Code:" in response
+    assert "summary_text" not in response  # Should not expose raw summary_text
+    # Should show at least one business highlight
+    assert any(
+        kw in response for kw in [
+            "Network:", "Annual limit:", "Area:", "Direct billing:",
+            "Referral required:", "Maternity cover:", "Pharmacy cover:", "Key exclusions:"]
+    )
+
+def test_response_is_business_friendly():
+    from src.agent_adapter import handle_user_query
+    queries = [
+        "What is the annual limit for Remedy 04?",
+        "Give me a summary of Remedy 03",
+        "What is the reimbursement rule for Remedy 05?"
+    ]
+    for q in queries:
+        resp = handle_user_query(q, output_mode="text")
+        # Response must be non-empty
+        assert resp and resp.strip(), f"Empty response for query: {q}"
+        # Response should not start with a label or internal marker
+        first_line = resp.strip().splitlines()[0]
+        assert not first_line.startswith("["), f"Response exposes label: {resp}"
+        # Response should not contain raw dict or internal formatting
+        assert not any(x in resp for x in ["{", "}", "'status'", "'tool'", "'answer'"]), f"Response exposes internal formatting: {resp}"
+        # Response should be readable (at least one alphanumeric character in first line)
+        assert any(c.isalnum() for c in first_line), f"Response not readable: {resp}"
+
+def test_no_normalized_keys_leak_in_response():
+    from src.agent_adapter import handle_user_query
+    queries = [
+        "What is the annual limit for Remedy 04?",
+        "Give me a summary of Remedy 03",
+        "What is the reimbursement rule for Remedy 05?"
+    ]
+    forbidden = ["status:", "tool:", "answer:", "errors:"]
+    for q in queries:
+        resp = handle_user_query(q, output_mode="text")
+        for key in forbidden:
+            assert key not in resp, f"Internal key '{key}' leaked in response: {resp}"
+
+def test_unsupported_and_unknown_are_business_friendly():
+    queries = [
+        ("Show me the dental coverage for Remedy 04", "en"),
+        ("ما الفرق بين الريميدي 2 والريميدي 4؟", "ar"),
+        ("What is the annual limit for Remedy 99?", "en"),
+    ]
+    forbidden = ["status", "tool", "answer", "errors", "{", "}"]
+    from src.agent_wrapper import run_agent_wrapper
+    for q, _ in queries:
+        out = run_agent_wrapper(q)
+        msg = out.get("message", "")
+        # Message must be non-empty and readable
+        assert msg and any(c.isalnum() for c in msg), f"Empty or unreadable message: {msg}"
+        # No internal keys or raw dicts
+        for key in forbidden:
+            assert key not in msg, f"Internal key '{key}' leaked in message: {msg}"
+        # No label prefix
+        assert not msg.strip().startswith("["), f"Label prefix leaked in message: {msg}"
+
