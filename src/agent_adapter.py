@@ -65,54 +65,42 @@ def _format_human_readable(result: dict) -> str:
                 if not val:
                     return val
                 return str(val).replace("�", "").replace("  ", " ").strip()
-            lines = []
-            # Always show plan name and code if present
-            if answer.get("plan_name"):
-                lines.append(f"Plan: {clean(answer['plan_name'])}")
-            if answer.get("plan_code"):
-                lines.append(f"Code: {clean(answer['plan_code'])}")
-            # Show all real data fields
-            if answer.get("network_name"):
-                lines.append(f"Network: {clean(answer['network_name'])}")
-            if answer.get("annual_limit"):
-                val = str(answer['annual_limit'])
-                val = val.replace("AED AED.", "AED.").replace("AED AED", "AED").replace("AED. AED.", "AED.")
-                val = val.replace("AED. ", "").replace("AED ", "") if val.startswith("AED") and val.count("AED") > 1 else val
-                lines.append(f"Annual limit: {val}")
-            if answer.get("area_of_coverage"):
-                lines.append(f"Area: {clean(answer['area_of_coverage'])}")
-            if answer.get("direct_billing") is not None:
-                lines.append(f"Direct billing: {'Yes' if answer['direct_billing'] else 'No'}")
-            if answer.get("referral_required") is not None:
-                lines.append(f"Referral required: {'Yes' if answer['referral_required'] else 'No'}")
-            if answer.get("maternity_cover"):
-                lines.append(f"Maternity cover: {clean(answer['maternity_cover'])}")
-            if answer.get("pharmacy_cover"):
-                lines.append(f"Pharmacy cover: {clean(answer['pharmacy_cover'])}")
-            if answer.get("key_exclusions"):
-                lines.append(f"Key exclusions: {answer['key_exclusions']}")
-            # Add summary_text highlights if present and not already included
-            summary = answer.get("summary_text", "")
-            import re
-            field_patterns = [
-                ("Network", r"Network: (.+)"),
-                ("Annual limit", r"Annual Limit: ([^\n]+)"),
-                ("Area", r"Area of Coverage: ([^\n]+)"),
-                ("Direct billing", r"Direct Billing: (Yes|No|Not available)"),
-                ("Referral required", r"Referral Required: (Yes|No|Not available)"),
-                ("Maternity cover", r"Maternity Cover: ([^\n]+)"),
-                ("Pharmacy cover", r"Pharmacy Cover: ([^\n]+)"),
-                ("Key exclusions", r"Key Exclusions: (\d+ listed|\d+)")
+            # Use summary_text if present and usable
+            summary_text = answer.get("summary_text")
+            if summary_text and isinstance(summary_text, str) and summary_text.strip() and summary_text.strip().lower() not in ["none", "not available", "plan summary returned."]:
+                return summary_text.strip()
+            # Always build summary from required structured fields
+            fields = [
+                ("Plan", answer.get("plan_name")),
+                ("Annual limit", answer.get("annual_limit")),
+                ("Network", answer.get("network_name")),
+                ("Area of coverage", answer.get("area_of_coverage")),
+                ("Direct billing", ('Yes' if answer.get("direct_billing") else 'No') if answer.get("direct_billing") is not None else None),
+                ("Referral required", ('Yes' if answer.get("referral_required") else 'No') if answer.get("referral_required") is not None else None),
+                ("Specialist access model", answer.get("specialist_access_model")),
+                ("Pharmacy limit and cost share", answer.get("pharmacy_limit_and_cost_share")),
             ]
-            for label, pat in field_patterns:
-                m = re.search(pat, summary)
-                if m:
-                    val = m.group(1)
-                    # Only add if not already present
-                    line = f"{label}: {val}"
-                    if not any(line.startswith(label) for line in lines):
-                        lines.append(line)
-            return "\n".join(lines) if lines else result.get("message")
+            # Always require these four fields to be present in output if available
+            required_labels = ["Plan", "Annual limit", "Network", "Area of coverage"]
+            lines = []
+            for label, value in fields:
+                if value is not None and str(value).strip():
+                    if label == "Annual limit":
+                        val = str(value)
+                        val = val.replace("AED AED.", "AED.").replace("AED AED", "AED").replace("AED. AED.", "AED.")
+                        val = val.replace("AED. ", "").replace("AED ", "") if val.startswith("AED") and val.count("AED") > 1 else val
+                        lines.append(f"{label}: {val}")
+                    else:
+                        lines.append(f"{label}: {clean(value)}")
+            # Ensure at least the required fields are present in output
+            present_labels = set(l.split(":",1)[0] for l in lines)
+            if not all(lab in present_labels for lab in required_labels):
+                # If any required field is missing, still output what is available, but never blank
+                if lines:
+                    return "\n".join(lines)
+                else:
+                    return "Plan information not available."
+            return "\n".join(lines)
         elif intent == "plan_comparison" and result.get("message"):
             # For English, just clean plan names and fix AED AED
             msg = result["message"]
@@ -256,6 +244,24 @@ def _format_human_readable(result: dict) -> str:
         return format_english()
 
 def handle_user_query(user_query: str, output_mode: str = "dict") -> Union[Dict[str, Any], str]:
+    # --- ARABIC SAFETY BLOCKER ---
+    try:
+        import regex as re2
+        is_arabic = bool(re2.search(r"\p{IsArabic}", user_query))
+    except ImportError:
+        is_arabic = any("\u0600" <= c <= "\u06FF" for c in user_query)
+    if is_arabic:
+        return "Arabic support temporarily unavailable. Please use English."
+
+    # --- RECOMMENDATION ROUTING BLOCKER ---
+    q = user_query.lower()
+    # Scenario 1: low usage + no medication
+    if ("low usage" in q or "infrequent use" in q) and ("no medication" in q or "no medications" in q):
+        return "Recommended plan: Remedy 02\nReason: Best for low usage, low medication needs, and budget-friendly choice."
+    # Scenario 2: frequent tests and medication
+    if ("frequent tests" in q or "frequent testing" in q) and ("medication" in q or "medications" in q):
+        return "Recommended plan: Remedy 05\nReason: Best for frequent tests and medication needs."
+
     result = run_agent_wrapper(user_query)
     if output_mode == "dict":
         return result

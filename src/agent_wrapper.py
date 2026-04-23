@@ -228,7 +228,16 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
     if intent == "plan_core":
         try:
             data = get_plan_core(plan_name)
-            msg = "تم عرض معلومات الخطة الأساسية." if is_arabic else "Plan core fields returned."
+            # Always build message from actual values, not placeholders
+            lines = []
+            lines.append(f"Plan: {data.get('plan_name')}")
+            lines.append(f"Code: {data.get('plan_code')}")
+            lines.append(f"Network: {data.get('network_name')}")
+            lines.append(f"Annual limit: {data.get('annual_limit')}")
+            lines.append(f"Area: {data.get('area_of_coverage')}")
+            lines.append(f"Direct billing: {'Yes' if data.get('direct_billing') else 'No' if data.get('direct_billing') is not None else 'Not available'}")
+            lines.append(f"Referral required: {'Yes' if data.get('referral_required') else 'No' if data.get('referral_required') is not None else 'Not available'}")
+            msg = "\n".join(lines)
             resp = {
                 "ok": True,
                 "intent": intent,
@@ -264,7 +273,22 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
     if intent == "reimbursement_rules":
         try:
             data = get_reimbursement_rules(plan_name)
-            msg = "تم عرض قواعد التعويض." if is_arabic else "Reimbursement rules returned."
+            # Always build message from actual clean fields
+            lines = []
+            lines.append(f"Reimbursement allowed: {'Yes' if data.get('reimbursement_allowed') else 'No' if data.get('reimbursement_allowed') is not None else 'Not available'}.")
+            if data.get('reimbursement_scope'):
+                lines.append(f"Scope: {data['reimbursement_scope']}.")
+            if data.get('outside_network_reimbursement'):
+                lines.append(f"Outside network reimbursement: {data['outside_network_reimbursement']}.")
+            if data.get('outside_uae_reimbursement'):
+                lines.append(f"Outside UAE reimbursement: {data['outside_uae_reimbursement']}.")
+            if data.get('reimbursement_basis'):
+                lines.append(f"Basis: {data['reimbursement_basis']}.")
+            if data.get('reimbursement_conditions'):
+                lines.append(f"Conditions: {data['reimbursement_conditions']}.")
+            if data.get('reimbursement_documents_required'):
+                lines.append(f"Documents required: {data['reimbursement_documents_required']}.")
+            msg = "\n".join(lines)
             resp = {
                 "ok": True,
                 "intent": intent,
@@ -300,57 +324,21 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
     if intent == "plan_summary":
         try:
             data = get_plan_summary(plan_name)
-            msg = "تم عرض ملخص الخطة." if is_arabic else "Plan summary returned."
-            # Patch: Safe Arabic summary localization (labels and values)
-            if is_arabic and data and data.get("summary_text"):
-                ar_labels = {
-                    "Plan Name": "اسم الخطة",
-                    "Plan Code": "رمز الخطة",
-                    "Network": "الشبكة",
-                    "Annual Limit": "الحد السنوي",
-                    "Area of Coverage": "نطاق التغطية",
-                    "Direct Billing": "الدفع المباشر",
-                    "Referral Required": "الإحالة مطلوبة",
-                    "Maternity Cover": "تغطية الأمومة",
-                    "Inpatient Cover": "تغطية المرضى الداخليين",
-                    "Outpatient Cover": "تغطية العيادات الخارجية",
-                    "Pharmacy Cover": "تغطية الصيدلية",
-                    "Key Exclusions": "الاستثناءات الأساسية",
-                }
-                # Only replace full label lines, not substrings
-                summary_lines = data["summary_text"].split("\n")
-                localized_lines = []
-                for line in summary_lines:
-                    colon_idx = line.find(":")
-                    if colon_idx > 0:
-                        label = line[:colon_idx].strip()
-                        value = line[colon_idx+1:].strip()
-                        # Localize label if present
-                        label_ar = ar_labels.get(label, label)
-                        # Localize value if exact
-                        if value == "Yes":
-                            value_ar = "نعم"
-                        elif value == "No":
-                            value_ar = "لا"
-                        elif value in ("Not available", "None", "null", "None listed"):
-                            value_ar = "غير متوفر"
-                        elif value == "لا يوجد":
-                            value_ar = value
-                        else:
-                            value_ar = value
-                        localized_lines.append(f"{label_ar}: {value_ar}")
-                    else:
-                        # For lines like "Key Exclusions: 3 listed"
-                        for en, ar in ar_labels.items():
-                            if line.startswith(en):
-                                line = line.replace(en, ar, 1)
-                        # Patch for "listed" count
-                        if "listed" in line:
-                            line = line.replace("listed", "عنصر/عناصر")
-                        localized_lines.append(line)
-                summary_text = "\n".join(localized_lines)
-                data = dict(data)
-                data["summary_text"] = summary_text
+            # Always build message from actual summary fields, never fallback or placeholder
+            summary_text = data.get("summary_text")
+            if summary_text and isinstance(summary_text, str) and summary_text.strip() and summary_text.strip().lower() not in ["none", "not available", "plan summary returned."]:
+                msg = summary_text.strip()
+            else:
+                # Build from structured fields if summary_text is missing
+                lines = []
+                lines.append(f"Plan: {data.get('plan_name')}")
+                lines.append(f"Code: {data.get('plan_code')}")
+                lines.append(f"Network: {data.get('network_name')}")
+                lines.append(f"Annual limit: {data.get('annual_limit')}")
+                lines.append(f"Area: {data.get('area_of_coverage')}")
+                lines.append(f"Direct billing: {'Yes' if data.get('direct_billing') else 'No' if data.get('direct_billing') is not None else 'Not available'}")
+                lines.append(f"Referral required: {'Yes' if data.get('referral_required') else 'No' if data.get('referral_required') is not None else 'Not available'}")
+                msg = "\n".join(lines)
             resp = {
                 "ok": True,
                 "intent": intent,

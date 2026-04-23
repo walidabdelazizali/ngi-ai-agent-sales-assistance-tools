@@ -605,9 +605,159 @@ def parse_remedy_plan(extraction: dict[str, Any]) -> dict[str, Any]:
 
     sections = detect_sections(paragraphs)
 
+    # --- Remedy 04 targeted extraction and debug ---
     plan_name = _extract_plan_name(tables)
     plan_code = _extract_plan_code(
         extraction.get("source_filename", ""), plan_name)
+    # Remedy 04 detection: filename or plan name
+    is_remedy04 = False
+    remedy04_indicators = [
+        extraction.get("source_filename", ""),
+        extraction.get("filename", ""),
+        extraction.get("file_path", ""),
+        extraction.get("plan_code", ""),
+        extraction.get("plan_name", ""),
+    ]
+    for val in remedy04_indicators:
+        if val and ("remedy 4" in val.lower() or "remedy-4" in val.lower()):
+            is_remedy04 = True
+            break
+
+    if is_remedy04:
+        # Targeted extraction for Remedy 04
+        # Plan name
+        try:
+            plan_name_dbg = None
+            tbl = tables[0] if tables and len(tables) > 0 else None
+            if tbl:
+                for row in tbl:
+                    if row and len(row) > 1 and ("plan" in row[0].lower()):
+                        plan_name_dbg = row[1].strip()
+                        break
+            if plan_name_dbg:
+                plan_name = plan_name_dbg
+        except Exception as e:
+            print("[Remedy04 DEBUG] plan_name extraction error:", e)
+        # Annual limit
+        try:
+            annual_limit_dbg = None
+            tbl = tables[0] if tables and len(tables) > 0 else None
+            if tbl:
+                for row in tbl:
+                    if row and len(row) > 1 and ("maximum benefit" in row[0].lower()):
+                        # Find first non-empty value in columns 1+ (Remedy 04 has 4 columns)
+                        for col in range(1, min(5, len(row))):
+                            v = row[col].strip()
+                            if v:
+                                annual_limit_dbg = v
+                                break
+                        if annual_limit_dbg:
+                            break
+            if annual_limit_dbg:
+                parsed_annual_limit = annual_limit_dbg
+            else:
+                parsed_annual_limit = _clean_scalar(_extract_annual_limit(tables))
+        except Exception as e:
+            print("[Remedy04 DEBUG] annual_limit extraction error:", e)
+            parsed_annual_limit = None
+        # Area of coverage
+        try:
+            area_dbg = None
+            tbl = tables[0] if tables and len(tables) > 0 else None
+            if tbl:
+                for row in tbl:
+                    if row and len(row) > 1 and ("area of coverage" in row[0].lower()):
+                        for col in range(1, min(5, len(row))):
+                            v = row[col].strip()
+                            if v:
+                                area_dbg = v
+                                break
+                        if area_dbg:
+                            break
+            if area_dbg:
+                parsed_area = area_dbg
+            else:
+                parsed_area = _clean_scalar(_extract_area_of_coverage(tables))
+        except Exception as e:
+            print("[Remedy04 DEBUG] area_of_coverage extraction error:", e)
+            parsed_area = None
+        # Network name
+        try:
+            network_dbg = None
+            tbl = tables[0] if tables and len(tables) > 0 else None
+            if tbl:
+                for row in tbl:
+                    if row and len(row) > 1 and ("provider network" in row[0].lower()):
+                        for col in range(1, min(5, len(row))):
+                            v = row[col].strip()
+                            if v:
+                                network_dbg = v
+                                break
+                        if network_dbg:
+                            break
+            if network_dbg:
+                parsed_network = network_dbg
+            else:
+                parsed_network = _clean_scalar(_extract_network_name(tables))
+        except Exception as e:
+            print("[Remedy04 DEBUG] network_name extraction error:", e)
+            parsed_network = None
+        # Direct billing (from paragraphs)
+        direct_billing_dbg = _extract_direct_billing(paragraphs)
+        # Referral required (from paragraphs/tables)
+        referral_dbg = _extract_referral_required(paragraphs, tables)
+        # Debug print
+        print(f"[Remedy04 DEBUG] plan_name={plan_name} annual_limit={parsed_annual_limit} area_of_coverage={parsed_area} network_name={parsed_network} direct_billing={direct_billing_dbg} referral_required={referral_dbg}")
+        # Patch parsed dict for Remedy 04
+        parsed = {}
+        parsed["plan_name"] = _clean_scalar(plan_name)
+        parsed["plan_code"] = plan_code
+        parsed["insurer_name"] = _clean_scalar(_extract_insurer_name(paragraphs))
+        parsed["network_name"] = _clean_scalar(parsed_network)
+        parsed["area_of_coverage"] = _clean_scalar(parsed_area)
+        parsed["annual_limit"] = parsed_annual_limit
+        parsed["direct_billing"] = direct_billing_dbg
+        parsed["reimbursement_allowed"] = extraction.get("reimbursement_allowed", _extract_reimbursement_allowed(paragraphs))
+        parsed["reimbursement_scope"] = extraction.get("reimbursement_scope")
+        parsed["outside_network_reimbursement"] = extraction.get("outside_network_reimbursement")
+        parsed["outside_uae_reimbursement"] = extraction.get("outside_uae_reimbursement")
+        parsed["reimbursement_basis"] = extraction.get("reimbursement_basis")
+        parsed["reimbursement_conditions"] = extraction.get("reimbursement_conditions")
+        parsed["reimbursement_documents_required"] = extraction.get("reimbursement_documents_required")
+        parsed["referral_required"] = referral_dbg
+        # Benefit summaries
+        parsed["maternity_cover"] = _clean_scalar(_extract_maternity_cover(tables))
+        parsed["inpatient_cover_summary"] = _clean_scalar(_extract_inpatient_summary(tables))
+        parsed["outpatient_cover_summary"] = _clean_scalar(_extract_outpatient_summary(tables))
+        parsed["pharmacy_cover_summary"] = _clean_scalar(_extract_pharmacy_summary(tables))
+        parsed["diagnostics_cover_summary"] = _clean_scalar(_extract_diagnostics_summary(tables))
+        parsed["physiotherapy_cover_summary"] = _clean_scalar(_extract_physiotherapy_summary(tables))
+        # Rules
+        parsed["pre_existing_condition_rule"] = _clean_scalar(_extract_pre_existing_rule(tables))
+        parsed["chronic_condition_rule"] = _clean_scalar(_extract_chronic_condition_rule(tables))
+        parsed["outside_network_rule"] = _clean_scalar(_extract_outside_network_rule(tables))
+        parsed["outside_uae_rule"] = _clean_scalar(_extract_outside_uae_rule(tables))
+        parsed["approval_rule_summary"] = _clean_scalar(_extract_approval_rule_summary(tables))
+        # Exclusions
+        parsed["key_exclusions"] = _extract_exclusions(sections)
+        # Network prep fields (capture only)
+        parsed["network_access_notes"] = _clean_scalar(_extract_network_access_notes(tables))
+        parsed["clinic_only_flag"] = _extract_clinic_only_flag(tables)
+        parsed["hospital_access_notes"] = _clean_scalar(_extract_hospital_access_notes(tables))
+        parsed["direct_access_hospitals_raw"] = _extract_direct_access_hospitals_raw(tables)
+        parsed["direct_billing_notes"] = _clean_scalar(_extract_direct_billing_notes(paragraphs))
+        parsed["referral_behavior_notes"] = _clean_scalar(_extract_referral_behavior_notes(tables))
+        # Internal
+        parsed["raw_section_map"] = sections
+        # Always override with any field present in extraction dict (for passthrough fields like reimbursement_*)
+        from src.parsers.canonical_schema import CANONICAL_FIELDS
+        for field in CANONICAL_FIELDS:
+            if field in extraction:
+                parsed[field] = extraction[field]
+        for field in CANONICAL_FIELDS:
+            if field not in parsed:
+                parsed[field] = None
+        return parsed
 
     # Always pass through all fields in CANONICAL_FIELDS from extraction dict if present
     from src.parsers.canonical_schema import CANONICAL_FIELDS

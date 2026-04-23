@@ -1,0 +1,57 @@
+import pytest
+from src.v2_plan_loader import load_clean_plan
+from src.v2_plan_normalizer import normalize_clean_plan
+from src.v2_plan_compare import compare_two_plans
+from src.v2_plan_sales import build_plan_sales_summary, build_plan_upgrade_pitch, build_plan_difference_pitch
+
+def get_norm(plan_name):
+    raw = load_clean_plan(plan_name)
+    return normalize_clean_plan(raw)
+
+def test_sales_summary_headline_and_lines():
+    for plan_name in ["Remedy 02", "Remedy 04", "Remedy 05"]:
+        norm = get_norm(plan_name)
+        result = build_plan_sales_summary(norm)
+        assert result["headline"].strip() != ""
+        assert result["sales_lines"]
+        assert all(isinstance(line, str) and line.strip() for line in result["sales_lines"])
+
+def test_sales_summary_mentions():
+    norm5 = get_norm("Remedy 05")
+    norm4 = get_norm("Remedy 04")
+    res5 = build_plan_sales_summary(norm5)
+    res4 = build_plan_sales_summary(norm4)
+    assert any("direct specialist access" in l.lower() for l in res5["sales_lines"])
+    assert any("no lab or radiology co-pay" in l.lower() for l in res4["sales_lines"])
+
+def test_upgrade_pitch_lines():
+    norm2 = get_norm("Remedy 02")
+    norm4 = get_norm("Remedy 04")
+    norm5 = get_norm("Remedy 05")
+    up_2_5 = build_plan_upgrade_pitch(norm2, norm5)
+    up_2_4 = build_plan_upgrade_pitch(norm2, norm4)
+    up_4_5 = build_plan_upgrade_pitch(norm4, norm5)
+    assert any("direct specialist access" in l.lower() for l in up_2_5["upgrade_lines"])
+    assert any("pharmacy" in l.lower() for l in up_2_5["upgrade_lines"])
+    assert up_2_5["headline"] and up_2_5["upgrade_lines"]
+    assert up_2_4["headline"] and up_2_4["upgrade_lines"]
+    assert up_4_5["headline"] and up_4_5["upgrade_lines"]
+
+def test_difference_pitch_lines():
+    norm2 = get_norm("Remedy 02")
+    norm4 = get_norm("Remedy 04")
+    norm5 = get_norm("Remedy 05")
+    cmp_2_4 = compare_two_plans(norm2, norm4)
+    cmp_2_5 = compare_two_plans(norm2, norm5)
+    cmp_4_5 = compare_two_plans(norm4, norm5)
+    diff_2_4 = build_plan_difference_pitch(cmp_2_4)
+    diff_2_5 = build_plan_difference_pitch(cmp_2_5)
+    diff_4_5 = build_plan_difference_pitch(cmp_4_5)
+    for diff in [diff_2_4, diff_2_5, diff_4_5]:
+        assert diff["headline"]
+        assert diff["pitch_lines"]
+        assert all(isinstance(line, str) and line.strip() for line in diff["pitch_lines"])
+        # No raw field names
+        forbidden = ["specialist_access_model", "pharmacy_limit_and_cost_share", "laboratory_cost_share", "radiology_cost_share"]
+        for f in forbidden:
+            assert not any(f in l for l in diff["pitch_lines"])
