@@ -138,14 +138,35 @@ class NetworkLookup:
     def answer_query(self, query):
         provider, network_col = self.extract_provider_and_network_from_query(query)
         norm_provider = self._normalize(provider)
-        # Alias-based query
+        # Alias-based query (output hardening for Basic Plus only)
         if network_col:
             details = self.provider_in_network(provider, network_col)
+            # Only harden output for Basic Plus
+            if network_col == "hn_basic_plus":
+                display_network = "HN Basic Plus network"
+                prov_name = details.get("provider_name") or norm_provider
+                prov_type = details.get("type", "")
+                prov_city = details.get("city", "")
+                if details.get("found"):
+                    if details.get("in_network"):
+                        extra = []
+                        if prov_type:
+                            extra.append(f"Type: {prov_type}.")
+                        if prov_city:
+                            extra.append(f"City: {prov_city}.")
+                        extra_str = (" "+" ".join(extra)) if extra else ""
+                        return f"[NETWORK] {prov_name} is in {display_network}.{extra_str}"
+                    else:
+                        return f"[NETWORK] {prov_name} is not in {display_network}."
+                return "Provider not found."
+            # All other alias-based queries (preserve old behavior, but do not leak internal label)
             if details.get("found"):
+                display_network = network_col.replace("hn_", "HN ").replace("_", " ").title().strip()
+                prov_name = details.get("provider_name") or norm_provider
                 if details.get("in_network"):
-                    return f"YES: {norm_provider} in {network_col}"
+                    return f"[NETWORK] {prov_name} is in {display_network}."
                 else:
-                    return f"NO: {norm_provider} in {network_col}"
+                    return f"[NETWORK] {prov_name} is not in {display_network}."
             return "Provider not found."
         # in network?
         if re.search(r"is .+ in the network|هل .+ داخل الشبكة", query, re.IGNORECASE):
