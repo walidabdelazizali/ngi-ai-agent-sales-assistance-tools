@@ -298,8 +298,14 @@ _plan_cache: dict[str, dict[str, Any]] = {}
 
 
 def _resolve_plan_key(name: str) -> Optional[str]:
-    """Return the JSON filename for a plan alias, or None."""
-    return _PLAN_ALIASES.get(name.strip().lower())
+    """Return the JSON filename for a plan alias, or None. Ignores spaces and zero padding for robust matching."""
+    def norm(s):
+        return s.strip().lower().replace(" ", "").replace("0", "")
+    n = norm(name)
+    for alias, fname in _PLAN_ALIASES.items():
+        if norm(alias) == n:
+            return fname
+    return None
 
 
 def _resolve_field(text: str) -> Optional[str]:

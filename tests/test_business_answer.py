@@ -1,3 +1,16 @@
+# --- Multi-intent business answer test ---
+def test_multi_intent_business_answer_ar():
+    from src.query import business_answer
+    out = business_answer.answer_business_query("مميزات Remedy 04 وعيادات الشارقة")
+    assert "مميزات" in out
+    assert "عيادات الشارقة" in out or "عيادات الشارقة ضمن" in out
+    forbidden_patterns = [
+        r"\bretrieval\b", r"\bnormalization\b", r"\bsystem\b", r"\bstate\b", r"\bdebug\b", r"\bstable\b", r"\binternal\b",
+        r"pytest", r"test result", r"tests passed", r"source code", r"commit", r"branch"
+    ]
+    import re
+    for pat in forbidden_patterns:
+        assert not re.search(pat, out, re.IGNORECASE)
 # --- Supported business question routing (exact input) ---
 def test_answer_business_query_stronger_pharmacy_en():
     out = business_answer.answer_business_query("Which plan is stronger for pharmacy?")

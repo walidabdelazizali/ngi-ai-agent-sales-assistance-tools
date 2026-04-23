@@ -216,10 +216,106 @@ def _append_diff(lines, field, diff, plan_a, plan_b, language):
 
 def answer_business_query(text: str) -> str:
     """
-    Deterministic router for business-style questions.
+    Deterministic router for business-style questions, now supports multi-intent (plan + network) queries.
     """
-    # Route to supported business question families
     t = text.strip().lower()
+
+    # --- Multi-intent detection (plan + network) ---
+    # Plan intent: Remedy 04/03/05 + (مميزات|benefits|summary|ملخص)
+    # Network intent: clinics/hospitals/labs/عيادات/مستشفيات/تحاليل + city
+    import re
+    plan_pat = r"(remedy\s*0?[345]|ريميدي\s*0?[345])"
+    plan_intent = re.search(plan_pat, t) and ("مميزات" in t or "benefits" in t or "summary" in t or "ملخص" in t)
+    # Network: English or Arabic city+type pattern
+    network_intent = (
+        re.search(r"(clinics|hospitals|labs|pharmacies|عيادات|مستشفيات|تحاليل|صيدليات)", t)
+        and re.search(r"(sharjah|dubai|ajman|abu dhabi|الشارقة|دبي|عجمان|ابوظبي|أبوظبي)", t)
+    )
+    if plan_intent and network_intent:
+        plan_match = re.search(plan_pat, t)
+        raw_plan = plan_match.group(0) if plan_match else ""
+        # Canonicalize to user-facing label for public API
+        canonical_plan = None
+        # Map all variants to "Remedy 04", "Remedy 03", etc.
+        plan_map = {
+            "remedy 04": "Remedy 04", "remedy 4": "Remedy 04", "remedy04": "Remedy 04", "remedy4": "Remedy 04",
+            "ريميدي 04": "Remedy 04", "ريميدي 4": "Remedy 04",
+            "remedy 03": "Remedy 03", "remedy 3": "Remedy 03", "remedy03": "Remedy 03", "remedy3": "Remedy 03",
+            "ريميدي 03": "Remedy 03", "ريميدي 3": "Remedy 03",
+            "remedy 05": "Remedy 05", "remedy 5": "Remedy 05", "remedy05": "Remedy 05", "remedy5": "Remedy 05",
+            "ريميدي 05": "Remedy 05", "ريميدي 5": "Remedy 05",
+            "remedy 02": "Remedy 02", "remedy 2": "Remedy 02", "remedy02": "Remedy 02", "remedy2": "Remedy 02",
+            "ريميدي 02": "Remedy 02", "ريميدي 2": "Remedy 02"
+        }
+        raw_plan_norm = raw_plan.replace(" ", "").lower()
+        for k, v in plan_map.items():
+            if raw_plan_norm == k.replace(" ", "").lower():
+                canonical_plan = v
+                break
+        lang = "ar" if any(ord(c) >= 0x0600 for c in text) else "en"
+        if canonical_plan:
+            plan_summary = explain_plan_for_business(canonical_plan, language=lang)
+        else:
+            plan_summary = _fallback(lang)
+        from src.query.network_lookup import get_network_lookup
+        net_lookup = get_network_lookup()
+        city = None
+        ptype = None
+        if lang == "ar":
+            city_ar = re.search(r"(الشارقة|دبي|عجمان|ابوظبي|أبوظبي)", t)
+            type_ar = re.search(r"(عيادات|مستشفيات|تحاليل|صيدليات)", t)
+            city = city_ar.group(0) if city_ar else None
+            ptype = type_ar.group(0) if type_ar else None
+        else:
+            city_en = re.search(r"(sharjah|dubai|ajman|abu dhabi)", t)
+            type_en = re.search(r"(clinics|hospitals|labs|pharmacies)", t)
+            city = city_en.group(0).title() if city_en else None
+            ptype = type_en.group(0).title()[:-1] if type_en else None
+        providers = ""
+        # Use trusted public network query path
+        network_section = ""
+        if city and ptype:
+            if lang == "ar":
+                # Compose natural Arabic query
+                network_query = f"هاتلي {ptype} في {city}"
+            else:
+                network_query = f"show {ptype}s in {city}"
+            providers = net_lookup.answer_query(network_query)
+            # Only include if providers found (not fallback)
+            provider_lines = [l for l in providers.split("\n") if l.strip() and not l.startswith("[NETWORK]")]
+            has_providers = len(provider_lines) > 0 and not (len(provider_lines) == 1 and (provider_lines[0].startswith("No matching") or provider_lines[0].startswith("لا يوجد")))
+            if has_providers:
+                network_section = providers
+        # Only block technical/system terms, not legitimate medical/business terms
+        forbidden_patterns = [
+            r"\bretrieval\b", r"\bnormalization\b", r"\bsystem\b", r"\bstate\b", r"\bdebug\b", r"\bstable\b", r"\binternal\b",
+            r"pytest", r"test result", r"tests passed", r"source code", r"commit", r"branch"
+        ]
+        def filter_forbidden(s):
+            for pat in forbidden_patterns:
+                s = re.sub(pat, "", s, flags=re.IGNORECASE)
+            return s.strip()
+        out = []
+        # Plan section: always include if not fallback
+        is_plan_fallback = plan_summary.strip().startswith("عذراً") or plan_summary.strip().startswith("No deterministic answer")
+        plan_section = None
+        if not is_plan_fallback:
+            if lang == "ar":
+                plan_section = filter_forbidden(plan_summary.replace("ملخص تنفيذي", "مميزات").replace("هذا الملخص مخصص للعرض التنفيذي أو للعميل. لا يوجد استنتاجات إضافية.", ""))
+            else:
+                plan_section = filter_forbidden(plan_summary.replace("Executive summary", f"{canonical_plan} Benefits").replace("This summary is for executive or client-facing use. No additional inference.", ""))
+            out.append(plan_section)
+        # Network section: only if providers found
+        if network_section:
+            out.append(filter_forbidden(network_section))
+        # Always return composed output if any section is present
+        sections = [s for s in out if s.strip()]
+        if sections:
+            return "\n\n".join(sections)
+        # Only fallback if no valid sections
+        return _fallback(lang)
+
+    # --- Existing business answer logic ---
     # Executive summary
     if any(x in t for x in ["executive summary", "client-facing summary", "short summary", "ملخص تنفيذي", "ملخص للعميل"]):
         if "remedy 03" in t or "ريميدي 03" in t:
