@@ -88,9 +88,20 @@ def test_basic_plus_alias_arabic():
         pytest.skip("No real network file present")
     lookup = NetworkLookup(csv_path)
     result = lookup.answer_query("هل ACCURACY PLUS MEDICAL LABORATORY في شبكة بيسك بلس؟")
-    # Output must be business-friendly, not leak internal label
-    assert result.startswith("[NETWORK] ACCURACY PLUS MEDICAL LABORATORY is in HN Basic Plus network.") or \
-           result.startswith("[NETWORK] ACCURACY PLUS MEDICAL LABORATORY is not in HN Basic Plus network.")
+    # Output must be Arabic business-friendly, not leak internal label
+    assert result.startswith("[NETWORK] المزود ACCURACY PLUS MEDICAL LABORATORY داخل شبكة HN Basic Plus") or \
+           result.startswith("[NETWORK] المزود ACCURACY PLUS MEDICAL LABORATORY غير موجود داخل شبكة HN Basic Plus")
+    assert "hn_basic_plus" not in result
+
+def test_basic_plus_alias_arabic_negative():
+    csv_path = Path("runtime_data/networks/network_list_normalized.csv")
+    if not csv_path.exists():
+        pytest.skip("No real network file present")
+    lookup = NetworkLookup(csv_path)
+    result = lookup.answer_query("هل AL FARHAN MEDICAL LABORATORY - L L C في بيسك بلس؟")
+    # Output must be Arabic business-friendly, negative wording, not leak internal label
+    assert result.startswith("[NETWORK] المزود AL FARHAN MEDICAL LABORATORY - L L C داخل شبكة HN Basic Plus") or \
+           result.startswith("[NETWORK] المزود AL FARHAN MEDICAL LABORATORY - L L C غير موجود داخل شبكة HN Basic Plus")
     assert "hn_basic_plus" not in result
 
 def test_basic_plus_no_label_leakage():
@@ -98,15 +109,20 @@ def test_basic_plus_no_label_leakage():
     if not csv_path.exists():
         pytest.skip("No real network file present")
     lookup = NetworkLookup(csv_path)
-    result = lookup.answer_query("Is ACCURACY PLUS MEDICAL LABORATORY in Basic Plus?")
-    assert "hn_basic_plus" not in result
-    assert "HN Basic Plus network" in result
+    result_en = lookup.answer_query("Is ACCURACY PLUS MEDICAL LABORATORY in Basic Plus?")
+    result_ar = lookup.answer_query("هل ACCURACY PLUS MEDICAL LABORATORY في بيسك بلس؟")
+    assert "hn_basic_plus" not in result_en
+    assert "hn_basic_plus" not in result_ar
+    assert "HN Basic Plus network" in result_en or "شبكة HN Basic Plus" in result_ar
 
 def test_generic_network_query_still_works():
     csv_path = Path("runtime_data/networks/network_list_normalized.csv")
     if not csv_path.exists():
         pytest.skip("No real network file present")
     lookup = NetworkLookup(csv_path)
-    # This should still return YES/NO and not the business output
-    result = lookup.answer_query("Is ACCURACY PLUS MEDICAL LABORATORY in the network?")
-    assert result.startswith("YES:") or result.startswith("NO:")
+    # This should still return YES/NO and not the business output (English)
+    result_en = lookup.answer_query("Is ACCURACY PLUS MEDICAL LABORATORY in the network?")
+    assert result_en.startswith("YES:") or result_en.startswith("NO:")
+    # This should still return YES/NO and not the business output (Arabic)
+    result_ar = lookup.answer_query("هل ACCURACY PLUS MEDICAL LABORATORY في الشبكة؟")
+    assert result_ar.startswith("YES:") or result_ar.startswith("NO:")

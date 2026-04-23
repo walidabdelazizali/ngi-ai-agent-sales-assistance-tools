@@ -93,6 +93,10 @@ class NetworkLookup:
         m = re.match(r"هل\s+(.+?)\s+داخل الشبكة", q)
         if m:
             return m.group(1).strip(), None
+        # Arabic: هل [PROVIDER] في الشبكة؟
+        m = re.match(r"هل\s+(.+?)\s+في الشبكة", q)
+        if m:
+            return m.group(1).strip(), None
         # Fallback: return whole query as provider
         return query.strip(), None
 
@@ -143,21 +147,36 @@ class NetworkLookup:
             details = self.provider_in_network(provider, network_col)
             # Only harden output for Basic Plus
             if network_col == "hn_basic_plus":
-                display_network = "HN Basic Plus network"
+                display_network_en = "HN Basic Plus network"
+                display_network_ar = "شبكة HN Basic Plus"
                 prov_name = details.get("provider_name") or norm_provider
                 prov_type = details.get("type", "")
                 prov_city = details.get("city", "")
+                # Detect Arabic query (simple heuristic: Arabic letters or known Arabic phrases)
+                is_arabic = bool(re.search(r"[\u0600-\u06FF]", query))
                 if details.get("found"):
                     if details.get("in_network"):
-                        extra = []
-                        if prov_type:
-                            extra.append(f"Type: {prov_type}.")
-                        if prov_city:
-                            extra.append(f"City: {prov_city}.")
-                        extra_str = (" "+" ".join(extra)) if extra else ""
-                        return f"[NETWORK] {prov_name} is in {display_network}.{extra_str}"
+                        if is_arabic:
+                            extra = []
+                            if prov_type:
+                                extra.append(f"النوع: {prov_type}.")
+                            if prov_city:
+                                extra.append(f"المدينة: {prov_city}.")
+                            extra_str = (" "+" ".join(extra)) if extra else ""
+                            return f"[NETWORK] المزود {prov_name} داخل {display_network_ar}.{extra_str}"
+                        else:
+                            extra = []
+                            if prov_type:
+                                extra.append(f"Type: {prov_type}.")
+                            if prov_city:
+                                extra.append(f"City: {prov_city}.")
+                            extra_str = (" "+" ".join(extra)) if extra else ""
+                            return f"[NETWORK] {prov_name} is in {display_network_en}.{extra_str}"
                     else:
-                        return f"[NETWORK] {prov_name} is not in {display_network}."
+                        if is_arabic:
+                            return f"[NETWORK] المزود {prov_name} غير موجود داخل {display_network_ar}."
+                        else:
+                            return f"[NETWORK] {prov_name} is not in {display_network_en}."
                 return "Provider not found."
             # All other alias-based queries (preserve old behavior, but do not leak internal label)
             if details.get("found"):
@@ -168,8 +187,8 @@ class NetworkLookup:
                 else:
                     return f"[NETWORK] {prov_name} is not in {display_network}."
             return "Provider not found."
-        # in network?
-        if re.search(r"is .+ in the network|هل .+ داخل الشبكة", query, re.IGNORECASE):
+        # in network? (English or Arabic generic)
+        if re.search(r"is .+ in the network|هل .+ داخل الشبكة|هل .+ في الشبكة", query, re.IGNORECASE):
             found = self.is_in_network(provider)
             return f"YES: {norm_provider}" if found else f"NO: {norm_provider}"
         # which network?
