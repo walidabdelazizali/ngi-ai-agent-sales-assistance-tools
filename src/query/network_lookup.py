@@ -23,15 +23,42 @@ class NetworkLookup:
     def list_basic_plus_providers(self, city=None, provider_type=None, lang="en", label_override=None):
         """
         List all providers in HN Basic Plus, optionally filtered by city and type.
+        Applies normalization and mapping for city/type variants.
         lang: 'en' or 'ar' for output language.
         label_override: (city, type) for output heading, if provided.
         """
         available_values = ("✔", "✓", "yes", "y", "true", "1")
         df = self.df[self.df["hn_basic_plus"].apply(lambda v: str(v).strip() in available_values)]
+        # --- City normalization ---
         if city:
-            df = df[df["city"].str.strip().str.lower() == city.strip().lower()]
+            city_norm = city.strip().lower()
+            # Accept variants: e.g., 'sharjah', 'al sharjah', etc.
+            def city_match(val):
+                v = str(val).strip().lower()
+                return city_norm in v or v in city_norm
+            df = df[df["city"].apply(city_match)]
+        # --- Type normalization and mapping ---
         if provider_type:
-            df = df[df["type"].str.strip().str.lower() == provider_type.strip().lower()]
+            type_norm = provider_type.strip().lower()
+            # Map type to possible variants in data
+            type_map = {
+                "clinic": ["clinic", "medical center"],
+                "clinics": ["clinic", "medical center"],
+                "medical center": ["medical center", "clinic"],
+                "hospital": ["hospital"],
+                "hospitals": ["hospital"],
+                "lab": ["diagnostic center", "laboratory"],
+                "labs": ["diagnostic center", "laboratory"],
+                "diagnostic center": ["diagnostic center", "laboratory"],
+                "diagnostic centers": ["diagnostic center", "laboratory"],
+                "pharmacy": ["pharmacy"],
+                "pharmacies": ["pharmacy"],
+            }
+            mapped_types = type_map.get(type_norm, [type_norm])
+            def type_match(val):
+                v = str(val).strip().lower()
+                return any(mt in v or v in mt for mt in mapped_types)
+            df = df[df["type"].apply(type_match)]
         if df.empty:
             if lang == "ar":
                 return "[NETWORK]\nلا يوجد مزودون مطابقون للمعايير المحددة في شبكة HN Basic Plus."
