@@ -20,6 +20,39 @@ import unicodedata
 NETWORK_CSV = Path("runtime_data/networks/network_list_normalized.csv")
 
 class NetworkLookup:
+    def list_basic_plus_providers(self, city=None, provider_type=None, lang="en", label_override=None):
+        """
+        List all providers in HN Basic Plus, optionally filtered by city and type.
+        lang: 'en' or 'ar' for output language.
+        label_override: (city, type) for output heading, if provided.
+        """
+        available_values = ("✔", "✓", "yes", "y", "true", "1")
+        df = self.df[self.df["hn_basic_plus"].apply(lambda v: str(v).strip() in available_values)]
+        if city:
+            df = df[df["city"].str.strip().str.lower() == city.strip().lower()]
+        if provider_type:
+            df = df[df["type"].str.strip().str.lower() == provider_type.strip().lower()]
+        if df.empty:
+            if lang == "ar":
+                return "[NETWORK]\nلا يوجد مزودون مطابقون للمعايير المحددة في شبكة HN Basic Plus."
+            else:
+                return "[NETWORK]\nNo matching providers found in HN Basic Plus network."
+        # Format output (max 15)
+        lines = []
+        for _, row in df.head(15).iterrows():
+            name = row.get("provider_name", "")
+            lines.append(f"- {name}")
+        # Heading
+        if label_override:
+            city_disp, type_disp = label_override
+        else:
+            city_disp = city or ""
+            type_disp = provider_type or ""
+        if lang == "ar":
+            heading = f"[NETWORK]\n{type_disp}{city_disp and ' ' + city_disp} (HN Basic Plus):"
+        else:
+            heading = f"[NETWORK]\n{city_disp} {type_disp}(s) (HN Basic Plus):".replace("  ", " ").replace("(s)s", "s")
+        return heading + "\n" + "\n".join(lines)
     @staticmethod
     def extract_provider_from_query(query):
         # English: Is [PROVIDER] in the network?
@@ -140,6 +173,49 @@ class NetworkLookup:
         return details["available_network_tiers"] if details.get("found", False) else []
 
     def answer_query(self, query):
+        q = query.strip().lower()
+        # General English city+type queries (HN Basic Plus only)
+        en_city_map = {"abu dhabi": "Abu Dhabi", "dubai": "Dubai", "sharjah": "Sharjah", "ajman": "Ajman"}
+        en_type_map = {
+            "hospitals": "Hospital", "hospital": "Hospital",
+            "clinics": "Clinic", "clinic": "Clinic",
+            "labs": "Diagnostic Center", "lab": "Diagnostic Center",
+            "diagnostic centers": "Diagnostic Center", "diagnostic center": "Diagnostic Center"
+        }
+        for city_key, city_val in en_city_map.items():
+            for type_key, type_val in en_type_map.items():
+                # e.g. "show hospitals in sharjah", "clinics in dubai", "labs in ajman"
+                if re.fullmatch(rf"(show )?{type_key} in {city_key}", q):
+                    return self.list_basic_plus_providers(city=city_val, provider_type=type_val, lang="en", label_override=(city_val, type_val+"s"))
+        # General Arabic city+type queries (HN Basic Plus only)
+        ar_city_map = {"ابوظبي": "Abu Dhabi", "أبوظبي": "Abu Dhabi", "دبي": "Dubai", "الشارقة": "Sharjah", "عجمان": "Ajman"}
+        ar_type_map = {
+            "مستشفيات": ("Hospital", "مستشفيات"),
+            "عيادات": ("Clinic", "عيادات"),
+            "مراكز": ("Medical Center", "مراكز"),
+            "تحاليل": ("Diagnostic Center", "تحاليل"),
+            "مراكز أشعة": ("Diagnostic Center", "مراكز أشعة")
+        }
+        for city_key, city_val in ar_city_map.items():
+            for type_key, (type_val, type_disp) in ar_type_map.items():
+                # e.g. "هاتلي مستشفيات في الشارقة", "عيادات في دبي", "تحاليل في عجمان", "مراكز أشعة في أبوظبي"
+                if re.fullmatch(rf"(هاتلي )?{type_key} في {city_key}", q):
+                    return self.list_basic_plus_providers(city=city_val, provider_type=type_val, lang="ar", label_override=(city_key, type_disp))
+        # City+type listing for HN Basic Plus (English, legacy pattern)
+        m = re.match(r"list (hospitals|clinics|labs|pharmacies|medical centers?) in ([a-zA-Z\s]+) (?:in )?basic plus", query.strip(), re.IGNORECASE)
+        if m:
+            ptype = m.group(1).rstrip('s').title()
+            city = m.group(2).strip().title()
+            return self.list_basic_plus_providers(city=city, provider_type=ptype, lang="en", label_override=(city, ptype+"s"))
+        # City+type listing for HN Basic Plus (Arabic, legacy pattern)
+        m = re.match(r"اعرض (مستشفيات|عيادات|مختبرات|صيدليات|مراكز طبية) في ([^\s]+) (?:في )?بيسك بلس", query.strip())
+        if m:
+            ar_type = m.group(1)
+            city = m.group(2)
+            type_map = {"مستشفيات": "Hospital", "عيادات": "Clinic", "مختبرات": "Diagnostic Center", "صيدليات": "Pharmacy", "مراكز طبية": "Medical Center"}
+            ptype = type_map.get(ar_type, "")
+            return self.list_basic_plus_providers(city=city, provider_type=ptype, lang="ar", label_override=(city, ar_type))
+        # ...existing code...
         provider, network_col = self.extract_provider_and_network_from_query(query)
         norm_provider = self._normalize(provider)
         # Alias-based query (output hardening for Basic Plus only)

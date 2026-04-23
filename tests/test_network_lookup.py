@@ -116,6 +116,61 @@ def test_basic_plus_no_label_leakage():
     assert "HN Basic Plus network" in result_en or "شبكة HN Basic Plus" in result_ar
 
 def test_generic_network_query_still_works():
+    def test_city_type_listing_english_hospitals_sharjah():
+        csv_path = Path("runtime_data/networks/network_list_normalized.csv")
+        if not csv_path.exists():
+            pytest.skip("No real network file present")
+        lookup = NetworkLookup(csv_path)
+        result = lookup.answer_query("show hospitals in sharjah")
+        assert result.startswith("[NETWORK]")
+        assert "Sharjah" in result and "Hospital" in result
+        assert "HN Basic Plus" in result
+        # Should be a list or not-found message
+        assert "- " in result or "No matching providers" in result
+
+    def test_city_type_listing_arabic_clinics_dubai():
+        csv_path = Path("runtime_data/networks/network_list_normalized.csv")
+        if not csv_path.exists():
+            pytest.skip("No real network file present")
+        lookup = NetworkLookup(csv_path)
+        result = lookup.answer_query("عيادات في دبي")
+        assert result.startswith("[NETWORK]")
+        assert ("دبي" in result or "Dubai" in result)
+        assert ("عيادات" in result or "Clinic" in result)
+        assert "HN Basic Plus" in result
+        assert "- " in result or "لا يوجد مزودون" in result
+
+    def test_city_type_listing_english_labs_ajman():
+        csv_path = Path("runtime_data/networks/network_list_normalized.csv")
+        if not csv_path.exists():
+            pytest.skip("No real network file present")
+        lookup = NetworkLookup(csv_path)
+        result = lookup.answer_query("labs in ajman")
+        assert result.startswith("[NETWORK]")
+        assert "Ajman" in result and ("Lab" in result or "Diagnostic Center" in result)
+        assert "HN Basic Plus" in result
+        assert "- " in result or "No matching providers" in result
+
+    def test_city_type_listing_arabic_hospitals_sharjah():
+        csv_path = Path("runtime_data/networks/network_list_normalized.csv")
+        if not csv_path.exists():
+            pytest.skip("No real network file present")
+        lookup = NetworkLookup(csv_path)
+        result = lookup.answer_query("هاتلي مستشفيات في الشارقة")
+        assert result.startswith("[NETWORK]")
+        assert ("الشارقة" in result or "Sharjah" in result)
+        assert ("مستشفيات" in result or "Hospital" in result)
+        assert "HN Basic Plus" in result
+        assert "- " in result or "لا يوجد مزودون" in result
+
+    def test_city_type_listing_does_not_break_existing():
+        csv_path = Path("runtime_data/networks/network_list_normalized.csv")
+        if not csv_path.exists():
+            pytest.skip("No real network file present")
+        lookup = NetworkLookup(csv_path)
+        # Existing membership query must still work
+        result = lookup.answer_query("Is ACCURACY PLUS MEDICAL LABORATORY in Basic Plus?")
+        assert result.startswith("[NETWORK] ACCURACY PLUS MEDICAL LABORATORY is in HN Basic Plus network.") or result.startswith("[NETWORK] ACCURACY PLUS MEDICAL LABORATORY is not in HN Basic Plus network.")
     csv_path = Path("runtime_data/networks/network_list_normalized.csv")
     if not csv_path.exists():
         pytest.skip("No real network file present")
