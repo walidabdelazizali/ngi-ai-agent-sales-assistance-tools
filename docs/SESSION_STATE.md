@@ -16,11 +16,13 @@ None
 ## Current Blocker
 None
 
+
 ## Last Changes
-- src/agent_adapter.py
-- src/query/plan_query.py
-- tests/test_agent_wrapper.py
-- docs/STAGE2_OPERATIONAL_HANDOFF.md
+- Remedy 03 accepted in V2
+- Remedy 06 accepted in V2
+- Expansion branch merged into stage2-live
+- Stable tag created: v2-remedy-03-06-stable
+- V2 post-merge test gate passed
 
 ## Today’s Focus
-- Stage 2 controlled rollout execution (Day 1)
+- V2 post-freeze expansion merged and stabilized
