@@ -1,13 +1,37 @@
 
+# Centralized alias mapping for network columns
+NETWORK_ALIASES = {
+    "hn_basic_plus": [
+        "basic plus",
+        "hn basic plus",
+        "basic plus network",
+        "بيسك بلس",
+        "شبكة بيسك بلس"
+    ]
+}
+
 
 # Only one class definition should exist. All methods must be inside this class.
 import pandas as pd
 from pathlib import Path
 import re
+import unicodedata
 
 NETWORK_CSV = Path("runtime_data/networks/network_list_normalized.csv")
 
 class NetworkLookup:
+    @staticmethod
+    def extract_provider_from_query(query):
+        # English: Is [PROVIDER] in the network?
+        m = re.match(r"is\s+(.+?)\s+in the network", query.strip().lower())
+        if m:
+            return m.group(1).strip().title()
+        # Arabic: هل [PROVIDER] داخل الشبكة؟
+        m = re.match(r"هل\s+(.+?)\s+داخل الشبكة", query.strip().lower())
+        if m:
+            return m.group(1).strip().title()
+        # Fallback: return whole query
+        return query.strip()
     def __init__(self, csv_path=NETWORK_CSV):
         self.df = pd.read_csv(csv_path, dtype=str, encoding='utf-8-sig').fillna("")
         self.df.columns = [c.lower() for c in self.df.columns]
@@ -41,37 +65,50 @@ class NetworkLookup:
         s = re.sub(r"[\s\t\n\r]+", " ", s)
         s = re.sub(r"^[^\w\d]+|[^\w\d]+$", "", s)  # strip simple punctuation at ends
         s = re.sub(r"[\.,;:!\-\(\)\[\]{}'\"]", "", s)  # remove simple punctuation inside
+        s = re.sub(r" +", " ", s)  # collapse multiple spaces
         return s
 
     @staticmethod
-    def extract_provider_from_query(query):
-        # English patterns
-        patterns = [
-            r"is\s+(.+?)\s+in the network",
-            r"which network\s+(.+?)(?:\?|$)",
-            r"details\s+(.+?)(?:\?|$)",
-            # Arabic patterns
-            r"هل\s+(.+?)\s+داخل الشبكة",
-            r"ما هي الشبكات المتاحة ل[ـ]؟?\s*([\w\s]+)",
-            r"ما هي الشبكات المتاحة لـ\s*([\w\s]+)",
-        ]
-        for pat in patterns:
-            m = re.search(pat, query, re.IGNORECASE)
-            if m:
-                return m.group(1).strip()
-        # fallback: try to use the whole query
-        return query.strip()
+    def extract_provider_and_network_from_query(query):
+        # Normalize query
+        q = query.strip().lower()
+        # Try to find network alias in query
+        for col, aliases in NETWORK_ALIASES.items():
+            for alias in aliases:
+                # English: 'in [alias]' | Arabic: 'في [alias]'
+                if f"in {alias}" in q:
+                    parts = q.split(f"in {alias}", 1)
+                    provider = parts[0].replace("is", "").strip(" ؟?.,:!\-\n\t")
+                    return provider, col
+                if f"في {alias}" in q:
+                    parts = q.split(f"في {alias}", 1)
+                    provider = parts[0].replace("هل", "").strip(" ؟?.,:!\-\n\t")
+                    return provider, col
+        # Fallback: no alias found, try generic patterns
+        # English: Is [PROVIDER] in the network?
+        m = re.match(r"is\s+(.+?)\s+in the network", q)
+        if m:
+            return m.group(1).strip(), None
+        # Arabic: هل [PROVIDER] داخل الشبكة؟
+        m = re.match(r"هل\s+(.+?)\s+داخل الشبكة", q)
+        if m:
+            return m.group(1).strip(), None
+        # Fallback: return whole query as provider
+        return query.strip(), None
 
     def find_provider(self, name):
         norm = self._normalize(name)
+        print(f"[DEBUG] find_provider: input='{name}', normalized='{norm}'")
         # 1. exact provider_name
         if norm in self.provider_name_idx:
+            print(f"[DEBUG] provider_name_idx match for '{norm}'")
             idxs = self.provider_name_idx[norm]
             if len(idxs) == 1:
                 return self.df.iloc[idxs[0]]
             return 'ambiguous' if len(idxs) > 1 else None
         # 2. exact google_name
         if norm in self.google_name_idx:
+            print(f"[DEBUG] google_name_idx match for '{norm}'")
             idxs = self.google_name_idx[norm]
             if len(idxs) == 1:
                 return self.df.iloc[idxs[0]]
@@ -83,6 +120,7 @@ class NetworkLookup:
             gn = self._normalize(row.get("google_name", ""))
             if norm in pn or norm in gn:
                 matches.append(idx)
+        print(f"[DEBUG] contains matches for '{norm}': {matches}")
         if len(matches) == 1:
             return self.df.iloc[matches[0]]
         if len(matches) > 1:
@@ -98,9 +136,17 @@ class NetworkLookup:
         return details["available_network_tiers"] if details.get("found", False) else []
 
     def answer_query(self, query):
-        # Extract provider from query
-        provider = self.extract_provider_from_query(query)
+        provider, network_col = self.extract_provider_and_network_from_query(query)
         norm_provider = self._normalize(provider)
+        # Alias-based query
+        if network_col:
+            details = self.provider_in_network(provider, network_col)
+            if details.get("found"):
+                if details.get("in_network"):
+                    return f"YES: {norm_provider} in {network_col}"
+                else:
+                    return f"NO: {norm_provider} in {network_col}"
+            return "Provider not found."
         # in network?
         if re.search(r"is .+ in the network|هل .+ داخل الشبكة", query, re.IGNORECASE):
             found = self.is_in_network(provider)
@@ -132,10 +178,11 @@ class NetworkLookup:
         col = network_code.lower()
         if col not in self.df.columns:
             return {"found": False}
-        val = str(row.get(col, "")).strip()
+        val = str(row[col]).strip() if col in row else ""
+        val = unicodedata.normalize('NFKC', val)
         unavailable_values = ("", "-", "0", "x", "X", "✖", "✕", "✗", "no", "n", "false")
         available_values = ("✔", "✓", "yes", "y", "true", "1")
-        in_network = val in available_values or (val and val not in unavailable_values)
+        in_network = val in available_values
         # available_network_tiers for this provider
         tiers = [c for c in self.network_tier_cols if str(row.get(c, "")).strip() in available_values]
         return {
@@ -187,29 +234,6 @@ class NetworkLookup:
         details = self.provider_details(name)
         return details["available_network_tiers"] if details.get("found", False) else []
 
-    def answer_query(self, query):
-        # Extract provider from query
-        provider = self.extract_provider_from_query(query)
-        norm_provider = self._normalize(provider)
-        # in network?
-        if re.search(r"is .+ in the network|هل .+ داخل الشبكة", query, re.IGNORECASE):
-            found = self.is_in_network(provider)
-            return f"YES: {norm_provider}" if found else f"NO: {norm_provider}"
-        # which network?
-        if re.search(r"which network|ما هي الشبكات", query, re.IGNORECASE):
-            nets = self.which_networks(provider)
-            return f"Networks for {norm_provider}: {', '.join(nets) if nets else 'None'}"
-        # details
-        if re.search(r"details|تفاصيل", query, re.IGNORECASE):
-            d = self.provider_details(provider)
-            return str(d)
-        # fallback: try direct lookup
-        d = self.provider_details(provider)
-        if d.get("found", False):
-            return str(d)
-        if d.get("ambiguous", False):
-            return "Ambiguous provider match."
-        return "Provider not found."
 
 def get_network_lookup():
     return NetworkLookup()
