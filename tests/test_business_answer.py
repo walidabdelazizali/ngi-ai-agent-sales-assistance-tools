@@ -1,3 +1,115 @@
+def test_lead_qualification_strong_arabic():
+    from src.query import business_answer
+    q = "عندي 20 موظف والتجديد الشهر الجاي وعايز عيادات في الشارقة"
+    out = business_answer.answer_business_query(q)
+    assert "تقييم الفرصة" in out
+    assert "قوية" in out
+    assert "عدد الموظفين" in out
+    assert "الخطوة التالية" in out
+    assert "census" in out or "أرسل census" in out or "الرخصة التجارية" in out
+    forbidden = ["الأفضل", "مضمون", "يغطي كل شيء", "الأفضل للجميع", "plan fact", "technical"]
+    for f in forbidden:
+        assert f not in out
+
+def test_lead_qualification_medium_arabic():
+    from src.query import business_answer
+    q = "عندي شركة وعايز تأمين طبي"
+    out = business_answer.answer_business_query(q)
+    assert "تقييم الفرصة" in out
+    assert "ضعيفة" in out  # Expect weak for vague queries
+    assert "الخطوة التالية" in out
+    forbidden = ["الأفضل", "مضمون", "يغطي كل شيء", "الأفضل للجميع", "plan fact", "technical"]
+    for f in forbidden:
+        assert f not in out
+
+def test_lead_qualification_weak_arabic():
+    from src.query import business_answer
+    q = "عايز أعرف الأسعار"
+    out = business_answer.answer_business_query(q)
+    assert "تقييم الفرصة" in out
+    assert "ضعيفة" in out  # Always weak, never fallback
+    assert "الخطوة التالية" in out
+    forbidden = ["الأفضل", "مضمون", "يغطي كل شيء", "الأفضل للجميع", "plan fact", "technical"]
+    for f in forbidden:
+        assert f not in out
+
+def test_lead_qualification_strong_english():
+    from src.query import business_answer
+    q = "I have 35 employees and renewal is next month"
+    out = business_answer.answer_business_query(q)
+    assert "Lead Qualification" in out
+    assert "Strong" in out
+    assert "employee count" in out.lower()
+    assert "next action" in out
+    forbidden = ["best plan", "guaranteed", "covers everything", "ideal for everyone", "plan fact", "technical"]
+    for f in forbidden:
+        assert f not in out
+def test_closing_arabic_suitability():
+    from src.query import business_answer
+    q = "هل Remedy 04 كويسة لشركة 20 موظف؟"
+    out = business_answer.answer_business_query(q)
+    assert "خطة Remedy 04" in out
+    assert "خياراً عملياً" in out
+    assert "عدد الموظفين" in out
+    assert "القرار النهائي" in out
+    # Forbidden words
+    forbidden = ["الأفضل", "مضمون", "يغطي كل شيء", "الأفضل للجميع"]
+    for f in forbidden:
+        assert f not in out
+
+def test_closing_arabic_low_budget():
+    from src.query import business_answer
+    q = "ايه احسن خطة لو الميزانية قليلة؟"
+    out = business_answer.answer_business_query(q)
+    assert "خطة Remedy" in out or "خطة" in out
+    assert "الميزانية" in out
+    assert "القرار النهائي" in out
+    forbidden = ["الأفضل", "مضمون", "يغطي كل شيء", "الأفضل للجميع"]
+    for f in forbidden:
+        assert f not in out
+
+def test_closing_arabic_upgrade():
+    from src.query import business_answer
+    q = "هل أختار Remedy 04 ولا Remedy 06؟"
+    out = business_answer.answer_business_query(q)
+    assert "Remedy 04" in out and "Remedy 06" in out
+    assert "القرار النهائي" in out
+    forbidden = ["الأفضل", "مضمون", "يغطي كل شيء", "الأفضل للجميع"]
+    for f in forbidden:
+        assert f not in out
+
+def test_closing_english_suitability():
+    from src.query import business_answer
+    q = "Is Remedy 04 suitable for a company with 20 employees?"
+    out = business_answer.answer_business_query(q)
+    assert "Remedy 04" in out
+    assert "practical option" in out
+    assert "employee count" in out or "employees" in out
+    assert "final decision" in out
+    forbidden = ["best plan", "guaranteed", "covers everything", "ideal for everyone"]
+    for f in forbidden:
+        assert f not in out
+
+def test_closing_english_low_budget():
+    from src.query import business_answer
+    q = "What is the best plan for low budget?"
+    out = business_answer.answer_business_query(q)
+    assert "Remedy" in out or "plan" in out
+    assert "budget" in out
+    assert "final decision" in out
+    forbidden = ["best plan", "guaranteed", "covers everything", "ideal for everyone"]
+    for f in forbidden:
+        assert f not in out
+
+def test_closing_english_upgrade():
+    from src.query import business_answer
+    q = "Should I choose Remedy 04 or Remedy 06?"
+    out = business_answer.answer_business_query(q)
+    assert "Remedy 04" in out and "Remedy 06" in out
+    assert "final decision" in out
+    forbidden = ["best plan", "guaranteed", "covers everything", "ideal for everyone"]
+    for f in forbidden:
+        assert f not in out
 # --- Multi-intent business answer test ---
 def test_multi_intent_business_answer_ar():
     from src.query import business_answer
@@ -77,3 +189,70 @@ def test_client_facing_summary():
 def test_answer_business_query_fallback():
     out = business_answer.answer_business_query("What is the best plan for cancer?")
     assert "unsupported" in out.lower() or "cannot answer" in out.lower() or "no deterministic answer" in out.lower()
+
+def test_lead_capture_fields_arabic_all_present():
+    from src.query import business_answer
+    q = "عندي 15 موظف والتجديد الشهر الجاي وميزانية محدودة وعايز شبكة موسعة ويوجد وثيقة حالية والمدير متوفر"
+    out = business_answer.answer_business_query(q)
+    assert "عدد الموظفين: 15" in out
+    # Accept partial match for renewal timing
+    assert "توقيت التجديد: التجديد الشهر" in out or "توقيت التجديد: الشهر الجاي" in out
+    assert "حالة الميزانية: ميزانية" in out or "حالة الميزانية: ميزانية محدودة" in out or "حالة الميزانية: محدودة" in out
+    assert "الشبكة أو المستشفيات المفضلة: شبكة" in out or "الشبكة أو المستشفيات المفضلة: موسعة" in out
+    assert "توفر وثيقة حالية: وثيقة" in out or "توفر وثيقة حالية: يوجد وثيقة حالية" in out
+    assert "حالة متخذ القرار: المدير" in out or "حالة متخذ القرار: متوفر" in out
+    assert "المستندات المطلوبة التالية:" in out
+    assert "الخطوة التالية" in out
+    forbidden = ["plan fact", "technical", "json", "{", "}"]
+    for f in forbidden:
+        assert f not in out
+
+def test_lead_capture_fields_arabic_missing():
+    from src.query import business_answer
+    q = "عندي شركة فقط"
+    out = business_answer.answer_business_query(q)
+    assert "عدد الموظفين: غير محدد" in out
+    assert "توقيت التجديد: غير محدد" in out
+    assert "حالة الميزانية: غير محدد" in out
+    assert "الشبكة أو المستشفيات المفضلة: غير محدد" in out
+    assert "توفر وثيقة حالية: غير محدد" in out
+    assert "حالة متخذ القرار: غير محدد" in out
+    # Expect next actions, not 'غير محدد'
+    assert "المستندات المطلوبة التالية: أرسل census sheet" in out or "المستندات المطلوبة التالية: أرسل آخر وثيقة إن وجدت" in out or "المستندات المطلوبة التالية: أرسل الرخصة التجارية" in out
+    assert "الخطوة التالية" in out
+    forbidden = ["plan fact", "technical", "json", "{", "}"]
+    for f in forbidden:
+        assert f not in out
+
+def test_lead_capture_fields_english_all_present():
+    from src.query import business_answer
+    q = "We have 25 employees, renewal is next month, budget is tight, prefer a broad network, current policy available, decision maker is present"
+    out = business_answer.answer_business_query(q)
+    assert "company_size: 25" in out  # Only the number
+    assert "renewal_timing: next month" in out or "renewal_timing: renewal is next month" in out
+    assert "budget_status: budget" in out or "budget_status: tight" in out
+    assert "preferred_network_or_hospitals: network" in out or "preferred_network_or_hospitals: broad" in out
+    assert "current_policy_available: policy" in out or "current_policy_available: current policy available" in out
+    assert "decision_maker_status: decision maker" in out or "decision_maker_status: present" in out
+    assert "next_required_documents:" in out
+    assert "Recommended next action" in out
+    forbidden = ["plan fact", "technical", "json", "{", "}"]
+    for f in forbidden:
+        assert f not in out
+
+def test_lead_capture_fields_english_missing():
+    from src.query import business_answer
+    q = "Just a company"
+    out = business_answer.answer_business_query(q)
+    assert "company_size: unknown" in out
+    assert "renewal_timing: unknown" in out
+    assert "budget_status: unknown" in out
+    assert "preferred_network_or_hospitals: unknown" in out
+    assert "current_policy_available: unknown" in out
+    assert "decision_maker_status: unknown" in out
+    # Expect next actions, not 'unknown'
+    assert "next_required_documents: ask for census" in out or "next_required_documents: ask for current policy" in out or "next_required_documents: ask for trade license" in out
+    assert "Recommended next action" in out
+    forbidden = ["plan fact", "technical", "json", "{", "}"]
+    for f in forbidden:
+        assert f not in out
