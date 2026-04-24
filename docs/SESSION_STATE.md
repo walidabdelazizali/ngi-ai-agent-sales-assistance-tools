@@ -1,28 +1,33 @@
 
+
+
 # SESSION_STATE.md
 
-## System Status
-Stable
+## What is DONE
+- Plan-only intent routing fixed
+- Multi-intent business answers stable
+- Network lookup + city/type listing stable
+- Arabic + English supported
+- All tests passing
 
-## What is Working
-- Supported plans (Remedy 02, 03, 04, 05)
-- Plan comparison
-- Arabic/English output
-- Stage 1 validation passed
-
-## What Needs Attention
-None
+## What is NOT STABLE yet
+- None
 
 ## Current Blocker
-None
+- None
 
+## Last Files Changed
+- src/query/business_answer.py
+- src/query/plan_query.py
+- src/query/network_lookup.py
+- tests/test_business_answer.py
+- tests/test_network_lookup.py
+- output/HN-REMEDY-4.json
 
-## Last Changes
-- Remedy 03 accepted in V2
-- Remedy 06 accepted in V2
-- Expansion branch merged into stage2-live
-- Stable tag created: v2-remedy-03-06-stable
-- V2 post-merge test gate passed
-
-## Today’s Focus
-- V2 post-freeze expansion merged and stabilized
+## Session Notes
+- System now supports real business queries:
+	- plan summary
+	- provider lookup
+	- multi-intent queries
+- No technical leakage in outputs
+- Ready for next phase (sales layer / deployment)
