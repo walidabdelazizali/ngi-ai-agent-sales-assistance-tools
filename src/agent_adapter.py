@@ -244,35 +244,85 @@ def _format_human_readable(result: dict) -> str:
         return format_english()
 
 def handle_user_query(user_query: str, output_mode: str = "dict") -> Union[Dict[str, Any], str]:
-    # --- ARABIC SAFETY BLOCKER ---
-    try:
-        import regex as re2
-        is_arabic = bool(re2.search(r"\p{IsArabic}", user_query))
-    except ImportError:
-        is_arabic = any("\u0600" <= c <= "\u06FF" for c in user_query)
-    if is_arabic:
-        return "Arabic support temporarily unavailable. Please use English."
-
-    # --- RECOMMENDATION ROUTING BLOCKER ---
-    q = user_query.lower()
-    # Scenario 1: low usage + no medication
-    if ("low usage" in q or "infrequent use" in q) and ("no medication" in q or "no medications" in q):
-        return "Recommended plan: Remedy 02\nReason: Best for low usage, low medication needs, and budget-friendly choice."
-    # Scenario 2: frequent tests and medication
-    if ("frequent tests" in q or "frequent testing" in q) and ("medication" in q or "medications" in q):
-        return "Recommended plan: Remedy 05\nReason: Best for frequent tests and medication needs."
-
-    result = run_agent_wrapper(user_query)
-    if output_mode == "dict":
-        return result
-    elif output_mode == "text":
-        return _format_human_readable(result)
+    # --- Unified business_answer routing ---
+    from src.query.business_answer import answer_business_query
+    answer = answer_business_query(user_query)
+    # If fallback, use legacy agent for structured output
+    if ("no deterministic answer" in answer.lower()) or ("عذراً" in answer):
+        from src.agent_wrapper import run_agent_wrapper
+        result = run_agent_wrapper(user_query)
+        if output_mode == "dict":
+            return result
+        elif output_mode == "text":
+            return _format_human_readable(result)
+        else:
+            return {
+                "ok": False,
+                "intent": "unsupported",
+                "plan_name": None,
+                "tool_name": None,
+                "data": None,
+                "message": f"Invalid output_mode: {output_mode}. Supported: 'dict', 'text'."
+            }
     else:
-        return {
-            "ok": False,
-            "intent": "unsupported",
-            "plan_name": None,
-            "tool_name": None,
-            "data": None,
-            "message": f"Invalid output_mode: {output_mode}. Supported: 'dict', 'text'."
-        }
+        # Attempt to parse structured info from answer string for 'dict' mode
+        def parse_structured_answer(ans: str) -> dict:
+            import re
+            if "annual limit" in ans.lower() and "remedy" in ans:
+                m = re.search(r"Remedy 0?[23456]", ans)
+                plan = m.group(0) if m else None
+                m2 = re.search(r"annual limit.*?(\d[\d,]*)", ans, re.IGNORECASE)
+                annual_limit = m2.group(1) if m2 else None
+                return {
+                    "ok": True,
+                    "intent": "plan_core",
+                    "plan_name": plan,
+                    "tool_name": "get_plan_core",
+                    "data": {"annual_limit": annual_limit},
+                    "message": ans
+                }
+            if "reimbursement allowed" in ans.lower() and "remedy" in ans:
+                m = re.search(r"Remedy 0?[23456]", ans)
+                plan = m.group(0) if m else None
+                allowed = "yes" in ans.lower()
+                return {
+                    "ok": True,
+                    "intent": "reimbursement_rules",
+                    "plan_name": plan,
+                    "tool_name": "get_reimbursement_rules",
+                    "data": {"reimbursement_allowed": allowed},
+                    "message": ans
+                }
+            if "plan:" in ans and "summary" in ans.lower():
+                m = re.search(r"Plan: (Remedy 0?[23456])", ans)
+                plan = m.group(1) if m else None
+                return {
+                    "ok": True,
+                    "intent": "plan_summary",
+                    "plan_name": plan,
+                    "tool_name": "get_plan_summary",
+                    "data": {"summary_text": ans},
+                    "message": ans
+                }
+            # Fallback: treat as unsupported
+            return {
+                "ok": False,
+                "intent": "unsupported",
+                "plan_name": None,
+                "tool_name": None,
+                "data": None,
+                "message": "No supported plan or answer for this query. Please ask about Remedy 02-06 or supported features."
+            }
+        if output_mode == "dict":
+            return parse_structured_answer(answer)
+        elif output_mode == "text":
+            return answer
+        else:
+            return {
+                "ok": False,
+                "intent": "unsupported",
+                "plan_name": None,
+                "tool_name": None,
+                "data": None,
+                "message": f"Invalid output_mode: {output_mode}. Supported: 'dict', 'text'."
+            }
