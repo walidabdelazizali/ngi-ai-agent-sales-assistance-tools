@@ -7,14 +7,15 @@ client = TestClient(app)
 def test_ask_smoke():
     resp = client.post("/ask", json={"question": "Hello"})
     assert resp.status_code == 200
-    assert "intent" in resp.json()
+    assert "answer" in resp.json()
+    assert "intent" in resp.json()["answer"]
 
 def test_ask_supported():
     # Use a known supported question (Remedy 03 summary)
     q = "اعطني ملخص لخطة ريميدي 03"
     resp = client.post("/ask", json={"question": q})
     assert resp.status_code == 200
-    data = resp.json()
+    data = resp.json()["answer"]
     assert data["intent"] == "plan_summary"
     assert data["plan_name"] == "Remedy 03"
     assert "message" in data

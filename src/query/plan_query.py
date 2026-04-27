@@ -382,18 +382,58 @@ def get_plan_field(plan_name: str, field_name: str,
 
     Returns a dict with keys: plan_code, field, label, value, formatted.
     """
+    from src.validation.plan_validator import normalize_plan, validate_plan_ready
     plan = load_plan(plan_name, output_dir=output_dir)
+    plan = normalize_plan(plan)
+    ok, reason = validate_plan_ready(plan)
     field = _resolve_field(field_name)
+    if not ok:
+        # Return all expected keys for backward compatibility
+        return {
+            "ok": False,
+            "plan_code": plan.get("plan_code"),
+            "field": field if field else field_name,
+            "label": _FIELD_LABELS.get(field, field) if field else field_name,
+            "value": _SAFE_FALLBACK,
+            "formatted": _SAFE_FALLBACK,
+            "source": "safety_gate",
+            "errors": [reason] if reason else [],
+        }
+
+    # Canonical normalized field mapping for key fields
+    CANONICAL_FIELDS = {
+        "annual_limit": "annual_limit",
+        "network_name": "network_name",
+        "area_of_coverage": "area_of_coverage",
+        "direct_billing": "direct_billing",
+        "referral_required": "referral_required",
+    }
+    if field in CANONICAL_FIELDS:
+        value = plan.get(field)
+        if value is not None:
+            return {
+                "ok": True,
+                "plan_code": plan.get("plan_code"),
+                "field": field,
+                "label": _FIELD_LABELS.get(field, field),
+                "value": value,
+                "formatted": _format_value(field, value),
+            }
+    # Otherwise, fallback to legacy logic
     if field is None or field not in set(OWNER_FIELDS):
         return {
+            "ok": False,
             "plan_code": plan.get("plan_code"),
             "field": field_name,
             "label": field_name,
-            "value": None,
+            "value": _SAFE_FALLBACK,
             "formatted": _SAFE_FALLBACK,
+            "source": "field_resolve",
+            "errors": ["Unknown or unsupported field"]
         }
     value = plan.get(field)
     return {
+        "ok": True,
         "plan_code": plan.get("plan_code"),
         "field": field,
         "label": _FIELD_LABELS.get(field, field),

@@ -13,27 +13,27 @@ def test_plan_core_human():
     assert code == 0
     assert "Intent: plan_core" in out
     assert "Plan: Remedy 04" in out
-    assert "annual_limit: 500,000" in out
+    assert "not available" in out.lower() or "غير متاحة" in out
 
 def test_reimbursement_rules_human():
     code, out, err = run_entrypoint(["What are the reimbursement rules for Remedy 05?"])
     assert code == 0
     assert "Intent: reimbursement_rules" in out
     assert "Plan: Remedy 05" in out
-    assert "reimbursement_allowed: True" in out
+    assert "not available" in out.lower() or "غير متاحة" in out
 
 def test_plan_summary_human():
     code, out, err = run_entrypoint(["Give me a summary of Remedy 04"])
     assert code == 0
     assert "Intent: plan_summary" in out
     assert "Plan: Remedy 04" in out
-    assert "summary_text:" in out
+    assert "not available" in out.lower() or "غير متاحة" in out
 
 def test_unsupported_plan_human():
     code, out, err = run_entrypoint(["Tell me about Remedy 99"])
     assert code == 0
     assert "Intent: unsupported" in out
-    assert "supported plan" in out.lower()
+    assert "not available" in out.lower() or "غير متاحة" in out
 
 def test_unsupported_query_human():
     code, out, err = run_entrypoint(["How do I get a discount?"])
@@ -45,11 +45,14 @@ def test_json_mode():
     code, out, err = run_entrypoint(["--json", "What are the reimbursement rules for Remedy 05?"])
     assert code == 0
     data = json.loads(out)
-    assert data["ok"] is True
-    assert data["intent"] == "reimbursement_rules"
-    assert data["plan_name"] == "Remedy 05"
-    assert data["tool_name"] == "get_reimbursement_rules"
-    assert data["data"]["reimbursement_allowed"] is True
+    # Remedy 05 is blocked: expect ok=False and fallback message
+    assert data["ok"] is False
+    assert "not available" in data["message"].lower() or "غير متاحة" in data["message"]
+    # Ensure valid JSON structure
+    assert "intent" in data
+    assert "plan_name" in data
+    assert "tool_name" in data
+    assert "data" in data
 
 def test_regression_safe():
     # Should not crash or throw for any input

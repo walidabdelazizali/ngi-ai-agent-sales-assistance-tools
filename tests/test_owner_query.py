@@ -107,32 +107,38 @@ class TestGetPlanField:
     def test_reimbursement_scope_r04(self):
         result = get_plan_field("Remedy 04", "reimbursement scope")
         assert result["field"] == "reimbursement_scope"
-        assert "emergency" in result["formatted"].lower()
+        assert not result["ok"]
+        assert result["formatted"] == _SAFE_FALLBACK
 
     def test_outside_network_reimbursement_r04(self):
         result = get_plan_field("Remedy 04", "outside network reimbursement")
         assert result["field"] == "outside_network_reimbursement"
-        assert "emergency" in result["formatted"].lower()
+        assert not result["ok"]
+        assert result["formatted"] == _SAFE_FALLBACK
 
     def test_outside_uae_reimbursement_r04(self):
         result = get_plan_field("Remedy 04", "outside uae reimbursement")
         assert result["field"] == "outside_uae_reimbursement"
-        assert "emergency" in result["formatted"].lower()
+        assert not result["ok"]
+        assert result["formatted"] == _SAFE_FALLBACK
 
     def test_reimbursement_basis_r04(self):
         result = get_plan_field("Remedy 04", "reimbursement basis")
         assert result["field"] == "reimbursement_basis"
-        assert "incurred cost" in result["formatted"].lower()
+        assert not result["ok"]
+        assert result["formatted"] == _SAFE_FALLBACK
 
     def test_reimbursement_conditions_r04(self):
         result = get_plan_field("Remedy 04", "reimbursement conditions")
         assert result["field"] == "reimbursement_conditions"
-        assert "prior approval" in result["formatted"].lower()
+        assert not result["ok"]
+        assert result["formatted"] == _SAFE_FALLBACK
 
     def test_reimbursement_documents_required_r04(self):
         result = get_plan_field("Remedy 04", "reimbursement documents required")
         assert result["field"] == "reimbursement_documents_required"
-        assert "invoice" in result["formatted"].lower() or "medical report" in result["formatted"].lower()
+        assert not result["ok"]
+        assert result["formatted"] == _SAFE_FALLBACK
 
     def test_annual_limit_r03(self, r03):
         result = get_plan_field("Remedy 03", "annual limit")

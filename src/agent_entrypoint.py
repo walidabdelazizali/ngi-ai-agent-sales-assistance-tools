@@ -27,10 +27,19 @@ def main():
     args = parser.parse_args()
     user_query = ' '.join(args.query)
     result = run_agent_wrapper(user_query)
+    # Always print valid structure, even for blocked plans
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
-        print_human_readable(result)
+        if not result.get("ok"):
+            print(f"Intent: {result.get('intent')}")
+            if result.get('plan_name'):
+                print(f"Plan: {result.get('plan_name')}")
+            if result.get('tool_name'):
+                print(f"Tool: {result.get('tool_name')}")
+            print(f"Message: {result.get('message')}")
+        else:
+            print_human_readable(result)
 
 if __name__ == "__main__":
     main()

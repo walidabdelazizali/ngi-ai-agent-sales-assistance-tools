@@ -251,6 +251,23 @@ def handle_user_query(user_query: str, output_mode: str = "dict") -> Union[Dict[
     if ("no deterministic answer" in answer.lower()) or ("عذراً" in answer):
         from src.agent_wrapper import run_agent_wrapper
         result = run_agent_wrapper(user_query)
+        # If blocked (ok=False), always return a safe fallback with valid structure
+        if not result.get("ok"):
+            fallback = {
+                "ok": False,
+                "intent": result.get("intent", "unsupported"),
+                "plan_name": result.get("plan_name"),
+                "tool_name": result.get("tool_name"),
+                "data": None,
+                "message": result.get("message", "This plan is not available for customer-facing answers."),
+                "normalized": result.get("normalized", {})
+            }
+            if output_mode == "dict":
+                return fallback
+            elif output_mode == "text":
+                return fallback["message"]
+            else:
+                return fallback
         if output_mode == "dict":
             return result
         elif output_mode == "text":

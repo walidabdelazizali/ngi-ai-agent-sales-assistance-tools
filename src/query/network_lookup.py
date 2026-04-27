@@ -82,12 +82,17 @@ class NetworkLookup:
         return heading + "\n" + "\n".join(lines)
     @staticmethod
     def extract_provider_from_query(query):
+        q = query.strip().lower()
+        # English: Which network [PROVIDER]?
+        m = re.match(r"^which network (.+)\??$", q)
+        if m:
+            return m.group(1).strip().title()
         # English: Is [PROVIDER] in the network?
-        m = re.match(r"is\s+(.+?)\s+in the network", query.strip().lower())
+        m = re.match(r"is\s+(.+?)\s+in the network", q)
         if m:
             return m.group(1).strip().title()
         # Arabic: هل [PROVIDER] داخل الشبكة؟
-        m = re.match(r"هل\s+(.+?)\s+داخل الشبكة", query.strip().lower())
+        m = re.match(r"هل\s+(.+?)\s+داخل الشبكة", q)
         if m:
             return m.group(1).strip().title()
         # Fallback: return whole query
@@ -177,17 +182,26 @@ class NetworkLookup:
             if len(idxs) == 1:
                 return self.df.iloc[idxs[0]]
             return 'ambiguous' if len(idxs) > 1 else None
-        # 3. unique contains match
+        # 3. unique contains match (provider_name or google_name)
         matches = []
         for idx, row in self.df.iterrows():
             pn = self._normalize(row.get("provider_name", ""))
             gn = self._normalize(row.get("google_name", ""))
             if norm in pn or norm in gn:
                 matches.append(idx)
-        print(f"[DEBUG] contains matches for '{norm}': {matches}")
         if len(matches) == 1:
             return self.df.iloc[matches[0]]
         if len(matches) > 1:
+            return 'ambiguous'
+        # 4. substring/contains match in google_name only
+        google_matches = []
+        for idx, row in self.df.iterrows():
+            gn = self._normalize(row.get("google_name", ""))
+            if norm in gn:
+                google_matches.append(idx)
+        if len(google_matches) == 1:
+            return self.df.iloc[google_matches[0]]
+        if len(google_matches) > 1:
             return 'ambiguous'
         return None
 

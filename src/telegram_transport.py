@@ -8,4 +8,7 @@ def handle_telegram_message(user_text: str) -> str:
     if not user_text:
         return "Sorry, I didn't receive a valid question. Please ask about Remedy 04 or Remedy 05."
     result = execute_planned_query(user_text, "text")
+    # Always return a safe fallback message for blocked plans
+    if isinstance(result, dict) and not result.get("ok"):
+        return result.get("message", "Sorry, this plan is not available for customer-facing answers.")
     return result if isinstance(result, str) else str(result)

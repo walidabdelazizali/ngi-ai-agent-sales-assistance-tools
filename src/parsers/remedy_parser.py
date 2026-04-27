@@ -568,7 +568,10 @@ def parse_remedy_plan(extraction: dict[str, Any]) -> dict[str, Any]:
     if not paragraphs and not tables:
         return {
             "plan_name": extraction.get("plan_name"),
-            "plan_code": extraction.get("plan_code"),
+            "plan_code": extraction.get("plan_code") or _extract_plan_code(
+                extraction.get("source_filename", ""),
+                extraction.get("plan_name"),
+            ),
             "insurer_name": None,
             "network_name": extraction.get("medical_network") or extraction.get("network_name"),
             "area_of_coverage": extraction.get("area_of_coverage"),

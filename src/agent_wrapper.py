@@ -198,175 +198,157 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 "errors": []
             }
         }
-    # If no supported plan or no supported intent, always return unsupported envelope
+    # If no supported plan or no supported intent, always return unsupported-query message
     if not plan_name or intent not in ("plan_core", "reimbursement_rules", "plan_summary"):
-        if is_arabic:
-            resp = {
-                "ok": False,
-                "intent": "unsupported",
-                "plan_name": None,
-                "tool_name": None,
-                "data": None,
-                "message": "عذراً، النظام يدعم فقط الريميدي 03 والريميدي 04 والريميدي 05 حالياً."
+        msg = (
+            "Sorry, this query is not supported or not available. Please specify a supported plan or question."
+            if not is_arabic else
+            "عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم."
+        )
+        resp = {
+            "ok": False,
+            "intent": "unsupported",
+            "plan_name": plan_name,
+            "tool_name": None,
+            "data": None,
+            "message": msg,
+            "normalized": {
+                "status": "not_found",
+                "tool": None,
+                "answer": None,
+                "errors": [msg]
             }
-        else:
-            resp = {
-                "ok": False,
-                "intent": "unsupported",
-                "plan_name": None,
-                "tool_name": None,
-                "data": None,
-                "message": "No supported plan and/or intent found in query. Supported plans: Remedy 03, Remedy 04, Remedy 05. Supported intents: plan_core, reimbursement_rules, plan_summary."
-            }
-        resp["normalized"] = {
-            "status": "not_found",
-            "tool": None,
-            "answer": None,
-            "errors": [resp["message"]]
         }
         return resp
-    if intent == "plan_core":
+    from src.validation.plan_validator import normalize_plan, validate_plan_ready
+    from src.query.plan_query import load_plan
+    if intent in ("plan_core", "reimbursement_rules", "plan_summary"):
         try:
-            data = get_plan_core(plan_name)
-            # Always build message from actual values, not placeholders
-            lines = []
-            lines.append(f"Plan: {data.get('plan_name')}")
-            lines.append(f"Code: {data.get('plan_code')}")
-            lines.append(f"الشبكة: {data.get('network_name')}")
-            lines.append(f"Annual limit: {data.get('annual_limit')}")
-            lines.append(f"Area: {data.get('area_of_coverage')}")
-            lines.append(f"Direct billing: {'Yes' if data.get('direct_billing') else 'No' if data.get('direct_billing') is not None else 'Not available'}")
-            lines.append(f"Referral required: {'Yes' if data.get('referral_required') else 'No' if data.get('referral_required') is not None else 'Not available'}")
-            msg = "\n".join(lines)
-            resp = {
-                "ok": True,
-                "intent": intent,
-                "plan_name": plan_name,
-                "tool_name": "get_plan_core",
-                "data": data,
-                "message": msg
-            }
-            resp["normalized"] = {
-                "status": "ok",
-                "tool": "get_plan_core",
-                "answer": data,
-                "errors": []
-            }
-            return resp
-        except Exception as e:
-            msg = f"حدث خطأ: {e}" if is_arabic else f"Error: {e}"
-            resp = {
-                "ok": False,
-                "intent": intent,
-                "plan_name": plan_name,
-                "tool_name": "get_plan_core",
-                "data": None,
-                "message": msg
-            }
-            resp["normalized"] = {
-                "status": "error",
-                "tool": "get_plan_core",
-                "answer": None,
-                "errors": [msg]
-            }
-            return resp
-    if intent == "reimbursement_rules":
-        try:
-            data = get_reimbursement_rules(plan_name)
-            # Always build message from actual clean fields
-            lines = []
-            lines.append(f"Reimbursement allowed: {'Yes' if data.get('reimbursement_allowed') else 'No' if data.get('reimbursement_allowed') is not None else 'Not available'}.")
-            if data.get('reimbursement_scope'):
-                lines.append(f"Scope: {data['reimbursement_scope']}.")
-            if data.get('outside_network_reimbursement'):
-                lines.append(f"Outside network reimbursement: {data['outside_network_reimbursement']}.")
-            if data.get('outside_uae_reimbursement'):
-                lines.append(f"Outside UAE reimbursement: {data['outside_uae_reimbursement']}.")
-            if data.get('reimbursement_basis'):
-                lines.append(f"Basis: {data['reimbursement_basis']}.")
-            if data.get('reimbursement_conditions'):
-                lines.append(f"Conditions: {data['reimbursement_conditions']}.")
-            if data.get('reimbursement_documents_required'):
-                lines.append(f"Documents required: {data['reimbursement_documents_required']}.")
-            msg = "\n".join(lines)
-            resp = {
-                "ok": True,
-                "intent": intent,
-                "plan_name": plan_name,
-                "tool_name": "get_reimbursement_rules",
-                "data": data,
-                "message": msg
-            }
-            resp["normalized"] = {
-                "status": "ok",
-                "tool": "get_reimbursement_rules",
-                "answer": data,
-                "errors": []
-            }
-            return resp
-        except Exception as e:
-            msg = f"حدث خطأ: {e}" if is_arabic else f"Error: {e}"
-            resp = {
-                "ok": False,
-                "intent": intent,
-                "plan_name": plan_name,
-                "tool_name": "get_reimbursement_rules",
-                "data": None,
-                "message": msg
-            }
-            resp["normalized"] = {
-                "status": "error",
-                "tool": "get_reimbursement_rules",
-                "answer": None,
-                "errors": [msg]
-            }
-            return resp
-    if intent == "plan_summary":
-        try:
-            data = get_plan_summary(plan_name)
-            # Always build message from actual summary fields, never fallback or placeholder
-            summary_text = data.get("summary_text")
-            if summary_text and isinstance(summary_text, str) and summary_text.strip() and summary_text.strip().lower() not in ["none", "not available", "plan summary returned."]:
-                msg = summary_text.strip()
-            else:
-                # Build from structured fields if summary_text is missing
+            # Always validate readiness using the full plan, not the tool output
+            full_plan = load_plan(plan_name)
+            norm_plan = normalize_plan(full_plan)
+            ok, reason = validate_plan_ready(norm_plan)
+            if not ok:
+                msg = (
+                    "هذه الخطة غير متاحة حالياً للإجابة على العملاء."
+                    if is_arabic else
+                    "Sorry, this plan is not available for customer-facing answers."
+                )
+                resp = {
+                    "ok": False,
+                    "intent": intent,
+                    "plan_name": plan_name,
+                    "tool_name": f"get_{intent}",
+                    "data": None,
+                    "message": msg
+                }
+                resp["normalized"] = {
+                    "status": "not_ready",
+                    "tool": f"get_{intent}",
+                    "answer": None,
+                    "errors": [reason]
+                }
+                return resp
+            # If ready, return tool output as before
+            if intent == "plan_core":
+                data = get_plan_core(plan_name)
+                plan = normalize_plan(data)
                 lines = []
-                lines.append(f"Plan: {data.get('plan_name')}")
-                lines.append(f"Code: {data.get('plan_code')}")
-                lines.append(f"الشبكة: {data.get('network_name')}")
-                lines.append(f"Annual limit: {data.get('annual_limit')}")
-                lines.append(f"Area: {data.get('area_of_coverage')}")
-                lines.append(f"Direct billing: {'Yes' if data.get('direct_billing') else 'No' if data.get('direct_billing') is not None else 'Not available'}")
-                lines.append(f"Referral required: {'Yes' if data.get('referral_required') else 'No' if data.get('referral_required') is not None else 'Not available'}")
+                lines.append(f"Plan: {plan.get('plan_name')}")
+                lines.append(f"Code: {plan.get('plan_code')}")
+                lines.append(f"الشبكة: {plan.get('network_name')}")
+                lines.append(f"Annual limit: {plan.get('annual_limit')}")
+                lines.append(f"Area: {plan.get('area_of_coverage')}")
+                lines.append(f"Direct billing: {'Yes' if plan.get('direct_billing') else 'No' if plan.get('direct_billing') is not None else 'Not available'}")
+                lines.append(f"Referral required: {'Yes' if plan.get('referral_required') else 'No' if plan.get('referral_required') is not None else 'Not available'}")
                 msg = "\n".join(lines)
-            resp = {
-                "ok": True,
-                "intent": intent,
-                "plan_name": plan_name,
-                "tool_name": "get_plan_summary",
-                "data": data,
-                "message": msg
-            }
-            resp["normalized"] = {
-                "status": "ok",
-                "tool": "get_plan_summary",
-                "answer": data,
-                "errors": []
-            }
-            return resp
+                resp = {
+                    "ok": True,
+                    "intent": intent,
+                    "plan_name": plan_name,
+                    "tool_name": "get_plan_core",
+                    "data": plan,
+                    "message": msg
+                }
+                resp["normalized"] = {
+                    "status": "ok",
+                    "tool": "get_plan_core",
+                    "answer": plan,
+                    "errors": []
+                }
+                return resp
+            elif intent == "reimbursement_rules":
+                data = get_reimbursement_rules(plan_name)
+                plan = normalize_plan(data)
+                lines = []
+                lines.append(f"Reimbursement allowed: {'Yes' if plan.get('reimbursement_allowed') else 'No' if plan.get('reimbursement_allowed') is not None else 'Not available' }.")
+                if plan.get('reimbursement_scope'):
+                    lines.append(f"Scope: {plan['reimbursement_scope']}.")
+                if plan.get('outside_network_reimbursement'):
+                    lines.append(f"Outside network reimbursement: {plan['outside_network_reimbursement']}.")
+                if plan.get('outside_uae_reimbursement'):
+                    lines.append(f"Outside UAE reimbursement: {plan['outside_uae_reimbursement']}.")
+                if plan.get('reimbursement_basis'):
+                    lines.append(f"Basis: {plan['reimbursement_basis']}.")
+                if plan.get('reimbursement_conditions'):
+                    lines.append(f"Conditions: {plan['reimbursement_conditions']}.")
+                if plan.get('reimbursement_documents_required'):
+                    lines.append(f"Documents required: {plan['reimbursement_documents_required']}.")
+                msg = "\n".join(lines)
+                resp = {
+                    "ok": True,
+                    "intent": intent,
+                    "plan_name": plan_name,
+                    "tool_name": "get_reimbursement_rules",
+                    "data": plan,
+                    "message": msg
+                }
+                resp["normalized"] = {
+                    "status": "ok",
+                    "tool": "get_reimbursement_rules",
+                    "answer": plan,
+                    "errors": []
+                }
+                return resp
+            elif intent == "plan_summary":
+                data = get_plan_summary(plan_name)
+                # Do not validate summary output, just return if plan is ready
+                summary_text = data.get("summary_text")
+                if summary_text and isinstance(summary_text, str) and summary_text.strip() and summary_text.strip().lower() not in ["none", "not available", "plan summary returned."]:
+                    msg = summary_text.strip()
+                else:
+                    lines = []
+                    lines.append(f"Plan: {data.get('plan_name')}")
+                    lines.append(f"Code: {data.get('plan_code')}")
+                    msg = "\n".join(lines)
+                resp = {
+                    "ok": True,
+                    "intent": intent,
+                    "plan_name": plan_name,
+                    "tool_name": "get_plan_summary",
+                    "data": data,
+                    "message": msg
+                }
+                resp["normalized"] = {
+                    "status": "ok",
+                    "tool": "get_plan_summary",
+                    "answer": data,
+                    "errors": []
+                }
+                return resp
         except Exception as e:
             msg = f"حدث خطأ: {e}" if is_arabic else f"Error: {e}"
             resp = {
                 "ok": False,
                 "intent": intent,
                 "plan_name": plan_name,
-                "tool_name": "get_plan_summary",
+                "tool_name": f"get_{intent}",
                 "data": None,
                 "message": msg
             }
             resp["normalized"] = {
                 "status": "error",
-                "tool": "get_plan_summary",
+                "tool": f"get_{intent}",
                 "answer": None,
                 "errors": [msg]
             }
