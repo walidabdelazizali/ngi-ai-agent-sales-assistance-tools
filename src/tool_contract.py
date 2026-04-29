@@ -29,6 +29,7 @@ def get_plan_core(plan_name: str) -> Dict[str, Any]:
         "area_of_coverage": plan.get("area_of_coverage"),
         "direct_billing": plan.get("direct_billing"),
         "referral_required": plan.get("referral_required"),
+        "maternity_cover": plan.get("maternity_cover"),
     }
 
 def get_reimbursement_rules(plan_name: str) -> Dict[str, Any]:

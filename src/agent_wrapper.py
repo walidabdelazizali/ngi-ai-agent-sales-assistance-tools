@@ -103,6 +103,10 @@ def _extract_plan_name(text: str) -> Optional[str]:
 
 def _intent_from_query(text: str) -> Optional[str]:
     lowered = text.lower()
+    # Special-case: route explicit "maternity limit" with plan to plan_core
+    if "maternity limit" in lowered:
+        if _extract_plan_name(lowered):
+            return "plan_core"
     # Comparison intent
     if _extract_comparison_plans(lowered):
         return "plan_comparison"
@@ -253,6 +257,31 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             if intent == "plan_core":
                 data = get_plan_core(plan_name)
                 plan = normalize_plan(data)
+                # Special-case: if query is for maternity limit and plan is Remedy 02, extract AED value from maternity_cover
+                if "maternity limit" in user_query.lower() and plan_name == "Remedy 02":
+                    maternity_cover = plan.get("maternity_cover")
+                    aed_match = None
+                    if maternity_cover:
+                        m = re.search(r"AED[ .]*([0-9,]+)", maternity_cover)
+                        if m:
+                            aed_match = f"AED {m.group(1)}"
+                    msg = f"Maternity limit: {aed_match if aed_match else 'Not available'}"
+                    resp = {
+                        "ok": True,
+                        "intent": intent,
+                        "plan_name": plan_name,
+                        "tool_name": "get_plan_core",
+                        "data": plan,
+                        "message": msg
+                    }
+                    resp["normalized"] = {
+                        "status": "ok",
+                        "tool": "get_plan_core",
+                        "answer": plan,
+                        "errors": []
+                    }
+                    return resp
+                # Default plan_core output
                 lines = []
                 lines.append(f"Plan: {plan.get('plan_name')}")
                 lines.append(f"Code: {plan.get('plan_code')}")

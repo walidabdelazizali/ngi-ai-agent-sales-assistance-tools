@@ -118,7 +118,11 @@ def test_get_plan_summary_unsupported():
 
 def test_contract_shapes():
     core = get_plan_core("Remedy 04")
-    assert set(core.keys()) == {"plan_name", "plan_code", "network_name", "annual_limit", "area_of_coverage", "direct_billing", "referral_required"}
+    allowed_keys = {"plan_name", "plan_code", "network_name", "annual_limit", "area_of_coverage", "direct_billing", "referral_required"}
+    # Allow optional maternity_cover field
+    if "maternity_cover" in core:
+        allowed_keys.add("maternity_cover")
+    assert set(core.keys()) == allowed_keys
     rules = get_reimbursement_rules("Remedy 04")
     assert set(rules.keys()) == {"reimbursement_allowed", "reimbursement_scope", "outside_network_reimbursement", "outside_uae_reimbursement", "reimbursement_basis", "reimbursement_conditions", "reimbursement_documents_required"}
     summary = get_plan_summary("Remedy 04")

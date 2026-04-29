@@ -40,3 +40,19 @@ def test_approved_plan_business_questions():
         assert "not available" in out["message"].lower() or "غير متاحة" in out["message"]
     # Missing source_trace: simulate by direct call if possible (not exposed in wrapper, so skip)
     # This is covered by plan readiness logic in wrapper
+
+def test_maternity_limit_remedy02():
+    # Only this query should be supported
+    out = run_agent_wrapper("What is the maternity limit for Remedy 02?")
+    assert out["ok"] is True, f"Should be ok: {out}"
+    assert out["intent"] == "plan_core"
+    assert out["plan_name"] == "Remedy 02"
+    assert out["data"] is not None
+    assert "AED 10,000" in out["message"], f"Expected AED 10,000 in message: {out['message']}"
+    # This query should remain blocked
+    out2 = run_agent_wrapper("What is the maternity limit?")
+    assert out2["ok"] is False
+    assert out2["intent"] == "unsupported"
+    assert out2["plan_name"] is None or out2["plan_name"] == ""
+    assert out2["data"] is None
+    assert "not supported" in out2["message"].lower() or "غير مدعوم" in out2["message"]
