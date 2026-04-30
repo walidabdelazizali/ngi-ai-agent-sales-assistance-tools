@@ -351,6 +351,20 @@ def load_plan(name: str, *, output_dir: Optional[Path] = None) -> dict[str, Any]
             f"Known plans: {', '.join(sorted(set(_PLAN_ALIASES.values())))}"
         )
 
+    # Source Boundary Lock: Never load Remedy 05 from legacy output JSON
+    if name.strip().lower() in ["remedy 05", "remedy 5", "hn-remedy-5"] or filename == "HN-REMEDY-5.json":
+        # Always load from authoritative DOCX, never output JSON
+        if filename in _plan_cache:
+            return _plan_cache[filename]
+        from src.extractors.docx_extractor import extract_docx
+        docx_path = Path("input_docs/HN-REMEDY 5.docx")
+        if not docx_path.exists():
+            raise ValueError("Authoritative DOCX for Remedy 05 not found: input_docs/HN-REMEDY 5.docx")
+        extraction = extract_docx(docx_path)
+        parsed = parse_remedy_plan(extraction)
+        _plan_cache[filename] = parsed
+        return parsed
+
     if filename in _plan_cache:
         return _plan_cache[filename]
 
