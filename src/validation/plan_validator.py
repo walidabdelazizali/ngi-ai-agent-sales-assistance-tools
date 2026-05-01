@@ -8,30 +8,10 @@ def normalize_plan(plan: Dict[str, Any]) -> Dict[str, Any]:
     norm = copy.deepcopy(plan)
     plan_code = norm.get("plan_code") or norm.get("plan_name") or ""
 
-    # Normalize + conditional approval for Remedy 05
+    # Remedy 05: Only normalize plan_code and reimbursement_allowed, do not approve
     if "Remedy 05" in str(norm.get("plan_name", "")):
         norm["plan_code"] = "HN-REMEDY-5"
         norm["reimbursement_allowed"] = True
-
-        required_fields = [
-            "plan_name",
-            "plan_code",
-            "network_name",
-            "annual_limit",
-            "area_of_coverage",
-            "direct_billing",
-            "referral_required",
-        ]
-
-        missing = [f for f in required_fields if f not in norm or not norm[f]]
-
-        if not missing:
-            norm["approval_status"] = "approved"
-            norm["tests_passed"] = True
-            norm["source_trace"] = {
-                field: f"input_docs/HN-REMEDY 5.docx:{field}"
-                for field in required_fields
-            }
 
     # ONLY approve Remedy 02 & 03
     if any(x in plan_code for x in ["Remedy 02", "HN-REMEDY-2", "Remedy 03", "HN-REMEDY-3"]):
@@ -67,7 +47,7 @@ def validate_plan_ready(plan: Dict[str, Any]) -> Tuple[bool, str]:
 
     # Per-field trace
     for field in REQUIRED_FIELDS:
-        if field in ("approval_status", "tests_passed"):
+        if field in ("approval_status", "tests_passed", "source_trace"):
             continue
         if field not in plan["source_trace"]:
             return False, f"Missing source_trace for required field: {field}"
