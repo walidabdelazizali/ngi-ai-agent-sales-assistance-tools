@@ -1,3 +1,58 @@
+# Deterministic WhatsApp client message formatter
+def format_whatsapp_client_message(obj, mode, *, greeting="Hello,", closing="Would you like to proceed?"):
+    """
+    Deterministically format a summary, comparison, or recommendation as a professional WhatsApp client message.
+
+    - obj: dict (allowed keys: plan_name, plan_code, summary_text, recommendation) or str (already formatted body)
+    - mode: "summary" | "comparison" | "recommendation"
+    - greeting: str (default "Hello,")
+    - closing: str (default "Would you like to proceed?")
+    Returns: str (client-ready WhatsApp message)
+    """
+    allowed_modes = {"summary", "comparison", "recommendation"}
+    if mode not in allowed_modes:
+        return "Sorry, a client-ready message is not available for this request."
+
+    # Handle string input as already formatted body
+    if isinstance(obj, str):
+        body = obj.strip()
+    elif isinstance(obj, dict):
+        # Only use allowed keys, ignore all others
+        plan_name = obj.get("plan_name", "") or obj.get("plan_code", "")
+        summary = obj.get("summary_text", "")
+        recommendation = obj.get("recommendation", "")
+        # Only use above variables; ignore any keys starting with _ or unknown fields
+        if mode == "summary":
+            if plan_name and summary:
+                body = f"{plan_name}: {summary.splitlines()[0]}"
+            elif summary:
+                body = summary.splitlines()[0]
+            else:
+                body = "Your plan details are ready."
+        elif mode == "comparison":
+            # For comparison, expect summary_text to contain a comparison line
+            if summary:
+                body = summary.splitlines()[0]
+            else:
+                body = "Comparison details are ready."
+        elif mode == "recommendation":
+            if plan_name and recommendation:
+                body = f"Our recommendation: {plan_name} — {recommendation.splitlines()[0]}"
+            elif recommendation:
+                body = f"Our recommendation: {recommendation.splitlines()[0]}"
+            else:
+                body = "We have a recommendation ready for you."
+    else:
+        return "Sorry, a client-ready message is not available for this request."
+
+    # Final message assembly, always short and client-friendly
+    message = f"{greeting}\n{body}\n{closing}"
+    # Ensure no leakage of internal/debug fields or raw fragments
+    lower_msg = message.lower()
+    forbidden = ["{", "}", "[", "]", "raw", "debug", "internal", "traceback"]
+    if any(x in lower_msg for x in forbidden):
+        return "Sorry, a client-ready message is not available for this request."
+    return message
 """
 Deterministic, channel-oriented output packaging for Remedy plans.
 - WhatsApp-ready short outputs

@@ -1,3 +1,44 @@
+from src.query.output_packaging import format_whatsapp_client_message
+
+def test_whatsapp_client_message_summary():
+    d = {"plan_name": "Remedy 04", "summary_text": "Annual limit: AED 1,000,000\nNetwork: Gold"}
+    msg = format_whatsapp_client_message(d, "summary")
+    assert msg.startswith("Hello,")
+    assert "Remedy 04: Annual limit: AED 1,000,000" in msg
+    assert msg.strip().endswith("proceed?")
+
+def test_whatsapp_client_message_comparison():
+    d = {"summary_text": "Annual limit: AED 500,000 | AED 1,000,000\nNetwork: Silver | Gold"}
+    msg = format_whatsapp_client_message(d, "comparison")
+    assert msg.startswith("Hello,")
+    assert "Annual limit: AED 500,000 | AED 1,000,000" in msg
+    assert msg.strip().endswith("proceed?")
+
+def test_whatsapp_client_message_recommendation():
+    d = {"plan_name": "Remedy 05", "recommendation": "Best for family coverage."}
+    msg = format_whatsapp_client_message(d, "recommendation")
+    assert msg.startswith("Hello,")
+    assert "Our recommendation: Remedy 05 — Best for family coverage." in msg
+    assert msg.strip().endswith("proceed?")
+
+def test_whatsapp_client_message_str_input():
+    s = "Comparison between Remedy 02 and Remedy 03: Annual limit: AED 500,000 | AED 1,000,000"
+    msg = format_whatsapp_client_message(s, "comparison")
+    assert msg.startswith("Hello,")
+    assert "Comparison between Remedy 02 and Remedy 03" in msg
+
+def test_whatsapp_client_message_invalid_mode():
+    d = {"plan_name": "Remedy 04", "summary_text": "Annual limit: AED 1,000,000"}
+    msg = format_whatsapp_client_message(d, "invalid")
+    assert "not available" in msg
+
+def test_whatsapp_client_message_no_leakage():
+    d = {"plan_name": "Remedy 04", "summary_text": "Annual limit: AED 1,000,000", "_debug": "should not appear"}
+    msg = format_whatsapp_client_message(d, "summary")
+    assert "_debug" not in msg
+    assert "{" not in msg and "}" not in msg and "[" not in msg and "]" not in msg
+    assert "raw" not in msg.lower()
+    assert "traceback" not in msg.lower()
 from src.agent_adapter import handle_user_query
 
 def test_plan_core_dict():
