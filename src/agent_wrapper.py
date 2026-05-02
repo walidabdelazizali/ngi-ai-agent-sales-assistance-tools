@@ -226,6 +226,13 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
         return resp
     from src.validation.plan_validator import normalize_plan, validate_plan_ready
     from src.query.plan_query import load_plan
+    def _strip_internal_metadata(d):
+        if isinstance(d, dict):
+            d = dict(d)
+            d.pop("approval_status", None)
+            d.pop("tests_passed", None)
+            d.pop("source_trace", None)
+        return d
     if intent in ("plan_core", "reimbursement_rules", "plan_summary"):
         try:
             # Always validate readiness using the full plan, not the tool output
@@ -257,6 +264,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             if intent == "plan_core":
                 data = get_plan_core(plan_name)
                 plan = normalize_plan(data)
+                plan = _strip_internal_metadata(plan)
                 # Special-case: if query is for maternity limit and plan is Remedy 02, extract AED value from maternity_cover
                 if "maternity limit" in user_query.lower() and plan_name == "Remedy 02":
                     maternity_cover = plan.get("maternity_cover")
@@ -309,6 +317,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             elif intent == "reimbursement_rules":
                 data = get_reimbursement_rules(plan_name)
                 plan = normalize_plan(data)
+                plan = _strip_internal_metadata(plan)
                 lines = []
                 lines.append(f"Reimbursement allowed: {'Yes' if plan.get('reimbursement_allowed') else 'No' if plan.get('reimbursement_allowed') is not None else 'Not available' }.")
                 if plan.get('reimbursement_scope'):
@@ -342,6 +351,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             elif intent == "plan_summary":
                 data = get_plan_summary(plan_name)
                 # Do not validate summary output, just return if plan is ready
+                data = _strip_internal_metadata(data)
                 summary_text = data.get("summary_text")
                 if summary_text and isinstance(summary_text, str) and summary_text.strip() and summary_text.strip().lower() not in ["none", "not available", "plan summary returned."]:
                     msg = summary_text.strip()

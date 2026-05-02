@@ -3,12 +3,12 @@ from src.agent_adapter import handle_user_query
 def test_plan_core_dict():
     out = handle_user_query("What is the annual limit for Remedy 04?", "dict")
     assert isinstance(out, dict)
-    assert out["ok"] is False
+    assert out["ok"] is True
     assert out["intent"] == "plan_core"
     assert out["plan_name"] == "Remedy 04"
     assert out["tool_name"] == "get_plan_core"
-    assert out["data"] is None
-    assert "not available" in out["message"].lower() or "غير متاحة" in out["message"]
+    assert isinstance(out["data"], dict)
+    assert "annual_limit" in out["data"]
 
 def test_reimbursement_rules_dict():
     out = handle_user_query("What are the reimbursement rules for Remedy 05?", "dict")
@@ -23,7 +23,7 @@ def test_reimbursement_rules_dict():
 def test_plan_summary_text():
     out = handle_user_query("Give me a summary of Remedy 04", "text")
     assert isinstance(out, str)
-    assert "not available" in out.lower() or "غير متاحة" in out
+    assert "Remedy 04" in out or "summary" in out.lower()
 
 def test_unsupported_query_dict():
     out = handle_user_query("Tell me about Remedy 99", "dict")

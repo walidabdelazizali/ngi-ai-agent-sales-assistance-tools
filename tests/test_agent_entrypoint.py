@@ -13,7 +13,7 @@ def test_plan_core_human():
     assert code == 0
     assert "Intent: plan_core" in out
     assert "Plan: Remedy 04" in out
-    assert "not available" in out.lower() or "غير متاحة" in out
+    assert "annual limit" in out.lower()
 
 def test_reimbursement_rules_human():
     code, out, err = run_entrypoint(["What are the reimbursement rules for Remedy 05?"])
@@ -27,7 +27,7 @@ def test_plan_summary_human():
     assert code == 0
     assert "Intent: plan_summary" in out
     assert "Plan: Remedy 04" in out
-    assert "not available" in out.lower() or "غير متاحة" in out
+    assert "summary" in out.lower()
 
 def test_unsupported_plan_human():
     code, out, err = run_entrypoint(["Tell me about Remedy 99"])

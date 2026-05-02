@@ -3,14 +3,8 @@ from src.query.plan_query import get_plan_field
 
 def test_arabic_reimbursement_scope():
     result = get_plan_field("Remedy 04", "نطاق التعويض")
-    # For blocked plans, expect fallback
-    assert result["ok"] is False
-    formatted = result["formatted"]
-    assert (
-        "not available" in formatted.lower()
-        or "غير متاحة" in formatted
-        or "No deterministic answer is available" in formatted
-    )
+    assert result["ok"] is True
+    assert result["field"] == "reimbursement_scope"
 """Tests for Arabic/business-friendly deterministic query polish layer.
 
 Covers:

@@ -36,18 +36,10 @@ def test_ambiguous_query():
 def test_execute_planned_query_dict():
     out = execute_planned_query("Tell me the annual limit for Remedy 04", "dict")
     assert isinstance(out, dict)
-    # Remedy 04 is blocked, expect fallback
-    assert out["ok"] is False
+    assert out["ok"] is True
     assert out["intent"] == "plan_core"
     assert out["plan_name"] == "Remedy 04"
-    # Fallback message should be present in either 'formatted' or 'message'
-    fallback_sources = [out.get("formatted", ""), out.get("message", "")]
-    assert any(
-        ("not available" in s.lower())
-        or ("No deterministic answer is available" in s)
-        or ("غير متاحة" in s)
-        for s in fallback_sources
-    )
+    assert "annual_limit" in out.get("data", {})
 
 def test_execute_planned_query_text():
     out = execute_planned_query("What are the reimbursement rules for Remedy 05?", "text")

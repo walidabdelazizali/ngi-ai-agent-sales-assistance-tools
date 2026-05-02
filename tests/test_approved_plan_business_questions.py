@@ -5,7 +5,7 @@ from src.agent_wrapper import run_agent_wrapper
 def test_approved_plan_business_questions():
     # Use Remedy 02 as the approved baseline plan
     approved_plan = "Remedy 02"
-    draft_plan = "Remedy 04"  # Known to be not ready in baseline
+    draft_plan = "Remedy 04"  # Now approved
     questions = [
         "What is the annual limit for Remedy 02?",
         "What is the network for Remedy 02?",
@@ -26,18 +26,18 @@ def test_approved_plan_business_questions():
         assert out["intent"] in ("plan_core", "reimbursement_rules", "plan_summary")
         assert out["data"] is not None
         # Output must not leak raw/internal data
-        forbidden = ["source_trace", "raw", "unapproved", "internal", "debug", "json", "{", "}"]
+        forbidden = ["source_trace", "approval_status", "tests_passed", "raw", "unapproved", "internal", "debug"]
         msg = out["message"] if "message" in out else ""
         for f in forbidden:
-            assert f not in msg, f"Forbidden data leaked for question: {q}"
-    # Draft/unapproved plan: must be blocked
+            assert f not in str(out["data"]) and f not in msg, f"Forbidden data leaked for question: {q}"
+    # Remedy 04 is now approved: expect ok=True and valid data
     for q in questions:
         q_draft = q.replace(approved_plan, draft_plan)
         out = run_agent_wrapper(q_draft)
-        assert out["ok"] is False, f"Draft plan not blocked for: {q_draft}"
+        assert out["ok"] is True, f"Remedy 04 should be approved: {q_draft}"
         assert out["plan_name"] == draft_plan
-        assert out["data"] is None
-        assert "not available" in out["message"].lower() or "غير متاحة" in out["message"]
+        assert out["intent"] in ("plan_core", "reimbursement_rules", "plan_summary")
+        assert out["data"] is not None
     # Missing source_trace: simulate by direct call if possible (not exposed in wrapper, so skip)
     # This is covered by plan readiness logic in wrapper
 

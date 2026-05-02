@@ -34,19 +34,17 @@ REMEDY_03_QUESTIONS = [
 ]
 
 # =========================
-# Remedy 04 (Blocked)
-# =========================
 REMEDY_04_QUESTIONS = [
-    ("annual limit", "What is the annual limit for Remedy 04?", False, False),
-    ("network", "What is the network for Remedy 04?", False, False),
-    ("area of coverage", "What is the area of coverage for Remedy 04?", False, False),
-    ("inpatient", "What is the inpatient cover for Remedy 04?", False, False),
-    ("outpatient", "What is the outpatient cover for Remedy 04?", False, False),
-    ("pharmacy", "What is the pharmacy cover for Remedy 04?", False, False),
-    ("maternity", "What is the maternity cover for Remedy 04?", False, False),
+    ("annual limit", "What is the annual limit for Remedy 04?", True, False),
+    ("network", "What is the network for Remedy 04?", True, False),
+    ("area of coverage", "What is the area of coverage for Remedy 04?", True, False),
+    ("inpatient", "What is the inpatient cover for Remedy 04?", True, True),
+    ("outpatient", "What is the outpatient cover for Remedy 04?", True, True),
+    ("pharmacy", "What is the pharmacy cover for Remedy 04?", True, True),
+    ("maternity", "What is the maternity cover for Remedy 04?", True, True),
     ("dental", "What is the dental cover for Remedy 04?", False, False),
-    ("referral required", "Is referral required for Remedy 04?", False, False),
-    ("outside network reimbursement", "What is the outside network reimbursement for Remedy 04?", False, False),
+    ("referral required", "Is referral required for Remedy 04?", True, True),
+    ("outside network reimbursement", "What is the outside network reimbursement for Remedy 04?", True, True),
 ]
 
 # =========================

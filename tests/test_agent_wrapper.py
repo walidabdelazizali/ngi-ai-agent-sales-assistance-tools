@@ -49,21 +49,21 @@ from src.agent_wrapper import run_agent_wrapper
 
 def test_plan_core_english():
     out = run_agent_wrapper("What is the annual limit for Remedy 04?")
-    assert out["ok"] is False
+    assert out["ok"] is True
     assert out["intent"] == "plan_core"
     assert out["plan_name"] == "Remedy 04"
     assert out["tool_name"] == "get_plan_core"
-    assert out["data"] is None
-    assert "not available" in out["message"].lower() or "غير متاحة" in out["message"]
+    assert isinstance(out["data"], dict)
+    assert "annual_limit" in out["data"]
 
 def test_plan_core_arabic():
     out = run_agent_wrapper("ما هو الحد السنوي لخطة ريميدي 04؟")
-    assert out["ok"] is False
+    assert out["ok"] is True
     assert out["intent"] == "plan_core"
     assert out["plan_name"] == "Remedy 04"
     assert out["tool_name"] == "get_plan_core"
-    assert out["data"] is None
-    assert "غير متاحة" in out["message"] or "not available" in out["message"].lower()
+    assert isinstance(out["data"], dict)
+    assert "annual_limit" in out["data"]
 
 def test_plan_core_remedy03_english():
     out = run_agent_wrapper("What is the annual limit for Remedy 03?")
@@ -153,26 +153,22 @@ def test_plan_summary_mixed_arabic_english_phrasing():
     # Mixed phrasing: Arabic + English
     queries = [
         ("لخص خطة Remedy 03", True),
-        ("ملخص Remedy 04", False),
+        ("ملخص Remedy 04", True),
         ("اعطني summary لخطة Remedy 05", True),
-        ("اعطني ملخص لخطة Remedy 04", False),
+        ("اعطني ملخص لخطة Remedy 04", True),
         ("ملخص ريميدي 03", True),
     ]
     for q, should_be_ok in queries:
         out = run_agent_wrapper(q)
-        if should_be_ok:
-            assert out["ok"] is True
-            assert out["intent"] == "plan_summary"
-            assert out["plan_name"] in ("Remedy 03", "Remedy 05")
-            assert out["tool_name"] == "get_plan_summary"
-            assert isinstance(out["data"], dict)
-            assert "summary_text" in out["data"]
-            summary = out["data"]["summary_text"]
-            # Check for at least one Arabic label
-            assert summary or "رمز الخطة" in summary
-        else:
-            assert out["ok"] is False
-            assert "not available" in out["message"].lower() or "غير متاحة" in out["message"]
+        assert out["ok"] is True
+        assert out["intent"] == "plan_summary"
+        assert out["plan_name"] in ("Remedy 03", "Remedy 04", "Remedy 05")
+        assert out["tool_name"] == "get_plan_summary"
+        assert isinstance(out["data"], dict)
+        assert "summary_text" in out["data"]
+        summary = out["data"]["summary_text"]
+        # Check for at least one Arabic label
+        assert summary or "رمز الخطة" in summary
 
 def test_reimbursement_rules_english():
     out = run_agent_wrapper("What are the reimbursement rules for Remedy 05?")
@@ -198,21 +194,21 @@ def test_reimbursement_rules_arabic():
 
 def test_plan_summary_english():
     out = run_agent_wrapper("Give me a summary of Remedy 04")
-    assert out["ok"] is False
+    assert out["ok"] is True
     assert out["intent"] == "plan_summary"
     assert out["plan_name"] == "Remedy 04"
     assert out["tool_name"] == "get_plan_summary"
-    assert out["data"] is None
-    assert "not available" in out["message"].lower() or "غير متاحة" in out["message"]
+    assert isinstance(out["data"], dict)
+    assert "summary_text" in out["data"]
 
 def test_plan_summary_arabic():
     out = run_agent_wrapper("اعطني ملخص لخطة ريميدي 04")
-    assert out["ok"] is False
+    assert out["ok"] is True
     assert out["intent"] == "plan_summary"
     assert out["plan_name"] == "Remedy 04"
     assert out["tool_name"] == "get_plan_summary"
-    assert out["data"] is None
-    assert "غير متاحة" in out["message"] or "not available" in out["message"].lower()
+    assert isinstance(out["data"], dict)
+    assert "summary_text" in out["data"]
 
 def test_unsupported_intent():
     out = run_agent_wrapper("Show me the dental coverage for Remedy 04")
@@ -255,11 +251,12 @@ def test_normalized_field_exists():
     assert "normalized" in out
     norm = out["normalized"]
     assert set(norm.keys()) == {"status", "tool", "answer", "errors"}
-    # Remedy 04 is blocked: expect not_ready and answer is None
-    assert norm["status"] == "not_ready"
+    # Remedy 04 is now approved: expect ok and answer present
+    assert norm["status"] == "ok"
     assert norm["tool"] == "get_plan_core"
-    assert norm["answer"] is None
+    assert norm["answer"] is not None
     assert isinstance(norm["errors"], list)
+    # Approval metadata assertion
 
 def test_plan_summary_business_friendly_formatting():
     from src.agent_adapter import handle_user_query

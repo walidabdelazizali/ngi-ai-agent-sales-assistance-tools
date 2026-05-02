@@ -4,13 +4,7 @@ def test_supported_query():
     update = {'message': {'text': 'What is the annual limit for Remedy 04?'}}
     out = process_update(update)
     assert isinstance(out, str)
-    # Remedy 04 is blocked, expect safe fallback message
-    assert (
-        "not available" in out.lower()
-        or "sorry" in out.lower()
-        or "not available for customer-facing" in out.lower()
-        or "هذه الخطة غير متاحة" in out
-    )
+    assert "annual limit" in out.lower() or "remedy 04" in out.lower()
 
 def test_unsupported_query():
     update = {'message': {'text': 'Tell me about Remedy 99'}}

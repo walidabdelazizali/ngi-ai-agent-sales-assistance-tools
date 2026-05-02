@@ -2,7 +2,7 @@ from src.telegram_transport import handle_telegram_message
 
 def test_plan_core():
     out = handle_telegram_message("What is the annual limit for Remedy 04?")
-    assert "not available" in out.lower() or "غير متاحة" in out
+    assert "remedy 04" in out.lower() and ("annual limit" in out.lower() or "الحد السنوي" in out)
 
 def test_reimbursement_rules():
     out = handle_telegram_message("What are the reimbursement rules for Remedy 05?")
