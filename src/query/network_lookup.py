@@ -20,6 +20,28 @@ import unicodedata
 NETWORK_CSV = Path("runtime_data/networks/network_list_normalized.csv")
 
 class NetworkLookup:
+    @staticmethod
+    def _cleanup_provider_query(query):
+        """
+        Remove common question phrases from provider queries for more robust matching.
+        Only applies to 'Is ... in the network' and Arabic equivalents, not 'Which network ...'.
+        """
+        q = query.strip().lower()
+        # Only strip for 'Is ... in the network' and Arabic equivalents
+        # English: Is [PROVIDER] in the network?
+        m = re.match(r"is\s+(.+?)\s+in the network", q)
+        if m:
+            return m.group(1).strip().title()
+        # Arabic: هل [PROVIDER] داخل الشبكة؟
+        m = re.match(r"هل\s+(.+?)\s+داخل الشبكة", q)
+        if m:
+            return m.group(1).strip().title()
+        # Arabic: هل [PROVIDER] في الشبكة؟
+        m = re.match(r"هل\s+(.+?)\s+في الشبكة", q)
+        if m:
+            return m.group(1).strip().title()
+        # Otherwise, return original
+        return query.strip()
     def list_basic_plus_providers(self, city=None, provider_type=None, lang="en", label_override=None):
         """
         List all providers in HN Basic Plus, optionally filtered by city and type.
@@ -83,20 +105,28 @@ class NetworkLookup:
     @staticmethod
     def extract_provider_from_query(query):
         q = query.strip().lower()
-        # English: Which network [PROVIDER]?
+        # 1. Which network tiers is X available in?
+        m = re.match(r"^which network tiers is (.+) available in\??$", q)
+        if m:
+            return m.group(1).strip().title()
+        # 2. Which network is X available in?
+        m = re.match(r"^which network is (.+) available in\??$", q)
+        if m:
+            return m.group(1).strip().title()
+        # 3. What city is X located in?
+        m = re.match(r"^what city is (.+) located in\??$", q)
+        if m:
+            return m.group(1).strip().title()
+        # 4. What type of provider is X?
+        m = re.match(r"^what type of provider is (.+)\??$", q)
+        if m:
+            return m.group(1).strip().title()
+        # 5. Which network X?
         m = re.match(r"^which network (.+)\??$", q)
         if m:
             return m.group(1).strip().title()
-        # English: Is [PROVIDER] in the network?
-        m = re.match(r"is\s+(.+?)\s+in the network", q)
-        if m:
-            return m.group(1).strip().title()
-        # Arabic: هل [PROVIDER] داخل الشبكة؟
-        m = re.match(r"هل\s+(.+?)\s+داخل الشبكة", q)
-        if m:
-            return m.group(1).strip().title()
-        # Fallback: return whole query
-        return query.strip()
+        # Otherwise, use cleanup helper
+        return NetworkLookup._cleanup_provider_query(query)
     def __init__(self, csv_path=NETWORK_CSV):
         self.df = pd.read_csv(csv_path, dtype=str, encoding='utf-8-sig').fillna("")
         self.df.columns = [c.lower() for c in self.df.columns]
