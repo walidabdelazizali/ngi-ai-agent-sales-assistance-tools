@@ -96,10 +96,21 @@ SUMMARY_PATTERNS = [
 
 def _extract_plan_name(text: str) -> Optional[str]:
     lowered = text.lower()
+    found = []
     for key, canonical in SUPPORTED_PLANS.items():
         if key in lowered:
-            return canonical
+            found.append(canonical)
+    if found:
+        return found[0]
     return None
+
+def _extract_all_plan_names(text: str) -> list[str]:
+    lowered = text.lower()
+    found = []
+    for key, canonical in SUPPORTED_PLANS.items():
+        if key in lowered and canonical not in found:
+            found.append(canonical)
+    return found
 
 def _intent_from_query(text: str) -> Optional[str]:
     lowered = text.lower()
@@ -107,9 +118,19 @@ def _intent_from_query(text: str) -> Optional[str]:
     if "maternity limit" in lowered:
         if _extract_plan_name(lowered):
             return "plan_core"
-    # Comparison intent
+    # Comparison/recommendation intent
+    rec_patterns = ["better", "recommend", "which one", "offer to client", "should i offer", "which should i offer", "which plan"]
     if _extract_comparison_plans(lowered):
+        for pat in rec_patterns:
+            if pat in lowered:
+                return "plan_comparison"
         return "plan_comparison"
+    # If two supported plans are mentioned and a rec pattern is present, treat as comparison
+    all_plans = _extract_all_plan_names(lowered)
+    if len(all_plans) == 2:
+        for pat in rec_patterns:
+            if pat in lowered:
+                return "plan_comparison"
     # Plan core
     for field in PLAN_CORE_FIELDS:
         if field in lowered:
@@ -138,6 +159,11 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
     # Comparison intent
     if intent == "plan_comparison":
         plans = _extract_comparison_plans(user_query)
+        # Fallback: if not found, try all plan names in query
+        if not plans:
+            all_plans = _extract_all_plan_names(user_query)
+            if len(all_plans) == 2:
+                plans = (all_plans[0], all_plans[1])
         if not plans:
             msg = "Please specify two supported plans to compare." if not is_arabic else "يرجى تحديد خطتين للمقارنة."
             return {
@@ -160,10 +186,14 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
         # Only show key fields
         key_fields = [
             ("annual_limit", "Annual Limit", "الحد السنوي"),
-            ("network_name", "Network", "الشبكة"),
-            ("area_of_coverage", "Area of Coverage", "نطاق التغطية"),
+            ("pharmacy_cover_summary", "Pharmacy", "الصيدلة"),
+            ("diagnostics_cover_summary", "Diagnostics", "التشخيص"),
+            ("physiotherapy_cover_summary", "Physiotherapy", "العلاج الطبيعي"),
             ("direct_billing", "Direct Billing", "الدفع المباشر"),
-            ("reimbursement_allowed", "Reimbursement Allowed", "التعويض")
+            ("reimbursement_allowed", "Reimbursement Allowed", "التعويض"),
+            ("referral_required", "Referral Required", "الإحالة"),
+            ("area_of_coverage", "Area of Coverage", "نطاق التغطية"),
+            ("network_name", "Network", "الشبكة"),
         ]
         lines = []
         if is_arabic:
@@ -174,9 +204,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             v1 = cmp['differing'].get(field, {}).get('plan_a') if field in cmp['differing'] else None
             v2 = cmp['differing'].get(field, {}).get('plan_b') if field in cmp['differing'] else None
             if v1 is None and v2 is None:
-                v1 = v2 = cmp['matched'][0]['value'] if cmp['matched'] and cmp['matched'][0]['field'] == field else None
-            if v1 is None and v2 is None:
-                # Try matched
+                v1 = v2 = None
                 for m in cmp['matched']:
                     if m['field'] == field:
                         v1 = v2 = m['value']
@@ -187,6 +215,43 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 label = label_en
             if v1 is not None or v2 is not None:
                 lines.append(f"{label}: {plan1}: {v1 if v1 is not None else '-'} | {plan2}: {v2 if v2 is not None else '-'}")
+        # Recommendation logic
+        def score(plan):
+            # Higher is better
+            score = 0
+            # Stronger pharmacy/diagnostics/physio
+            for field in ["pharmacy_cover_summary", "diagnostics_cover_summary", "physiotherapy_cover_summary"]:
+                val = cmp['differing'].get(field, {}).get('plan_a' if plan == plan1 else 'plan_b')
+                if val and isinstance(val, str) and ("unlimited" in val.lower() or "covered" in val.lower() or "yes" in val.lower()):
+                    score += 2
+                elif val:
+                    score += 1
+            # Lower co-pay (not available, so skip)
+            # Direct access
+            direct = cmp['differing'].get("referral_required", {}).get('plan_a' if plan == plan1 else 'plan_b')
+            if direct is False:
+                score += 2
+            return score
+        s1 = score(plan1)
+        s2 = score(plan2)
+        if s1 > s2:
+            rec = f"We recommend {plan1} as it offers stronger benefits in key areas."
+        elif s2 > s1:
+            rec = f"We recommend {plan2} as it offers stronger benefits in key areas."
+        else:
+            # Highlight differences if similar
+            diffs = []
+            for field, label_en, _ in key_fields:
+                v1 = cmp['differing'].get(field, {}).get('plan_a')
+                v2 = cmp['differing'].get(field, {}).get('plan_b')
+                if v1 != v2 and v1 is not None and v2 is not None:
+                    diffs.append(f"{label_en}: {plan1}={v1}, {plan2}={v2}")
+            if diffs:
+                rec = f"Both plans are similar overall, but differ in: {', '.join(diffs)}."
+            else:
+                rec = "Both plans are very similar in their key benefits."
+        lines.append("")
+        lines.append(rec)
         msg = "\n".join(lines)
         return {
             "ok": True,
