@@ -215,31 +215,89 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 label = label_en
             if v1 is not None or v2 is not None:
                 lines.append(f"{label}: {plan1}: {v1 if v1 is not None else '-'} | {plan2}: {v2 if v2 is not None else '-'}")
-        # Recommendation logic
+        # Sales-friendly recommendation section
+        def get_sales_recommendation():
+            reasons_b = []
+            reasons_a = []
+            # Pharmacy
+            pharm_a = cmp['differing'].get('pharmacy_cover_summary', {}).get('plan_a')
+            pharm_b = cmp['differing'].get('pharmacy_cover_summary', {}).get('plan_b')
+            if pharm_a and pharm_b:
+                import re
+                lim_a = re.search(r"AED[\s.]*([\d,]+)", pharm_a)
+                lim_b = re.search(r"AED[\s.]*([\d,]+)", pharm_b)
+                if lim_a and lim_b:
+                    val_a = int(lim_a.group(1).replace(",", ""))
+                    val_b = int(lim_b.group(1).replace(",", ""))
+                    if val_b > val_a:
+                        reasons_b.append(f"Higher pharmacy limit (AED {val_b:,} vs {val_a:,})")
+                    elif val_a > val_b:
+                        reasons_a.append(f"Higher pharmacy limit (AED {val_a:,} vs {val_b:,})")
+            # Physio
+            physio_a = cmp['differing'].get('physiotherapy_cover_summary', {}).get('plan_a')
+            physio_b = cmp['differing'].get('physiotherapy_cover_summary', {}).get('plan_b')
+            import re
+            def physio_sessions(val):
+                if not val:
+                    return 0
+                m = re.search(r"(\d{1,3})\s*(sessions|جلسة)", val)
+                return int(m.group(1)) if m else 0
+            s_a = physio_sessions(physio_a)
+            s_b = physio_sessions(physio_b)
+            if s_b > s_a:
+                reasons_b.append(f"Better physiotherapy coverage ({s_b} sessions vs {s_a})")
+            elif s_a > s_b:
+                reasons_a.append(f"Better physiotherapy coverage ({s_a} sessions vs {s_b})")
+            # Diagnostics (just mention if different)
+            diag_a = cmp['differing'].get('diagnostics_cover_summary', {}).get('plan_a')
+            diag_b = cmp['differing'].get('diagnostics_cover_summary', {}).get('plan_b')
+            if diag_a and diag_b and diag_a != diag_b:
+                reasons_b.append("Stronger diagnostics benefits")
+            # Referral
+            ref_a = cmp['differing'].get('referral_required', {}).get('plan_a')
+            ref_b = cmp['differing'].get('referral_required', {}).get('plan_b')
+            if ref_b is False and ref_a is not False:
+                reasons_b.append("No referral required")
+            if ref_a is False and ref_b is not False:
+                reasons_a.append("No referral required")
+            # Reimbursement
+            reimb_a = cmp['differing'].get('reimbursement_allowed', {}).get('plan_a')
+            reimb_b = cmp['differing'].get('reimbursement_allowed', {}).get('plan_b')
+            if reimb_a and not reimb_b:
+                reasons_a.append("Reimbursement flexibility is important")
+            if reimb_b and not reimb_a:
+                reasons_b.append("Reimbursement flexibility is important")
+            # Compose recommendation
+            rec_lines = ["Recommendation:"]
+            if reasons_b:
+                rec_lines.append(f"{plan2} is generally better if your client is looking for stronger outpatient benefits:")
+                for r in reasons_b:
+                    rec_lines.append(f"- {r}")
+            if reasons_a:
+                if reasons_b:
+                    rec_lines.append("")
+                rec_lines.append(f"{plan1} may be preferred if:")
+                for r in reasons_a:
+                    rec_lines.append(f"- {r}")
+            if not reasons_a and not reasons_b:
+                rec_lines.append("Both plans are very similar in their key benefits.")
+            return "\n".join(rec_lines)
+        # Old similarity/difference logic for fallback
         def score(plan):
-            # Higher is better
             score = 0
-            # Stronger pharmacy/diagnostics/physio
             for field in ["pharmacy_cover_summary", "diagnostics_cover_summary", "physiotherapy_cover_summary"]:
                 val = cmp['differing'].get(field, {}).get('plan_a' if plan == plan1 else 'plan_b')
                 if val and isinstance(val, str) and ("unlimited" in val.lower() or "covered" in val.lower() or "yes" in val.lower()):
                     score += 2
                 elif val:
                     score += 1
-            # Lower co-pay (not available, so skip)
-            # Direct access
             direct = cmp['differing'].get("referral_required", {}).get('plan_a' if plan == plan1 else 'plan_b')
             if direct is False:
                 score += 2
             return score
         s1 = score(plan1)
         s2 = score(plan2)
-        if s1 > s2:
-            rec = f"We recommend {plan1} as it offers stronger benefits in key areas."
-        elif s2 > s1:
-            rec = f"We recommend {plan2} as it offers stronger benefits in key areas."
-        else:
-            # Highlight differences if similar
+        if s1 == s2:
             diffs = []
             for field, label_en, _ in key_fields:
                 v1 = cmp['differing'].get(field, {}).get('plan_a')
@@ -247,11 +305,13 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 if v1 != v2 and v1 is not None and v2 is not None:
                     diffs.append(f"{label_en}: {plan1}={v1}, {plan2}={v2}")
             if diffs:
-                rec = f"Both plans are similar overall, but differ in: {', '.join(diffs)}."
+                lines.append("")
+                lines.append(f"Both plans are similar overall, but differ in: {', '.join(diffs)}.")
             else:
-                rec = "Both plans are very similar in their key benefits."
+                lines.append("")
+                lines.append("Both plans are very similar in their key benefits.")
         lines.append("")
-        lines.append(rec)
+        lines.append(get_sales_recommendation())
         msg = "\n".join(lines)
         return {
             "ok": True,
