@@ -55,7 +55,7 @@ def test_get_plan_core_remedy05():
     # Area of coverage: match DOCX territory wording (e.g., "UAE")
     assert "UAE" in result["area_of_coverage"] or "United Arab Emirates" in result["area_of_coverage"]
     assert result["direct_billing"] is True
-    assert result["referral_required"] is True
+    assert result["referral_required"] is False
 
 # 3. test_get_reimbursement_rules_remedy04
 

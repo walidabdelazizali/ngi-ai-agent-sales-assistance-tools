@@ -13,12 +13,6 @@ def print_human_readable(result: dict):
     if result.get('tool_name'):
         print(f"Tool: {result.get('tool_name')}")
     print(f"Message: {result.get('message')}")
-    data = result.get('data')
-    if data and isinstance(data, dict):
-        for k in sorted(data.keys()):
-            print(f"{k}: {data[k]}")
-    elif data:
-        print(f"Data: {data}")
 
 def main():
     parser = argparse.ArgumentParser(description="Deterministic Agent Entrypoint")

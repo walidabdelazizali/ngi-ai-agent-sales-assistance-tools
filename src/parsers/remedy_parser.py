@@ -223,6 +223,19 @@ def _extract_reimbursement_allowed(paragraphs: list[str]) -> Optional[bool]:
 
 def _extract_referral_required(paragraphs: list[str],
                                tables: list[list[list[str]]]) -> Optional[bool]:
+    # If 'Direct Access to Specialist' is present anywhere, referral is NOT required
+    direct_access_patterns = [r"Direct Access to Specialist", r"Not Applicable with Direct Access to Specialist"]
+    for para in paragraphs:
+        for pat in direct_access_patterns:
+            if re.search(pat, para, re.IGNORECASE):
+                return False
+    for table in tables:
+        for row in table:
+            for cell in row:
+                for pat in direct_access_patterns:
+                    if re.search(pat, cell, re.IGNORECASE):
+                        return False
+    # Otherwise, look for referral evidence
     for para in paragraphs:
         if re.search(r"referral", para, re.IGNORECASE):
             return True
