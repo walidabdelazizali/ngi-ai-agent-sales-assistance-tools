@@ -20,7 +20,7 @@ def test_reimbursement_rules_human():
     assert code == 0
     assert "Intent: reimbursement_rules" in out
     assert "Plan: Remedy 05" in out
-    assert "not available" in out.lower() or "غير متاحة" in out
+    assert "reimbursement allowed" in out.lower() or "تعويض" in out
 
 def test_plan_summary_human():
     code, out, err = run_entrypoint(["Give me a summary of Remedy 04"])
@@ -45,9 +45,9 @@ def test_json_mode():
     code, out, err = run_entrypoint(["--json", "What are the reimbursement rules for Remedy 05?"])
     assert code == 0
     data = json.loads(out)
-    # Remedy 05 is blocked: expect ok=False and fallback message
-    assert data["ok"] is False
-    assert "not available" in data["message"].lower() or "غير متاحة" in data["message"]
+    # Remedy 05 is now approved: expect ok=True and valid data
+    assert data["ok"] is True
+    assert "reimbursement allowed" in data["message"].lower() or "تعويض" in data["message"]
     # Ensure valid JSON structure
     assert "intent" in data
     assert "plan_name" in data

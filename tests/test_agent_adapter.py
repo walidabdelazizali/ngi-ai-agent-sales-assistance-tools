@@ -13,12 +13,12 @@ def test_plan_core_dict():
 def test_reimbursement_rules_dict():
     out = handle_user_query("What are the reimbursement rules for Remedy 05?", "dict")
     assert isinstance(out, dict)
-    assert out["ok"] is False
+    assert out["ok"] is True
     assert out["intent"] == "reimbursement_rules"
     assert out["plan_name"] == "Remedy 05"
     assert out["tool_name"] == "get_reimbursement_rules"
-    assert out["data"] is None
-    assert "not available" in out["message"].lower() or "غير متاحة" in out["message"]
+    assert isinstance(out["data"], dict)
+    assert "reimbursement allowed" in out["message"].lower() or "تعويض" in out["message"]
 
 def test_plan_summary_text():
     out = handle_user_query("Give me a summary of Remedy 04", "text")

@@ -154,7 +154,7 @@ def test_plan_summary_mixed_arabic_english_phrasing():
     queries = [
         ("لخص خطة Remedy 03", True),
         ("ملخص Remedy 04", False),
-        ("اعطني summary لخطة Remedy 05", False),
+        ("اعطني summary لخطة Remedy 05", True),
         ("اعطني ملخص لخطة Remedy 04", False),
         ("ملخص ريميدي 03", True),
     ]
@@ -163,7 +163,7 @@ def test_plan_summary_mixed_arabic_english_phrasing():
         if should_be_ok:
             assert out["ok"] is True
             assert out["intent"] == "plan_summary"
-            assert out["plan_name"] in ("Remedy 03",)
+            assert out["plan_name"] in ("Remedy 03", "Remedy 05")
             assert out["tool_name"] == "get_plan_summary"
             assert isinstance(out["data"], dict)
             assert "summary_text" in out["data"]
@@ -176,25 +176,25 @@ def test_plan_summary_mixed_arabic_english_phrasing():
 
 def test_reimbursement_rules_english():
     out = run_agent_wrapper("What are the reimbursement rules for Remedy 05?")
-    # Remedy 05 is blocked: expect ok=False and fallback message
-    assert out["ok"] is False
-    assert "not available" in out["message"].lower() or "غير متاحة" in out["message"]
+    # Remedy 05 is now approved: expect ok=True and valid data
+    assert out["ok"] is True
+    assert "reimbursement allowed" in out["message"].lower() or "تعويض" in out["message"]
     # Ensure valid structure
     assert out["intent"] == "reimbursement_rules"
     assert out["plan_name"] == "Remedy 05"
     assert out["tool_name"] == "get_reimbursement_rules"
-    assert out["data"] is None or isinstance(out["data"], dict)
+    assert isinstance(out["data"], dict)
 
 def test_reimbursement_rules_arabic():
     out = run_agent_wrapper("ما هي شروط التعويض لخطة ريميدي 05؟")
-    # Remedy 05 is blocked: expect ok=False and fallback message
-    assert out["ok"] is False
-    assert "not available" in out["message"].lower() or "غير متاحة" in out["message"]
+    # Remedy 05 is now approved: expect ok=True and valid data
+    assert out["ok"] is True
+    assert "reimbursement allowed" in out["message"].lower() or "تعويض" in out["message"]
     # Ensure valid structure
     assert out["intent"] == "reimbursement_rules"
     assert out["plan_name"] == "Remedy 05"
     assert out["tool_name"] == "get_reimbursement_rules"
-    assert out["data"] is None or isinstance(out["data"], dict)
+    assert isinstance(out["data"], dict)
 
 def test_plan_summary_english():
     out = run_agent_wrapper("Give me a summary of Remedy 04")
