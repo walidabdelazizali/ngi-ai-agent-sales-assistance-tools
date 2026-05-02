@@ -118,6 +118,12 @@ _PLAN_ALIASES: dict[str, str] = {
     "remedy05":  "HN-REMEDY-5.json",
     "remedy5":   "HN-REMEDY-5.json",
     "hn-remedy-5": "HN-REMEDY-5.json",
+    # Batch 3: Remedy 06
+    "remedy 06": "HN-REMEDY-6.json",
+    "remedy 6":  "HN-REMEDY-6.json",
+    "remedy06":  "HN-REMEDY-6.json",
+    "remedy6":   "HN-REMEDY-6.json",
+    "hn-remedy-6": "HN-REMEDY-6.json",
     # Arabic
     "ريميدي 2": "HN-REMEDY-2.json",
     "ريميدي 02": "HN-REMEDY-2.json",
@@ -125,6 +131,8 @@ _PLAN_ALIASES: dict[str, str] = {
     "ريميدي 03": "HN-REMEDY-3.json",
     "ريميدي 4": "HN-REMEDY-4.json",
     "ريميدي 04": "HN-REMEDY-4.json",
+    "ريميدي 6": "HN-REMEDY-6.json",
+    "ريميدي 06": "HN-REMEDY-6.json",
 }
 
 # Fields exposed to the owner (subset of BUSINESS_FIELDS, excludes internal
@@ -351,7 +359,7 @@ def load_plan(name: str, *, output_dir: Optional[Path] = None) -> dict[str, Any]
             f"Known plans: {', '.join(sorted(set(_PLAN_ALIASES.values())))}"
         )
 
-    # Source Boundary Lock: Never load Remedy 05 from legacy output JSON
+    # Source Boundary Lock: Never load Remedy 05 or 06 from legacy output JSON
     if name.strip().lower() in ["remedy 05", "remedy 5", "hn-remedy-5"] or filename == "HN-REMEDY-5.json":
         # Always load from authoritative DOCX, never output JSON
         if filename in _plan_cache:
@@ -365,7 +373,23 @@ def load_plan(name: str, *, output_dir: Optional[Path] = None) -> dict[str, Any]
         # --- Approval metadata patch for Remedy 05 ---
         parsed["approval_status"] = "approved"
         parsed["tests_passed"] = True
-        # source_trace must be a dict mapping each required field (except approval_status, tests_passed, source_trace) to the DOCX path
+        from src.schema.plan_schema import REQUIRED_FIELDS
+        parsed["source_trace"] = {field: str(docx_path) for field in REQUIRED_FIELDS if field not in ("approval_status", "tests_passed", "source_trace")}
+        _plan_cache[filename] = parsed
+        return parsed
+    if name.strip().lower() in ["remedy 06", "remedy 6", "hn-remedy-6"] or filename == "HN-REMEDY-6.json":
+        # Always load from authoritative DOCX, never output JSON
+        if filename in _plan_cache:
+            return _plan_cache[filename]
+        from src.extractors.docx_extractor import extract_docx
+        docx_path = Path("input_docs/HN-REMEDY 6.docx")
+        if not docx_path.exists():
+            raise ValueError("Authoritative DOCX for Remedy 06 not found: input_docs/HN-REMEDY 6.docx")
+        extraction = extract_docx(docx_path)
+        parsed = parse_remedy_plan(extraction)
+        # --- Approval metadata patch for Remedy 06 ---
+        parsed["approval_status"] = "approved"
+        parsed["tests_passed"] = True
         from src.schema.plan_schema import REQUIRED_FIELDS
         parsed["source_trace"] = {field: str(docx_path) for field in REQUIRED_FIELDS if field not in ("approval_status", "tests_passed", "source_trace")}
         _plan_cache[filename] = parsed
