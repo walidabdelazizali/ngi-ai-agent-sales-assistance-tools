@@ -104,27 +104,27 @@ class NetworkLookup:
         return heading + "\n" + "\n".join(lines)
     @staticmethod
     def extract_provider_from_query(query):
-        q = query.strip().lower()
+        q = query.strip()
         # 1. Which network tiers is X available in?
-        m = re.match(r"^which network tiers is (.+) available in\??$", q)
+        m = re.match(r"^which network tiers is (.+) available in\??$", q, re.IGNORECASE)
         if m:
-            return m.group(1).strip().title()
+            return m.group(1).strip()
         # 2. Which network is X available in?
-        m = re.match(r"^which network is (.+) available in\??$", q)
+        m = re.match(r"^which network is (.+) available in\??$", q, re.IGNORECASE)
         if m:
-            return m.group(1).strip().title()
+            return m.group(1).strip()
         # 3. What city is X located in?
-        m = re.match(r"^what city is (.+) located in\??$", q)
+        m = re.match(r"^what city is (.+) located in\??$", q, re.IGNORECASE)
         if m:
-            return m.group(1).strip().title()
+            return m.group(1).strip()
         # 4. What type of provider is X?
-        m = re.match(r"^what type of provider is (.+)\??$", q)
+        m = re.match(r"^what type of provider is (.+)\??$", q, re.IGNORECASE)
         if m:
-            return m.group(1).strip().title()
+            return m.group(1).strip()
         # 5. Which network X?
-        m = re.match(r"^which network (.+)\??$", q)
+        m = re.match(r"^which network (.+)\??$", q, re.IGNORECASE)
         if m:
-            return m.group(1).strip().title()
+            return m.group(1).strip()
         # Otherwise, use cleanup helper
         return NetworkLookup._cleanup_provider_query(query)
     def __init__(self, csv_path=NETWORK_CSV):
@@ -338,6 +338,28 @@ class NetworkLookup:
         if re.search(r"is .+ in the network|هل .+ داخل الشبكة|هل .+ في الشبكة", query, re.IGNORECASE):
             found = self.is_in_network(provider)
             return f"YES: {norm_provider}" if found else f"NO: {norm_provider}"
+
+        # Minimal patch: handle network tiers, city, and type queries
+        extracted_provider = self.extract_provider_from_query(query)
+        row = self.find_provider(extracted_provider)
+        if isinstance(row, pd.Series):
+            # 1. Which network tiers is X available in?
+            if re.search(r"which network tiers is .+ available in", query, re.IGNORECASE):
+                tiers = []
+                for col in self.network_tier_cols:
+                    val = row.get(col, "")
+                    if val and str(val).strip().lower() not in ("no", "0", "", "false", "n/a"):
+                        tiers.append(f"{col}: {val}")
+                return f"Network tiers for {extracted_provider}: {', '.join(tiers) if tiers else 'None'}"
+            # 2. What city is X located in?
+            if re.search(r"what city is .+ located in", query, re.IGNORECASE):
+                city = row.get("city", "")
+                return f"City for {extracted_provider}: {city if city else 'Unknown'}"
+            # 3. What type of provider is X?
+            if re.search(r"what type of provider is .+\??$", query, re.IGNORECASE):
+                ptype = row.get("type", "")
+                return f"Type for {extracted_provider}: {ptype if ptype else 'Unknown'}"
+
         # which network?
         if re.search(r"which network|ما هي الشبكات", query, re.IGNORECASE):
             nets = self.which_networks(provider)
