@@ -143,11 +143,144 @@ def _intent_from_query(text: str) -> Optional[str]:
     for pat in SUMMARY_PATTERNS:
         if pat in lowered:
             return "plan_summary"
+    # New: plan+city+type intent
+    # e.g. "What hospitals are available in Sharjah for Remedy 6?"
+    city_words = ["in ", "available in ", "located in ", "في "]
+    # Add plural forms for robust detection
+    type_words = [
+        "hospital", "hospitals",
+        "clinic", "clinics",
+        "pharmacy", "pharmacies",
+        "medical center", "medical centers",
+        "laboratory", "laboratories",
+        "lab", "labs",
+        "diagnostic center", "diagnostic centers"
+    ]
+    lowered = text.lower()
+    if any(t in lowered for t in type_words) and any(c in lowered for c in city_words) and _extract_plan_name(lowered):
+        return "plan_network_city_type"
     return None
 
 def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
     plan_name = _extract_plan_name(user_query)
     intent = _intent_from_query(user_query)
+    is_arabic = any(c in user_query for c in '\u0627\u0623\u0625\u0622\u0628\u062a\u062b\u062c\u062d\u062e\u062d\u0632\u0631\u0632\u0633\u0634\u0635\u0636\u0637\u0638\u0639\u063a\u0641\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u064a\u0621\u0649\u0629')
+
+    # New: plan_network_city_type intent
+    if intent == "plan_network_city_type":
+        # Extract city and provider type
+        import re
+        # Extract provider type (first match, map plural to singular for lookup)
+        type_map = {
+            "hospitals": "hospital",
+            "hospital": "hospital",
+            "clinics": "clinic",
+            "clinic": "clinic",
+            "pharmacies": "pharmacy",
+            "pharmacy": "pharmacy",
+            "medical centers": "medical center",
+            "medical center": "medical center",
+            "laboratories": "laboratory",
+            "laboratory": "laboratory",
+            "labs": "lab",
+            "lab": "lab",
+            "diagnostic centers": "diagnostic center",
+            "diagnostic center": "diagnostic center"
+        }
+        provider_type = None
+        lowered_query = user_query.lower()
+        for t in type_map:
+            if t in lowered_query:
+                provider_type = type_map[t]
+                break
+        # Extract city (word after 'in' or 'available in' or 'في')
+        city = None
+        m = re.search(r"in ([A-Za-z\u0621-\u064A ]+)", user_query, re.IGNORECASE)
+        if m:
+            city = m.group(1).strip().split()[0]
+        else:
+            m = re.search(r"available in ([A-Za-z\u0621-\u064A ]+)", user_query, re.IGNORECASE)
+            if m:
+                city = m.group(1).strip().split()[0]
+            else:
+                m = re.search(r"في ([A-Za-z\u0621-\u064A ]+)", user_query, re.IGNORECASE)
+                if m:
+                    city = m.group(1).strip().split()[0]
+        # Get plan network
+        from src.v2_plan_loader import load_clean_plan
+        try:
+            plan_data = load_clean_plan(plan_name)
+            network_name = None
+            for k in ["network", "network_name", "الشبكة"]:
+                if k in plan_data and plan_data[k]:
+                    network_name = plan_data[k]
+                    break
+            if not network_name:
+                msg = "Network not defined for this plan"
+                return {
+                    "ok": False,
+                    "intent": intent,
+                    "plan_name": plan_name,
+                    "tool_name": None,
+                    "data": None,
+                    "message": msg,
+                    "normalized": {
+                        "status": "not_found",
+                        "tool": None,
+                        "answer": None,
+                        "errors": [msg]
+                    }
+                }
+            # Only support HN Basic Plus for now (minimal patch)
+            if "basic plus" not in network_name.lower():
+                msg = f"Network '{network_name}' not supported for provider listing"
+                return {
+                    "ok": False,
+                    "intent": intent,
+                    "plan_name": plan_name,
+                    "tool_name": None,
+                    "data": None,
+                    "message": msg,
+                    "normalized": {
+                        "status": "not_found",
+                        "tool": None,
+                        "answer": None,
+                        "errors": [msg]
+                    }
+                }
+            from src.query.network_lookup import get_network_lookup
+            lookup = get_network_lookup()
+            result = lookup.list_basic_plus_providers(city=city, provider_type=provider_type)
+            return {
+                "ok": True,
+                "intent": intent,
+                "plan_name": plan_name,
+                "tool_name": "list_basic_plus_providers",
+                "data": None,
+                "message": result,
+                "normalized": {
+                    "status": "ok",
+                    "tool": "list_basic_plus_providers",
+                    "answer": result,
+                    "errors": []
+                }
+            }
+        except Exception as e:
+            msg = f"Error: {e}"
+            return {
+                "ok": False,
+                "intent": intent,
+                "plan_name": plan_name,
+                "tool_name": None,
+                "data": None,
+                "message": msg,
+                "normalized": {
+                    "status": "error",
+                    "tool": None,
+                    "answer": None,
+                    "errors": [msg]
+                }
+            }
     is_arabic = any(c in user_query for c in 'اأإآبتثجحخدذرزسشصضطظعغفقكلمنهويءىة')
     # Patch: Robust summary routing for mixed Arabic/English phrasing
     # If summary pattern is present and plan_name is present, force plan_summary intent
@@ -351,6 +484,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
         return resp
     from src.validation.plan_validator import normalize_plan, validate_plan_ready
     from src.query.plan_query import load_plan
+    import re  # Fix: ensure re is always available for maternity limit extraction
     def _strip_internal_metadata(d):
         if isinstance(d, dict):
             d = dict(d)

@@ -1,3 +1,29 @@
+def test_plan_network_city_type_pharmacies_in_sharjah_remedy6():
+    out = run_agent_wrapper("What pharmacies are available in Sharjah for Remedy 6?")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_network_city_type"
+    assert out["plan_name"] == "Remedy 06"
+    assert out["tool_name"] == "list_basic_plus_providers"
+    msg = out["message"]
+    # Should contain pharmacy or pharmacies and Sharjah in heading
+    assert "Sharjah".lower() in msg.lower()
+    assert ("pharmacy" in msg.lower() or "pharmacies" in msg.lower())
+    # Should not mention lab(s)
+    assert "lab(s)" not in msg.lower()
+    # Should not be unsupported
+    assert "not supported" not in msg.lower()
+def test_plan_network_city_type_hospitals_in_sharjah_remedy6():
+    out = run_agent_wrapper("What hospitals are available in Sharjah for Remedy 6?")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_network_city_type"
+    assert out["plan_name"] == "Remedy 06"
+    assert out["tool_name"] == "list_basic_plus_providers"
+    msg = out["message"]
+    # Should contain at least one hospital and Sharjah in heading
+    assert "Sharjah".lower() in msg.lower()
+    assert "hospital" in msg.lower()
+    # Should not be unsupported
+    assert "not supported" not in msg.lower()
 def test_plan_comparison_english():
     out = run_agent_wrapper("compare Remedy 02 and Remedy 04")
     assert out["ok"] is True
