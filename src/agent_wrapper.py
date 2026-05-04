@@ -157,8 +157,26 @@ def _intent_from_query(text: str) -> Optional[str]:
         "diagnostic center", "diagnostic centers"
     ]
     lowered = text.lower()
+    # Standard pattern
     if any(t in lowered for t in type_words) and any(c in lowered for c in city_words) and _extract_plan_name(lowered):
         return "plan_network_city_type"
+    # Alias patterns for existing supported queries (no output/logic change)
+    # e.g. "Dubai providers Remedy 6", "Providers in Dubai Remedy 6", "Remedy 6 Dubai providers", etc.
+    city_aliases = ["dubai", "abu dhabi", "sharjah"]
+    plan_aliases = ["remedy 6", "remedy 06"]
+    provider_aliases = ["providers", "labs", "diagnostic centers", "diagnostic", "lab"]
+    for city in city_aliases:
+        for plan in plan_aliases:
+            for prov in provider_aliases:
+                # "Dubai providers Remedy 6"
+                if city in lowered and prov in lowered and plan in lowered:
+                    return "plan_network_city_type"
+                # "Providers in Dubai Remedy 6"
+                if prov in lowered and city in lowered and plan in lowered:
+                    return "plan_network_city_type"
+                # "Remedy 6 Dubai providers"
+                if plan in lowered and city in lowered and prov in lowered:
+                    return "plan_network_city_type"
     return None
 
 def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
