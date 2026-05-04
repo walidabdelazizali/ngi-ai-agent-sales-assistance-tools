@@ -59,6 +59,53 @@ def test_smoke_real_network_file():
     assert found, "No provider found in real file"
 
 
+# ---------------------------------------------------------------------------
+# Regression: Provider lookup for Aster Hospital Qusais, Burjeel Hospital, Burjeel Pharmacy
+# ---------------------------------------------------------------------------
+import pytest
+from src.query.network_lookup import NetworkLookup
+
+
+# DATA MISSING: Aster Hospital Qusais is not present in the CSV. Test must assert safe not-found behavior.
+@pytest.mark.skipif(not Path("runtime_data/networks/network_list_normalized.csv").exists(), reason="No real network file present")
+def test_aster_hospital_qusais_not_found():
+    lookup = NetworkLookup(Path("runtime_data/networks/network_list_normalized.csv"))
+    result = lookup.provider_details("Aster Hospital Qusais")
+    # Should NOT be found, and should not raise or misclassify
+    assert not result["found"], f"Aster Hospital Qusais unexpectedly found: {result}"
+    assert result.get("provider_name") is None or "ASTER HOSPITAL" not in str(result.get("provider_name")).upper()
+    # Should not be misclassified as pharmacy or hospital
+    assert result.get("type") is None or result["type"].upper() not in ("PHARMACY", "HOSPITAL")
+
+@pytest.mark.skipif(not Path("runtime_data/networks/network_list_normalized.csv").exists(), reason="No real network file present")
+def test_burjeel_hospital_abu_dhabi_found():
+    lookup = NetworkLookup(Path("runtime_data/networks/network_list_normalized.csv"))
+    # Canonical name: BURJEEL HOSPITAL
+    result = lookup.provider_details("Burjeel Hospital Abu Dhabi")
+    assert result["found"], f"Burjeel Hospital Abu Dhabi not found: {result}"
+    assert "BURJEEL HOSPITAL" in result["provider_name"].upper()
+    assert result["type"].upper() == "HOSPITAL"
+
+@pytest.mark.skipif(not Path("runtime_data/networks/network_list_normalized.csv").exists(), reason="No real network file present")
+def test_burjeel_pharmacy_not_confused_with_hospital():
+    lookup = NetworkLookup(Path("runtime_data/networks/network_list_normalized.csv"))
+    # There are multiple Burjeel Pharmacy entries; test one
+    result = lookup.provider_details("Burjeel Pharmacy")
+    # Should be ambiguous, not found, and not a hospital
+    assert not result.get("found", False), f"Burjeel Pharmacy should not be uniquely found: {result}"
+    assert result.get("ambiguous", False), f"Burjeel Pharmacy should be ambiguous: {result}"
+    # Should not be classified as hospital
+    if "type" in result and result["type"]:
+        assert "HOSPITAL" not in str(result["type"]).upper(), f"Burjeel Pharmacy should not be classified as hospital: {result}"
+
+def test_burjeel_pharmacy_llc_branch_13_found():
+    lookup = NetworkLookup(Path("runtime_data/networks/network_list_normalized.csv"))
+    result = lookup.provider_details("Burjeel Pharmacy LLC - Branch 13")
+    assert result["found"], f"Burjeel Pharmacy LLC - Branch 13 not found: {result}"
+    assert "PHARMACY" in result["type"].upper(), f"Should be classified as PHARMACY: {result}"
+    assert "HOSPITAL" not in result["type"].upper(), f"Should not be classified as HOSPITAL: {result}"
+
+
 def test_basic_plus_alias_positive():
     csv_path = Path("runtime_data/networks/network_list_normalized.csv")
     if not csv_path.exists():

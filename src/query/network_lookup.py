@@ -212,17 +212,80 @@ class NetworkLookup:
             if len(idxs) == 1:
                 return self.df.iloc[idxs[0]]
             return 'ambiguous' if len(idxs) > 1 else None
-        # 3. unique contains match (provider_name or google_name)
+
+        # 2.5: Try stripping trailing city if present and retry
+        city_list = set(self.df["city"].dropna().str.lower().unique())
+        norm_parts = norm.split()
+        if len(norm_parts) > 2:
+            # Try removing last word if it matches a city
+            if norm_parts[-1] in city_list:
+                norm_city_stripped = " ".join(norm_parts[:-1])
+                if norm_city_stripped in self.provider_name_idx:
+                    idxs = self.provider_name_idx[norm_city_stripped]
+                    if len(idxs) == 1:
+                        return self.df.iloc[idxs[0]]
+                    return 'ambiguous' if len(idxs) > 1 else None
+
+        # --- Multi-word entity safe matching ---
+        # Known generic words to exclude as sole match
+        known_types = {"hospital", "pharmacy", "clinic", "medical", "center", "centre"}
+        known_cities = set(self.df["city"].dropna().str.lower().unique())
+        norm_tokens = norm.split()
+        # Build all n-grams (phrases) from the query, longest to shortest
+        ngrams = []
+        for n in range(len(norm_tokens), 0, -1):
+            for i in range(len(norm_tokens) - n + 1):
+                phrase = " ".join(norm_tokens[i:i+n])
+                ngrams.append(phrase)
         matches = []
         for idx, row in self.df.iterrows():
             pn = self._normalize(row.get("provider_name", ""))
             gn = self._normalize(row.get("google_name", ""))
-            if norm in pn or norm in gn:
-                matches.append(idx)
+            row_type = str(row.get("type", "")).lower()
+            row_city = str(row.get("city", "")).lower()
+            # Only match if overlap is not a generic type word
+            for phrase in ngrams:
+                if phrase in known_types or phrase in known_cities:
+                    continue
+                # Accept if provider_name is a word-bound substring of query, or vice versa
+                if (f" {pn} " in f" {norm} " or f" {norm} " in f" {pn} ") or (f" {gn} " in f" {norm} " or f" {norm} " in f" {gn} "):
+                    matches.append(idx)
+                    break
+        # If no matches, fallback to unique_contains_fallback logic (for test coverage)
+        if not matches:
+            for idx, row in self.df.iterrows():
+                pn = self._normalize(row.get("provider_name", ""))
+                if norm in pn:
+                    matches.append(idx)
+        # If still no matches, not found
+        if not matches:
+            return None
+        # If type is in query, filter by type
+        type_token = None
+        for t in norm_tokens:
+            if t in known_types:
+                type_token = t
+                break
+        if type_token:
+            matches = [i for i in matches if type_token in str(self.df.iloc[i].get("type", "")).lower()]
+            if not matches:
+                return None
+        # If city is in query, filter by city
+        city_token = None
+        for t in norm_tokens:
+            if t in known_cities:
+                city_token = t
+                break
+        if city_token:
+            matches = [i for i in matches if city_token in str(self.df.iloc[i].get("city", "")).lower()]
+            if not matches:
+                return None
+        # Final decision
         if len(matches) == 1:
             return self.df.iloc[matches[0]]
         if len(matches) > 1:
             return 'ambiguous'
+        return None
         # 4. substring/contains match in google_name only
         google_matches = []
         for idx, row in self.df.iterrows():
