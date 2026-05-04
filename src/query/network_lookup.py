@@ -86,9 +86,9 @@ class NetworkLookup:
                 return "[NETWORK]\nلا يوجد مزودون مطابقون للمعايير المحددة في شبكة HN Basic Plus."
             else:
                 return "[NETWORK]\nNo matching providers found in HN Basic Plus network."
-        # Format output (max 15)
+        # Format output: return all matching providers (no truncation)
         lines = []
-        for _, row in df.head(15).iterrows():
+        for _, row in df.iterrows():
             name = row.get("provider_name", "")
             lines.append(f"- {name}")
         # Heading
