@@ -269,17 +269,23 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             from src.query.network_lookup import get_network_lookup
             lookup = get_network_lookup()
             result = lookup.list_basic_plus_providers(city=city, provider_type=provider_type)
-            # Output hardening: Remove [NETWORK] and improve heading wording for Dubai/Abu Dhabi Remedy 6 only
-            if intent == "plan_network_city_type" and plan_name in ("Remedy 06", "Remedy 6") and city and city.lower() in ("dubai", "abu", "abu dhabi") and provider_type in ("lab", "diagnostic center"):
+            # Output hardening: Remove [NETWORK] and standardize heading for supported cities/categories
+            if intent == "plan_network_city_type" and plan_name in ("Remedy 06", "Remedy 6") and city and provider_type:
                 lines = result.splitlines()
                 # Remove [NETWORK] if present
                 if lines and lines[0].strip().startswith("[NETWORK]"):
                     lines = lines[1:]
-                # Build improved heading
-                city_heading = "Abu Dhabi" if city.lower().startswith("abu") else city.title()
-                heading = f"{city_heading} diagnostic providers (HN Basic Plus) for Remedy 6:"
-                improved = [heading] + lines[1:] if len(lines) > 1 else [heading]
-                result = "\n".join(improved)
+                # Standardize heading for Sharjah hospitals
+                if city.lower() == "sharjah" and provider_type == "hospital":
+                    heading = f"Sharjah hospitals (HN Basic Plus) for Remedy 6:"
+                    improved = [heading] + lines[1:] if len(lines) > 1 else [heading]
+                    result = "\n".join(improved)
+                # Standardize heading for Dubai/Abu Dhabi diagnostic providers (already clean, but ensure no [NETWORK])
+                elif city.lower() in ("dubai", "abu", "abu dhabi") and provider_type in ("lab", "diagnostic center"):
+                    city_heading = "Abu Dhabi" if city.lower().startswith("abu") else city.title()
+                    heading = f"{city_heading} diagnostic providers (HN Basic Plus) for Remedy 6:"
+                    improved = [heading] + lines[1:] if len(lines) > 1 else [heading]
+                    result = "\n".join(improved)
             return {
                 "ok": True,
                 "intent": intent,
