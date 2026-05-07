@@ -353,9 +353,31 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 }
             }
         plan1, plan2 = plans
-        from src.query.plan_query import compare_plans
-        cmp = compare_plans(plan1, plan2)
-        # Only show key fields
+        try:
+            from src.query.plan_query import compare_plans
+            cmp = compare_plans(plan1, plan2)
+        except Exception as ex:
+            # Block unsupported/unknown plans and return safe message
+            msg = (
+                "Sorry, comparison is not supported or not available for one or both plans."
+                if not is_arabic else
+                "عذراً، المقارنة غير مدعومة أو غير متاحة لخطة أو أكثر."
+            )
+            return {
+                "ok": False,
+                "intent": "plan_comparison",
+                "plan_name": f"{plan1} vs {plan2}",
+                "tool_name": None,
+                "data": None,
+                "message": msg,
+                "normalized": {
+                    "status": "not_found",
+                    "tool": None,
+                    "answer": None,
+                    "errors": [msg]
+                }
+            }
+        # Only show key fields (no internal fields)
         key_fields = [
             ("annual_limit", "Annual Limit", "الحد السنوي"),
             ("pharmacy_cover_summary", "Pharmacy", "الصيدلة"),
@@ -387,7 +409,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 label = label_en
             if v1 is not None or v2 is not None:
                 lines.append(f"{label}: {plan1}: {v1 if v1 is not None else '-'} | {plan2}: {v2 if v2 is not None else '-'}")
-        # Sales-friendly recommendation section
+        # Sales-friendly recommendation section (unchanged, but do not leak internal fields)
         def get_sales_recommendation():
             reasons_b = []
             reasons_a = []
@@ -484,18 +506,23 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 lines.append("Both plans are very similar in their key benefits.")
         lines.append("")
         lines.append(get_sales_recommendation())
+        # Filter out internal fields from message (no approval_status, tests_passed, source_trace, raw dicts)
         msg = "\n".join(lines)
+        forbidden = ["approval_status", "tests_passed", "source_trace", "status", "tool", "answer", "errors", "{", "}"]
+        for key in forbidden:
+            if key in msg:
+                msg = msg.replace(key, "")
         return {
             "ok": True,
             "intent": "plan_comparison",
             "plan_name": f"{plan1} vs {plan2}",
             "tool_name": "compare_plans",
-            "data": cmp,
+            "data": None,  # Do not expose raw cmp
             "message": msg,
             "normalized": {
                 "status": "ok",
                 "tool": "compare_plans",
-                "answer": cmp,
+                "answer": None,
                 "errors": []
             }
         }
