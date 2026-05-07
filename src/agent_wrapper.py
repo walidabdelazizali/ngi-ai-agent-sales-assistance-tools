@@ -43,6 +43,10 @@ SUPPORTED_PLANS = {
     "hn-remedy-6": "Remedy 06",
     "ريميدي 6": "Remedy 06",
     "ريميدي 06": "Remedy 06",
+    # Classic 2 (plan_core only)
+    "classic 2": "Classic 2",
+    "hn_classic_2": "Classic 2",
+    "hn classic 2": "Classic 2",
 }
 
 import re
@@ -518,8 +522,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
         }
         return resp
     from src.validation.plan_validator import normalize_plan, validate_plan_ready
-    from src.query.plan_query import load_plan
-    import re  # Fix: ensure re is always available for maternity limit extraction
+    import re
     def _strip_internal_metadata(d):
         if isinstance(d, dict):
             d = dict(d)
@@ -529,8 +532,13 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
         return d
     if intent in ("plan_core", "reimbursement_rules", "plan_summary"):
         try:
-            # Always validate readiness using the full plan, not the tool output
-            full_plan = load_plan(plan_name)
+            # Classic 2: use authoritative enhanced loader for readiness and data
+            if plan_name == "Classic 2":
+                from src.tools.internal_loader_hn_classic_2 import load_internal_hn_classic_2
+                full_plan = load_internal_hn_classic_2()
+            else:
+                from src.query.plan_query import load_plan
+                full_plan = load_plan(plan_name)
             norm_plan = normalize_plan(full_plan)
             ok, reason = validate_plan_ready(norm_plan)
             if not ok:

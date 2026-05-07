@@ -9,6 +9,20 @@ from src.parsers.canonical_schema import CANONICAL_FIELDS
 # --- Tool contract functions ---
 
 def get_plan_core(plan_name: str) -> Dict[str, Any]:
+    # Classic 2 plan_core-only routing
+    normalized = plan_name.strip().lower().replace("_", " ")
+    if normalized in {"classic 2", "hn classic 2"}:
+        from src.tools.internal_loader_hn_classic_2 import load_internal_hn_classic_2
+        plan = load_internal_hn_classic_2()
+        return {
+            "plan_name": plan.get("plan_name"),
+            "plan_code": plan.get("plan_code"),
+            "network_name": plan.get("network_name"),
+            "annual_limit": plan.get("annual_limit"),
+            "area_of_coverage": plan.get("area_of_coverage"),
+            "direct_billing": plan.get("direct_billing"),
+            "referral_required": plan.get("referral_required"),
+        }
     try:
         plan = load_plan(plan_name)
     except Exception:
