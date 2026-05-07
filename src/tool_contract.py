@@ -84,6 +84,42 @@ def get_reimbursement_rules(plan_name: str) -> Dict[str, Any]:
     }
 
 def get_plan_summary(plan_name: str) -> Dict[str, Any]:
+    normalized = plan_name.strip().lower().replace("_", " ")
+    if normalized in {"classic 2", "hn classic 2"}:
+        from src.tools.internal_loader_hn_classic_2 import load_internal_hn_classic_2
+        from src.validation.plan_validator import normalize_plan, validate_plan_ready
+        plan = load_internal_hn_classic_2()
+        norm_plan = normalize_plan(plan)
+        ok, reason = validate_plan_ready(norm_plan)
+        if not ok:
+            return {
+                "plan_name": None,
+                "plan_code": None,
+                "summary_text": None,
+                "field_count": 0,
+            }
+        # Build a customer-safe summary string
+        lines = []
+        lines.append(f"Plan: {norm_plan.get('plan_name')}")
+        lines.append(f"Code: {norm_plan.get('plan_code')}")
+        lines.append(f"Network: {norm_plan.get('network_name')}")
+        lines.append(f"Annual limit: {norm_plan.get('annual_limit')}")
+        lines.append(f"Area: {norm_plan.get('area_of_coverage')}")
+        lines.append(f"Direct billing: {'Yes' if norm_plan.get('direct_billing') else 'No' if norm_plan.get('direct_billing') is not None else 'Not available'}")
+        lines.append(f"Referral required: {'Yes' if norm_plan.get('referral_required') else 'No' if norm_plan.get('referral_required') is not None else 'Not available'}")
+        summary_text = "\n".join(lines)
+        # Only return customer-safe fields
+        return {
+            "plan_name": norm_plan.get("plan_name"),
+            "plan_code": norm_plan.get("plan_code"),
+            "network_name": norm_plan.get("network_name"),
+            "annual_limit": norm_plan.get("annual_limit"),
+            "area_of_coverage": norm_plan.get("area_of_coverage"),
+            "direct_billing": norm_plan.get("direct_billing"),
+            "referral_required": norm_plan.get("referral_required"),
+            "summary_text": summary_text,
+            "field_count": 7,
+        }
     try:
         summary = summarize_plan(plan_name)
     except Exception:

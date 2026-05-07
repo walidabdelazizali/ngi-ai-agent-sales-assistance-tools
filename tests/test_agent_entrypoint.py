@@ -54,6 +54,16 @@ def test_json_mode():
     assert "tool_name" in data
     assert "data" in data
 
+def test_classic2_summarize_json_routes_to_plan_summary():
+    code, out, err = run_entrypoint(["--json", "Summarize Classic 2"])
+    assert code == 0
+    assert not err
+    data = json.loads(out)
+    assert data["ok"] is True
+    assert data["intent"] == "plan_summary"
+    assert data["plan_name"] == "Classic 2"
+    assert data["tool_name"] == "get_plan_summary"
+
 def test_regression_safe():
     # Should not crash or throw for any input
     queries = [
