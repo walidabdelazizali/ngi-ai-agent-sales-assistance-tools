@@ -24,7 +24,21 @@ def get_plan_core(plan_name: str) -> Dict[str, Any]:
             "referral_required": plan.get("referral_required"),
         }
     try:
+        from src.validation.plan_validator import normalize_plan, validate_plan_ready
         plan = load_plan(plan_name)
+        norm_plan = normalize_plan(plan)
+        ok, reason = validate_plan_ready(norm_plan)
+        if not ok:
+            return {
+                "plan_name": None,
+                "plan_code": None,
+                "network_name": None,
+                "annual_limit": None,
+                "area_of_coverage": None,
+                "direct_billing": None,
+                "referral_required": None,
+                "maternity_cover": None,
+            }
     except Exception:
         return {
             "plan_name": None,
@@ -34,16 +48,17 @@ def get_plan_core(plan_name: str) -> Dict[str, Any]:
             "area_of_coverage": None,
             "direct_billing": None,
             "referral_required": None,
+            "maternity_cover": None,
         }
     return {
-        "plan_name": plan.get("plan_name"),
-        "plan_code": plan.get("plan_code"),
-        "network_name": plan.get("network_name"),
-        "annual_limit": plan.get("annual_limit"),
-        "area_of_coverage": plan.get("area_of_coverage"),
-        "direct_billing": plan.get("direct_billing"),
-        "referral_required": plan.get("referral_required"),
-        "maternity_cover": plan.get("maternity_cover"),
+        "plan_name": norm_plan.get("plan_name"),
+        "plan_code": norm_plan.get("plan_code"),
+        "network_name": norm_plan.get("network_name"),
+        "annual_limit": norm_plan.get("annual_limit"),
+        "area_of_coverage": norm_plan.get("area_of_coverage"),
+        "direct_billing": norm_plan.get("direct_billing"),
+        "referral_required": norm_plan.get("referral_required"),
+        "maternity_cover": norm_plan.get("maternity_cover"),
     }
 
 def get_reimbursement_rules(plan_name: str) -> Dict[str, Any]:
@@ -121,7 +136,38 @@ def get_plan_summary(plan_name: str) -> Dict[str, Any]:
             "field_count": 7,
         }
     try:
-        summary = summarize_plan(plan_name)
+        from src.validation.plan_validator import normalize_plan, validate_plan_ready
+        plan = load_plan(plan_name)
+        norm_plan = normalize_plan(plan)
+        ok, reason = validate_plan_ready(norm_plan)
+        if not ok:
+            return {
+                "plan_name": None,
+                "plan_code": None,
+                "summary_text": None,
+                "field_count": 0,
+            }
+        # Build a customer-safe summary string
+        lines = []
+        lines.append(f"Plan: {norm_plan.get('plan_name')}")
+        lines.append(f"Code: {norm_plan.get('plan_code')}")
+        lines.append(f"Network: {norm_plan.get('network_name')}")
+        lines.append(f"Annual limit: {norm_plan.get('annual_limit')}")
+        lines.append(f"Area: {norm_plan.get('area_of_coverage')}")
+        lines.append(f"Direct billing: {'Yes' if norm_plan.get('direct_billing') else 'No' if norm_plan.get('direct_billing') is not None else 'Not available'}")
+        lines.append(f"Referral required: {'Yes' if norm_plan.get('referral_required') else 'No' if norm_plan.get('referral_required') is not None else 'Not available'}")
+        summary_text = "\n".join(lines)
+        return {
+            "plan_name": norm_plan.get("plan_name"),
+            "plan_code": norm_plan.get("plan_code"),
+            "network_name": norm_plan.get("network_name"),
+            "annual_limit": norm_plan.get("annual_limit"),
+            "area_of_coverage": norm_plan.get("area_of_coverage"),
+            "direct_billing": norm_plan.get("direct_billing"),
+            "referral_required": norm_plan.get("referral_required"),
+            "summary_text": summary_text,
+            "field_count": 7,
+        }
     except Exception:
         return {
             "plan_name": None,
@@ -129,36 +175,3 @@ def get_plan_summary(plan_name: str) -> Dict[str, Any]:
             "summary_text": None,
             "field_count": 0,
         }
-    # Patch: If plan_name is None in summary, try to get it from loaded plan (passthrough case)
-    plan_name_val = summary.get("plan_name")
-    if plan_name_val is None:
-        try:
-            from src.query.plan_query import load_plan
-            plan = load_plan(plan_name)
-            plan_name_val = plan.get("plan_name")
-        except Exception:
-            plan_name_val = None
-    plan_code_val = summary.get("plan_code")
-    if plan_code_val is None:
-        try:
-            from src.query.plan_query import load_plan
-            plan = load_plan(plan_name)
-            plan_code_val = plan.get("plan_code")
-        except Exception:
-            plan_code_val = None
-    used_fields = [
-        plan_name_val,
-        plan_code_val,
-        summary.get("network_name"),
-        summary.get("annual_limit"),
-        summary.get("area_of_coverage"),
-        summary.get("direct_billing"),
-        summary.get("referral_required"),
-    ]
-    field_count = sum(1 for v in used_fields if v not in (None, "", []))
-    return {
-        "plan_name": plan_name_val,
-        "plan_code": plan_code_val,
-        "summary_text": summary.get("summary_text"),
-        "field_count": field_count,
-    }

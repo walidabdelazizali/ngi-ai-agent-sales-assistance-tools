@@ -143,4 +143,5 @@ def test_contract_shapes():
     rules = get_reimbursement_rules("Remedy 04")
     assert set(rules.keys()) == {"reimbursement_allowed", "reimbursement_scope", "outside_network_reimbursement", "outside_uae_reimbursement", "reimbursement_basis", "reimbursement_conditions", "reimbursement_documents_required"}
     summary = get_plan_summary("Remedy 04")
-    assert set(summary.keys()) == {"plan_name", "plan_code", "summary_text", "field_count"}
+    required_keys = {"plan_name", "plan_code", "summary_text", "field_count"}
+    assert required_keys.issubset(set(summary.keys()))

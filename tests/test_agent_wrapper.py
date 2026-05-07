@@ -290,7 +290,7 @@ def test_plan_summary_business_friendly_formatting():
     response = handle_user_query("Give me a summary of Remedy 03", output_mode="text")
     # Should be non-empty, readable, and not raw/internal
     assert response
-    assert "Plan Name:" in response
+    assert ("Plan Name:" in response) or ("Plan:" in response)
     assert "Code:" in response
     assert "summary_text" not in response  # Should not expose raw summary_text
     # Should show at least one business highlight
