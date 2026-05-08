@@ -135,6 +135,8 @@ def _intent_from_query(text: str) -> Optional[str]:
         for pat in rec_patterns:
             if pat in lowered:
                 return "plan_comparison"
+    if "compare" in lowered and all_plans:
+        return "plan_comparison"
     # Plan core
     for field in PLAN_CORE_FIELDS:
         if field in lowered:
@@ -337,7 +339,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             if len(all_plans) == 2:
                 plans = (all_plans[0], all_plans[1])
         if not plans:
-            msg = "Please specify two supported plans to compare." if not is_arabic else "يرجى تحديد خطتين للمقارنة."
+            msg = "Comparison is not supported or not available for one or both plans. Please specify two supported plans to compare." if not is_arabic else "يرجى تحديد خطتين مدعومتين للمقارنة."
             return {
                 "ok": False,
                 "intent": "plan_comparison",
@@ -353,6 +355,39 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 }
             }
         plan1, plan2 = plans
+        def _comparison_not_available():
+            msg = (
+                "Sorry, comparison is not supported or not available for one or both plans."
+                if not is_arabic else
+                "ط¹ط°ط±ط§ظ‹طŒ ط§ظ„ظ…ظ‚ط§ط±ظ†ط© ط؛ظٹط± ظ…ط¯ط¹ظˆظ…ط© ط£ظˆ ط؛ظٹط± ظ…طھط§ط­ط© ظ„ط®ط·ط© ط£ظˆ ط£ظƒط«ط±."
+            )
+            return {
+                "ok": False,
+                "intent": "plan_comparison",
+                "plan_name": f"{plan1} vs {plan2}",
+                "tool_name": None,
+                "data": None,
+                "message": msg,
+                "normalized": {
+                    "status": "not_found",
+                    "tool": None,
+                    "answer": None,
+                    "errors": [msg]
+                }
+            }
+        try:
+            from src.tools.enhanced_plan_loader import is_enhanced_plan
+            from src.query.plan_query import load_plan
+            from src.validation.plan_validator import normalize_plan, validate_plan_ready
+            if is_enhanced_plan(plan1) or is_enhanced_plan(plan2):
+                return _comparison_not_available()
+            for candidate in (plan1, plan2):
+                norm_candidate = normalize_plan(load_plan(candidate))
+                ok_candidate, _ = validate_plan_ready(norm_candidate)
+                if not ok_candidate:
+                    return _comparison_not_available()
+        except Exception:
+            return _comparison_not_available()
         try:
             from src.query.plan_query import compare_plans
             cmp = compare_plans(plan1, plan2)

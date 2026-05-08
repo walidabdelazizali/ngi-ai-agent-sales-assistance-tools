@@ -351,3 +351,14 @@ def test_unsupported_and_unknown_are_business_friendly():
         # No label prefix
         assert not msg.strip().startswith("["), f"Label prefix leaked in message: {msg}"
 
+def test_plan_comparison_blocked():
+    # Should return safe unsupported JSON, not crash, for invalid/blocked comparison
+    out = run_agent_wrapper("compare Classic 2 and Remedy 99")
+    assert out["ok"] is False
+    assert out["intent"] == "plan_comparison"
+    assert "not supported" in out["message"] or "غير مدعومة" in out["message"]
+    # Should not crash or leak internal fields
+    assert out["tool_name"] is None
+    assert out["data"] is None
+    assert out["normalized"]["status"] in ("not_found", "error")
+

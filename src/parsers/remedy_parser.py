@@ -722,8 +722,7 @@ def parse_remedy_plan(extraction: dict[str, Any]) -> dict[str, Any]:
         direct_billing_dbg = _extract_direct_billing(paragraphs)
         # Referral required (from paragraphs/tables)
         referral_dbg = _extract_referral_required(paragraphs, tables)
-        # Debug print
-        print(f"[Remedy04 DEBUG] plan_name={plan_name} annual_limit={parsed_annual_limit} area_of_coverage={parsed_area} network_name={parsed_network} direct_billing={direct_billing_dbg} referral_required={referral_dbg}")
+        # Debug print removed for production safety
         # Patch parsed dict for Remedy 04
         parsed = {}
         parsed["plan_name"] = _clean_scalar(plan_name)
