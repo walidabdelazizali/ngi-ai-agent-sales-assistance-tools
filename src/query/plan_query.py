@@ -40,6 +40,8 @@ from src.parsers.canonical_schema import BUSINESS_FIELDS
 from src.parsers.plan_comparator import compare_plans as _raw_compare
 
 from src.parsers.remedy_parser import parse_remedy_plan
+# Enhanced loader imports (minimal)
+from src.tools.enhanced_plan_loader import is_enhanced_plan, load_enhanced_plan
 from src.query.network_lookup import get_network_lookup
 
 # ---------------------------------------------------------------------------
@@ -352,6 +354,10 @@ def load_plan(name: str, *, output_dir: Optional[Path] = None) -> dict[str, Any]
     Raises ``ValueError`` if the plan name is not recognized or the file
     is missing.
     """
+    # Enhanced loader delegation (before Remedy alias/file loading)
+    if is_enhanced_plan(name):
+        return load_enhanced_plan(name)
+
     filename = _resolve_plan_key(name)
     if filename is None:
         raise ValueError(
@@ -361,9 +367,7 @@ def load_plan(name: str, *, output_dir: Optional[Path] = None) -> dict[str, Any]
 
     # Source Boundary Lock: Never load Remedy 05 or 06 from legacy output JSON
     if name.strip().lower() in ["remedy 05", "remedy 5", "hn-remedy-5"] or filename == "HN-REMEDY-5.json":
-        # Always load from authoritative DOCX, never output JSON
-        if filename in _plan_cache:
-            return _plan_cache[filename]
+        # ...existing code...
         from src.extractors.docx_extractor import extract_docx
         docx_path = Path("input_docs/HN-REMEDY 5.docx")
         if not docx_path.exists():
@@ -378,9 +382,7 @@ def load_plan(name: str, *, output_dir: Optional[Path] = None) -> dict[str, Any]
         _plan_cache[filename] = parsed
         return parsed
     if name.strip().lower() in ["remedy 06", "remedy 6", "hn-remedy-6"] or filename == "HN-REMEDY-6.json":
-        # Always load from authoritative DOCX, never output JSON
-        if filename in _plan_cache:
-            return _plan_cache[filename]
+        # ...existing code...
         from src.extractors.docx_extractor import extract_docx
         docx_path = Path("input_docs/HN-REMEDY 6.docx")
         if not docx_path.exists():
