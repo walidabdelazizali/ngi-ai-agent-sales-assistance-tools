@@ -225,3 +225,48 @@ stage2-live
   - provider routing-to-unsupported fallthroughs
   - provider alias/dataset normalization gaps
 - Replay full 200-pack after each focused hardening slice.
+
+## Latest Work Session (Stabilization Freeze Sprint)
+
+### Stabilization Freeze Checkpoint
+1. Established controlled baseline checkpoint metadata:
+	- Branch: stage2-live
+	- Commit: 953aad2
+	- Tag: v-safety-boundary-hardening-1
+2. Added freeze documentation set:
+	- [docs/SUPPORTED_CAPABILITIES.md](docs/SUPPORTED_CAPABILITIES.md)
+	- [docs/SAFE_USAGE_BOUNDARIES.md](docs/SAFE_USAGE_BOUNDARIES.md)
+	- [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md)
+	- [docs/INTERNAL_DEMO_SCRIPT.md](docs/INTERNAL_DEMO_SCRIPT.md)
+	- [docs/OPERATOR_RUNBOOK.md](docs/OPERATOR_RUNBOOK.md)
+3. Documented supported deterministic capabilities:
+	- plan summary
+	- plan core fields
+	- provider/network lookup
+	- Arabic/mixed routing
+	- Classic 2R enhanced baseline
+	- factual comparisons
+	- safe blocking behavior
+4. Documented unsupported and safely blocked boundaries:
+	- recommendation-style plan selection
+	- pricing advice
+	- underwriting advice
+	- unapproved enhanced benefits
+	- unknown provider guessing
+	- broad business advice
+5. Added internal demo flow with fixed query set:
+	- 5 plan questions
+	- 5 provider/network questions
+	- 5 Arabic/mixed questions
+	- 3 Classic 2R questions
+	- 3 safe-block examples
+6. Added operator runbook with reproducible commands for:
+	- CLI execution
+	- pytest execution
+	- 200-pack operational replay
+	- classification interpretation (GOOD / REVIEW / BLOCKED_OK / GAP)
+	- GAP containment and triage procedure
+
+## Next Session Priority
+- Keep freeze mode in effect and process only narrow, evidence-backed changes.
+- Any change request must preserve deterministic boundaries and pass full pytest.
