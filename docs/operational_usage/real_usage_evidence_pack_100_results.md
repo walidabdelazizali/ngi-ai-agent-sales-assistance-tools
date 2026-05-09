@@ -1,9 +1,9 @@
 # Real Usage Evidence Pack (100 Questions)
 
 ## Run Context
-- Mode: REAL USAGE EVIDENCE PACK (after normalization sprint)
+- Mode: REAL USAGE EVIDENCE PACK (after provider dataset coverage sprint)
 - Execution path: `python -m src.agent_entrypoint --json <query>`
-- Scope: evidence only
+- Scope: evidence refresh only
 
 ## Evaluation Set Composition
 - plan_summary_benefit: 20
@@ -14,9 +14,9 @@
 - total: 100
 
 ## Summary
-- total GOOD: 63
-- total REVIEW: 19
-- total BLOCKED_OK: 13
+- total GOOD: 71
+- total REVIEW: 16
+- total BLOCKED_OK: 8
 - total GAP: 5
 
 ## Detailed Results
@@ -80,7 +80,7 @@ Referral required: No
 ```text
 Plan: Classic 3
 Code: HN_CLASSIC_3
-الشبكة: Standard
+ط§ظ„ط´ط¨ظƒط©: Standard
 Annual limit: AED 250,000
 Area: UAE+Home country
 Direct billing: Yes
@@ -106,7 +106,7 @@ Sorry, this query is not supported or not available. Please specify a supported 
 ```text
 Plan: Classic 2R
 Code: HN_CLASSIC_2R
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
@@ -122,7 +122,7 @@ Referral required: No
 ```text
 Plan: Classic 2R
 Code: HN_CLASSIC_2R
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
@@ -136,9 +136,9 @@ Referral required: No
 - reason: Deterministic supported response returned.
 - output:
 ```text
-Plan: NGI Healthnet –Remedy 04
+Plan: NGI Healthnet â€“Remedy 04
 Code: HN-REMEDY 4
-Network: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals
+Network: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals
 Annual limit: AED. 150,000
 Area: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
 Direct billing: Yes
@@ -152,9 +152,9 @@ Referral required: Yes
 - reason: Deterministic supported response returned.
 - output:
 ```text
-Plan: NGI Healthnet –Remedy 05
+Plan: NGI Healthnet â€“Remedy 05
 Code: HN-REMEDY-5
-الشبكة: HN Basic Plus
+ط§ظ„ط´ط¨ظƒط©: HN Basic Plus
 Annual limit: AED. 150,000
 Area: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
 Direct billing: Yes
@@ -212,7 +212,7 @@ Sorry, this query is not supported or not available. Please specify a supported 
 - reason: Benefit data exists in source but intentionally not exposed in runtime.
 - output:
 ```text
-عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم.
+ط¹ط°ط±ط§ظ‹طŒ ظ‡ط°ط§ ط§ظ„ط§ط³طھظپط³ط§ط± ط؛ظٹط± ظ…ط¯ط¹ظˆظ… ط£ظˆ ط؛ظٹط± ظ…طھط§ط­. ظٹط±ط¬ظ‰ طھط­ط¯ظٹط¯ ط®ط·ط© ط£ظˆ ط³ط¤ط§ظ„ ظ…ط¯ط¹ظˆظ….
 ```
 #### 15. هل فيه كاشلس في كلاسيك 3؟
 - intent: plan_core
@@ -224,7 +224,7 @@ Sorry, this query is not supported or not available. Please specify a supported 
 ```text
 Plan: Classic 3
 Code: HN_CLASSIC_3
-الشبكة: Standard
+ط§ظ„ط´ط¨ظƒط©: Standard
 Annual limit: AED 250,000
 Area: UAE+Home country
 Direct billing: Yes
@@ -272,7 +272,7 @@ Referral required: No
 ```text
 Plan: Classic 3
 Code: HN_CLASSIC_3
-الشبكة: Standard
+ط§ظ„ط´ط¨ظƒط©: Standard
 Annual limit: AED 250,000
 Area: UAE+Home country
 Direct billing: Yes
@@ -288,7 +288,7 @@ Referral required: No
 ```text
 Plan: Classic 2
 Code: HN_CLASSIC_2
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
@@ -304,7 +304,7 @@ Referral required: No
 ```text
 Plan: Classic 2R
 Code: HN_CLASSIC_2R
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
@@ -312,7 +312,7 @@ Referral required: No
 ```
 
 ### network_provider_lookup
-#### 21. Is Burjeel Hospital in the network?
+#### 1. Is Burjeel Hospital in the network?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -322,7 +322,7 @@ Referral required: No
 ```text
 YES: burjeel hospital
 ```
-#### 22. Is Burjeel Abu Dhabi in the network?
+#### 2. Is Burjeel Abu Dhabi in the network?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -332,7 +332,7 @@ YES: burjeel hospital
 ```text
 YES: burjeel abu dhabi
 ```
-#### 23. Is Accuracy Plus Medical Laboratory in the network?
+#### 3. Is Accuracy Plus Medical Laboratory in the network?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -342,7 +342,7 @@ YES: burjeel abu dhabi
 ```text
 YES: accuracy plus medical laboratory
 ```
-#### 24. Is Aster Qusais in the network?
+#### 4. Is Aster Qusais in the network?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -352,47 +352,27 @@ YES: accuracy plus medical laboratory
 ```text
 YES: aster qusais
 ```
-#### 25. Which network tiers is Burjeel Hospital available in?
-- intent: error
-- tool: None
+#### 5. Which network tiers is Burjeel Hospital available in?
+- intent: network_lookup
+- tool: network_lookup
 - plan: None
-- classification: REVIEW
-- reason: Runtime parsing/handling error requires deterministic guard.
+- classification: GOOD
+- reason: Deterministic supported response returned.
 - output:
 ```text
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 39, in <module>
-    main()
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 26, in main
-    print(json.dumps(result, ensure_ascii=False, indent=2))
-  File "C:\Users\H Dos\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1256.py", line 19, in encode
-    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeEncodeError: 'charmap' codec can't encode character '\u2714' in position 186: character maps to <undefined>
+Network tiers for Burjeel Hospital: hn_exclusive: âœ”, hn_premier: âœ”, hn_advantage: âœ–, hn_standard_plus: âœ–, hn_standard: âœ–, hn_basic_plus: âœ–, hn_basic: âœ–
 ```
-#### 26. Which network tiers for Burjeel Hospital?
-- intent: error
-- tool: None
+#### 6. Which network tiers for Burjeel Hospital?
+- intent: network_lookup
+- tool: network_lookup
 - plan: None
-- classification: REVIEW
-- reason: Runtime parsing/handling error requires deterministic guard.
+- classification: GOOD
+- reason: Deterministic supported response returned.
 - output:
 ```text
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 39, in <module>
-    main()
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 26, in main
-    print(json.dumps(result, ensure_ascii=False, indent=2))
-  File "C:\Users\H Dos\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1256.py", line 19, in encode
-    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeEncodeError: 'charmap' codec can't encode character '\u2714' in position 186: character maps to <undefined>
+Network tiers for Burjeel Hospital: hn_exclusive: âœ”, hn_premier: âœ”, hn_advantage: âœ–, hn_standard_plus: âœ–, hn_standard: âœ–, hn_basic_plus: âœ–, hn_basic: âœ–
 ```
-#### 27. What city is Burjeel Hospital located in?
+#### 7. What city is Burjeel Hospital located in?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -402,7 +382,7 @@ UnicodeEncodeError: 'charmap' codec can't encode character '\u2714' in position 
 ```text
 City for Burjeel Hospital: ABU DHABI
 ```
-#### 28. What city for Burjeel Hospital?
+#### 8. What city for Burjeel Hospital?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -412,7 +392,7 @@ City for Burjeel Hospital: ABU DHABI
 ```text
 City for Burjeel Hospital: ABU DHABI
 ```
-#### 29. What type of provider is Burjeel Hospital?
+#### 9. What type of provider is Burjeel Hospital?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -422,7 +402,7 @@ City for Burjeel Hospital: ABU DHABI
 ```text
 Type for Burjeel Hospital: HOSPITAL
 ```
-#### 30. What type is Burjeel Hospital?
+#### 10. What type is Burjeel Hospital?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -432,7 +412,7 @@ Type for Burjeel Hospital: HOSPITAL
 ```text
 Type for Burjeel Hospital: HOSPITAL
 ```
-#### 31. Burjeel Hospital in which network?
+#### 11. Burjeel Hospital in which network?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -442,7 +422,7 @@ Type for Burjeel Hospital: HOSPITAL
 ```text
 Networks for Burjeel Hospital: hn_exclusive, hn_premier
 ```
-#### 32. Is Burjeel Hospital Abu Dhabi in Basic Plus?
+#### 12. Is Burjeel Hospital Abu Dhabi in Basic Plus?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -452,17 +432,17 @@ Networks for Burjeel Hospital: hn_exclusive, hn_premier
 ```text
 [NETWORK] BURJEEL HOSPITAL is not in HN Basic Plus network.
 ```
-#### 33. Is Unknown Future Hospital in Basic Plus?
+#### 13. Is Unknown Future Hospital in Basic Plus?
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
 - classification: REVIEW
-- reason: Provider lookup failed; likely alias/coverage limitation.
+- reason: Runtime or routing response needs triage.
 - output:
 ```text
 Provider not found.
 ```
-#### 34. show hospitals in sharjah
+#### 14. show hospitals in sharjah
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -481,7 +461,7 @@ Sharjah Hospitals(s) (HN Basic Plus):
 - ROYAL HOSPITAL
 - THUMBAY HOSPITAL DAYCARE - MUWAILAH
 ```
-#### 35. show hospitals in dubai
+#### 15. show hospitals in dubai
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -508,7 +488,7 @@ Dubai Hospitals(s) (HN Basic Plus):
 - JEBEL ALI EMERGENCY AND TRAUMA CENTER
 - ARMADA ONE DAY SURGICAL CENTER DMCC
 ```
-#### 36. show labs in abu dhabi
+#### 16. show labs in abu dhabi
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -530,7 +510,7 @@ Abu Dhabi Diagnostic Centers(s) (HN Basic Plus):
 - UNILABS DIAGNOSTICS L.L.C
 - SANIMED INTERNATIONAL LAB AND MANAGEMENT L.L.C.
 ```
-#### 37. show clinics in dubai
+#### 17. show clinics in dubai
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -638,7 +618,7 @@ Dubai Clinics(s) (HN Basic Plus):
 - DR. ISMAIL POLYCLINIC BRANCH-JEBEL ALI
 - DR. ISMAIL POLYCLINIC KARAMA
 - DR. JOHN CLINIC
-- DR. JOSEPH’S POLYCLINIC-KARAMA BR OF GHI
+- DR. JOSEPHâ€™S POLYCLINIC-KARAMA BR OF GHI
 - DR. KAMKAR MEDICAL & PHYSIOTHERAPY CENTRE
 - DR. KOYA CLINIC
 - DR. MOOPENS' AL QUOZ MEDICAL CENTRE
@@ -869,7 +849,7 @@ POLYCLINIC
 - BETA STAR CLINIC L L C
 - AL BARSHA AL NOOR POLYCLINIC LLC
 ```
-#### 38. What hospitals are available in Sharjah for Remedy 6?
+#### 18. What hospitals are available in Sharjah for Remedy 6?
 - intent: plan_network_city_type
 - tool: list_basic_plus_providers
 - plan: Remedy 06
@@ -887,7 +867,7 @@ Sharjah hospitals (HN Basic Plus) for Remedy 6:
 - ROYAL HOSPITAL
 - THUMBAY HOSPITAL DAYCARE - MUWAILAH
 ```
-#### 39. What pharmacies are available in Sharjah for Remedy 6?
+#### 19. What pharmacies are available in Sharjah for Remedy 6?
 - intent: plan_network_city_type
 - tool: list_basic_plus_providers
 - plan: Remedy 06
@@ -1177,7 +1157,7 @@ Sharjah pharmacy(s) (HN Basic Plus):
 - WASEEM PHARMACY
 - YAS PHARMACY LLC
 - ZAHRAT ALRABIE PHARMACY
-- SHIFA AL JAZEERAH CENTRE PHARMACY .LLC – SHJ.BR
+- SHIFA AL JAZEERAH CENTRE PHARMACY .LLC â€“ SHJ.BR
 - AL YAMAMA PHARMACY
 - AL TALAL PHARMACY
 - AL MISBAH PHARMACY L L C
@@ -1217,10 +1197,10 @@ Sharjah pharmacy(s) (HN Basic Plus):
 - AL BURHAN PHARMACY LLC
 - AL MUBARAK CENTRE PHARMACY LLC
 - AL NAHDA PHARMACY LLC
-- AL RAWDHA PHARMACY LLC
+- AL RAWDHAآ PHARMACYآ LLC
 - AL TAMIMI PHARMACY LLC
 - DAR AL SAJAA PHARMACY LLC
-- NAJMAT ABU SHAGARA PHARMACY LLC
+- NAJMAT ABU SHAGARA PHARMACYآ LLC
 - ZAHRAT AL MADINAH PHARMACY LLC
 - AL GHAD AL AFDAL PHARMACY LLC
 - NAJMAT AL ROLLA PHARMACY LLC
@@ -1310,70 +1290,8613 @@ Sharjah pharmacy(s) (HN Basic Plus):
 - PESHAWAR PHARMACY LLC (SHARJAH)
 - AL BEDAYA PHARMACY L.L.C.SP
 - LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 43 (AL KHAN)
-- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 44 (AL NAHDA SHARJAH)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 44 (AL NAHDAآ SHARJAH)
 - LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 42 (AL SHAHBA)
 ```
-#### 40. Remedy 6 Dubai providers
-- intent: error
-- tool: None
-- plan: None
-- classification: REVIEW
-- reason: Runtime parsing/handling error requires deterministic guard.
+#### 20. Remedy 6 Dubai providers
+- intent: plan_network_city_type
+- tool: list_basic_plus_providers
+- plan: Remedy 06
+- classification: GOOD
+- reason: Deterministic supported response returned.
 - output:
 ```text
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 39, in <module>
-    main()
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 26, in main
-    print(json.dumps(result, ensure_ascii=False, indent=2))
-  File "C:\Users\H Dos\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1256.py", line 19, in encode
-    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeEncodeError: 'charmap' codec can't encode character '\u200b' in position 46961: character maps to <undefined>
+[NETWORK]
+ (s) (HN Basic Plus):
+- ACCURACY PLUS MEDICAL LABORATORY
+- AL BORG DIAGNOSTIC CENTRE FOR LABORATORIES L.L.C.
+- AL FARHAN MEDICAL LABORATORY - L L C
+- Dar Al Mouasah Diagnostic Centre
+- IDEAL CLINICAL LABORATORIES
+- MENA LABS MEDICAL LABORATORY LLC
+- PROFICIENCY SPECIALIST LABORATORIES
+- QUALITY DIAGNOSTIC LABORATORY L.L.C
+- THE OPEN MRI CENTER -LLC
+- UNILABS DIAGNOSTICS L.L.C
+- YAS CLINIC ONE DAY SURGERY - SOLE PROPRIETORSHIP L.L.C
+- AL AHALI HOSPITAL COMPANY LLC BRANCH 1
+- AL AHLI HOSPITAL COMPANY -WLL
+- AL ANAMEL MEDICAL CENTER
+- AL DHANNAH HOSPITAL (EX. RUWAIS HOSPITAL)
+- AL MAZROUI MEDICAL CENTRE ONE DAY SURGERY LLC
+- BAREEN INTERNATIONAL HOSPITAL
+- DELMA HOSPITAL
+- GHIATHY HOSPITAL
+- HEART BEAT MEDICAL CENTER & ONE DAY SURGERY L.L.C.
+- LIFECARE  HOSPITAL LLC
+- LIFECARE HOSPITAL LLC BRANCH 1
+- LIWA HOSPITAL
+- LLH HOSPITAL LLC
+- LLH HOSPITAL LLC - MUSSAFAH
+- MADINAT ZAYED HOSPITAL
+- MARFA HOSPITAL
+- MEDICAL PARK CONSULTANTS ONE DAY SURGERY CENTRE`
+- MILLENNIUM HOSPITAL LLC
+- Nation Hospital
+- NMC ROYAL FAMILY MEDICAL CENTRE LTD (EX. NMC DAY SURGERY CENTER LLC)
+- NMC SPECIALTY HOSPITAL - AUH
+- PHOENIX  HOSPITAL LLC ( Ex: Al Bustan Speciality Hospital)
+- SILA HOSPITAL
+- TAJMEEL SPECIALIZED MEDICAL CENTER L.L.C
+- UNIQUE ALAHALIA OPHTHALMOLOGY ONE DAY SURGERY MEDICAL CENTER
+- WELLNESS ONE DAY SURGERY CENTER LLC
+- FIRST CITY MEDICAL CENTER LLC
+- A L D MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C
+- A M C MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C
+- A M H MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C.
+- ABU AL-ABYAD CLINIC
+- ABU SALMAN MEDICAL CENTER
+- Acacia Medical Center
+- ADAM & EVE SPECIALIZED MEDICAL CENTRE L.L.C. - BRANCH
+- ADAM AND EVE SPECIALIZED MEDICAL CENTER LLC
+- AIC MEDICAL CENTER - SOLE PROPRIETORSHIP L.L.C
+- AILABOUNY MEDICAL CENTRE LLC
+- Al Amal Medical Center LLC
+- AL AMEEN MEDICAL CENTER
+- AL AMEEN MEDICAL CENTRE LLC â€“BRANCH 1
+- AL DHAFARA FAMILY MEDICINE CENTER
+- Al Dhafra Mobile Mammography Unit
+- AL DHAFRA MODERN CLINIC
+- AL FARHAN MEDICAL CENTRE
+- LLH MEDICAL CENTRE ALNAJDA LLC (EX. AL FUAD MEDICAL CENTRE L.L.C.)
+- Al Jasrain Medical Center
+- AL KAMAL MEDICAL POLY CLINICS - L.L.C - S.P.C (EX. AL KAMAL MEDICAL CENTER)
+- AL KHAZNA MEDICAL CENTER
+- AL MARIA MEDICAL CENTER
+- AL MUROJ MEDICAL CENTER
+- AL NASEEM MEDICALCENTER LLC
+- Al Qabail Medical Centre LLC
+- AL QUDWAH MEDICAL CENTER
+- AL TADAMON MEDICAL CENTRE
+- AL WAHDA MEDICAL CENTRE
+- ALAFIA GHYATHI MEDICAL CENTRE L.L.C
+- Alpha Medical Centre L L C
+- ANSARI MEDICAL CENTRE - L L C
+- APOLLO MEDICAL CENTRE
+- ASTER PRIMARY CARE L.L.C.
+- BANIYAS AHALIA MEDICAL CENTER
+- BANIYAS MEDICAL CLINICS
+- BASEL MEDICAL CENTRE
+- BEDA AL MUTAWA CLINIC
+- BLUE OCEAN MEDICAL CENTER
+- BREEZE MEDICAL CENTRE L.L.C.
+- BURJEEL OASIS MEDICAL CENTRE L.L.C
+- CANADIAN MEDICAL CENTER LLC
+- CANADIAN MEDICAL CENTER LLC BRANCH-2
+- CENTRAL CLINIC LLC
+- Charisma Medical Center LLC
+- CHC MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C.
+- CONSULTANTâ€™S MEDICAL CENTRE
+- COSMPOLITAIN MEDICAL CENTRE
+- MISBAH MEDICAL CENTER - L.L.C - O.P.C (EX. DAAR AL MISBAH MEDICAL CENTER)
+- DAR AL SHIFA MEDICAL CENTRE
+- DIAMOND  MEDICAL CENTER
+- DOCTOR ATIQUR RAHMAN POLYCLINIC LLC
+- DR. GUPTA MEDICAL CLINIC
+- EASTERN AL AHILI MEDICAL CENTER - BRANCH 1
+- EASTERN AL AHLI MEDICAL CENTER
+- EMERALD MEDICAL CENTRE LLC
+- HEALTHLINE PRIMARY HEALTHCARE (EX. EMIRATES FILIPINO MEDICAL CLINIC)
+- Dijla Medical Center L.L.C - O.P.C (EX. EMIRATES JORDANIAN MEDICAL CENTER)
+- EVER CARE MEDICAL CLINIC
+- EXCELLENT MEDICAL CENTER L.L.C
+- EXPRESS GHAYATHI CLINIC
+- FAMOUS MEDICAL CENTRE LLC
+- FREEDOM MEDICAL POLY CLINIC
+- FUTURE MEDICAL CENTRE
+- GENET DENTAL CENTER L.L.C
+- GERMAN ADVANCE MEDICAL CENTER L.L.C.
+- GLITTER DRINGENDEN CLINIC
+- GOLDEN HEALTH MEDICAL CENTER
+- H H C MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C.
+- HADDAD MEDICAL & DENTAL CENTRE LLC
+- LLH MEDICAL CENTRE ALDHAFRA - L.L.C (EX. HALA MEDICAL CENTRE)
+- HEALTH & STYLE MEDICAL CENTRE -L L C
+- HEALTH SHEILD MEDICAL CENTER L.L.C
+- HEALTH TIME MEDICAL CENTRE
+- HEALTHLINE MEDICAL CENTER L. L. C.
+- HealthShades Medical Centre LLC
+- HIGH LIFE MEDICAL CENTER
+- Holistic Medical Centre
+- HOLISTIC MEDICAL CENTRE -SOLE PROPRIETORSHIP L.L.C BRANCH
+- Home Health Medical Centre LLC
+- HOPE MEDICAL CENTER LLC
+- IBN SINA MEDICAL CENTRE
+- IBN SINA MEDICAL CENTRE- BRANCH 1
+- ICON CLINIC LLC
+- ILLC MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C
+- INDUS MEDICAL CENTRE LLC
+- INFINITI MEDICAL CENTER LLC
+- IVORY MEDICAL CENTER - SOLE PROPRIETORSHIP LLC
+- KHYBER MEDICAL CENTRE
+- KHYBER POLY CLINIC
+- LAHORE MEDICAL CENTRE
+- LIFE MEDICAL CENTRE
+- LIFECARE CLINIC L.L.C
+- LIFECARE CLINIC L.L.C - BRANCH 3
+- LIFECAREآ CLINICآ  L.L.C.آ - BRANCH
+- LIWA MEDICAL CENTRE L.LC
+- LLH MEDICAL CENTRE AL MUSAFFAH L.L.C - BRANCH 1
+- LLH MEDICAL CENTRE AL MUSAFFAH L.L.C - BRANCH 3
+- LLH MEDICAL CENTRE AL MUSAFFAH LLC
+- LLH MEDICAL CENTRE LLC
+- LLH MEDICAL CENTRE LLC
+- MARDAN MEDICAL CENTER - SOLE PROPRIETORSHIP L.L.C.
+- MARIAM MEDICAL CENTER L.L.C
+- MAXIM MEDICAL CENTRE L.L.C
+- MEDICAL SPECIALITY CENTRE LLC
+- MEDLINK MEDICAL CENTRE
+- MEDLUX MEDICAL CENTER LLC
+- Medstar ICAD Medical Center
+- MESK ALMADINA MEDICAL CENTRE L.L.C.
+- MEZYAD MEDICAL CENTER
+- MUBARAK MEDICAL CENTER L.L.C. - BRANCH 1
+- NATURAL HEALTH MEDICAL CENTER L.L.C.
+- NEW AL MAZROUI MEDICAL CENTRE
+- NEW FAMOUS MEDICAL CENTRE LLC
+- NEW HYDERABAD CLINIC
+- NEW LOOK MEDICAL CENTER L.L.C.
+- NEW NATIONAL MEDICAL CENTRE
+- NEW NATIONAL MEDICAL CENTRE LLC BR 1
+- NEW HEALTHLINE MEDICAL CENTER (EX. NEW SADD MAAREB MEDICAL CENTRE)
+- NMC ROYAL MEDICAL CENTER L.L.C - BRANCH SHAHAMA
+- NMC ROYAL MEDICAL CENTER L.L.C. - AL KARAMA BRANCH
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 2
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 3
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 4
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 6
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 6
+- OASIS MEDICAL CENTER
+- OASIS MEDICAL CENTRE - BRANCH 1
+- OCCU MED CLINIC LLC
+- Peshawar Medical Centre
+- PROFICIENCY MEDICAL CLINIC
+- PROVIDENCE INTERNATIONAL MEDICAL & COSMETIC CENTER L.L.C.
+- QUALITY CARE MEDICAL CENTER LLC
+- RAHAT MEDICAL CENTRE
+- RIGHT CHOICE MEDICAL CENTER
+- Royal International Medical Center
+- SADIQ POLYCLINIC  (OWNER BY ZAIN ALI SALEH - SOLE PROPRIETORSHIP)
+- Sahara Medical Center LLC
+- SEHATY MEDICAL CENTER- SOLE PROPRIETORSHIP L.L.C.
+- Sir Baniyas Clinic
+- STANFORD MEDICAL CENTER - SOLE PROPRIETORSHIP L.L.C. (EX. GHANIM MEDICAL CLINIC)
+- STAR AL AHALIA MEDICAL CENTER L.L.C.
+- SWAT MEDICAL POLY CLINIC
+- TABIBAK MEDICAL CLINIC L.L.C.
+- TAHA MEDICAL CENTRE
+- TAJMEEL KIDS PARK MEDICAL CENTRE L.L.C.
+- TAJMEEL SPECIALIZED MEDICAL CENTER L.L.C - BRANCH
+- TIME CURE MEDICAL CENTER
+- TOP CARE MEDICAL CENTRE
+- WAZIRUSTAN MEDICAL CENTRE L.L.C.
+- WESTERN TOWERS AL AHLIA MEDICAL CENTER
+- YAS HEALTHCARE BRANCH 1
+- YAS HEALTHCARE LLC
+- ZIA MEDICAL CENTER
+- RAHMATH SILA CLINIC
+- FUTURE INTERNATIONAL PHARMACY L.L.C
+- ABU AL-ABYAD CLINIC O.P. PHARMACY
+- ADVANCED CARE PHARMACY L.L.C.
+- AL AFDAL PHARMACY
+- AL AHALIA NATIONAL PHARMACY L.L.C. - BRANCH 1
+- AL AHALIA NATIONAL PHARMACY LLC
+- AL AMAZON PHARMACY
+- AL ANQOOD PHARMACY
+- AL ASAALA PHARMACY LLC
+- AL BATEEN PHARMACY
+- AL BUROOJ PHARMACY LLC
+- AL DAMAN PHARMACY
+- AL DHAFRA FIELDS PHARMACY
+- AL DHANNAH HOSPITAL PHARMACY (EX. RUWAIS HOSPITAL PHARMACY)
+- AL DHARFA FAMILI MEDICINE CENTER PHARMACY
+- AL FALAH LAND MARK PHARMACY
+- AL FURQAN PHARMACY
+- AL HANEEN PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- AL HOSN PHARMACY
+- AL KAMAL PHARMACY
+- AL MANARA AL BAHIA PHARMACY
+- AL MANARA AL RUWAIS PHARMACY
+- Al Manara DAS Island  Pharmacy
+- AL MANARA GLOBAL PHARMACY  (PREVIOUSLY DALIA PHARMACY)
+- AL MANARA INTERNATIONLA PHARMACY
+- AL MANARA NEW PHARMACY
+- AL MANARA PHARMACY - BRANCH 16
+- AL MANARA PHARMACY - MARINAL MALL
+- AL MANARA PHARMACY AL CORNICHE
+- AL MANARA PHARMACY BRANCH 13
+- Al Manara Pharmacy BRANCH 2
+- Al Manara Pharmacy BRANCH 3
+- AL MANARA PHARMACY -BRANCH 5
+- AL MANARA PHARMACY CAPITAL MALL
+- AL MANARA PHARMACY WORLD TRADE CENTER
+- AL MANARA PHARMACY-KHALIFA
+- AL MANARA PHARMACY-KHALIFA CITY
+- Al Manara Yas Mall  Pharmacy
+- AL MARINA PHAMACY L.L.C BRANCH 1
+- AL MARINA PHARMACY
+- AL MAZROUI PHARMACY
+- AL MULLA PHARMACY
+- AL MUROJ PHARMACY
+- AL NAJAH PHARMACY
+- AL REDHA PHARMACY
+- AL SAHAB PHARMACY
+- AL SILA PHARMACY
+- AL TADAWI PHARMACY
+- AL TAHANI PHARMACY
+- AL THIQA AL ALMYIAH PHARMACY
+- AL THIQA AL DOWALIAH PHARMACY LLC
+- AL THURAYYA PHARMACY
+- Health First Pharmacy L.L.C. - Branch 2(EX. AL WATHBA PHARMACY)
+- Al Zia Pharmacy
+- ALMANARA AL SHAWAMEKH Pharmacy
+- ALMANARA PHARMACY  AL FORZAN BRANCH 8
+- ALMANARA PHARMACY AL REEF BRANCH 7
+- ALMANARA PHARMACY BAWABAT ALSHARQ
+- ALMANARA PHARMACY BRANCH 1
+- ALMANARA PHARMACY MASDAR
+- ALMANARA PHARMACY MUROOR BRANCH 11
+- ALMANARA PHARMACY MUSHRIF  BRANCH 4
+- ALMANARA PHARMACY NEW ABU DHABI MALL BRANCH 10
+- ALMANARA PHARMACY NEW YORK UNIVERSITY BRANCH 6
+- ALMANARA PHARMACY SAADIYAT-ALRAEDA
+- Alpha Care Pharmacy L L C
+- ALQASER ALAINY PHARMACY
+- ALRAWDHA PHARMACY
+- ALTHAKHASYSIYA ALTHIQA PHARMACY L.L.C
+- AMAL PHARMACY - SOLE PROPRIETORSHIP L.L.C (EX. AMAL PHARMACY)
+- APOLLO PHARMACY LLC
+- Aster Pharmacies Group  LLC- Branch of Abudhabi 4
+- Aster Pharmacies Group L.L.C  Abu Dhabi Branch 11
+- Aster Pharmacies Group L.L.C - Abu Dhabi Branch 15
+- Aster Pharmacies Group L.L.C - Branch of Abu Dhabi 14
+- Aster Pharmacies Group L.L.C (Branch of Dubai) Branch of Abu Dhabi 12
+- Aster Pharmacies Group L.L.C Branch Abu Dhabi 10
+- Aster Pharmacies Group L.L.C- Branch of Abu Dhabi 6
+- Aster Pharmacies Group L.L.C- Branch of Abu Dhabi 7
+- Aster Pharmacies Group L.L.C- Branch of Abu Dhabi 8
+- Aster Pharmacies Group L.L.C Branch of Abu Dhabi 9
+- ASTER PHARMACIES GROUP LLC - BRANCH OF ABU DHABI 1
+- ASTER PHARMACIES GROUP LLC - BRANCH OF ABU DHABI 3
+- Aster pharmacies Group LLC Branch Abudhabi 13
+- ASTER PHARMACIES GROUP LLC -BRANCH OF ABU DHABI 5
+- ASTER PHARMACIES GROUP LLC-BRANCH OF ABU DHABI 2
+- ASTER PHARMACY LLC
+- IBN NAFEES MEDICAL CENTER PHARMACY L.L.C (EX. BABIL PHARMACY)
+- BAIN AL QASRAIN PHARMACY
+- BANGASH PHARMACY - LLC
+- BAREEN PHARMACY
+- BASSEM PHARMACY
+- BEAUTY TRICK PHARMACY LLC
+- BENEFICIAL PHARMACY LLC
+- BETTER LIFE PHARMACY
+- BETTER LIFE PHARMACY LLC BRANCH 1
+- BIDA MUTAWA CLINIC O.P. PHARMACY
+- BIN  SINA DELMA MALL NEW PHARMACY
+- BIN  SINA DELMA MALL PHARMACY
+- BIN SINA - AL MUROOR PHARMACY
+- BIN SINA - DANA PLAZA PHARMACY
+- BIN SINA AL KHALIDIYA PHARMACY
+- BIN SINA BANIYAS PHARMACY
+- BIN SINA DUTY FREE PHARMACY
+- BIN SINA PARAGON MALL PHARMACY
+- BIN SINA PHARMACY
+- BIN SINA PHARMACY - BRANCH 9
+- BIN SINA PHARMACY AL MARYAH ISLAND
+- BLUE OCEAN PHARMACY
+- BRIGHT POINT PHARMACY LLC
+- Burjeel Pharmacy Branch 10
+- Charisma Pharmacy LLC
+- CLINIX PHARMACY - BRANCH
+- DELMA HOSPITAL O.P.D PHARMACY
+- DOT COM PHARMACY
+- DREAM PHARMACY
+- EASTERN AL AHLI PHARMACY
+- Health First Pharmacy L.L.C. - Branch 7(EX. ELITE MODERN PHARMACY)
+- ELYAZIA PHARMACY
+- EMERALD PHARMACY  LLC
+- EMIRATES JORDANIAN PHARMACY L L C
+- EXCELLENT PHARMACY L.L.C
+- EXPRESS GHAYATHI PHARMACY
+- FALCON PHARMACY L.L.C
+- FUTURE PHARMACY LLC
+- GALAXY PHARMACY
+- GAYATHY HOSPITAL IN PATIENT PHARMACY
+- GHIATHY HOSPITAL O.P.D PHARMACY
+- GHIYATHI PHARMACY
+- GIANT PHARMACY L.L.C.
+- GOLDEN HEALTH PHARMACY
+- GOOD CARE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- GREEN CARE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- GREEN LIFE PHARMACY
+- GULF APOLLO PHARMACY LLC
+- HEALING PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- Health First Pharmacy L.L.C. - Branch 3(EX. HEALTH FIRST AL JAZEERAH PHARMACY)
+- Health First Pharmacy L.L.C. - Branch 5(EX. HEALTH FIRST AL SADIQ PHARMACY)
+- Health First Pharmacy L.L.C. - Branch 6(EX. HEALTH FIRST JOUDY PHARMACY)
+- HEALTH FIRST PHARMACY
+- HEALTH FIRST PHARMACY - BRANCH 12
+- HEALTH FIRST PHARMACY - BRANCH 13
+- HEALTH FIRST PHARMACY - BRANCH 15
+- Health First Pharmacy L.L.C. - Branch (EX. HEALTH FIRST PHARMACY- BRANCH 18)
+- Health First Pharmacy L.L.C. - Branch 4(EX. HEALTH FIRST ROYAL PHARMACY)
+- HEALTH POINT PHARMACY LLC
+- HEALTH SHEILD MEDICAL CENTER PHARMACY
+- HEALTH TIME PHARMACY
+- Health First Pharmacy L.L.C. - Branch 9(EX. HEALTHFIRST PLANET PHARMACY)
+- HOPE PHARMACY  L.L.C
+- HORIZONS PHARMACY L.L.C.
+- IBN SINA PHARMACY AL MUSAFAH
+- IBN SINA PHARMACY L.L.-BRANCH ALCORNICHE
+- IBN SINA PHARMACY L.L.C. - BRANCH 13
+- IBN SINA PHARMACY L.L.C. - BRANCH 15
+- IBN SINA PHARMACY L.L.C. - BRANCH 16
+- IBN SINA PHARMACY L.L.C. - BRANCH 17
+- IBN SINA PHARMACY L.L.C. - BRANCH 20
+- IBN SINA PHARMACY L.L.C. - BRANCH 26
+- IBN SINA PHARMACY L.L.C. - BRANCH 27
+- IBN SINA PHARMACY L.L.C. - BRANCH 3
+- IBN SINA PHARMACY LLC. -BRANCH 18
+- IBN SINA UNITED SQUARE PHARMACY
+- JUNAID PHARMACY BRANCH 1
+- JUNAID PHARMACY L.L.C
+- KHALID BIN AL WALEED PHARMACY
+- KHYBER PHARMACY LLC
+- KNIGHTS PHARMACY
+- KNIGHTS PHARMACY - LLC - KHALIFA BRANCH
+- Lahore Pharmacy
+- LAND MARK PLAZA PHARMACY
+- LARA PHARMACY
+- LIFE CARE INTERNATIONAL PHARMACY L.L.C. - BRANCH
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 14
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 2
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 33
+- LIFE PHARMACY LLC - BRANCH OF ABUDHABI 13
+- LIFE PHARMACY LLC - BRANCH OF ABUDHABI 6
+- LIFE PHARMACY LLC BRANCH 10 - BRANCH OF ABU DHABI 53
+- LIFE PHARMACY LLC BRANCH 12 - BRANCH OF ABU DHABI 55
+- LIFE PHARMACY LLC BRANCH 15 - BRANCH OF ABU DHABI 76
+- LIFE PHARMACY LLC BRANCH 16 - BRANCH OF ABU DHABI 77
+- LIFE PHARMACY LLC BRANCH 17 - BRANCH OF ABU DHABI 63
+- LIFE PHARMACY LLC BRANCH 18 BRANCH OF ABUDHABI 64
+- LIFE PHARMACY LLC BRANCH 19 BRANCH OF ABUDHABI 65
+- LIFE PHARMACY LLC BRANCH 21
+- LIFE PHARMACY LLC BRANCH 31 BRANCH OF 6 BRANCH OF ABU DHABI 12
+- LIFE PHARMACY LLC BRANCH 34 - BRANCH OF ABU DHABI 15
+- LIFE PHARMACY LLC BRANCH 36 BRANCH OF ABU DHABI 17
+- LIFE PHARMACY LLC BRANCH 37 BRANCH OF ABU DHABI 18
+- LIFE PHARMACY LLC BRANCH 39 - BRANCH OF ABUDHABI 96
+- Life Pharmacy LLC Branch 42 - Branch of Abu Dhabi 24
+- LIFE PHARMACY LLC BRANCH 43 BRANCH OF ABU DHABI 25
+- Life Pharmacy LLC Branch 44 - Branch of Abu Dhabi 37
+- LIFE PHARMACY LLC BRANCH 47 BRANCH OF ABU DHABI 29
+- LIFE PHARMACY LLC BRANCH OF ABU DHABI 1
+- LIFE PHARMACY LLC BRANCH OF ABU DHABI 5
+- Life Pharmacy LLC Branch of Abu Dhabi 9
+- LIFE PHARMACY LLC BRANCH OF ABUDHABI 7
+- LIFE PHARMACY LLC BRANCH OF ABUDHABI 8
+- Life Pharmacy LLC Branch of Dubai - Branch of Abu Dhabi 1
+- Life Pharmacy LLC Branch of Dubai - Branch of Abu Dhabi 2
+- LIFECARE INTERNATIONAL PHARMACY LLC
+- LIFECARE INTERNATIONAL PHARMACY LLC-BRANCH 1
+- LIFELINE PHARMACY - MUSAFFAH
+- LIWA HOSPITAL O.P.D PHARMACY
+- LLH HOSPITAL PHARMACY LLC
+- LLH PHARMACY ALMUSAFFAH L.L.C
+- LOTUS PHARMACY LLC- NMC GROUP
+- LULU KHALIDYA PHARMACY
+- LULU RAHA PHARMACY
+- LUMIERE PHARMACY L.L.C - BRRANCH 1
+- MADINA ZAYED AL AHALIA PHARMACY
+- MADINAT ZAYED HOSPITAL INPATIENT PHARMACY
+- MADINAT ZAYED HOSPITAL OPD IN PHARMACY
+- MAKEEN PHARMACY
+- MARFA HOSPITAL O.P.D PHARMACY
+- MARIAM PHARMACY LLC
+- MED CARE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- MEDCINA PHARMACY
+- MEDICAL PARK PHARMACY LLC
+- MEDICINA A FALAH
+- MEDICINA AL MUNEERA PHARMACY
+- MEDICINA BRANCH 1
+- MEDICINA BRANCH 3
+- MEDICINA GULF PHY
+- MEDICINA INTERNATIONAL
+- MEDICINA PHARMACY BRANCH 2
+- MEDISERV PHARMACY - SOLE PROPRIETORSHIP LLC
+- MEDLUX PHARMACY
+- MEDMAX PHARMACY L.L.C
+- Medstar Hamdan Pharmacy
+- Medstar Pharmacy ICAD Residential
+- MERAL PHARMACY
+- MILLENNIUM HOSPITAL PHARMACY LLC
+- MODERN DAR AL SHIFA PHARMACY
+- MODERN DAR AL SHIFA PHARMACY-MUSSAFAH
+- MODERN PHARMACY
+- MOUNT PHARMACY
+- MUBARAK PHARMACY L.L.C. â€“ BRANCH 1
+- NATION PHARMACY L.L.C
+- NATURAL LIFE PHARMACY LLC
+- NAZEK PHARMACY - SOLE PROPRIETORSHIP L.L.C
+- NEW ABU DHABI PHARMACY
+- NEW AL DAMAN PHARMACY
+- NEW AL SHAM PHARMACY
+- Health First Pharmacy L.L.C. - Branch 8(EX. NEW AL WATHBA PHARMCY)
+- NEW AMAREETA PHARMACY
+- NEW LAND MARK PHARMACY
+- NEW NATIONAL MEDICAL CENTER PHARMACY
+- NEW NATIONAL MEDICAL CENTRE PHARMACY LLC BRANCH 1
+- NEW PHARMACY COMPANY WLL
+- NEW PHARMACY COMPANY WLL BRANCH 2
+- NEW PHARMACY COMPANY WLL- BRANCH 7
+- New Pharmacy Company WLL Branch 8
+- New Sadd Maareb Pharmacy
+- NEXT HEALTH PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- NIDHAM GHIYATHI PHARMACY
+- NMC PHARMACY
+- NMC PHARMACY - BRANCH
+- NOOR AL AHLI PHARMACY
+- NOOR AL SHIFA PHARMACY
+- NOOR ALAHLI PHARMACY - BRANCH 2
+- NOOR ALAHLI PHARMACY - BRANCH 3
+- NOOR ALAHLI PHARMACY - BRANCH 4
+- NOOR ALAHLI PHARMACY - BRANCH 5
+- NOOR ALAHLI PHARMACY - BRANCH 6
+- NOOR ALAHLI PHARMACY - BRANCH 7
+- NOOR ALAHLI PHARMACY - BRANCH 8
+- NOOR ALAHLI PHARMACY -BRANCH 1
+- Orchid Pharmacy
+- PARAGON PHARMACY
+- PATTAYA PHARMACY
+- PHOENIX HOSPITAL PHARMACY L.L.C.
+- ALTHIQA ELITE PHARMACY - L.L.C. - S.P.C. (EX. PRIME CURE PHARMACY)
+- PUBLIC HEALTH PHARMACY L.L.C.
+- REAL 7 PHARMACY DMCC BRANCH- ABU DHABI
+- RIX PHARMACY
+- Royal International Pharmacy
+- SADD MAAREB MEDICAL CENTER PHARMACY L.L.C.
+- Sadd Maareb Pharmacy
+- Sahara Pharmacy LLC
+- SELECT PHARMACY LLC
+- SILA HOSPITAL IN PATIENT PHARMACY
+- SILA HOSPITAL O.P.D PHARMACY
+- SIR BANIYAS CLINIC PHARMACY
+- SKY LINE PHARMACY LLC
+- SPECIALIST PHARMACY LLC
+- STAR AL AHALIA PHARMACY
+- Super Care Pharmacy LLC Branch
+- SUPER CARE PHARMACY-BRANCH OF ABU DHABI 1
+- SuperCare Pharmacy - Branch of Abu Dhabi 2
+- SUPERCARE PHARMACY L.L.C â€“ BRANCH OF ABU DHABI 8
+- SuperCare Pharmacy L.L.C - Branch Of Abu Dhabi 9
+- SuperCare Pharmacy LLC - Branch Of Abu Dhabi 4
+- SuperCare Pharmacy LLC - Branch Of Abu Dhabi 7
+- SUPERCARE PHARMACY-BRANCH OF ABU DHABI 3
+- SWAT PHARMACY
+- TAHA PHARMACY
+- TALAT PHARMACY AL MUSAFFAH
+- Target Pharmacy
+- TIME CURE PHARMACY
+- TOP CARE PHARMACY
+- TOP CARE PHARMACY- BRANCH 1
+- TOWN LIFE PHARMACY L.L.C
+- TRUE WISH PHARMACY L.L.C
+- UNIQUE AL AHALIA PHARMACY
+- UNIQUE AL AHALIA PHARMACY - BRANCH 2
+- UNIVERSAL PHARMACY
+- VENUS PHARMACY
+- VIVID PHARMACY LLC
+- WAHEEDA PHARMACY
+- WELL CARE PHARMACY
+- Wellness Pharmacy LLC
+- WESTERN TOWERS AL AHLIA PHARMACY
+- WHITE PHARMACY L.L.C
+- ZANBAQ AL MADINA PHARMACY LLC.
+- Biotech  Medical Lab -Ajman
+- AJMAN SPECIALITY GENERAL HOSPITAL
+- AMINA HOSPITAL LLC
+- THUMBAY HOSPITAL (LLC) - Ajman
+- THUMBAY UNIVERSITY HOSPITAL COMPLEX LLC (HOSPITAL, DENTAL & PT)
+- AALIYAH  MEDICAL CENTRE LLC
+- ABDUL AZIZ MEDICAL CENTER
+- ACCESS MEDICAL CENTRE
+- ADVANCED MEDICAL CENTRE
+- AHALIA MEDICAL CENTRE
+- AJMAN MEDICAL CENTRE
+- AL AIN MEDICAL CENTER
+- AL BUSTAN MEDICAL CLINIC
+- AL ELAJ MEDICAL CENTRE
+- AL ENAYA MEDICAL CLINIC LLC
+- AL GHARAFA MEDICAL CENTER
+- AL HIRA MEDICAL CENTRE
+- AL JARAF MEDICAL CENTER
+- AL NUAIMIA MEDICAL CENTRE CLINIC
+- AL SANAIYA CLINIC
+- AL SHIFA MEDICAL SPECIALIST CENTRE LLC
+- ASTER MEDICAL CENTRE AJMAN
+- ASTER SPECIALIST MEDICAL CENTER
+- AURA MEDICAL CENTER LLC
+- CAREPLUS MEDICAL CENTER LLC
+- COST CARE MEDICAL CENTER
+- DEAR HEALTH MEDICAL CENTER
+- ELAJ MEDICAL CENTRE L.L.C 01
+- EMIRATES PRIVATE MEDICAL CENTER
+- EVE MEDICAL CENTER
+- FAMILY MEDICAL CENTER
+- SHEIKHA CLINIC LLC (EX. FIRSTAID CLINIC LLC)
+- IBIN SINA MEDICAL CENTER
+- IBTESAM MEDICAL CENTER
+- INTERNATIONAL SPECIALISTS MEDICAL CENTRE
+- KHALID LALA GENERAL CLINIC LLC
+- LLH SPECIALIST MEDICAL CENTER
+- MAPLE MEDICAL CENTER LLC
+- MEDO MEDICAL CENTRE(Ex:KHALID GENERAL CLINIC)
+- METRO MEDICAL CENTRE
+- MODERN MEDICAL CENTER
+- NASEEM ALMANAMA SPECIALIZED CENTER
+- NATIONAL CLINIC
+- NEW IBINSINA MEDICAL CENTER
+- NMC MEDICAL CENTER AJMAN LLC
+- NOOR AL SHIFA CLINIC L.L.C
+- NORTHERN AL AHLIAH MEDICAL CENTER
+- PRIME MEDICAL CENTER AJM-LLC
+- RED MAPLE MEDICAL CENTER L.L.C
+- RIGHT HEALTH CLINIC JURF LLC
+- SEHA MEDICAL CENTER
+- SHIFA AL JAZEERA MEDICAL CENTRE LLC- AJMAN
+- SHIFA AL JAZEERAH MEDICAL CENTRE - L.L.C - Branch 01
+- THUMBAY CLINIC LLC AL RASHIDEYA 1
+- WELLCURE MEDICAL CENTRE L.L.C
+- AL NAHRAIN MEDICAL CENTER 1 L.L.C
+- ACCESS PHARMACY AJMAN
+- AJMAN SPECIALTY GENERAL HOSPITAL PHARMACY
+- AL ABRAR PHARMACY LLC
+- AL ADIL PHARMACY LLC
+- AL AFDHAL PHARMACY
+- AL AIN PHARMACY
+- AL BUSTAN PHARMACY AJMAN
+- AL ELAJ PHARMACY LLC
+- AL EMAN PHARMACY
+- AL GHARAFA PHARMACY LLC
+- AL HEKMAH PHARMACY
+- AL ISRA PHARMACY LLC
+- AL KHALEEJ PHARMACY
+- AL MURTADHA PHARMACY
+- AL MUSALLA PHARMACY
+- AL NAHRAIN PHARMACY
+- AL NAHRAIN PHARMACY 1 L.L.C
+- AL NEEM PHARMACY L.L.C
+- AL NUAIMIA PHARMACY
+- AL OMAIR PHARMACY LLC
+- AL RIDA PHARMACY L.L.C.
+- AL SANAIYA PHARMACY -SOLE PROPRIETORSHIP L.L.C
+- Al Saqer Pharmacy L.L.C
+- Al Seha Pharmacy LLC
+- AL ZAMAN PHARMACY L.L.C
+- ALYA PHARMACY
+- AMINA HOSPITAL PHARMACY LLC
+- ASTER PHARMACY - AJMAN
+- Aster Pharmacy 154  (BR OF ASTER PHARMACIES GROUP)
+- Aster Pharmacy 159 Br of Aster Pharmacies Group LLC
+- ASTER PHARMACY 163 BR OF ASTER PHARMACIES GROUP LLC
+- AURA PHARMACY LLC
+- BAIT AL NEEM PHARMACY LLC
+- BAYN AL NAHRAIN PHARMACY LLC
+- BIN BAKHEET PHARMACY
+- CENTRAL MAKKAH PHARMACY
+- DEAR HEALTH PHARMACY
+- DOOA PHARMACY - AJMAN
+- ELAJ MEDICAL CENTRE PHAMACY LLC
+- ELAJ MEDICAL CENTRE PHARMACY L.L.C 01
+- EMIRATES PHARMACY
+- EVE PHARMACY (EX:AL WAHA PHARMACY)
+- FIRSTAID PHARMACY LLC
+- GRAND MAKKAH PHARMACY
+- GRAND PHARMACY
+- HALA PHARMACY BR 54
+- HALA PHARMACY LLC - BRANCH 01
+- HALA PHARMACY LLC - BRANCH 49
+- HALA PHARMACY LLC - BRANCH 50
+- HEALTH FIRST PHARMACY â€“ BRANCH 01
+- KHALID LALA PHARMACY
+- KHALIDHA PHARMACY L.L.C.
+- LIFE PHARMACY
+- LIFE PHARMACY 28 BR OF LIFE PHARMCY LLC
+- LIFE PHARMACY 32 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY LLC BRANCH 62
+- LULU PHARMACY
+- MAKKAH PHARMACY LLC - AJMAN
+- MANSOUR PHARMACY L.L.C
+- MAPLE PHARMACY L.L.C
+- MASOOD PHARMACY - L.L.C
+- MAWJOOD PHARMACY L.L.C
+- MEDI PRIME PHARMACY AJM-LLC
+- MEDICINA PHARMACY 29
+- MEDICINE HOME PHARMACY L.L.C
+- MEDICOM PHARAMACY 27
+- MEDICOM PHARMACY 18 (PREV. AL ALAM)
+- METRO MEDS PHARMACY
+- METRO PHARMACY
+- Modern Pharmacy- Ajman
+- NASEEM AL MANAMA PHARMACY
+- NEW DOOA PHARMACY
+- NEW GRAND PHARMACY
+- NEW MEDICAL CENTRE PHARMACY BRANCH
+- NEW SANAIYA PHARMACY â€“ AJMAN
+- NOOR AL SHIFA PHARMACY
+- NOOR MAKKAH PHARMACY
+- NORTHERN AL AHLIA PHARMACY
+- PHARMACY AHALIA
+- RAZAN PHARMACY LLC
+- RIGHT HEALTH PHARMACY JURF LLC
+- SHAMS MAKKAH PHARMACY LLC
+- SHIFA AL JAZEERA CENTRE PHARMCY LLC
+- SHIFA ALJZEERAH CENTRE PHARMACY - L.L.C - Branch 01
+- SUPERCARE PHARMACY - AJMAN
+- SuperCare Pharmacy LLC -Branch 01
+- THUMBAY HOSPITAL PHARMACY
+- THUMBAY UNIVERSITY HOSPITAL COMPLEX PHARMACY - LLC
+- TOPCARE PHARMACY AL JADEEDA L.L.C
+- TOPCARE PLUS PHARMACY LLC
+- ACCU CARE MEDICAL LABORATORY - SOLE PROPRIETORSHIP L.L.C
+- ADVANCED MEDICAL CENTER
+- AL BORG DIAGNOSTIC CENTRE FOR LABORATORIES L.L.C. - BRANCH 1
+- AL TAJ MEDICAL LABORATORY
+- EMIRATES INTERNATIONAL HOSPITAL
+- NMC SPECIALTY HOSPITAL - AL AIN
+- AL AAHED MEDICAL CENTRE - SOLE PROPRIETORSHIP L.L.C.
+- AL AIN AHALIA MEDICAL CENTER
+- AL BASHEER MEDICAL CENTRE L.L.C.
+- AL FARABI MEDICAL CENTRE LLC
+- AL MAGD MEDICAL CENTER - SOLE PROPRIETORSHIP L.L.C
+- AL MUKHTAR MEDICAL CENTER
+- AL RANEEN MEDICAL CENTRE
+- AL SULTAN ADVANCED MEDICAL CLINICS
+- AL WAQAR MEDICAL CENTRE
+- MOON LIGHT MEDICAL CENTER L.L.C (EX. ALOSTORA MEDICAL CENTER)
+- ALPINE MEDICAL CENTRE
+- ARABIAN SPECIALIST MEDICAL CENTER L.L.C
+- ARABIC CANADIAN MEDICAL CENTER
+- DHIYARA MEDICAL CENTER
+- EMIRATES CLINIC & MEDICAL SERVICES CENTER
+- EMIRATES CONFIDENTY MEDICAL CENTER
+- EMIRATES CONFIDENTY MEDICAL CENTER BRANCH 1
+- EMIRATES INTERNATIONAL POLY CLINIC
+- CURE ARENA MEDICAL CENTER - L.L.C (EX. HAMDAN MEDICAL CENTER)
+- MARJAN MEDICAL CENTER
+- Medstar Clinics Sanaiya Alain
+- METRO INTERNATIONAL MEDICAL CENTER
+- MISSION MEDICAL CENTER
+- MODERN CENTER
+- MUBARAK MEDICAL CENTER L.L.C.
+- MUNICH MEDICAL & REHABILITION CENTER L.L.C.
+- NAZEK MEDICAL CENTER
+- NEW AL AIN MEDICAL CLINICS CENTER LLC
+- NEW LOOK MEDICAL CENTER L.L.C. - BRANCH 1
+- NEW LOOK MEDICAL CENTER L.L.C. - BRANCH 2
+- NEW LOOK MEDICAL CENTER L.L.C. - BRANCH 3
+- NOOR ALAHLI MEDICAL CENTER
+- ORTHOPLUS BONE AND JOINT CENTER L.L.C.
+- REAL HEALTH CENTER
+- REVIERA MEDICAL CENTRE LLC
+- ROYAL CARE MEDICAL CENTRE
+- SPECTRUM MEDICAL CENTER
+- SPECTRUM MEDICAL CENTER-BRANCH 1
+- SULTAN MEDICAL CENTER
+- SUN MEDICAL CLINIC
+- SUN MEDICAL CLINIC BRANCH 1
+- TAJMEEL COSMO CLINIC L.L.C
+- TRUE LIFE PRIMARY CARE CENTER - SOLE PROPRIETORSHIP LLC
+- Ultra Medical Center
+- HUB MEDICAL CENTRE - SOLE PROPRIETORSHIP L.L.C (EX.URGENT CARE MEDICAL CENTER)
+- WLDY MEDICAL CENTER
+- Advanced Al Ain Pharmacy LLC
+- AL AIN AHALIA PHARMACY
+- Al Ain Pharmacy LLC
+- AL MAGD CENTER PHARMACY L.L.C - SOLE PROPRIETORSHIP L.L.C.
+- AL MANARA PHARMACY - BAWADI MALL
+- AL MANARA PHARMACY BOUTIK MALL
+- AL MANARA PHARMACY-AL AIN BRANCH
+- AL NASR PHARMACY
+- Al Raneen Pharmacy LLC
+- AL SANA'AYA PHARMACY
+- ALMANARA PHARMACY BRANCH 12
+- ALMANARA PHARMACY BRANCH 9
+- ALMANARA PHARMACY HILI MALL
+- ALMAQAM PHARMACY - SOLE PROPRIETORSHIP L.L.C
+- MOON LIGHT MEDICAL CENTER PHARMACY L.L.C (EX. ALOSTORA MEDICAL CENTER PHARMACY)
+- BIN SINA PHARMACY - HILI MALL
+- EMIRATES INTERNATIONAL HOSPITAL PHARMACY
+- EMIRATES PHARMACY
+- FAIZAN PHARMACY
+- FALAJ HAZAA PHARMACY
+- Health First Pharmacy L.L.C.- Branch 11(EX. HEALTH FIRST AL AIN PHARMACY)
+- Health First Pharmacy L.L.C. - Branch 1(EX. HEALTH FIRST NATIONAL PHARMACY)
+- Health First Pharmacy - Branch 14
+- Home Health Pharmacy
+- LIFE PHARMACY LLC BRANCH 25 - BRANCH OF ABUDHABI 85
+- LIFE PHARMACY LLC BRANCH 26 - BRANCH OF ABU DHABI 86
+- LIFE PHARMACY LLC BRANCH 28 - BRANCH OF ABU DHABI 88
+- LIFE PHARMACY LLC BRANCH 35 - BRANCH OF ABU DHABI 58
+- LIFE PHARMACY LLC BRANCH 38 - BRANCH OF ABUDHABI 95
+- LIFE PHARMACY LLC BRANCH 41 - BRANCH OF ABU DHABI 104
+- LIFE PHARMACY LLC BRANCH 52 - BRANCH OF ABUDHABI 105
+- LIFE PHARMACY LLC BRANCH 61 - BRANCH OF ABUDHABI 118
+- LONDON PHARMACY
+- LULU AL AIN PHARMACY
+- LULU AL AIN PHARMACY - BRANCH
+- LULU AL FOAH PHARMACY LLC
+- MAJED PHARMACY
+- MARJAN MEDICAL CENTER PHARMACY
+- MAX CARE PHARMACY
+- Medstar Pharmacy Sanaiya Alain
+- MODERN IBN SINA PHARMACY
+- MUBARAK PHARMACY L.L.C.
+- MUNICH MEDICAL CENTER PHARMACY L.L.C.
+- NEW LOOK MEDICAL CENTER PHARMACY L.L.C.
+- NEW MEDICAL CENTRE PHARMACY LLC
+- PRIDE PHARMACY
+- RAFA PHARMACY
+- ROOTS PHARMACY  LLC
+- ROYAL CARE PHARMACY
+- TAIBAH ALAIN PHARMACY -LLC
+- TRUE LIFE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- Ultra Medical Center Pharmacy
+- AL MANARA PHARMACY - DHCC
+- ASTER PHARMACY 100 (PREV. PANACEA PHARMACY DHCC)
+- IBN SINA PHARMACY 66
+- LIFE HOME HEALTHCARE FZ LLC
+- NEW BIN SINA PHARMACY
+- Advanced Diagnostic Center LLC
+- Advanced Diagnostic Center LLC BR
+- AIRIS IMAGING AND DIAGNOSTIC CENTER LLC
+- AL ABBAR LABORATORY BR OF GHI
+- AL BORJ LABORATORY
+- AL DIYAFA MEDICAL DIAGNOSTIC CENTER
+- AMERICAN UPRIGHT MRI
+- ASTER IMAGING CENTRE AL  MUTEENA (BR OF DM HEALTHCARE LLC)
+- BIOHEALTH DIAGNOSTIC CENTRE
+- DEIRA CITY MEDICAL DIAGNOSTIC CENTER
+- DUBAI MEDICAL LABORATORY BR OF GHI
+- HISTOPATHOLOGY & SPECIALTY LABORATORY
+- INTEL LAB LLC (EX. DR. FARIS MEDICAL LABORATORY)
+- LAB247 DIAGNOSTICS L.L.C
+- LIFENITY INTERNATIONAL CLINICAL LABORATORY  LLC
+- MEDICAL DIAGNOSTIC & IMAGING CENTRE
+- MEDINOVA DIAGNOSTIC CENTER
+- MEGA SCAN CENTRE
+- MICRO HEALTH MEDICAL LAB
+- MICRO HEALTH MEDICAL LAB
+- MINERVA DIAGNOSTIC LABORATORY
+- PH DIAGNOSTICS LLC
+- R N S DIAGNOSTICS AND IMAGING
+- STAR METROPOLIS CLINICAL LABORATORIES
+- AVM LABS L.L.C (EX. THYROCARE LABORATORIES LLC)
+- ASTER DAY SURGERY CENTRE LLC
+- ASTER HOSPITAL BR OF ASTER DM HEALTHCARE FZC- Al Qusais
+- ASTER HOSPITAL- Mankhool
+- ASTER HOSPITAL SONAPUR
+- CEDARS JEBEL ALI INTERNATIONAL HOSPITAL
+- DR. ISMAIL DAY SURGICAL CENTRE
+- DUBAI MEDICAL UNIVERSITY HOSPITAL
+- HATTA HOSPITAL
+- INTERNATIONAL MODERN HOSPITAL
+- MEDEOR 24X7 HOSPITAL LLC
+- MEDSTAR HEALTHCARE LLC
+- MYHEALTH  DAY SURGICAL CENTER LLC
+- NMC ROYAL HOSPITAL LLC(DXB)
+- NMC SPECIALTY HOSPITAL - DXB
+- NMC SPECIALTY HOSPITAL DIP (Br of N M C ROYAL HOSPITAL LTD) (Dubai Branch)
+- ABBARA POLYCLINIC
+- ABEER AL NOOR POLY CLINIC LLC BRANCH
+- ABRIS MEDICAL CENTRE LLC
+- ABSOLUTE WELLNESS MEDICAL CENTRE
+- ACCESS CLINIC ALQUOZ
+- ACCESS CLINIC BUR DUBAI
+- ACCESS CLINIC DIC BR DM HEALTHCARE LLC
+- ACCESS CLINIC DIP
+- ACCESS CLINIC DIP 2 BR OF DM HEALTHCARE LLC
+- ACCESS CLINIC FREEZONE
+- ACCESS CLINIC INTERNATIONAL CITY
+- ACCESS CLINIC PERSIA CLUSTER
+- ACCESS CLINIC SONAPUR
+- ACCESS CLINIC SONAPUR 2 BR OF DM HEALTHCARE LLC (EX. AFIF MEDICAL CENTER)
+- ADVANCED CARE MEDICAL CENTER
+- ADVANCED CARE MEDICAL CENTER  LLC (BRANCH)
+- ADVANCED CARE MEDICAL CENTER BRANCH
+- ADVANCED CARE MEDICAL CENTER LLC (BRANCH)
+- ADVANCED CARE MEDICAL CENTER LLC BRANCH
+- ADVANCED CARE MEDICAL CENTER LLC BRANCH-GRAND CITY MALL
+- ADVANCED CARE MEDICAL CENTRE L.L.C (BRANCH )- DIP 1
+- AL ABRAH CLINIC
+- AL AMAL POLYCLINIC
+- AL AMAN MEDICAL CENTER
+- AL AZHAR CLINIC
+- AL AZHAR CLINIC BR DIP 2
+- AL AZHAR CLINIC BRANCH
+- Al Azhar Clinic Branch 3
+- Al Azhar Clinic LLC 4
+- AL DHAFRA MEDICAL CENTRE
+- Al Fahim Clinic
+- AL FALAH MEDICAL CLINIC
+- AL HANA MEDICAL CENTER LLC
+- AL HANA MODERN MEDICAL CENTER LLC
+- AL KHAIL MEDICAL CENTER
+- AL KHAIL MEDICAL CENTRE BRANCH
+- AL MASHAHER MEDICAL CENTRE
+- AL MURJAN MEDICAL CENTER
+- AL NOOR POLYCLINIC - BR OF GHI AL SATWA
+- AL NOOR POLYCLINIC - BR OF GHI DEIRA
+- AL NOOR POLYCLINIC BR OF GHI AL RIGGA (AMBER)
+- WELLCARE ADVANCED POLY CLINIC L.L.C (EX. AL QUOZ CITY STAR POLYCLINIC)
+- AL QUSAIS STAR POLYCLINIC
+- SONAPUR STAR POLYCLINIC L.L.C (EX. AL QUSAIS STAR POLYCLINIC (BRANCH))
+- AL RASHIDIYAH AL NOOR POLYCLINIC
+- AL SANAIYA MEDICAL CLINIC
+- AL SANAIYA MEDICAL CLINIC-BRANCH
+- AL SHAAB MEDICAL CENTRE
+- AL SHIFA AL KHALEEJI MEDICAL CENTER
+- Al Shifa Al Khaleeji Medical Centre Branch LLC-DIP
+- AL SHIFA INTERNATIONAL CLINIC
+- AL SHIFA INTERNATIONAL CLINIC LLC- BRANCH
+- AL TADAWI MEDICAL CENTRE
+- AL TAIF MEDICAL CENTER
+- AL WAHA CLINIC
+- ALDIA MEDICAL CENTER L.L.C
+- ALHABAB GENERAL CLINIC
+- ALI MEDICAL CLINIC
+- AMALA MEDICAL CENTRE
+- AMIRUDDIN CLINIC
+- ANAYA MEDICAL CENTER LLC
+- ANAYA MEDICAL CENTER LLC BRANCH
+- APPLE CLINIC
+- APPLE INTERNATIONAL POLY CLINIC
+- ARIN CARE POLYCLINIC L.L.C
+- ASH TREE CLINIC LLC
+- ASHOKAN MEDICAL CLINIC
+- ASTER CEDARS CLINIC
+- ASTER JABAL ALI MEDICAL CENTRE
+- Aster Medical Centre Oud Metha (Br Of D M Healthcare LLC)
+- ASTER MEDICAL CENTRE ABU HAIL BR OF DM HEALTHCARE
+- ASTER MEDICAL CENTRE AL QUSAIS
+- ASTER MEDICAL CENTRE DUBAI LAND
+- ASTER MEDICAL CENTRE INTERNATIONAL CITY(Gynaecology and Paediatrics services only)
+- ASTER MEDICAL CENTRE REMRAAM (BR OF D M HEALTHCARE)
+- BADR AL SAMAA MEDICAL CENTER
+- BEST HEALTH MEDICAL CENTER L.L.C
+- BIO VISTA MEDICAL CENTRE LLC
+- BLUE BELL MEDICAL CENTRE
+- BRIGHT LIFE MEDICAL CENTER LLC
+- CARE AND CURE MEDICAL CENTER L.L.C
+- CARE ONE POLY CLINIC LLC
+- CARE PLUS MEDICAL CENTER
+- CLINICARE BR OF IMARA HEALTH CARE LLC
+- CLINICARE SAMARI BR OF IMARA HEALTH CARE LLC
+- COMMUNITY MEDICAL CENTRE
+- COSMOPOLITAN MEDICAL CENTRE
+- DOCIB CLINIC LLC
+- DOCTORS CLINIC
+- DOCTORS CLINIC DIAGNOSTIC CENTRE FZ-LLC
+- DR. IBRAHIM ABBARA CLINIC
+- DR. ISMAIL MEDICAL CENTRE - AL MUHAISANAH
+- DR. ISMAIL MEDICAL CENTRE - AL QUOZ
+- DR. ISMAIL POLYCLINIC BRANCH-DISCOVERY GARDEN
+- DR. ISMAIL POLYCLINIC BRANCH-JEBEL ALI
+- DR. ISMAIL POLYCLINIC KARAMA
+- DR. JOHN CLINIC
+- DR. JOSEPHâ€™S POLYCLINIC-KARAMA BR OF GHI
+- DR. KAMKAR MEDICAL & PHYSIOTHERAPY CENTRE
+- DR. KOYA CLINIC
+- DR. MOOPENS' AL QUOZ MEDICAL CENTRE
+- DR. MOOPEN'S MEDICAL CENTER - KARAMA
+- DR. MUHAMMED KUNHI MEDICAL CLINIC
+- DR. RADAKRISHNAN MEDICAL CENTRE
+- DR. SANJAY MEDICAL CENTER - DUBAI
+- DR. SHANIL MEDICAL CENTRE LLC
+- DR.ABDULLAS CLINIC
+- DULSCO MEDICAL CLINIC
+- DULSCO MEDICAL CLINIC BRANCH
+- DURRAIYA KAMAL MEDICAL CLINIC
+- EXCEL HEALTHCARE ICARE CLINICS DISCOVERY GARDEN
+- FAITH JABAL MEDICAL CENTER L.L.C
+- FALCON MEDICAL CLINIC
+- FAMILY CLINIC
+- FIRST MEDICAL CENTRE
+- FULLCARE MEDICAL CENTER
+- Globehealth General Clinic  LLC
+- GOODWILL CLINIC LLC
+- GRAND INFINITY MEDICAL CENTER LLC
+- GRAND INFINITY MEDICAL CENTER LLC BRANCH
+- GREEN CITY MEDICAL CENTER L.L.C. (EX: NEW AL MUSALLA MEDICAL CENTER BRANCH)
+- HARLEY INTERNATIONAL MEDICAL CLINIC
+- HARLEY INTERNATIONAL MEDICAL CLINIC (BRANCH)
+- Harley International Medical Clinic LLC Branch
+- HOPECARE POLYCLINIC L.L.C
+- HOUSTON MEDICAL CLINIC LLC
+- HOUSTON MEDICAL CLINIC LLC (Branch)
+- HTK Medical Centre
+- ICARE ALREFFA BR OF EXCEL HEALTHCARE LLC
+- ICARE OASIS BRANCH OF EXCEL HEALTHCARE
+- Islamabad Medical Clinic LLC( Ex: Globe HealthPolyclinic)
+- JANSON MEDICAL CLINIC
+- JOSEPH'S QUSAIS POLYCLINIC
+- JUPITER AL NAHDA POLYCLINIC
+- JUPITER AL QUSAIS POLYCLINIC
+- JUPITER SPECIALTY MEDICAL CENTER
+- KARAMA MEDICAL CENTER - DIP BRANCH
+- KARAMA MEDICAL CENTER AL QUOZ MALL BRANCH
+- KARAMA MEDICAL CENTRE
+- KARAMA MEDICAL CENTRE - AL QUOZ BRANCH
+- KARAMA MEDICAL CENTRE BR  JV
+- KARAMA MEDICAL CENTRE BR, BURJUMAN
+- KARAMA MEDICAL CENTRE BR. AL KHAIL GATE
+- KARAMA MEDICAL CENTRE BR. MUHAISNAH
+- KEERTHI MEDICAL CENTER (PREVIOUSLY DR. KEERTHI CLINIC)
+- KHALIDHA MEDICAL CENTRE LLC
+- KIMS MEDICAL CENTRE
+- KINGS MEDICAL CENTER LLC
+- LAVERA CLINIC LLC
+- LIFEGUARD GENERAL CLINIC L.L.C (EX. OUR CARE AND CURE MEDICAL CENTER LLC )
+- LIFENITY INTERNATIONAL ADVANCED POLY CLINIC L.L.C
+- LIFENITY INTERNATIONAL ADVANCED POLY CLINIC L.L.C (BRANCH)
+- LIVE CARE CLINIC LLC
+- LOTUS MEDICAL CENTER
+- MAG Health Clinic
+- MARHABA MEDICAL CENTER-DXB
+- MATHEW MEDICAL CLINIC LLC
+- MED ONE MEDICAL CENTER LLC (EX. AQUA MEDICAL CENTER)
+- Medi Family Polyclinic FZE
+- MEDICURE CENTRE
+- MEDICURE CENTRE BRANCH
+- Medicure Polyclinic L.L.C Branch- Al Manara
+- MEDILIFE POLYCLINIC LLC
+- MEDILITE MEDICAL CENTRE
+- MEDZE CLINIC LLC
+- MID EAST POLY CLINIC
+- Miracure Medical Centre  LLC
+- Mobile Home Healthcare Services LLC
+- MUHAISNA SPECIALIST MEDICAL CENTRE LLC
+- MULTI CARE MEDICAL CENTRE
+- MVR DIAGNOSTIC CLINIC L.L.C (EX. MVR Medical Center)
+- NAIF MEDICAL CENTER LLC
+- NASSER CLINIC
+- NEW AL MUSALLA MEDICAL CENTER
+- NEW APOLLO POLYCLINIC
+- NEW EMIRATES MEDICAL CENTER
+- NEW LOTUS MEDICAL CENTER
+- NEW MEDICAL CENTER (Ex:Reena Beegum clinic branch)
+- NEW MEDICAL CENTRE LLC
+- NEW MEDILIFE MEDICAL CENTRE L.L.C
+- NEW SANAIYA CLINIC
+- NEW SANAIYA CLINIC BRANCH - HORALANZ
+- NEW SANAIYA CLINIC BRANCH-DIP
+- NMC DIC CLINIC AND PHARMACY BR OF NMC ROYAL HOSPITAL LTD DUBAI BRANCH
+- NMC POLYCLINIC BRANCH OF NMC HOSPITAL LLC
+- Noor Al Shefa Branch 3
+- NOOR AL SHEFA CLINIC - JEBEL ALI MALL
+- NOOR AL SHEFA CLINIC BRANCH - AL QUOZ
+- NOOR AL SHEFA CLINIC BRANCH - RAS AL KHOR
+- Noor Al Shefa Clinic Branch. 4
+- NOVITAS CLINIC L.L.C BRANCH
+- NOVITAS CLINIC LLC
+- OXFORD MEDICAL CENTER
+- PAKISTAN MEDICAL CENTER
+- Paradise Plus Poly Clinic LLC
+- PESHAWAR MEDICAL CENTRE- DUBAI
+- PHYSIOVEDA MEDICAL CENTER L.L.C
+- PHYSIOVEDA MEDICAL CENTER L.L.C (BRANCH)
+- PRIME MEDICAL CENTER AL QUSAIS (BR OF PRIME MEDICAL CENTER LLC)
+- PRIME MEDICAL CENTER DUBAI AIRPORT (BR OF PRIME MEDICAL CENTER LLC)
+- PRIMECORP MEDICAL CENTER AL QUSAIS (BR OF PRIMECORP MEDICAL CENTER LLC)
+- PRIMECORP MEDICAL CENTER AL WARSAN (BR OF PRIMECORP MEDICAL CENTER L.L.C)
+- PRIMECORP MEDICAL CENTER ALQUOZ LLC BRANCH
+- PRIMECORP MEDICAL CENTER DWC BR OF PRIMECORP MEDICAL CENTER LLC
+- PRIMECORP MEDICAL CENTER L L C DIP BRANCH
+- PRIMECORP MEDICAL CENTER LLC
+- PRIMECORP MEDICAL CENTER LLC  JABAL ALI BRANCH
+- QAMAR AL MADINA MEDICAL CENTER L.L.C
+- RASHIDIYA PRIVATE POLYCLINIC
+- Releaf Medical Centre (DIP)
+- Releaf Medical Centre (J Mart)
+- Releaf Medical Centre(Al Qouz 2)
+- Releaf Medical Centre(Jabal Ali)
+- REMEDY PLUS MEDICAL CLINIC LLC
+- RIAZ MEDICAL CENTRE - DUBAI
+- RUBY CLINIC
+- SALEEM POLYCLINIC
+- SHEIKH MANNA BIN HASHER AL MAKTOUM POLYCLINIC
+- SIRAJUDEEN MEDICAL CENTER
+- SYED SADIQ GENERAL PRACTITIONER CLINIC LLC
+- THE DOCTORS HUB POLYCLINIC L.L.C (EX. DR. JOSEPH GHRAYEB POLYCLINIC)
+- TORONTO MEDICAL CENTER LLC
+- VCARE POLYCLINIC LLC
+- VIDA CLINICS- BURDUBAI
+- VIDA CLINICS LLC BRANCH-MUHAISANAH
+- Zahrat Al Shefa Medical Centre LLC
+- ZEN LIFE POLYCLINIC CO LLC
+- ZIYATH ANSAR POLY CLINIC L.L.C
+- CARE BLUE CLINIC FZCO
+- DOHA PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- HALA PHARMACY 13 EXPRESS CLINIC (GP CLINIC ONLY)
+- JADAF LIFE PHARAMCY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE AL QUSAIS PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE DWTC PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE MURAQABAT PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PEARL PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 16 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 25 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 74 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 77 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY BARSHA SOUTH FOURTH EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- NATURES LIFE EXPRESS CLINIC LLC (GP CLINIC ONLY)
+- NEW AL KANZ PHARAMCY BRANCH EXPRESS CLINIC (GP CLINIC ONLY)
+- RAMADA LIFE EXPRESS CLINIC (GP CLINIC ONLY)
+- ROYAL LIFE EXPRESS CLINIC (GP CLINIC ONLY)
+- 800 PHARMACY FZ-LLC
+- 800 PHARMACY LLC
+- 800 PHARMACY LLC BRANCH
+- Abeer Al Noor Pharmacy LLC
+- ABEER PHARMACY
+- ABRIS PHARMACY LLC
+- ABWAB AL KHEIR PHARMACY L.L.C
+- ACCESS PHARMACY
+- ACCESS PHARMACY 2
+- ACCESS PHARMACY 3
+- ADVANCED CARE PHARMACY LLC
+- ADVANCED CARE PLUS PHARMACY LLC
+- ADVANCED STAR PHARMACY LLC
+- AHB HEALTHCARE PHARMACY LLC
+- AHLAM PHARMACY
+- AIWA PHARMACY
+- AJMAL PHARMACY
+- AL AFDHAL PHARMACY 1
+- AL AMEEN PHARMACY
+- AL AMEEN PHARMACY LLC BRANCH
+- AL ANBER PHARMACY
+- AL AWEER SOCIETY PHARMACY (BR OF AL SHAFAR PHARM GRP.)
+- AL AZHAR AL JADEEDA PHARMACY
+- AL AZHAR PHARMACY
+- AL BAIROONI PHARMACY
+- AL BARAKA PHARMACY
+- AL BASHAER PHARMACY
+- AL CORNICHE PHARMACY
+- AL DORRA PHARMACY
+- AL EHSAN PHARMACY
+- AL ENAYA AL FAEQA PHARMACY L.L.C
+- AL FAHAIDI PHARMACY
+- AL FAISAL PHARMACY LLC
+- AL FALAH PHARMACY
+- AL FANAR PHARMACY
+- AL FARAH PHARMACY DUBAI
+- AL FARDOOS PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- AL GARHOUD PHARMACY
+- AL GHUBAIBA PHARMACY
+- AL HAMRIYA COMMUNITY PHARMACY
+- AL HAWI PHARMACY
+- AL HIKMAH PHARMACY
+- AL HOKAMAA PHARMACY
+- AL JAMEYA AL TAAWENYA PHARMACY
+- AL JAZEERAH PHARMACY - DUBAI
+- AL JUMA PHARMACY
+- AL JUMEIRAH PHARMACY
+- AL KANZ PHARMACY (L.L.C.)
+- AL KANZ PHARMACY LLC
+- AL KHAIR COMMUNITY PHARMACY
+- AL KHAN PHARMACY LLC- DXB
+- AL MADINA AL SANAIYA PHARMACY
+- AL MANARA GARDEN PHARMACY
+- AL MANARA PHARMACY-MAKTOUM STREET
+- AL MANARA SUNSET PHARMACY
+- AL MANKHOOL PHARMACY
+- AL MANZIL AL JADEED PHARMACY LLC
+- AL MANZIL PHARMACY
+- AL MURAGGABAT PHARMACY
+- AL MUSAIF PHARMACY
+- AL MUSSALA PHARMACY
+- AL MUTEENA PHARMACY
+- AL NADA PHARMACY LLC
+- AL NASEEM PHARMACY
+- AL NEEM GRAND PHARMACY L.L.C
+- AL NEEM GREEN PHARMACY L.L.C
+- AL NEEM PHARMACY L.L.C (Branch)
+- AL NEEM STAR PHARMACY LLC
+- AL OMARRA PHARMACY
+- AL PETRA PHARMACY
+- AL QUOZ PHARMACY
+- AL RAFAH PHARMACY
+- AL RAHA PHARMACY
+- AL RAIS PHARMACY
+- Al Rawda Pharmacy LLC Br DIP
+- AL RAWDHA PHARMACY
+- AL RAYAN PHARMACY
+- AL RAZI PHARMACY
+- AL SANAIYA PHARMACY
+- AL SEHA AL KUBRA PHARMACY
+- AL SHAN PHARMACY
+- AL SHIFA PHARMACY
+- AL SHIHHE PHARMACY
+- AL SHINDAGA PHARMACY
+- AL SHOHOB PHARMACY LLC
+- AL TADAWI PHARMACY
+- AL TOWAR PHARMACY
+- AL WARQA PHARMACY
+- AL WASEL COMMUNITY PHARMACY
+- AL ZAHRA PHARMACY LLC
+- ALFA PHARMACY
+- ALICO ADVANCED CAREPHARMACY L.L.C
+- ALMURJAN PHARMACY LLC
+- Alpha Care International Pharmacy
+- Alpha International Pharmacy JLT
+- Alpha Peoples Pharmacy LLC
+- Alpha Peoples Pharmacy LLC Branch
+- Alpha Star Pharmacy LLC
+- ALQUOZ ADVANCED CARE PHARMACY LLC
+- ALQUSAIS STAR PHARMACY (LLC)
+- SONAPUR STAR PHARMACY L.L.C (EX. ALQUSAIS STAR PHARMACY (LLC) (BRANCH))
+- AMAAN PHARMACY
+- AMBER CLINIC LLC COMMUNITY PHARMACY
+- AMIGO PHARMACY LLC
+- APEX ATRIUM PHARMACY LLC
+- APOTEC GRAND PHARMACY L.L.C
+- APOTEC HUDAIBA PHARMACY L.L.C
+- APOTEC PHARMACY LLC
+- APOTEC PHARMACY LLC BRANCH
+- APPLE CARE PHARMACY
+- APPLE CARE PHARMACY LLC BRANCH
+- ARABELLA PHARMACY
+- ARABELLA PHARMACY (L.L.C.) (BRANCH)
+- Arabella Pharmacy LLC Branch
+- Arabella Pharmacy LLC Branch 2
+- ARABIAN HOME PHARMACY
+- ARAFA PHARMACY
+- ARDH AL NASEEM PHARMACY LLC
+- AREEJ PHARMACY
+- ARIN CARE PHARMACY
+- ASH TREE PHARMACY L.L.C
+- ASIA PHARMACY
+- ASMA PHARMACY
+- Aster Al hayat Pharmacy(Br of Aster Pharmacies Group LLC)
+- ASTER AL SHAFAR PHARMACY (PREVIOUSLY LAMCY PHARMACY)
+- ASTER DAY SURGERY CENTRE PHARMACY LLC
+- Aster DCC Pharmacy LLC
+- ASTER DIP PHARMACY
+- ASTER GRAND PHARMACY
+- Aster Healthcare Hypermarket(Br of Aster Pharmacies Group LLC)
+- ASTER HOSPITAL PHARMACY BR OF ASTER DM HEALTHCARE- Al Qusais
+- ASTER HOSPITAL PHARMACY- Mankhool
+- ASTER HOSPITAL PHARMACY SONAPUR
+- ASTER JBR PHARMACY
+- ASTER JEBEL ALI PHARMACY
+- Aster Medical Center Pharmacy Al Muhaisna Br of DM Healthcare LLC
+- Aster medical centre  Arabian Ranches Pharmacy Br of DM Healthcare LLC
+- Aster Pharmacies Group LLC (DMCC Branch)
+- Aster Pharmacies Group LLC Branch
+- ASTER PHARMACY 1
+- ASTER PHARMACY 101
+- ASTER PHARMACY 102 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 103
+- ASTER PHARMACY 104
+- ASTER PHARMACY 104 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 105
+- ASTER PHARMACY 109
+- ASTER PHARMACY 110
+- ASTER PHARMACY 111
+- ASTER PHARMACY 112
+- ASTER PHARMACY 113
+- ASTER PHARMACY 114
+- ASTER PHARMACY 115
+- ASTER PHARMACY 116
+- ASTER PHARMACY 117
+- ASTER PHARMACY 118
+- ASTER PHARMACY 119
+- ASTER PHARMACY 120
+- ASTER PHARMACY 123
+- ASTER PHARMACY 124
+- ASTER PHARMACY 126
+- ASTER PHARMACY 127
+- ASTER PHARMACY 128 BR OF ASTER PHARMACIES GROU LLC
+- ASTER PHARMACY 129
+- ASTER PHARMACY 130
+- Aster Pharmacy 131(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 132 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 134
+- ASTER PHARMACY 135 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 136
+- ASTER PHARMACY 137 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 138 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 141(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 142(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 143(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 144-BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 145(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 146(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 147-BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 148(BR OF ASTER PHARMACIES GROUP LLC)
+- ASTER PHARMACY 149 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 150 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 152(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 155 (Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 156 BROF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 157(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 158(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 160 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 161 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 162 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 164 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 165 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 167 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 168 (Br of Aster Pharmacies Group LLC)
+- Aster pharmacy 169 (Br of Aster pharmacies Group LLC)
+- Aster Pharmacy 170 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 172 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 173 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 175 (Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 2 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 200(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 201 (BR OF ASTER PHARMACIES GROUP LLC)
+- ASTER PHARMACY 202 (BR OF ASTER PHARMACIES GROUP LLC)
+- Aster Pharmacy 204(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 205 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 206 (Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 3
+- ASTER PHARMACY 5 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 6
+- ASTER PHARMACY 98 BRANCH OF ASTER PHARMACY LLC
+- ASTER PHARMACY TCOM
+- ATLAS HEALTHCARE PHARMACY LLC
+- ATLAS STAR PHARMACY LLC
+- AVENUE PHARMACY LLC
+- BAB AL HAYAT PHARMACY LLC
+- BAB AL NOOR PHARMACY LLC
+- BADER PHARMACY
+- BAIT AL MAQDES PHARMACY LLC
+- BAIT AL SHIFA PHARMACY L.L.C. DUBAI BRANCH
+- BAIT AL SHIFAA NEW  PHARMACY
+- BALSAM AL HADEETHA PHARMACY
+- BALSAM AL JADEEDHA PHARMACY
+- BALSAM PHARMACY
+- BANIYAS LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- BARSHA ROSE GARDENS PHARMACY LLC
+- BASMAT AL IFRAH PHARMACY LLC
+- BAY SQUARE PHARMACY L.L.C
+- BETA PHARMACY
+- BETTER LIFE PHARMACY
+- BIN SERAY PHARMACY LLC
+- BIN SINA 21 PHARMACY
+- BIN SINA 29 PHARMACY
+- BIN SINA 54 PHARMACY
+- BIN SINA GRAND PHARMACY
+- BIN SINA PHARMACY - MALL OF EMIRATES
+- BIN SINA SCIENTIFIC PHARMACY
+- BINSINA 44
+- BINSINA PHARMACY 40
+- BINSINA PHARMACY 43
+- BINSINA PHARMACY 50
+- BINSINA PHARMACY 51
+- BINSINA PHARMACY 52
+- BINSINA PHARMACY 55
+- BINSINA PHARMACY 56
+- BINSINA PHARMACY 60
+- BINSINA PHARMACY 61
+- BINSINA PHARMACY 62
+- BINSINA PHARMACY 74
+- BINSINA PHARMACY 75
+- BINSINA PHARMACY 78
+- BINSINA PHARMACY 82
+- BIO VISTA PHARMACY LLC
+- BLUE BELL INTERNATIONAL PHARMACY LLC
+- BURJEEL AL HAYYAT PHARMACY
+- BURJUMAN PHARMACY
+- C C M LIFE PHARMACY BR OF LIFE PHARMACY
+- C C S LIFE PHARMACY BR OF LIFE PHARMACY
+- CAMBRIDGE PHARMACY
+- CARE AND CURE PHARMACY LLC
+- CARE WELL PHARMACY
+- CEDARS JEBEL ALI INTERNATIONAL HOSPITAL PHARMACY
+- CENTRAL MARKET PHARMACY
+- Central United Pharmacy(Br of United Pharmacy Investment LLC)
+- CITY LAND LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- CITY LIFE PHARMACY L.L.C
+- CO-OPERATIVE PHARMACY
+- COUNTRY PHARMACY
+- CREEK LIFE PHARMACY BR OF LIFE
+- CREEK LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- DAR AL NASEEM PHARMACY LLC
+- DAR ALWAFA PHARMACY LLC
+- DEIRA LIFE PHARMACY L.L.C
+- DIAMOND 3 PHARMACY L.L.C
+- DOCIB PHARMACY LLC
+- DOCTORS PHARMACY
+- DOHA PHARMACY
+- DR ABDULLA S PHARMACY L.L.C
+- Dr. Joseph Polyclinic LLC Branch of Gulf Healthcare International LLC Community (outpatient )Pharmacy
+- DRAGON MART PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- DRAGON PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- Dragon Pharmacy (Br of Aster Al Shafar Pharmacies Group LLC)
+- DREAM PHARMACY
+- DUBAI LIFE PHARMACY LLC
+- DULSCO PHARMACY BR OF DULSCO LLC
+- DULSCO PHARMACY LLC
+- EAST HILL PHARMACY
+- EL ASHRAFIA PHARMACY 1
+- EL ASHRAFIA PHARMACY 10
+- EL ASHRAFIA PHARMACY 3 BR OF EL ASHRAFIA INVESTMENTS LLCâ€‹
+- EL ASHRAFIA PHARMACY 4 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 5 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 6 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 7 BR OF EL ASHRAFIA INVESTMENT LLC
+- EL ASHRAFIA PHARMACY 8 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 9 BR OF EL ASHRAFIA INVESTMENTS LLC
+- ELAJ PHARMACY
+- ELIXIR PHARMACY
+- EMIRATES PHARMACY LLC BRANCH (MOTOR CITY)
+- EXPERTS PHARMACY
+- EXTRA LIFE PHARMACY
+- FAJER MIRDIF PHARMACY LLC BRANCH
+- LIVIX PLUS PHARMACY L.L.C (BRANCH) (EX. FAJR AL MADINA PHARMACY L.L.C BRANCH)
+- LIVIX PLUS PHARMACY L.L.C (EX. FAJR AL MADINA PHARMACY LLC)
+- FAR BEYOND PHARMACY LLC
+- FAWAGEE PHARMACY LLC
+- FAWAGEE SCIENTIFIC PHARMACY LLC
+- FESTIVAL LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- FIT FOR LIFE PHARMACY LLC
+- FOUR SEASONS PHARAMCY LLC
+- Galleria United Pharmacy(Br of United Pharmacy Investment LLC)
+- GATE BETTER LIFE PHARMACY
+- GHAZAL AL JABAL PHARMACY
+- Gigi Pharmacy
+- Globehealth Pharmacy LLC
+- Gold Life Pharmacy Br of Life Pharmacy LLC
+- GOLDEN LIFE PHARMACY LLC
+- GOLDEN SANDS PHARMACY
+- GOODWILL PHARMACY LLC
+- GRAND INFINITY PHARMACY  LLC BRANCH
+- GRAND INFINITY PHARMACY LLC
+- GRAND LIFE PHARMACY
+- GRAND ROYAL PHARMACY
+- Grand United Pharmacy(Br of United Pharmacy Investment)
+- GREEN APPLES PHARMACY
+- GREEN COMMUNITY PHARMACY
+- HAFSA PHARMACY
+- HALA PHARMACY 13 LLC
+- HALA PHARMACY 14 LLC
+- HALA PHARMACY 15 LLC
+- HALA PHARMACY 16 LLC
+- HALA PHARMACY 19 L.L.C
+- HALA PHARMACY BR OF LIFE PHARMACY
+- HALA PHARMACY BR OF LIFE PHARMACY LLC
+- HAMRIYA LIFE PHARMACY L L C
+- HARLEY INTERNATIONAL MEDICAL CLINIC PHARMACY BRANCH
+- HATTA PHARMACY LLC
+- HEALTH EXPERT PHARMACY LLC
+- HEALTH FIRST PHARMACY  1
+- HEALTH FIRST PHARMACY 11
+- HEALTH FIRST PHARMACY 2
+- HEALTH FIRST PHARMACY 23
+- HEALTH FIRST PHARMACY 24
+- HEALTH FIRST PHARMACY 25
+- HEALTH FIRST PHARMACY 27
+- HEALTH FIRST PHARMACY 29
+- HEALTH FIRST PHARMACY 3
+- HEALTH FIRST PHARMACY 30
+- HEALTH FIRST PHARMACY 31
+- HEALTH FIRST PHARMACY 32
+- HEALTH FIRST PHARMACY 33
+- HEALTH FIRST PHARMACY 34
+- HEALTH FIRST PHARMACY 35
+- Health First Pharmacy 36
+- HEALTH FIRST PHARMACY 37
+- HEALTH FIRST PHARMACY 38
+- HEALTH FIRST PHARMACY 39
+- HEALTH FIRST PHARMACY 4
+- HEALTH FIRST PHARMACY 40
+- HEALTH FIRST PHARMACY 41
+- HEALTH FIRST PHARMACY 42
+- HEALTH FIRST PHARMACY 43
+- HEALTH FIRST PHARMACY 45
+- HEALTH FIRST PHARMACY 47
+- Health First Pharmacy 48
+- HEALTH FIRST PHARMACY 5
+- HEALTH FIRST PHARMACY 52
+- HEALTH FIRST PHARMACY 55
+- HEALTH FIRST PHARMACY 56 (BR OF HEALTH FIRST INVESTMENT LLC)
+- HEALTH FIRST PHARMACY 58
+- HEALTH FIRST PHARMACY 6
+- HEALTH FIRST PHARMACY 60
+- HEALTH FIRST PHARMACY 7
+- HEALTH FIRST PHARMACY 8
+- HEALTH FIRST PHARMACY 9
+- HEALTH POINT PHARMACY LLC
+- HEALTHY LIFE PHARMACY
+- HIGHWAY PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- HILL LIFE PHARMACY LLC
+- HILLS COMMUNITY PHARMACY
+- HOPECARE PHARMACY LLC
+- HORIZON HEALTH CARE PHARMCY
+- HTK Pharmacy
+- IBIN SINA 30 PHARMACY
+- IBIN SINA 38 PHARMACY
+- IBN AL AZWAR PHARMACY
+- IBN AL HAITHAM PHARMACY
+- IBN ROSHID MODERN PHARMACY
+- IBN ROSHID PHARMACY
+- IBN SINA 31 PHARMACY
+- IBN SINA 33 PHARMACY
+- IBN SINA 34 PHARMACY
+- IBN SINA 35 PHARMACY
+- IBN SINA 36 PHARMACY
+- IBN SINA 39 PHARMACY-Al BARSHA 2
+- IBN SINA 41 PHARMACY - BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 45 PHARMACY
+- IBN SINA 58 PHARMACY
+- IBN SINA 63 PHARMACY BR OF IBN SINA GROUP PHARMACIES
+- IBN SINA 64 PHARMACY (BR OF IBN SINA GROUP PHARMACIES L.L.C)
+- IBN SINA 71 PHARMACY
+- IBN SINA 73 PHARMACY
+- IBN SINA 76 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 77 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 79 PHARMACY LLC
+- IBN SINA 80 PHARMACY
+- IBN SINA 81 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 83 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 84 PHARMACY
+- IBN SINA 85 PHARMACY
+- IBN SINA 86 PHARMACY
+- IBN SINA 87 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 88 PHARMACY
+- IBN SINA 89 PHARMACY
+- IBN SINA 90 PHARMACY (BR OF IBN SINA GROUP PHARMACIES L.L.C)
+- IBN SINA 92 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 94 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 96 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 97 PHARMACY
+- IBN SINA 98 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 99 PHARMACY )BR OF IBN SINA GROUP PHARMACIES )L.L.C
+- IBN SINA GROUP OF PHARMACIES L.L.C - (DMCC BRANCH)
+- IBN SINA PHARMACY
+- IBN SINA PHARMACY BR. 32
+- IBN SINA TWENTY FIVE PHARMACY
+- INTERNATIONAL MODERN HOSPITAL PHARMACY
+- IQRA PHARMACY
+- MURSHID PHARMACY L.L.C (EX. IRAN PHARMACY)
+- J.B.R. LIFE PHARMACY
+- JABAL ALI GARDENS PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- JADAF LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- JBR BAHAR PHARMACY EST.
+- JBR LIFE PHARMACY 2 BR OF LIFE PHARMACY LLC
+- JBR MURJAN PHARMACY EST.
+- JBR SADAF PHARMACY EST.
+- JBR SHAMS PHARMACY LLC
+- JEBAL ALI ADVANCED CARE PHARMACY LLC
+- JUMEIRA BETTER LIFE PHARMACY
+- JVC LIFE PHARMACY LLC
+- JVT LIFE PHARMACY LLC
+- Karama Life Pharmacy Br Of Life Pharmacy L L C
+- KARAMA ONE PHARMACY L.L.C
+- KHALIDHA PHARMACY LLC
+- KIMS PHARMACY LLC
+- LA RIVIERA LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- LIFE ABU HAIL PHARMACY LLC
+- LIFE AL BADAA PHARMACY L.L.C
+- LIFE AL BARSHA FOURTH 2 BR OF LIFE PHARMACY LLC
+- LIFE AL BARSHA PHARMACY LLC
+- LIFE AL BARSHA SOUTH FOURTH BR OF LIFE PHARMACY L L C
+- LIFE AL HAMRIYA BR OF LIFE PHARMACY LLC
+- LIFE AL KARAMA PHARMACY
+- LIFE AL MIZHAR FIRST BR OF LIFE PHARMACY
+- LIFE AL NAHDA PHARMACY L.L.C
+- LIFE AL QUSAIS PHARMACY LLC
+- LIFE AL RIQQA PHARMACY L.L.C
+- LIFE AL RIQQA2 BR OF LIFE PHARMACY LLC
+- LIFE AL SHAB PHARMACY L.L.C
+- LIFE AL WARQA 2 BR OF LIFE PHARMACY LLC
+- LIFE AL WARQA PHARMACY LLC
+- LIFE AL YALAYIS 1 (BR OF LIFE PHARMACY 3 L.L.C)
+- LIFE CHECK PHARMACY LLC
+- LIFE DIP PHARMACY LLC
+- LIFE EXPRESS PHARMACY
+- LIFE GUARD PHARMACY L.L.C
+- LIFE MAYFAIR PHARMACY L.L.C
+- LIFE MORE PHARMACY LLC
+- LIFE MURAQABAT PHARMACY LLC
+- LIFE ONE PHARMACY
+- LIFE PEARL PHARMACY L.L.C
+- LIFE PHARAMCY 106 BR OF LIFE PHARMACY L.L.C
+- LIFE PHARMACY 10 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 101 Br of Life Pharmacy LLC
+- Life Pharmacy 102 Br of Life Pharmacy LLC
+- Life Pharmacy 103 Br. Of Life Pharmacy LLC
+- LIFE PHARMACY 104 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 107 BR of Life Pharmacy LLC
+- LIFE PHARMACY 109 (BR. OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 11 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 110 (Br. Of Life Pharmacy LLC)
+- Life Pharmacy 118 (Br. Of Life Pharmacy LLC)
+- LIFE PHARMACY 12 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 12 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 120 Br. Of Life Pharmacy LLC
+- LIFE PHARMACY 178 (EX. LIFE PHARMACY 13 BR OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 16 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 17 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 19 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 20 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 21 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 22 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 23 BR OF LIFE PHARMCY LLC
+- LIFE PHARMACY 24 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 25 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 26 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 27 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 29 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 3 LLC
+- LIFE PHARMACY 3 LLC (BRANCH)
+- LIFE PHARMACY 3 LLC BRANCH
+- LIFE PHARMACY 4 LLC
+- LIFE PHARMACY 44 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 45 Br. Of Life Pharmacy LLC
+- LIFE PHARMACY 46 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 47 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 48 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 5 LLC
+- LIFE PHARMACY 51 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 53 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 54 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 56 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 58 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 59 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 65 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 68 BR OF LIFE PHARMCY LLC
+- LIFE PHARMACY 7 LLC
+- LIFE PHARMACY 70 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 71 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 72 BR  OF LIFE PHARMACY LLC
+- LIFE PHARMACY 73 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 74 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 76 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 77 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 78 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 79 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 8 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 80 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 81 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 82 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 83 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 84 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 85 BR OF LIFE PHARMACY
+- LIFE PHARMACY 86 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 87 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 88 BR OF LIFE
+- LIFE PHARMACY 94 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 95 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 96 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 97 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 98(BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY BARSHA HEIGHTS BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY DAMASCUS BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY DFC BR OF LIFE PHARMACY LLC
+- Life Pharmacy DIP 2 Br of Life Pharmacy L L C
+- LIFE PHARMACY DUSSELDORF BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY DWTC BR OF LIFE PHARMACY LLC
+- Life Pharmacy FZ-LLC-DHCC
+- LIFE PHARMACY HILLS BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY I B M 2 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY I B M BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY JVT 2 BR OF LIFE PHARMACY LLC
+- Life Pharmacy L L C Branch
+- LIFE PHARMACY LLC (BRANCH)
+- LIFE PHARMACY LLC BR
+- Life Pharmacy LLC DMCC Br
+- LIFE PHARMACY LLC DMCC BR
+- LIFE PHARMACY MARINA BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY MARINA WALK BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY N K MALL BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY VILLAGE MALL BR OF LIFE PHARMACY LLC
+- LIFE PLUS PHARMACY LLC
+- LIFE ROSE PHARMACY LLC
+- LIFE SILICON PHARMACY LLC
+- LIFE TWO PHARMACY LLC BRANCH
+- LIFE VISION PHARMACY LLC
+- LIFENITY INTERNATIONAL ADVANCED PHARMACY L.L.C
+- LIVE CARE PHARMACY LLC
+- LIWA PHARMACY
+- LIWAN PHARMACY LLC
+- LOTUS PHARMACY LLC
+- LULU BARSHA PHARMACY
+- LULU CENTER PHARMACY
+- LULU KARAMA PHARMACY
+- MANCHESTER COMMUNITY PHARMACY
+- MANSION PHARMACY L.L.C
+- MARIAM NEW PHARMACY
+- MARINA ALKHAWANEEEJ PHARMACY (BR MARINA PHARMACY LLC)
+- MARINA CARE PHARMACY
+- MARINA CENTER PHARMACY
+- MARINA GREENS PHARMACY (LLC)
+- MARINA LIFE PHARMACY LLC
+- MARINA PEARL PHARMACY
+- MARINA PHARMACY
+- MARINA PHARMACY (BRANCH)
+- MARINA PHARMACY ALMUSTAQBAL BR OF MARINA PHARMACY LLC
+- Marina Pharmacy Atlantis (Br of Marina Pharmacy (L.L.C)
+- MARINA PHARMACY AVENUE (BR OF MARINA PHARMACY LLC)
+- MARINA PHARMACY BORJ STATION LLC
+- MARINA PHARMACY BRIDGE BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE 3 BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE 5 BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE TWO BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE1-BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CITY CENTER STATION LLC
+- MARINA PHARMACY CITY WALK-BR OF MARINA PHARMACY
+- MARINA PHARMACY GATE
+- MARINA PHARMACY GOLDEN MILE ONE
+- MARINA PHARMACY GOLDEN MILE TWO
+- Marina Pharmacy NAD Alshiba(BR of Marina Pharmacy (LLC))
+- MARINA PHARMACY OLD TOWN (LLC)
+- MARINA PHARMACY ONE CENTRAL BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY PALM FZCO
+- MARINA PHARMACY SHOROOQ BR OF MARINA PHARMACY LLC
+- Marina Pharmacy South Br of Marina Pharmacy LLC
+- MARINA VIEW PHARMACY LLC
+- MARSA COMMUNITY PHARMACY
+- MARSA LIFE PHARMACY L.L.C
+- MARYAM PHARMACY
+- MAS LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- MEADOWS LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- MED ONE PHARMACY
+- MED SAVE PHARMACY
+- MED X PHARMACY LLC
+- Medcare Medical Centre Barsha South Pharmacy Br of Medcare Hospital LLC
+- MEDEOR 24X7 PHARMACY
+- MEDI GREEN PHARMACY LLC
+- MEDI PRIME AL MIZHAR PHARMACY LLC
+- MEDI PRIME PHARMACY AL QUSAIS(BR OF MEDI PRIME PHARMACY LLC)
+- MEDI PRIME PHARMACY AL WARQA (BR OF MEDI PRIME PHARMACY (LLC))
+- MEDI PRIME PHARMACY BARSHA HEIGHTS (BR OF MEDI PRIME PHARMACY (L.L.C)
+- MEDI PRIME PHARMACY JUMEIRAH BRANCH LLC
+- MEDI PRIME PHARMACY LLC
+- MEDI PRIME PHARMACY MOTOR CITY(BR OF MEDI PRIME PHARMACY(LLC))
+- MEDI PRIME PHARMACY REEF MALL BR OF MEDI PRIME PHARMACY LLC
+- MEDI PRIME PHARMACY RTA BRANCH
+- MEDIC PLUS PHARMACY LLC
+- MEDICINA 1 PHARMACY
+- MEDICINA 10
+- MEDICINA 2 PHARMACY
+- MEDICINA 5 PHARMACY
+- MEDICINA 8
+- MEDICINA AL FAHIDI PHARMACY
+- MEDICINA BEACH ROAD PHARMACY
+- MEDICINA FIRST PHARMACY
+- MEDICINA PHARMACY
+- MEDICINA PHARMACY 11
+- MEDICINA PHARMACY 3
+- MEDICINA PHARMACY 4
+- MEDICINA PHARMACY 6
+- MEDICINA PHARMACY 7
+- MEDICINE SHOPPE MICRO PHARMACY
+- MEDICINE SHOPPE PHARMACY
+- MEDICOM PHARMACY (PREV. AL PHARABI)
+- MEDICOM PHARMACY 1 (PREV. AL JAMEYA)
+- MEDICOM PHARMACY 10 (PREV. AL SABA)
+- MEDICOM PHARMACY 11 (PREV. NEW FLAME)
+- MEDICOM PHARMACY 12 (PREV. DUBAI CENTURY)
+- MEDICOM PHARMACY 13 (PREV. HOME)
+- MEDICOM PHARMACY 14 (PREV. NEW HOME)
+- MEDICOM PHARMACY 15
+- MEDICOM PHARMACY 16 (PREV. MAKKA)
+- MEDICOM PHARMACY 2 (PREV. AL WASL)
+- MEDICOM PHARMACY 3 (PREV. WORLD)
+- MEDICOM PHARMACY 33 LLC
+- MEDICOM PHARMACY 34 LLC
+- MEDICOM PHARMACY 4 (PREV. TOWN)
+- MEDICOM PHARMACY 5 (PREV. EMIRATES COOP. SOCIETY)
+- MEDICOM PHARMACY 6 (PREV. MAZAYA)
+- MEDICOM PHARMACY 7 (PREV. FLAME)
+- MEDICOM PHARMACY 8 (PREV. CENTURY)
+- MEDICOM PHARMACY 9 (PREV. AL QEMMA)
+- MEDICURE PHARMACY
+- MEDICURE PHARMACY BRANCH LLC
+- MEDILIFE PHARMACY LLC
+- MEDILUX PHARMACY LLC
+- MEDSEVEN PHARMACY LTD
+- MEDSHOP GARDEN PHARMACY
+- MEDY MART PHARMACY LLC
+- MERCATO FAMILY PHARMACY CO
+- MERCURY PLUS PHARMACY LLC
+- MEZHAR LIFE PHARMACY
+- MIRDIF PHARMACY
+- MODERN IBN SINA PHARMACY
+- MODERN LIFE PHARMACY
+- MODERN MEDI PRIME PHARMACY LLC
+- MODERN PHARMACY
+- MOTHER CARE PHARMACY
+- MOTHER PHARMACY
+- MOTOR COMMUNITY PHARMACY
+- MUHAISNA STAR PHARMACY LLC
+- MULTICARE PHARMACY
+- MUSALAH AL QUOZE PHARMACY
+- MUSALLA SONAPOOR PHARMACY
+- NAD SHAMMA PHARMACY LLC
+- NAEEM PHARMACY
+- NAHDA SAHARA PHARMACY
+- NAJMA AL MUSALLAH PHARMACY LLC
+- NAJMAT AL SHAMS PHARMACY LLC
+- NATURE'S LIFE PHARMACY
+- Neo Pharmacy L.L.C Branch
+- Neo Pharmacy L.L.C Branch
+- Neo Pharmacy LLC
+- Neo Pharmacy LLC BRANCH
+- NEW ADVANCED CARE PHARMACY LLC
+- NEW AL KANZ PHARMACY (MAG214)
+- NEW AL KANZ PHARMACY BRANCH
+- NEW AL NAHDA PHARMACY - DUBAI
+- NEW AL NEEM PHARMACY LLC
+- NEW AL QUOZ PHARMACY
+- NEW AL SHAIMAA PHARMACY
+- NEW AL SHIFA PHARMACY
+- NEW ALHADIQA PHARMCY L.L.C
+- NEW ASTER PHARMACY JLT
+- NEW BETTER LIFE PHARMACY
+- NEW DOHA PHARMACY
+- NEW GRAND 1 PHARMACY
+- NEW GRAND MURQABAT PHARMACY L.L.C
+- NEW IBN SINA PHARMACY
+- NEW MAMZAR PHARMACY LLC
+- NEW MANKHOOL PHARMACY
+- NEW MAZAYA PHARMACY EST.
+- NEW MEDI PRIME PHARMACY LLC
+- NEW MEDICINA PHARMACY
+- NEW MEDILIFE PHARMACY LLC
+- NEW MOTOR CITY PHARMACY L.L.C
+- NEW RASHED PHARMACY
+- NEW SALAHALDIN PHARMACY FZE
+- NEW SANAIYA PHARMACY
+- NEW SILICON PHARMACY BR OF LIFE PHARMACY
+- NEW SMILE PHARMACY
+- NEW SPRING PHARMACY (BR OF LIFE PHARMACY LLC)
+- NEW SUPERCARE PHARMACY-MEDIA CITY
+- NEW VIDA PHARMACY LLC
+- NICE LIFE PHARMACY- Br of Aster Pharmacies Group LLC
+- NILE PHARMACY LLC
+- NMC DIC CLINIC AND PHARMACY BR OF NMC ROYAL HOSPITAL LTD DUBAI BRANCH
+- NMC ROYAL HOSPITAL PHARMACY
+- NMC SPECIALITY HOSPITAL PHARMACY
+- NMC SPECIALTY HOSPITAL PHARMACY DIP (Br of N M C ROYAL HOSPITAL LTD) (Dubai Branch)
+- NOOR AL IMAN PHARMACY - DUBAI
+- NOOR AL MADINA PHARMACY
+- NOOR AL MAMZAR PHARMACY
+- NOOR AL SHEFAA PHARMACY LLC
+- NOVA ADVANCED CARE PHARMACY LLC
+- BETA STAR PHARMACY L L
+- NOVITAS PHARMACY LLC
+- NOVO PHARMACY BRANCH
+- NOVO PHARMACY LLC
+- NOVO PHARMACY LLC (BRANCH)- DEIRA
+- NOVO PHARMACY LLC (BRANCH)- KARAMA
+- OASIS LIFE PHARMACY
+- OASIS PHARMACY LLC
+- OMAN PHARMACY
+- ONYX PHARMACY
+- ONYX PHARMACY II
+- ORION FAMILY PHARMACY LLC
+- OUR LIFE GUARD PHARMACY L L C
+- Outlet By Life Pharmacy LLC
+- PALM STRIP PHARMACY
+- PANACEA PHARMACY - MADINAT
+- PANACEA PHARMACY - REEF
+- PANORAMA RX PHARMACY
+- Paradise Plus Pharmacy LLC
+- PARK BETTER LIFE PHARMACY
+- Peoples Pharmacy
+- PHARMA ONE PHARMACY
+- Premier Pharmacy
+- PRIMACARE PHARMACY L.L.C
+- PRIMECORP MEDICAL CENTER AL WARSAN PHARMACY (BR OF PRIMECORP MEDICAL CENTER)
+- PRISTINE PHARMACY L.L.C
+- PROTECTION PHARMACY
+- QAMAR AL MADINA PHARMACY LLC
+- RAHEQ ALAZHAR PHARMACY  L.L.C
+- RAMADA LIFE PHARMACY
+- RAS AL KHOOR PHARMACY
+- RASHID PHARMACY
+- REAL 10 PHARMACY LLC
+- REAL 3 PHARMACY L.L.C
+- REAL 4 PHARMACY L.L.C
+- REAL 5 PHARAMACY LLC
+- REAL 6 PHARMACY L.L.C
+- REAL 7 PHARMACY DMCC
+- REAL 7 PHARMACY DMCC
+- REAL 7 PHARMACY DMCC BRANCH
+- RIGHT AID PHARMACY
+- RIGHT HEALTH PHARMACY L.L.C  (BRANCH)
+- RIGHT HEALTH PHARMACY LLC
+- RIVIERA LIFE PHARMACY LLC
+- ROSARY PHARMACY - SPRINGS
+- ROYAL GRAND PHARMACY
+- ROYAL LIFE PHARMACY LLC
+- ROYAL MARINA PHARMACY
+- ROYAL MEMZAR PHARMACY
+- ROYAL PHARMACY
+- ROYAL RUBY PHARMACY
+- RUBY PHARMACY
+- RX PHARMACY
+- S B N 2 PHARMACY
+- S B N Pharmacy
+- S Z R LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- SAFA SOCIETY PHARMACY
+- SAHARA AL MANKHOOL PHARMACY
+- SAHARA PHARMACY
+- SAHARA STAR PHARMACY
+- SALAH ALDIN PHARMACY
+- SAMARI RX PHARMACY
+- Samary Pharmacy LLC
+- SAMER PHARMACY LLC
+- SANDS COMMUNITY PHARMACY
+- SARA PHARMACY LLC
+- SEHA PHARMACY LLC
+- SEIF PHARMACIES BR OF EL ASHRAFIA INVESTMENTS LLC
+- SEREENA PHARMACY
+- SHAJARAT AL NEEM PHARMACY LLC
+- SMILE PHARMACY
+- SONDOS PHARMACY
+- SOUKARE PHARMACY
+- STAR MIRDIF PHARMACY
+- SULTAN PHARMACY
+- SUPER CARE JUMEIRAH PHARMACY
+- SUPER CARE PHARMACY 26
+- SUPER CARE PHARMACY 27
+- SUPER CARE PHARMACY 28
+- SUPER CARE PHARMACY 39
+- SUPER CARE PHARMACY AL THANYA
+- SUPER CARE PHARMACY DIP
+- SUPER CARE PHARMACY DMCC
+- SUPER CARE PHARMACY L.L.C - BRANCH- MEYDAN HEIGHTS
+- Super Care Pharmacy L.L.C - Branch Of Abu Dhabi 6
+- SUPER CARE PHARMACY L.L.C (BRANCH)
+- SUPER CARE PHARMACY L.L.C (BRANCH)
+- SUPER CARE PHARMACY L.L.C (BRANCH)
+- SUPER CARE PHARMACY L.L.C (BRANCH)- FESTIVAL PLAZA
+- Super Care Pharmacy L.L.C. Meaisem
+- Super Care Pharmacy LLC (DMCC Branch)
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- SUPER CARE PHARMACY LLC BRANCH- CENTRAL MALL
+- SUPER CARE PHARMACY LLC BRANCH- DUBAI MARINA
+- SUPER CARE PHARMACY LLC BRANCH- Q MALL
+- Super Care Pharmacy LLC Branch(Wadi Al Safa 7)
+- Super Care Pharmacy LLC Branch-Al Barsha 3
+- SUPER CARE PHARMACY LLC BRANCH-Al Ghurair mall
+- SUPER CARE PHARMACY LLC- MOTOR CITY
+- SUPER CARE PHARMACY MIRDIF 2 (OR DHA-F-0245928)
+- SUPER LIFE PHARMACY LLC
+- SUPERCARE EMIRATES PHARMACY
+- SUPERCARE GARDENS PHARMACY
+- SUPERCARE MANKHOOL PHARMACY
+- SUPERCARE PHARMACY - ASWAAQ UMM SUQEIM
+- SUPERCARE PHARMACY - DCC
+- SUPERCARE PHARMACY - JLT
+- SUPERCARE PHARMACY - MARSA
+- SUPERCARE PHARMACY - MIRDIF
+- SUPERCARE PHARMACY - SHEIKH ZAYED ROAD
+- SUPERCARE PHARMACY - SILICON
+- SUPERCARE PHARMACY - UMM SUQEIM
+- SUPERCARE PHARMACY - WASL SQUARE
+- SuperCare Pharmacy 29
+- SuperCare Pharmacy 31
+- SuperCare Pharmacy 33 DMCC
+- SuperCare Pharmacy 34
+- SUPERCARE PHARMACY 38
+- SUPERCARE PHARMACY 41
+- SUPERCARE PHARMACY 43
+- SUPERCARE PHARMACY 44
+- SUPERCARE PHARMACY ARABIAN PLAZA
+- SUPERCARE PHARMACY DUBAI MALL
+- SUPERCARE PHARMACY FESTIVAL CITY
+- Supercare Pharmacy LLC Branch
+- SuperCare Pharmacy LLC Branch
+- SuperCare Pharmacy LLC Branch
+- SuperCare Pharmacy LLC Branch
+- SUPERCARE PHARMACY OASIS CENTRE
+- SUPERCARE PHARMACY SAFA
+- SUSTAINABLE LIFE PHARMACY LLC
+- TAJ PHARMACY
+- TAREQ PHARMACY
+- THE POINTE LIFE PHARMACY BR OF LIFE PHARMACY  LLC
+- THORAYA AL MADENA PHARMACY LLC
+- MODERN PHARMACY L.L.C (BRANCH) (BURDUBAI)  (EX. THUMBAY PHARMACY 5 BRANCH OF THUMBAY PHARMACY LLC)
+- MODERN PHARMACY L.L.C (BRANCH) (AL BARSHA 2) (EX. THUMBAY PHARMACY 7 BRANCH OF THUMBAY PHARMACY LLC)
+- MODERN PHARMACY L.L.C (BRANCH) (SATWA)  (EX. THUMBAY PHARMACY 8 BRANCH OF THUMBAY PHARMACY LLC)
+- TOWN LIFE PHARMACY
+- TOWN SQUARE LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- TRACKS PHARMACY
+- TRAM LIFE PHARMACY L.L.C
+- TRUSTCARE PHARMACY LLC
+- UDS PHARMACY LLC
+- UMM HURAIR PHARMACY
+- UNICARE PHARMACY LLC
+- UNICARE STAR PHARMACY
+- UNION PHARMACY
+- United Pharmacy 2(Br of United Pharmacy Investment LLC)
+- United Pharmacy IBN Battuta(Br of United Pharmacy Investment( LLC)
+- United Pharmacy(Br of United Pharmacy Investment LLC)
+- UNITY PHARMACY LLC
+- UPTOWN COMMUNITY PHARMACY
+- UPTOWN PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- VCARE PHARMACY LLC
+- VITA CARE PHARMACY L.L.C
+- Vita United Pharmacy(Br of United Pharmacy Investment LLC)
+- VIVA PHARMACY LLC
+- WARSAN LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- We Care Pharmacy (L.L.C.)
+- WECARE E R X PHARMACY LLC( Ex : Kap Pharmacy)
+- WELLCARE PHARMACY LLC
+- WELLFAST PHARMACY
+- WELLMART PHARMACY LLC
+- WEST HILL PHARMACY
+- YACOUB PHARMACY
+- YARA PHARMACY
+- YASMED PHARMACY LLC
+- YASSAT LIFE PHARMACY LLC
+- YAZ PHARMACY LLC
+- ZABEEL PHARMACY LLC
+- Zabeel Pharmacy LLC
+- ZAHRAT AL NOOR PHARMACY LLC
+- Zahrat Al Shefa Pharmacy
+- ZAMZAM PHARMACY
+- ZAYD PHARMACY
+- ZEN LIFE PHARMACY CO LLC
+- ZULEKHA PHARMACY
+- GULF DIAGNOSTIC MEDICAL CENTRE
+- THUMBAY HOSPITAL LLC FUJAIRAH BRANCH
+- AL AHLI MEDICAL CENTER-FUJAIRAH
+- AL HAYL MEDICAL CENTRE
+- AL SHARQ MEDICAL CENTER - AL ETIHAD
+- AL SHARQ MEDICAL CENTER - DIBBA
+- AL SHARQ MEDICAL CENTRE - COSMOMED
+- ALFA CLINICA LLC- FUJAIRAH
+- ASTER MEDICAL CENTRE - FUJEIRAH
+- FATHIMA MEDICAL CENTER
+- Fujairah Port Medical Centre
+- LIFE CARE MEDICAL CENTER
+- LIFE CARE MEDICAL CLINIC LLC
+- Makah Medical Clinic
+- MAKKAH MEDICAL CENTER
+- NORTHERN AL AHLIAH MEDICAL CENTRE
+- SUHA MEDICAL CENTER
+- AL ASDIQAA PHARMACY
+- AL HASHMI PHARMACY
+- AL KHAN PHARMACY
+- AL NASR PHARMACY
+- AL SHARQ FAMILY PHARMACY
+- AL SHARQ MODERN PHARMACY
+- AL SHARQ PHARMACY - DIBBA
+- AL ZAYTOON PHARMACY
+- ASTER PHARMACY 139
+- ASTER PHARMACY 8
+- ASTER PHARMACY FUJAIRAH BRANCH LLC
+- BETTER LIFE PHARMACY
+- EAST COAST AHALIA PHARMACY
+- HEALTH CURE PHARMACY
+- HEALTH FIRST 19 PHARMACY
+- HEALTH FIRST 20 PHARMACY
+- HEALTH FIRST PHARMACY 16
+- HEALTH FIRST PHARMACY 17 (PREV. TOWER PHARMACY)
+- HEALTH FIRST PHARMACY 18
+- HEALTH FIRST PHARMACY 21
+- HEALTH FIRST PHARMACY 26
+- Health First Pharmacy 59 Fujairah Branch
+- LABAIK PHARMACY
+- LIFE CARE PHARMACY
+- LIFE PHARMACY LLC FUJAIRAH BR 1
+- Life Pharmacy LLC Fujairah Branch 2
+- LULU DIBBA PHARMACY - DIBBA
+- MEDICINA PHARMACY 20 FUJAIRAH BRANCH
+- MEDICINA PHARMACY 28
+- NATIONAL MEDICAL CENTRE PHARMACY
+- SUHA PHARMACY
+- TAIBA PHARMACY
+- THUMBAY HOSPITAL PHARMACY
+- AL ENWAN MEDICAL CENTRE
+- BAWABAT AL ENWAN PHARMACY
+- BIOTECH MEDICAL LAB L.L.C- RAK
+- INTERNATIONAL RADIOLOGY CENTER - RAK
+- AL ORAIBI HOSPITAL
+- AL ZAHRAWI HOSPITAL
+- AL AFIA MEDICAL CENTRE - RAK
+- AL SAADA SPECIALIST CLINIC
+- AL SHIFA MEDICAL CENTER-RAK
+- ALAHLIA MEDICAL CENTRE
+- ASTER MEDICAL CENTRE RAK BRANCH
+- CARE POINT MEDICAL CENTER LLC
+- EMIRATES CARDIOLOGY CLINIC LLC
+- EMIRATES HOSPITALS AND CLINICS LLC RAS AL KHAIMAH 1
+- HEALTH MEDICAL CENTER
+- LIFE CHECK MEDICAL CENTER LLC
+- LIFE CHECK PHARMACY
+- MARHABA MEDICAL CENTRE- RAK
+- MAXCARE MEDICAL CENTER
+- NEXUS MEDICAL CLINIC
+- NMC ROYAL MEDICAL CENTRE
+- Ras Al Khaimah Medical Center Al Hamra - RAK
+- Ras Al Khaimah Medical Center Ghalilla - RAK
+- Ras Al Khaimah Medical Centre Al Jazeera - RAK
+- SHIFA AL JAZEERA MEDICAL CENTRE LLC- RAK
+- THUMBAY CLINIC RAK BRANCH
+- UNION MEDICAL &DENTAL CENTER LLC
+- AL ABRAR PHARMACY
+- AL AFIA PHARMACY
+- AL AHD PHARMACY
+- AL AHLIA PHARMACY RAK BRANCH
+- AL DOAA PHARMACY
+- AL GHAIL PHARMACY-RAK
+- AL HARMEEN PHARMACY
+- AL HSAYAT PHARMACY
+- AL HUDA PHARMACY
+- AL LULU RAK PHARMACY
+- AL MANARA PHARMACY - RAK
+- AL MARKEZIA PHARMACY
+- AL MUNTASER PHARMACY
+- AL SHAMAL PHARMACY LLC
+- AL WATANIA PHARMACY
+- AL ZAHRAWI PHARMACY
+- ASTER PHARMACIES GROUP LLC BRANCH 1
+- Aster Pharmacies Group LLC Branch 2
+- ASTER PHARMACIES GROUP LLC RAK BRANCH
+- BALSAM PHARMACY
+- CAREPOINT PHARMACY
+- Emirates Dubai Pharmacy LLC RAK Branch
+- HALA PHARMACY 25
+- HALA PHARMACY 34 LLC
+- HALA PHARMACY 36 LLC
+- HALA PHARMACY21
+- HALA PHARMACY22 (RAK)
+- HEALTH FIRST PHARMACY 14
+- HEALTH FIRST PHARMACY 22
+- HEALTH FIRST PHARMACY 50
+- HEALTH FIRST PHARMACY 54
+- IBN SINA PHARMACY - HAMRA MALL -RAK
+- IBN SINA PHARMACY 1
+- IBN SINA PHARMACY 2
+- IBN SINA Pharnacy-Branch 3
+- JABAL AL NOOR PHARMACY
+- LIFE PHARMACY
+- LIFE PHARMACY LLC - RAK BRANCH 1
+- MARHABA PHARMACY
+- MARHABTAIN PHARMACY
+- MEDICINA 27 PHARMACY
+- MEDICOM PHARMACY 23 (PREV. AL ENAYA)
+- NEXUS PHARMACY LLC
+- NMC ROYAL PHARMACY
+- NOOR AL SHEFAA PHARMACY L.L.C
+- Oxygen Pharmacy LLC
+- Ras Al Khaimah Al Jazira Al Hamra Pharmacy - RAK
+- Ras Al Khaimah Ghalila Pharmacy - RAK
+- RAZAN PHARMACY LLC
+- RUKN AL HAYAT PHARMACY L.L.C
+- SHIFA AL JAZEERA PHARMACY LLC
+- Super Care Pharmacy LLC - RAK Branch
+- U M D C PHARMACY LLC
+- YAMAMAH PHARMACY
+- ZAHRAT NOOR AL SHEFAA PHARMACY
+- Al Ola Pharmacy Br Aster Pharmacies Group LLC
+- AL BURJ MEDICAL LAB-SHARJAH
+- AL DURRAH RADIOLOGY CENTRE
+- AL SAFWA RADIOLOGY CENTER
+- AL SARH MEDICAL LAB
+- ASTER DIAGNOSTIC CENTER
+- BIO TECH MEDICAL LAB- SHARJAH
+- EMIRATES MEDICAL LABORATORY
+- INTERNATIONAL RADIOLOGY AND DIAGNOSTIC SERVICES CENTRE LLC-BRANCH 1
+- INTERNATIONAL RADIOLOGY CENTER
+- MEDI PLUS DIAGNOSTIC CENTER
+- REEM MEDICAL DIAGNOSTIC CENTRE
+- TEXAS MEDICAL LAB
+- AL NAKHEEL ONE DAY SURGERY HOSPITAL
+- AL SAHA WA AL SHIFAA HOSPITAL FOR ONE DAY SURGERY
+- BURJEEL SPECIALTY HOSPITAL LLC- SHARJAH
+- CENTRAL HOSPITAL LLC( EX: Central Private Hospital)
+- EMIRATES EUROPEAN HOSPITAL LLC ONE DAY SURGERY
+- ORIANA HOSPITAL FOR ONE DAY SURGERY
+- ROYAL HOSPITAL
+- THUMBAY HOSPITAL DAYCARE - MUWAILAH
+- ABRAHAMS MEDICAL CENTRE
+- ACCESS AL ROLLA MEDICAL CENTRE
+- ACCESS AL SAJAA CLINIC
+- ACCESS CLINIC MUWAILAH
+- AHALIA REGIONAL MEDICAL CENTER
+- AL AFDAL MEDICAL CENTER
+- AL AFYA MEDICAL CENTRE
+- AL AMANA MEDICAL CENTRE
+- AL AMUMAH MEDICAL CENTER
+- AL ARIF HEART & CHILDRENS MEDICAL CENTRE LLC
+- AL AZHAR MEDICAL CLINIC
+- AL BARAKAH MEDICAL CLINIC
+- AL BURJ AL THAHBI MEDICAL CENTRE LLC
+- AL DARARY MEDICAL CENTRE
+- AL DHAID MEDICAL CENTRE
+- AL DUNIA MEDICAL CENTER LLC
+- AL EMARAT NATIONAL MEDICAL CENTER LLC
+- AL FAIEZ MEDICAL CENTRE
+- AL LUBNANI MEDICAL CENTER LLC (LEBANON MEDICAL CENTER)
+- AL MAHER MEDICAL CENTER LLC
+- AL MALIHA MEDICAL CENTRE
+- AL MANSOUR MEDICAL CENTRE
+- AL NAHDA MEDICAL CENTER
+- AL NASEEM  MEDICAL CENTRE- SHJ
+- AL QASIMIAH MEDICAL CLINIC
+- AL RABEE MEDICAL CENTER
+- AL RAHAH MEDICAL CENTRE
+- AL SAFI MEDICAL CENTER LLC
+- Al Shifa Al Khaleeji Medical Centre
+- AL YAMAMAH MEDICAL CENTRE
+- ALBAYAN MEDICAL CENTER
+- ALIBTESAMAH AL RAIEAA MEDICAL CENTRE
+- ASTER ABU SHAGARA MEDICAL CENTRE
+- ASTER ABUTINA MEDICAL CENTRE
+- ASTER MUWAILEH MEDICAL CENTER
+- BAB AL SAJAAH CLINIC LLC
+- BRISTOL MEDICAL CENTRE LLC
+- BUSHRA SPECIALIST MEDICAL CENTRE
+- CLASS MEDICAL CENTRE
+- DAR AL SALAM MEDICAL CENTER LLC
+- DEEPA CLINIC
+- DR.SABA MEDICAL CENTRE
+- OAKLAND MEDICAL CENTRE L.L.C (EX. EMIRATES INTERNATIONAL MEDICAL CENTER)
+- EMIRATES MEDICAL CENTRE
+- EVE MEDICAL CENTER LLC
+- FIRST GULF MEDICAL CENTER
+- HANNOVER MEDICAL CENTER
+- Health Vision Medical Center LLC
+- IDEAL MEDICAL CENTRE
+- LIBERTY MEDICAL CENTER
+- MAMPILLI MEDICAL CENTER
+- MARINA MEDICAL CENTER
+- MGM MEDICAL CENTRE LLC
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.1
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.2
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.3
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.4
+- NATHANI MEDICAL CENTER
+- NEW MEDICAL CENTRE - SHARJAH
+- NOOR AL MADINAH MEDICAL CENTER
+- ORCHID MEDICAL CENTRE- SHARJAH
+- PESHAWAR MEDICAL CENTRE- SHARJAH
+- PREMIER MEDICAL CENTRE LLC
+- PRIME MEDICAL CENTRE AL QASIMIA
+- PRIMECORP MEDICAL CENTER L.L.C SHJ 1
+- REGAL MEDICAL CENTRE
+- RIAZ MEDICAL CENTRE - SHARJAH
+- SABAH AL NOOR MEDICAL CENTER
+- SAHARA MEDICAL CENTRE
+- SAIFZONE MEDICAL CENTRE (FZC)
+- SANA HABIB MEDICAL CENTRE LLC
+- SHAMAAL AL AHALIA MEDICAL CENTRE
+- SHIFA AL JAZEERA MEDICAL CENTRE- SHARJAH
+- SIYAD SPECIALIST MEDICAL CENTRE
+- STARCARE MEDICAL CENTER L.L.C
+- SUNNY HALWAN SPECIALITY MEDICAL CENTRE LLC
+- SUNNY MAYSLOON SPECIALITY MEDICAL CENTRE LLC
+- SUNNY SHARQAN MEDICAL  CENTRE LLC
+- Thumbay Clinic LLC Br 1
+- Thumbay Clinic LLC Branch 2
+- THUMBAY MEDICAL & DENTAL SPECIALITY CENTRE - Sharjah
+- TRUE CARE MEDICAL CLINIC
+- UNICARE MEDICAL CENTRE LLC
+- UNION MEDICAL CENTRE
+- VENNIYIL MEDICAL CENTRE
+- YAS MEDICAL CENTER LLC
+- ZAFERULLA MEDICAL CENTRE
+- 800 PHARMACY LLC - SHJ.BR
+- ABUDHABI PHARMACY
+- AKNAF BAIT AL MAQDES PHARMACY LLC
+- AL AFDHAL PHARMACY
+- AL AHLIAH PHARMACY
+- AL AHSAN PHARMACY
+- AL AMAL PHARMACY
+- AL AMAN PHARMACY
+- AL AMANI PHARMACY
+- AL AZHAR PHARMACY
+- AL BADR AL KAMIL PHARMACY LLC
+- AL BAHR PHARMACY
+- AL BASSAM PHARMACY
+- AL BURJ AL THAHBI PHARMACY LLC
+- AL BUSTAN PHARMACY LLC
+- Al Courniche pharmacy LLC
+- AL DALIL PHARMACY LLC
+- AL DAWA AND AL JAMAL PHARAMCY  LLC
+- AL DHIA PHARMACY LLC
+- AL DUNIA PHARMACY LLC
+- AL ELAJ PHARMACY LLC
+- AL FAISAL PHARMACY LLC
+- AL FAJER PHARMACY
+- AL FARAH PHARMACY
+- AL FARAJ PHARMACY
+- AL FARDAN CENTRE PHARMACY LLC
+- AL FARES PHARMACY
+- AL GHAITH PHARMACY
+- AL GHRAIF PHARMACY
+- AL HIJRAH PHARMACY LLC
+- AL HIKMAH PHARMACY - SHARJAH
+- AL INAYA AL MUTAQADIMAH PHAMRACY LLC  (PREVIOUSLY AL QASSIM PHARMACY)
+- AL INAYA PHARMACY
+- AL ITEKAL PHARMACY
+- AL ITIHAD PHARMACY
+- AL KHAIR PHARMACY
+- AL KINDI PHARMACY
+- AL MAJAZ PHARMACY
+- AL MALEHA PHARMACY
+- AL MANARAH PHARMACY
+- AL MANSOOR PHARMACY
+- AL MAWADAH PHARMACY
+- AL MEENA PHARMACY LLC
+- AL MOAALAJ PHARMACY LLC
+- AL MUSALLA PHARMACY
+- AL NABAA PHARMACY
+- AL NADIA PHARMACY LLC
+- AL NAHAR PHARMACY LLC
+- AL NAJIM AL LAMEE PHARMACY
+- AL NAS PHARMACY L.L.C
+- AL NASEEM PHARMACY
+- AL NUZHA PHARMACY
+- AL OROUBA PHARMACY
+- AL QADSYAH PHARMACY
+- AL QASIMIAH PHARMACY
+- AL RAJAA PHARMACY
+- AL RAWAA PHARMACY LLC
+- AL RAYA PHARMACY
+- AL RAYAN PHARMACY LLC
+- AL RIYADH PHARMACY
+- AL RUAYAH PHARMACY
+- AL SABAH PHARMACY L.L.C
+- AL SADAF PHARMACY
+- AL SADIQ PHARMACY
+- AL SAFI PHARAMCY LLC
+- AL SAHA AND AL JAMAL PHARMACY LLC
+- AL SAHA PHARMACY LLC
+- AL SAIF PHARMACY
+- AL SALAMAH PHARMACY
+- AL SAMHA PHARMACY LLC
+- AL SEHA AL KUBRA PHARMACY LLC
+- AL SHALAL PHARMACY
+- AL SHIFA AL AFIAH PHARMACY
+- AL TAIF PHARMACY
+- AL TAJ PHARMACY
+- AL TAQWA PHARMACY LLC
+- AL WAAD PHARMACY
+- AL WADI PHARMACY
+- AL WASFA PHARMACY LLC
+- ALBARSHA PHARMACY
+- ALNAJIM ALAZRAQ PHARMACY
+- ANAS PHARMACY
+- ANWAR BAIT AL MAQDES PHARMACY LLC
+- Arabian Home health pharmacy
+- ARABIAN PHARMACY - SHARJAH
+- ASIA PHARMACY LLC
+- ASMA PHARMACY
+- ASTER AL BUHAIRA PHARMACY
+- Aster Pharmacies Group LLC -SHJ BR
+- Aster Pharmacies Group LLC- SHJ BR - Branch 3
+- Aster Pharmacies Group LLC- SHJ BR - Branch 5
+- Aster Pharmacies Group LLC -SHJ BR -Branch 1
+- Aster Pharmacies Group LLC -SHJ BR -Branch 2
+- Aster Pharmacies Group LLC -SHJ BR -Branch 4
+- ASTER PHARMACY - SHARJAH
+- ASTER PHARMACY 106
+- ASTER PHARMACY 107
+- ASTER PHARMACY 108
+- ASTER PHARMACY 121
+- ASTER PHARMACY 122
+- ASTER PHARMACY 125
+- ASTER PHARMACY 133
+- ASTER PHARMACY 140
+- ASTER PHARMACY 151
+- Aster Pharmacy 153
+- Aster Pharmacy 203
+- ATLAS PHARMACY
+- BAIT AL DAWAA PHARMACY
+- BAIT AL HIKMA PHARMACY
+- BAIT AL MAQDES AL JADEEDAH PHARMACY
+- BAIT AL MAQDES PHARMACY LLC
+- BAIT AL SHIFA PHARMACY - SHARJAH
+- BANIYAS PHARMACY
+- BILAL PHARMACY  LLC
+- BIN SINA PHARMACY
+- BOORJ AL ROLLA PHARMACY LLC
+- BORJ SARAH PHARMACY
+- BURJEEL SPECIALTY HOSPITAL PHARMACY
+- CENTRAL PRIVATE HOSPITAL PHARMACY
+- CITY LIFE PHARMACY LLC BRANCH SHARJAH
+- CONSULTANT'S PHARMACY
+- CRISTAL PHARMACY
+- DAR AL DAWAA PHARMACY L.L.C
+- DAR AL HAYAT PHARMACY L.L.C.
+- DAR AL HIKMAH PHARMACY LLC
+- DAR AL NEEM PHARMACY LLC
+- DEIRA PHARMACY LLC
+- DELMON PHARMACY
+- DOCTORS PHARMACY
+- DUAA PHARMACY
+- EMIRATES EUROPEAN HOSPITAL PHARMACY
+- EXPERTS PHARMACY
+- FATIMA AL ZAHRAA PHARMACY
+- GARDEN PHARMACY LLC
+- GOLDEN LIFE PHARMACY
+- GRAND HAMAD PHARMACY
+- GULF PHARMACY LLC
+- HALA PHARMACY BR 45
+- HALA PHARMACY BR 55
+- HALA PHARMACY LLC
+- HALA PHARMACY LLC - BRANCH 28
+- HALA PHARMACY LLC - BRANCH 38
+- HALA PHARMACY LLC - BRANCH 42
+- HALA PHARMACY LLC - BRANCH 44
+- HALA PHARMACY LLC - BRANCH 46
+- HALA PHARMACY LLC - BRANCH 51
+- HALA PHARMACY LLC BR 52
+- HALA PHARMACY LLC BRANCH 27
+- HALA PHARMACY LLC BRANCH 33
+- HALA PHARMACY LLC BRANCH 35
+- HALA PHARMACY LLC BRANCH 37
+- HALA PHARMACY LLC BRANCH 40
+- HALA PHARMACY LLC BRANCH 43
+- HALA PHARMACY LLC BRANCH 47
+- HALA PHARMACY LLC BRANCH 48
+- HALA PHARMACY LLC BRANCH 56
+- HALA PHARMACY LLC-Branch 1
+- HALA PHARMACY LLC-Branch 10
+- HALA PHARMACY LLC-BRANCH 11
+- HALA PHARMACY LLC-Branch 12
+- HALA PHARMACY LLC-BRANCH 18
+- HALA PHARMACY LLC-BRANCH 19
+- HALA PHARMACY LLC-Branch 2
+- HALA PHARMACY LLC-BRANCH 20
+- HALA PHARMACY LLC-BRANCH 26
+- HALA PHARMACY LLC-Branch 3
+- HALA PHARMACY LLC-Branch 4
+- HALA PHARMACY LLC-Branch 5
+- HALA PHARMACY LLC-Branch 6
+- HALA PHARMACY LLC-Branch 7
+- HALA PHARMACY LLC-Branch 8
+- HALA PHARMACY LLC-Branch 9
+- HAMAD AL IHTERAFEYA PHARMACY LLC
+- HAMAD AL MUMAYAZAH PHARMACY LLC
+- HAMAD AL OULA PHARMACY LLC
+- HAMAD PHARMACY
+- HARAMAIN PHARMACY
+- HEALTH FIRST PHARMACY
+- Health First Pharmacy Br 6
+- HEALTH FIRST PHARMACY BR2
+- HEALTH FIRST PHARMACY BR3
+- HEALTH FIRST PHARMACY BR4
+- HEALTH FIRST PHARMACY BRANCH 10
+- Health First Pharmacy Branch 8
+- HEALTH FIRST PHARMACY BRANCH 9
+- HEALTHCARE PHARMACY LLC
+- HUSSEIN PHARMACY
+- IBN BATUTA PHARMACY
+- IBN HAYAN PHARMACY SHARJAH
+- IBN SEENA PHARMACY 70
+- IBN SINA AL KUBRA PHARMACY
+- IBN SINA AL RAHMANIA PHARMACY
+- IBN SINA AL ZAHIAH PHARMACY
+- Ibn Sina Pharmacy 37
+- IBN SINA PHARMACY-SOLE PROPRIETORSHIP L.L.C
+- IBN ZOHR PHARMACY
+- ISHAQ BIN OMRAN PHARMACY LLC
+- JABAL JAIS PHARMACY LLC
+- LAMIA PHARMACY
+- LIFE PHARMACY LLC BRANCH SHJ
+- LIFE PHARMACY LLC SHJ BR 3
+- LIFE PHARMACY LLC SHJ BR BRANCH 1
+- LIFE PHARMACY LLC SHJ BR BRANCH 2
+- LIFE PHARMACY LLC SHJ BRANCH 6
+- LIFE PHARMACY LLC SHJ BRANCH 7
+- LUBNA PHARMACY
+- LULU AL FALAH PHARMACY LLC-SHARJAH
+- LULU AL NAHDA PHARMACY LLC-SHARJAH
+- MAJID PHARMACY
+- MAKKAH PHARMACY LLC - SHARJAH
+- MARHABA PHARMACY
+- MASAFI PHARMACY
+- MAY PHARMACY
+- MEDI PRIME AL MAJAZ PHARMACY LLC -BRANCH 1
+- MEDI PRIME AL NAHDA PHARMACY LLC
+- MEDI PRIME AL QASIMIAH PHARMACY
+- MEDI PRIME PHARMACY
+- MEDICARE PHARMACY
+- MEDICINA 22 PHARMACY
+- MEDICINA 23 PHARMACY
+- MEDICINA 24 PHARMACY
+- MEDICINA 25 PHARMACY
+- MEDICINA 31
+- MEDICOM PHARMACY 17 (PREV.AL ANSAR)
+- MERCURY PHARMACY LLC
+- MERCURY STAR PHARMACY LLC
+- MILAN PHARMACY LLC
+- MILLENNIUM PHARMACY
+- Modern Al Riqqa Pharmacy
+- MODERN BAIT AL MAQDES PHARMACY LLC
+- MUHAMMAD AYAZ PHARMACY
+- Najm Al Qasimia Pharmacy
+- NAJMATH SAHARA AL JADEEDA PHARMACY
+- NATIONAL MEDICAL CENTER PHARMACY
+- NEW AL WAFA PHARMACY
+- NEW BIN SINA PHARMACY
+- NEW CITY PHARMACY
+- NEW MEDICAL CENTER PHARMACY
+- NMC MEDICAL CENTRE PHARMACY -LLC N.M.C Branch 1
+- NOORA PHARMACY
+- ORCHID PHARMACY ALKHAN LLC
+- ORIANA PHARMACY
+- Palmyra Pharmacy
+- PHARMACY ONE LLC
+- RASHA PHARMACY
+- RAWABINA PHARMACY
+- RAZAN PHARMACY LLC
+- REEM AL NAHDAH PHARMACY LLC
+- ROYAL GARDEN PHARMACY LLC
+- RUKN ABU SHAGHARAH PHARAMCY
+- RUKN AL DAWAA PHARMACY LLC
+- RUKN AL JAWDAH PHARMACY
+- RUKN AL SALAM PHARMACY
+- RUKN ALYASMEEN PHARMACY
+- SAHARA AL JAZEERA PHARMACY
+- SAHARA LIFE PHARMACY LLC
+- SAIF AL KHAN PHARMACY LLC
+- SAIFZONE PHARMACY (FZC)
+- SALALAH PHARAMCY LLC
+- SALIM PHARMACY
+- SALSABEEL PHARMACY
+- SAMA MUWAILEH PHARMACY LLC
+- SCIENTIFIC PHARMACY
+- SHAMS AL NAHDA PHARMACY LLC
+- SHARJAH AHALIA PHARMACY
+- SHARJAH PHARMACY
+- SHARQAN PHARMACY
+- SIR ALSHIFFAA PHARMACY
+- STARCARE PHARMACY LLC
+- Super Care Pharmacy LLC - SHJ BR - Branch 2
+- Super Care Pharmacy LLC - SHJ BR - Branch 3
+- SUPERCARE PHARMACY
+- TAIBAH PHARMACY
+- United Pharmacy AL Zahiah LLC
+- UNITED PHARMACY AL ZAHIAH LLC - BRANCH 1
+- UNITED PHARMACY AL ZAHIAH LLC - BRANCH 2
+- WAJEAT AL KHOOR PHARMACY - SHARJAH
+- WASEEM PHARMACY
+- YAS PHARMACY LLC
+- ZAHRAT ALRABIE PHARMACY
+- AL HAYAT MEDICAL CENTER
+- AL KHALEEJ MEDICAL CENTRE
+- DAR AL HAYAT MEDICAL CENTER L.L.C
+- NEW AL KHALEEJ MEDICAL CENTRE
+- THUMBAY CLINIC UAQ BRANCH
+- YASMED MEDICAL CENTER
+- AL NEEM PHARMACY LLC
+- AL SAFA PHARMACY
+- Aster Pharmacies Group LLC UAQ Branch
+- DANA PHARMACY
+- DOOA PHARMACY - UAQ
+- HEALTH FIRST PHARMACY 12
+- HEALTH FIRST PHARMACY 13
+- HEALTH FIRST PHARMACY 28
+- IBN BATUTA PHARMACY LLC
+- LIFE PHARMACY
+- LIFE PHARMACY L.L.C - BRANCH 1
+- LIFE PHARMACY LLC BRANCH 2
+- LULU CENTER PHARMACY LLC
+- MEDICOM PHARMACY 26
+- MEDICOM PHARMACY 33 LLC UAQ BRANCH
+- ROUA PHARMACY LLC
+- TAJERAN PHARMACY
+- YASMED PHARMACY
+- AXON MEDICA POLYCLINIC, BR. AXON MEDICA INVESTMENT MANAGEMENT L.L.C
+- AXON MEDICA PHARMA L.L.C
+- AXON MEDICA POLYCLINIC
+- AXON MEDICA PHARMA L.L.C
+- DR ISMAIL POLYCLINIC
+MALL BR OF DR. ISMAIL
+POLYCLINIC
+- JUPITER AL QUSAIS POLYCLINIC LLC PHARMACY
+- Emirates Hospitals & Clinics LLC Branch, Pharmacy
+- SHIFA AL RABEE MEDICAL CENTRE
+- SHIFA AL JAZEERAH CENTRE PHARMACY .LLC â€“ SHJ.BR
+- AL YAMAMA PHARMACY
+- AL TALAL PHARMACY
+- AL MISBAH PHARMACY L L C
+- AL ALIYA PHARMACY
+- HEY LAB FOR MEDICAL ANALYSIS
+- APOLLO CLINIC LLC (EX. NEW CITY CLINIC LLC)
+- APL PHARMACY LLC
+- AXIOS HOME CARE SERVICES L.L.C
+- OCCU MED CLINIC LLC FUJAIRAH BRANCH 1
+- Modern Family Clinic LLC
+- THUMBAY LABS LLC â€“ BRANCH 01
+- LIFE PHARMACY 44 EXPRESS CLINIC (GP CLINIC ONLY)
+- Evercare Medical Center
+- NAVEEN PHARMACY
+- LIFE PHARMACY 116 (BR OF LIFE PHARMACY)
+- LIFE PHARMACY 117 (BR. OF LIFE PHARMACY LLC)
+- LIFE PHARMACY LLC FUJAIRAH BRANCH 3
+- LIFE PHARMACY LLC - RAK BRANCH 2
+- LIFE PHARMACY LLC BRANCH 57 - BRANCH OF ABU DHABI 114
+- LIFE PHARMACY LLC BRANCH 32 - BRANCH OF ABU DHABI 92
+- LIFE PHARMACY 122 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 121 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC BRANCH 56 - BRANCH OF ABU DHABI 112
+- LIFE PHARMACY 108 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC BRANCH 58 - BRANCH OF ABU DHABI 115
+- LIFE PHARMACY LLC BRANCH 51 - BRANCH OF ABU DHABI 103
+- LIFE PHARMACY LLC BRANCH 33 - BRANCH OF ABU DHABI 93
+- LIFE PHARMACY LLC BRANCH 46 - BRANCH OF ABU DHABI 99
+- LIFE PHARMACY LLC BRANCH 53 - BRANCH OF ABU DHABI 1
+- LIFE PHARMACY LLC BRANCH 24 - BRANCH OF ABU DHABI 80
+- LIFE PHARMACY 105 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 11
+- LIFE PHARMACY LLC BRANCH 49 - BRANCH OF ABU DHABI 101
+- LIFE PHARMACY LLC BRANCH 40 - BRANCH OF ABU DHABI 97
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 123
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 124
+- LIFE PHARMACY LLC BRANCH 22 - BRANCH OF ABU DHABI 69
+- LIFE PHARMACY LLC DIBBA BR
+- LIFE PHARMACY LLC FUJAIRAH BRANCH 5
+- FUTURE LIFE GENERAL MEDICAL CLINIC
+- AL NAJEM PHARMACY LLC
+- AL ENWAN PHARMACY LLC
+- AL AJWAH PHARMACY LLC
+- AL AQSA PHARMACY L.L.C
+- AL FAROOQ PHARMACY L.L.C
+- AL TAWAR PHARMACY LLC
+- AL RAZY PHARMACY L.L.C
+- AL HAMRIA PHARMACY
+- AL AHRAM PHARMACY LLC
+- AL TAMIMI NEW PHARMACY LLC
+- AL TAMIMI NEW PHARMACY LLC BRANCH
+- AL SAFA AL QUOZ PHARMACY L.L.C
+- FAITH ACACIA PHARMACY LLC
+- FAITH AHLAN PHARMACY LLC
+- FAITH CAP 1 PHARMACY LLC
+- FAITH EUROPEAN PHARMACY LLC
+- MEDIGREEN PHARMACY LLC (BRANCH)
+- DAJLA PHARMACY LLC
+- AL TAMIMI PHARMACY L.L.C
+- DAR AL FARAH PHARMACY LLC
+- FAITH WAY PHARMACY L.L.C
+- NAD AL HAMAR PHARMACY L.L.C
+- NAWAIEM PHARMACY LLC
+- AL TEMOUH PHARMACY LLC
+- MUZEIRA MEDICAL CENTER L.L.C(AL SHAMS)
+- SHAMS MUZEIRA PHARMACY LLC
+- BUPA PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- FAITH PHARMACY L.L.C
+- AL AFDAL MEDICAL CENTER L.L.C
+- MODERN FAMILY CLINIC L.L.C (BRANCH)
+- MODERN FAMILY PHARMACY L.L.C
+- SuperCare Pharmacy LLC (Branch)
+- SuperCare Pharmacy LLC (Branch)
+- Arabella Pharmacy L.L.C - Branch Of Abu Dhabi 1
+- ARABIAN MEDICAL CENTRE
+- PHARMACY ONE R PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- SURE MEDI PHARMACY - SOLE PROPRIETORSHIP L.L.C
+- Aster Pharmacy 166 (Br Of Aster Pharmacies Group L.L.C)
+- Aster pharmacy 176 ( Br of Aster pharmacies Group L.L.C)
+- Aster Pharmacy 179 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 180 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 181 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 182 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 183 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Royal Clinic Downtown Pharmacy Br Of Dm Healthcare LLc
+- Aster Pharmacies Group L.L.C - Branch Of Abu Dhabi 16
+- Aster Pharmacies Group L.L.C - Branch Of Abu Dhabi 17
+- HEALTH FIRST PHARMACY 63 LLC
+- HEALTH FIRST PHARMACY 61(BR OF HEALTH FIRST INVESTMENT LLC)
+- Al saah pharmacy L.L.C
+- GULF PHARMACY
+- AL ABEER MEDICAL CENTER DAY SURGERY UNIT L.L.C
+- AL ABEER PHARMACY LLC
+- AMBER PHARMACY L.L.C
+- Healthline Daycare Surgery LLC
+- HEALTH LINE PHARMACY L.L.C.
+- DANA MEDICAL CENTER L.L.C
+- DANA MEDICAL CENTER PHARMACY L.L.C
+- HEALTH LINE PHARMACY L.L.C. - BRANCH
+- Health First Pharmacy - Branch 11
+- SUPER CARE PHARMACY L.L.C - BRANCH OF ABU DHABI 10
+- JANSONS PHARMACY L.L.C
+- PRIMACARE SPECIALITY CLINICS L.L.C - SHJ. BR
+- DR ABDUL LATIF CLINIC LLC
+- LIFE PHARMACY 119 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 125 (BR OF LIFE PHARMACY L.L.C)
+- LIVERPOOL MEDICAL CLINIC L.L.C
+- LIVERPOOL PHARMACY L.L.C
+- Al Sherouq Medical Centre LLC
+- WOW MEDICAL CENTER
+- ASTER MEDICAL CENTRE - BR OF (D M HEALTHCARE) LLC UMM AL QUWAIN BRANCH
+- LAIKA MEDICAL CENTER
+- PUBLIC LIFE PHARMACY L.L.C.
+- M37 PHARMACY L.L.C.
+- AL NOOR AL SAATE PHARMACY LLC
+- BADAR PHARMACY LLC
+- MEDICINE WORLD LLC
+- SAMARA PHARMACY LLC
+- MUSHEIRIF PHARMACY LLC
+- AROOS AL BAHER PHARMACY LLC
+- AL AFLAJ PHARMACY LLC
+- MAKKAH PHARMACY LLC
+- LABIBAH PHARMACY LLC
+- LIFE PHARMACY LLC BRANCH 50 - BRANCH ABUDHABI 102
+- LIFE PHARMACY LLC BRANCH 27 BRANCH OF ABUDHABI 87
+- LIFE PHARMACY LLC BRANCH 55 - BRANCH OF ABUDHABI 111
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 127
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 122
+- LIFE PHARMACY LLC BRANCH 62 - BRANCH OF ABUDHABI 119
+- Life Pharmacy 128 br of Life Pharmacy LLC
+- Life Pharmacy LLC Branch Br of Sharjah 11
+- Life Pharmacy 126 Br of Life Pharmacy LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 130
+- Life Pharmacy LLC - SHJ. BR. Branch 13
+- Life Pharmacy 132 Br of Life Pharmacy LLC
+- Life Pharmacy 130 (Br of Life Pharmacy L.L.C)
+- Life Pharmacy 135 br of Life pharmacy LLC
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 17
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 133
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 134
+- LIFE PHARMACY LLC BRANCH 135 - BRANCH - BRANCH OF ABU DHABI 1
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 155
+- LIFE PHARMACY 119 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY LLC BRANCH 141 - BRANCH OF ABU DHABI 140
+- LIFE PHARMACY L.L.C - Branch 33
+- LIFE PHARMACY L.L.C - Branch 31
+- MUZEIRA PHARMACY LLC
+- FAITH JABAL PHARMACY LLC
+- FAITHWAY PHARMACY LLC (BRANCH)
+- YOUR CENTER POLY CLINIC L.L.C
+- YOUR CENTER PHARMACY L.L.C
+- AL MUFEED CLINIC GENERAL MEDICINE L.L.C
+- LIFENITY GENOMIC LABORATORY DMCC
+- OXFORD PHARMACY L.L.C
+- MODERN FAMILY CLINIC L.L.C (BRANCH)
+- MODERN FAMILY PHARMACY L.L.C (BRANCH)
+- MBM SPECIALITY MEDICAL CENTER L.L.C
+- MEDICARE MEDICAL CENTRE L.L.C
+- SuperCare Pharmacy LLC Branch-Al Warqa
+- SuperCare Pharmacy LLC Branch-Mizhar
+- GULF CARE DIAGNSOTIC CENTER L.L.C
+- Zest Wellness Pharmacy LLC - Branch Of Abu Dhabi 1
+- A B C PLUS MEDICAL CENTER
+- ABC PLUS PHARMACY
+- ABC PLUS PHARMACY - BRANCH
+- YASSAT LIFE PHARMACY
+- W WILSON HOSPITAL PHARMACY
+- SANA PHARMACY  LLC
+- RIGHT HEALTH PHARMACY JURF 2
+- RIGHT HEALTH CLINIC JURF 2 LLC
+- REEM AL NAHDA MEDICAL DIAGNOSTIC CENTER
+- REAL ONE PHARMACY L.L.C
+- NOOR ALAHLI MEDICAL CCENTER -BRANCH 5
+- NOOR AL AHALIA PHARMACY
+- NOOR AL AHALIA MEDICAL CENTER
+- NAJMAT MUWEILAH PHARMACY LLC
+- LULU AL BUHAIRA PHARMACY LLC
+- LIFE TWO PHARMACY L.L.C
+- LIFE TRIDENT PHARMACY L.L.C
+- LIFE PHARMACY 45 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 18 BR OF LIFE PHARMACY LLC
+- Hala Pharmacy 23
+- EXPERT PHARMACY LLC
+- EXPERT MEDICAL CLINIC-SOLE PROPRIETORSHIP.L.L.C
+- ARIFA PHARMACY
+- AL SHAWAB PHARMACY LLC
+- AL SANA PHARMACY LLC
+- AL SAMA PHARMACY LLC
+- AL JAWDAH MEDICAL CENTRE
+- ASTER PHARMACIES GROUP LLC FUJAIRAH BRANCH 2
+- ASTER PHARMACY 174 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 184 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- AL SHUALLA PHARMACY
+- ASTER PHARMACIES GROUP L.L.C - ABU DHABI BRANCH 20
+- ASTER PHARMACIES GROUP L.L.C - BRANCH OF ABU DHABI 18
+- ASTER PHARMACIES GROUP L.L.C - BRANCH OF ABU DHABI 19
+- ASTER PHARMACIES GROUP L.L.C - BRANCH OF ABU DHABI 21
+- ASTER PHARMACY 178 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 188 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 189 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ZEST PHARMACY 1 (BR OF ZEST WELLNESS PHARMACY L.L.C)
+- ASTER PHARMACIES GROUP LLC - SHJ.BR - BRANCH 7
+- ASTER ROYAL CLINIC SPRINGS SOUK PHARMACY BR OF D M HEALTHCARE L L C
+- ALOKA EYE CLINIC LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 156
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 18
+- ABEER AL NOOR PHARMACY LLC-BRANCH
+- AL HANA PHARMACY L.L.C
+- MEDCOME HEALTH CARE CENTER
+- BRIGHT CARE CLINIC L.L.C
+- SEHA AL NOOR PHARMACY L.L.C
+- VISTA PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- LIFE PHARMACY L.L.C - Branch 29
+- DELTA AL DHAID PHARMACY
+- DELTA AL MAMZAR PHARMACY
+- DELTA MODERN PHARMACY
+- DELTA PHARMACY
+- FAITH AL KHAIL PHARMACY L.L.C
+- FAITH WALK PHARMACY LLC
+- Faith Zone Pharmacy FZC
+- MASHREQ PHARMACY L.L.C
+- MURIAT PHARMACY L.L.C
+- NASEEM AL BATAEH PHARMACY LLC
+- QALB AL IMAN PHARMACY L.L.C
+- G M G MEDICAL CENTER L.L.C
+- SARAH MEDICAL CENTRE
+- Al Dhafrah Pharmacy LLC
+- Liwa Pharmacy LLC
+- MAX GRAND PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- TruDoc Pharmacy LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 150
+- AL BURHAN PHARMACY LLC
+- AL MUBARAK CENTRE PHARMACY LLC
+- AL NAHDA PHARMACY LLC
+- AL RASHEEDآ PHARMACYآ LLC
+- AL RAWDHAآ PHARMACYآ LLC
+- AL TAMIMI PHARMACY LLC
+- DAR AL NOOR PHARMACY LLC
+- DAR AL SAJAA PHARMACY LLC
+- MADINAT AL QOUZ PHARMACY LLC
+- NAJMAT ABU SHAGARA PHARMACYآ LLC
+- NEW AL SUWAIDI PHARMACY LLC
+- NEW HEALTH SIGN PHARMACY LLC
+- NOOR AL QUSAIS PHARMACY LLC
+- NOOR AL SATWAآ PHARMACY LLC
+- ORBITآ STAR PHARMACYآ LLC
+- ROCK STAR PHARMACY LLC
+- ZAHRAT AL MADINAH PHARMACY LLC
+- AL GHAD AL AFDAL PHARMACY LLC
+- FAJER MIRDIF PHARMACY LLC
+- NAJMAT AL ROLLA PHARMACY LLC
+- KHAYBER MEDICAL CENTER
+- ASCENT ENT SPECIALITY CENTRE LLC
+- ASCENT PHARMACY LLC
+- STEPS POLYCLINIC LLC
+- STEPS PHARMACY L.L.C
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 19
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 148
+- Life Pharmacy 127 Br of Life Pharmacy LLC
+- Life Pharmacy 112 br of Life phy LLC
+- Life Pharmacy 124 (Br. Of Life Pharmacy LLC)
+- Hala Pharmacy 22 LLC
+- Life Pharmacy LLC SHJ Br Branch 9
+- Life Pharmacy 125 Br. Of Life Pharmacy LLC
+- Life Pharmacy LLC Br 34
+- Life Pharmacy LLC Branch Br of Sharjah 8
+- Life pharmacy 123 Br of Life Pharmacy LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 136
+- HALA PHARMACY 21 LLC Branch
+- Life Pharmacy 139 Br of Life Pharmacy LLC
+- Life Pharamcy 142 Br of Life Pharmacy LLC
+- Life Pharmacy LLC  -  Branch of Abu Dhabi 172
+- Life Pharmacy 138 br of Life Pharmacy LLC
+- Life Pharmacy L.L.C - Branch of Abu Dhabi 164
+- LIFE PHARMACY 143 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 131 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 144 (BR OF LIFE PHARMACY L.L.C)
+- Life Pharmacy 136(Br of Life Pharmacy LLC)
+- Life Pharmacy 141 (Br of Life Pharmacy LLC)
+- EMIRATES INTERNATIONAL MEDICAL CENTER BRANCH -1
+- APEX MEDICAL CENTRE LLC
+- BLACK FALCON PHARMACY LLC
+- LLH Medical Center LLC Pharmacy
+- DR. ISMAIL POLYCLINIC (BRANCH)
+- HAFSA PHARMACY (BRANCH)
+- Zainab Al Shareefi Pharmacy L.L.C
+- SEHA AL NOOR CLINIC LLC
+- SEHA AL NOOR PHARMACY LLC BRANCH
+- SARAH ALI PHARMACY L.L.C
+- Medicom Pharmacy 1 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 187 (Br of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 185
+- Aster Pharmacies Group LLC - Shj. Br - Branch 8
+- Medcare Medical Centre Al Furjan West Pharmacy Br Of Medcare Hospital LLC
+- LA ROSA MEDICAL CENTER L.L.C
+- EARTH PHARMACY - L.L.C - O.P.C
+- Al Bayan Medical Center LLC
+- PRIMECORP MEDICAL CENTER DIP PHARMACY
+- PINE PHARMACY LLC - SPC
+- AL MARJAN PHARMACY LLC
+- Rayhan Gulf Medical Center LLC
+- Rayhan Gulf Pharmacy LLC
+- NAHDI PHARMACY LLC
+- NAHDI PHARMACY BRANCH
+- NAHDI PHARMACY BRANCH 1
+- NAHDI PHARMACY BRANCH 2
+- NAHDI PHARMACY BRANCH 3
+- NAHDI PHARMACY BRANCH 4
+- NAHDI PHARMACY BRANCH 5
+- NAHDI PHARMACY BRANCH 6
+- NAHDI PHARMACY BRANCH 7
+- NAHDI PHARMACY BRANCH 9
+- NAHDI PHARMACY BRANCH 10
+- NAHDI PHARMACY BRANCH 11
+- NAHDI PHARMACY BRANCH 12
+- NAHDI PHARMACY L L C BRANCH OF ABU DHABI 1
+- NAHDI PHARMACY L.L.C - BRANCH OF ABU DHABI 2
+- NAHDI PHARMACY - BRANCH OF ABU DHABI 3
+- NAHDI PHARMACY - BRANCH OF ABU DHABI 4
+- NAHDI PHARMACY L.L.C - SHJ. BR
+- NAHDI PHARMACY L.L.C - SHJ. BR - BRANCH 1
+- NAHDI PHARMACY L.L.C - BRANCH 01
+- NAHDI PHARMACY LLC - RAK BRANCH
+- NAHDI PHARMACY L L C RAK BRANCH 1
+- MED DOC PHARMACY - L.L.C - O.P.C
+- Medicom pharmacy 31 LLC
+- MED DOC PHARMACY L.L.C (EX. SONDOS PHARMACY LLC BRANCH)
+- FAMILY STAR MEDICAL CENTRE
+- FAMILY STAR PHARMACY
+- ADVANCED CARE MEDICAL CENTER BRANCH LLC
+- GRAND ADVANCED CARE PHARMACY LL
+- RALS HEALTHCARE (AL QUSAIS)  (EX. MINI VM POLYCLINIC)
+- RALS PHARMACY (AL QUSAIS) DUBAI
+- RALS PHARMACY BR OF ABDULWAHED BIN SHABIB INVESTMENT GROUP L L C (AL SOUQI) DUBAI
+- RALS HEALTHCARE PHARMACY (BR OF ABD ULWAHED BIN SHABIB INVESTMENT GROUP L.L.C (AL FAHIDI) DUBAI
+- RALS HEALTHCARE BR OF ABD ULWAHED BIN SHABIB INVESTMENT GROUP L.L.C (JABAL ALI) DUBAI
+- RALS PHARMACY BR OF ABD ULWAHED BIN SHABIB INVESTMENT GROUP LLC (JABAL ALI) DUBAI
+- Oud Al Muteena Medical Center
+- MEDCITY MEDICAL CENTER LLC
+- NOOM MEDICAL CLINIC L.L.C
+- NOOM PHARMACY LLC
+- RELIEF PHARMACY LLC
+- MEDICOM 37 PHARMACY LLC RAK BRANCH
+- MEDICOM PHARMACY 36 LLC
+- MEDICOM PHARMACY 37 LLC SHJ BR (AL KHAN) SHARJAH
+- MEDICOM PHARMACY 38 LLC
+- MEDCOM 45 PHARMACY
+- MEDICOM PHARMACY 38 LLC(BRANCH)2
+- AL AFDHAL PHY RAK
+- AL WASL PHARMACY
+- MEDICOM PHARMACY 35 LLC
+- IRVINE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- IRVINE PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- HUMAN TOUCH AHALIA PHARMACY - L.L.C - O.P.C
+- SUPERCARE PHARMACY LLC BRANCH
+- SUPERCARE PHARMACY LLC - SHJ BR - BRANCH 4
+- SUPERCARE PHARMACY L.L.C - BRANCH OF ABU DHABI 11
+- SUPERCARE PHARMACY LLC BRANCH
+- SUPERCARE PHARMACY LLC BRANCH
+- GOLDEN STAR PHARMACY L L C
+- RUKN AL AFRAH PHARMACY L.L.C
+- SAMEENA MEDICAL CENTRE LLC
+- 800 PHARMA FZ-LLC
+- 800 PHARMA PHARMACY LLC
+- 800 PHARMA PHARMACY LLC-SHJ.BR
+- AL FARAH AL HADITHAH PHARMACYLLC
+- AL HADHAR PHARMACY LLC
+- AL MATAR PHARMACY LLC
+- AL NEEM PHARMACY L.L.C
+- AL NEEM PHARMACY L.L.C BRANCH (JAFZA SOUTH)
+- AL RAFEAH PHARMACY LLC
+- CARE MARK PHARMACY FZCO
+- DAR AL FARAJ PHARMACY LLC
+- JANAH PHARMACY L.L.C (SHARJAH)
+- JANAH PHARMACY L.L.C BRANCH-2
+- JANAH PHARMACY LLC (AJMAN)
+- LANA PHARMACY L.L.C (DUBAI)
+- LANA PHARMACY L.L.C (AJMAN)
+- LANA PHARMACY L.L.C (SHARJAH)
+- LANA PHARMACY L.L.C BRANCH
+- MEDON FIRST PHARMACY LLC
+- MEDON FIRST PHARMACY LLC (BRANCH)
+- MEDON FIRST PHARMACY LLC (BRANCH) 3
+- MEDON PHARMACY LLC
+- MEDON PHARMACY LLC RAK Branch
+- PHARMACY SABEEL L.L.C - SHJ. BR 1
+- PHARMACY SABEEL LLC
+- PULSE LIFE PHARMACY LLC
+- RUKN AL RAFEAH PHARMACY LLC
+- RUKN AL UFUQ PHARMACY LLC
+- ZAHRAT AL OUD PHARMACY LLC
+- ZARA PHARMACY LLC
+- MARYAM PHARMACY LLC
+- SHAMS AL AHALIA MEDICAL CENTER
+- SHAMS AL AHALIA MEDICAL  CENTER PHARMACY
+- AL HAJIS PHARMACY L.L.C
+- FAITH AL QUOZ PHARMACY LLC
+- AL KAYAN PHARMACY LLC
+- AIWA PHARMACY LLC
+- FAITH CARE PHARMACY LLC
+- WAHAT AL TAIBAH PHARMACY L.L.C
+- AL JAREENA PHARMACY LLC
+- FAITH HAYAA PHARMACY LLC
+- FAITH CAP 2 PHARMACY LLC
+- AIWA PHARMACY LLC BRANCH 01
+- TABOOK PHARMACY LLC
+- ORCHID AL RGAYEB PHARMACY LLC
+- FAITH HILLS PHARMACY LLC
+- GREEN BELT PHARMACY LLC
+- MED CARE PHARMACY LLC
+- WHAT AL DHAIT PHARMACY LLC
+- AL PLAZA PHARMACY LLC BRANCH
+- AL NAHDA PHARMACY LLC
+- FAMILY PHARMACY
+- MEDICOM PHARMACY 37 LLC
+- MEDCOM 44 PHARMACY
+- VIDA PHARMACY L.L.C
+- ZMC HEALTH CLINIC L.L.C
+- ZMC PHARMACY L.L.C
+- WELL CARE MEDICAL CENTER LLC
+- B F MEDICAL CENTER
+- B F PHARMACY
+- LIFE PHARMACY 146 (BR OF LIFE PHARMACY L.L.C)
+- LIFE TWO PHARMACY L.L.C (JVC)
+- LIFE PHARMACY 149 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 152 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 162 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 155 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 163 (BR OF LIFE PHARMACY L.L.C)
+- PHARMACY FOR LESS (BR OF LIFE PHARMACY L.L.C)
+- LIFE HEALTH AND WELLNESS TRADING LLC
+- LIFE PHARMACY 154 (BR OF LIFE PHARMACY L.L.C)
+- HALA 37 PHARMACY LLC OPC
+- LIFE PHARMACY 129 (BR OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 161 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 164 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 167 (BR OF LIFE PHARMACY L.L.C)
+- HALA 37 PHARMACY LLC OPC BRANCH 1
+- LIFE PHARMACY 158 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 156 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C BRANCH (DSO)
+- LIFE PHARMACY 159 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 166 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 153 (BR OF LIFE PHARMACY L.L.C)
+- HALA 37 PHARMACY LLC OPC -BRANCH 3
+- LIFE PHARMACY L.L.C - SHJ. BR 22
+- LIFE PHARMACY LLC. SHJ. BR - BRANCH 26
+- LIFE PHARMACY L.L.C - SHJ. BR 23
+- LIFE PHARMACY 147 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 148 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 27
+- LIFE PHARMACY LLC BRANCH AL REEM 1
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI AL WAHA
+- MODERN FAMILY PHARMACY LLC BRANCH
+- MODERN FAMILY PHARMACY LLC SHJ BR
+- BLUEBELL MEDICAL CENTRE LLC PHARMACY
+- THUMBAY CLINIC (S.P.S - L.L.C)
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 163
+- LIFE PHARMACY 133 (BR OF LIFE PHARMACY L.L.C)
+- LA FAMI MEDICAL COMPLEX - L.L.C
+- HEALTH PLUS PHARMACY SPS LLC (AJMAN)
+- PALMA MEDICAL CENTER LLC
+- Houston Pharmacy LLC
+- GSM MEDICAL CENTRE LLC (BRANCH)
+- GSM GREENS PHARMACY LLC
+- NEW ROYAL MEDICAL AND DENTAL CENTER LLC
+- HARMONICA MEDICAL CENTER L.L.C
+- PURE PATH MEDICAL CENTER L.L.C.SP
+- PURE PATH PHARMACY L.L.C.SP
+- Life Pharmacy 113 Br of Life Pharmacy LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 190
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 173
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 187
+- Life Pharmacy 145 Br of Life Pharmacy LLC-
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 189
+- LIFE PHARMACY 134 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC AL REEM
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI SHABANA
+- LIFE PHARMACY LLC Fujairah Branch 6
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 212
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 214
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI KHALIDIYA
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 21
+- GOOD LIFE MEDICAL CENTER L.L.C
+- AL MULAYIM PHARMACY L.L.C
+- BLOOM PLUS POLY CLINIC L.L.C
+- BLOOM PLUS PHARMACY L.L.C
+- ALIBTESAMA JATHABA MEDICAL CENTER
+- ALNOOR ALNAHDA POLY CLINIC L.L.C(old Al Shifa Al Uropi Medical Center )
+- AL MARIFFA MEDICAL CENTER L.L.C (DUBAI)
+- AL MARIFFA MEDICAL CENTRE (SHARJAH)
+- ARD AL KHAN PHARMACY L.L.C
+- BEST LIFE GENERAL CLINIC L.L.C
+- AL SHIFA MEDICAL CENTER -  UAQ
+- CALLADOC TELEHEALTH SERVICES L.L.C
+- AL TAJ AL FADHI CLINIC
+- AFRIDI MEDICAL CENTER L.L.C
+- AFRIDI PHARMACY LLC
+- DEANS LIFE PHARMACY L.L.C
+- SHARE AND CARE MEDICAL CENTER L L C
+- FORTE CLINICAL LABORATORY L.L.C
+- MEDPLUS MEDICAL CENTER LLC
+- MEDPLUS PHARMACY LLC
+- Care For You Medical Centre
+- MOTHER PHARMACY L.L.C
+- ABDULLA PHARMACY - L.L.C
+- Zest Wellness Pharmacy L LC - Shj. Br
+- Aster Pharmacies Group Llc - Shj. Br - Branch 6
+- Aster Pharmacy 186 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 191 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 192 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 196 (Br Of Aster Pharmacies Group L.L.C)
+- NEW IBN SINA PHARMACY (BR OF IBN SINA GROUP PHARMACIES) LLC
+- IBN SINA 95 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 100 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- Ibn Sina Pharmacy 66
+- IBN SINA 91 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 75 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA SCIENTIFIC PHARMACY(BR OF IBN SINA GROUP PHARMACIES)
+- IBN SINA 67 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - BRANCH 3
+- IBN SINA 68 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 77 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP LLC - SPC Fujairah Branch 1
+- IBN SINA 76 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 82 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - SHJ. BR - BRANCH 9
+- IBN SINA 86 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 50 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 81 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 57 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 93 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 69 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - BRANCH 11
+- CWH PHARMACY L.L.C
+- CWH Pharmacy LLC Branch
+- LIFE PHARMACY L.L.C - Branch 37
+- LIFE PHARMACY L.L.C - Branch 36
+- LIFE PHARMACY 160 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 165 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 177 (BR OF LIFE PHARMACY L.L.C)
+- Life Pharmacy 176 ( Br Of Life Pharmacy LLC)
+- LIFE PHARMACY L.L.C - DIBBA BR 2
+- HALA 37 PHARMACY LLC OPC - Branch 2
+- LIFE PHARMACY LLC - SHJ.BR-BRANCH 16
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 10
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 18
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 19
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 20
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 28
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 32
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 31
+- LIFE PHARMACY L.L.C BRANCH 3
+- ROYAL PHOENIX CLINIC L.L.C
+- ROYAL PHOENIX CLINIC L.L.C - PHARMACY
+- Kripa Medical Centre
+- AL MUBARAK MEDICAL CENTER SPS - LLC
+- SHIFA AL MUBARAK PHARMACY SPS LLC
+- AL JIMI MEDICAL POLYCLINICS L.L.C. - BRANCH
+- NEDHAL PHARMACY L.L.C
+- NEDHAL PHARMACY L.L.C. - BRANCH
+- SHAHEEN MEDICAL CENTER
+- MANSOUR PHARMACY
+- REGAL HOUSE PHARMACY
+- MARHABA PHARMACY L.L.C (DUBAI)
+- Right Care Pharmacy L L C SP
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 30
+- LIFE PHARMACY L.L.C - Branch 38
+- LIFE PHARMACY 175 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 35
+- LIFE PHARMACY 169 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC - SPC Fujairah Branch 8
+- JEBEL ALI EMERGENCY AND TRAUMA CENTER
+- SANIMED INTERNATIONAL LAB AND MANAGEMENT L.L.C.
+- AL SHIFA UROPI PHARMACY L.L.C (SHARJAH)
+- JESR AL SHIFA PHARMACY - L.L.C
+- AL SHIFA UROPI PHARMACY L.L.C (DUBAI)
+- AL SHIFA UROPI PHARMACY DWC LLC
+- WELLNESS MEDICAL CENTER L.L.C (UAQ)
+- WELLNESS PHARMACY (UAQ)
+- Sharmin Akter Medical  Center - L.L.C
+- Sharmin Akter Pharmacy - L.L.C
+- AL AMAL MEDICAL CENTRE LLC
+- AL HEMAYA GENERAL CLINIC LLC (JURF) - AJMAN
+- ABSOLUTE WELLNESS MEDICAL  CENTRE PHARMACY
+- SMART MEDICAL CENTRE L.L.C
+- SMART PHARMACY L.L.C
+- JANAH PHARMACY FZ LLC
+- ADAMS PHARMACY L.L.C (BRANCH)
+- ADAMS PHARMACY L.L.C
+- DAOUD PHARMACY L.L.C.SP
+- LIFE PHARMACY 172 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 170 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 174 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 181 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 34
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 38
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 37
+- Aster Pharmacy 171 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 177 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 195 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 194 (Br Of Aster Pharmacies Group L.L.C)
+- RUKN AL MAJAZ PHARMACY L.L.C
+- SANIMED INTERNATIONAL LAB AND MANGEMENT L.L.C - SHJ. BR
+- Life Pharmacy and Express Clinic FZ LLC
+- Life Pharmacy LLC Fujairah Branch 4
+- Health First Pharmacy LLC - Branch 10
+- Health First Pharmacy 53
+- Health First Pharmacy 55
+- Health First Pharmacy - Branch 7
+- Health First Pharmacy 57
+- Health First Pharmacy 62
+- HEALTH FIRST PHARMACY 64
+- Ferdows Medical Center L.L.C
+- SUHA MEDICAL CENTER LLC FUJAIRAH BRANCH 1
+- SUHA PHARMACY LLC FUJAIRAH BRANCH 1
+- M26 MEDICAL CENTER
+- M26 PHARMACY
+- CARE AND CURE MEDICAL AND DENTAL CENTER LLC
+- CARE AND CURE PHARMACY LLC
+- MERASHID PHARMACY LLC - SPC
+- BANGLADESH PHARMACY LLC
+- AHLAN PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- LIFE PHARMACY 168 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 179 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 36
+- LIFE PHARMACY 183 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 173 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - Branch 40
+- LIFE PHARMACY L.L.C - Branch 43
+- VPM INTERNATIONAL HEALTH CARE - L.L.C
+- RASLAN MEDICAL CENTRE L.L.C.SP
+- INSTACARE PHARMACY L.L.C
+- Peshawar Medical Center LLC (International City)
+- NEXA PHARMACY L.L.C
+- DAR AL HIKMAH MEDICAL LAB
+- AL SANABIL MEDICAL CENTER L.L.C
+- Regional Medical And Dental Center LLC
+- Zain Care Medical And Dental  Center LLC OPC
+- NAFEESA MEDICAL CENTER L.L.C
+- RELAX HEALTH INTERNATIONAL MEDICAL CENTER
+- Aster Pharmacies Group LLC (DMCC Branch) (MEDORE Residential Tower)
+- Medcare Medical Centre Arabian Ranches 3 Pharmacy Br Of Medcare Hospital LLC
+- Medcare Medical Centre The Valley Pharmacy Br Of Medcare Hospital L.L.C
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 25
+- LIFE PHARMACY 188 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 180 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 17
+- LIFE PHARMACY 185 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - Branch 47
+- SHIFA AL BAIROONI PHARMACY LLC
+- SAFA AL BAIROONI PHARMACY LLC
+- RUKN AL MAMZAR PHARMACY LLC
+- Life Pharmacy 180 Express Clinic
+- LIFE PHARMACY 173 BR OF LIFE PHARMACY (GENERAL CLINIC)
+- MADAWAH HEALTHCARE CLINIC L.L.C
+- LLH CLINIC L.L.C.
+- LLH Pharmacy Al Musaffah L.L.C. - Branch
+- LLH MEDICAL CENTRE AL AIN-LLC
+- LLH CLINIC L.L.C. - BRANCH
+- HEALTH ONE MEDICAL CENTER
+- AL HILAL PHARMACY LLC
+- SAFA ALNOOR POLYCLINIC LLC
+- MUMTAZ AL NOOR EXPRESS PHARMACY CLINIC LLC
+- GRAND DR ISMAIL POLYCLINIC L.L.C
+- GRAND DR ISMAIL POLYCLINIC L.L.C PHARMACY
+- DR SABAH AL SAKBAN MEDICAL CLINIC - L.L.C - S.P.C
+- BASHIRA SPECIALIZED MEDICAL CLINIC  - L.L.C - S.P.C
+- AL DIYAFA PHARMACY (ABU DHABI)
+- Peshawar Medical Center L.L.C (Ajman)
+- PMC PHARMACY LLC
+- Pak Satwa Poly Clinic Co. LLC
+- AL HAYAT PHARMACY LLC
+- DAR AL HAYAT PHARMACY
+- Nucleus Clinic LLC (DUBAI MARINA)
+- NANDA MEDICAL CENTER
+- FIRST STEP PHARMACY L.L.C.SP
+- Aster Pharmacy 208 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 211 (Br Of Aster Pharmacies Group L.L.C)
+- Medcare Medical Center Nad Al Sheba Pharmacy Br of Medcare Hospital LLC
+- PROHEALTH PHARMACY L.L.C
+- AL IMAN PHARMACY LLC (RAK)
+- AL IMAN PHARMACY LLC (UAQ)
+- AHLAN PHARMACY LLC (RAK)
+- AL RAYYAN PHARMACY - L.L.C
+- SELENA PHARMACY - L.L.C - O.P.C
+- ACTIVE HEALTH CARE PHARMACY-L.L.C-O.P.C
+- MEDHUB MEDICAL CENTER L.L.C
+- MEDHUB PHARMACY L.L.C
+- MEDHUB PHARMACY L.L.C (BRANCH)
+- ABEER ALNOOR POLYCLINIC LLC PHARMACY BRANCH(MUHAISNAH)
+- AL BARSHA ALNOOR POLYCLINIC L.L.C
+- INNOVATION FAMILY PHARMACY L.L.C
+- DURAIYA KAMAL MEDICAL CLINIC-PHARMACY
+- DYNAMIC LIFE CLINIC L.L.C
+- DYNAMIC LIFE CLINIC LLC BRANCH
+- ICARE AL REFFA BR OF EXCEL HEALTHCARE LLC-Pharmacy
+- FAMILY CARE MEDICAL CENTER LLC
+- SADAF AL SAJAH MEDICAL CENTER
+- SADAF AL SAJAH PHARMACY
+- AL NEEL PHARMACY L.L.C.S.P
+- ALAHRAR PHARMACY L.L.C.S.P
+- TULIP PHARMACY LLC SP
+- IRIS DENTAL CLINIC LLC
+- LIFE PHARMACY L.L.C (BRANCH)-DSO
+- LIFE PHARMACY 186 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - Branch 42
+- LIFE PHARMACY 196 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 190 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - Branch 41
+- LIFE PHARMACY L.L.C - Branch 46
+- LIFE PHARMACY 189 (BR OF LIFE PHARMACY L.L.C)
+- PHARMACY FOR LESS 1 (BR OF PHARMACY FOR LESS L.L.C)
+- LIFE PHARMACY 182 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 198 (Br of LIFE PHARMACY L.L.C)
+- Aster Pharmacy 199 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 190 (Br Of Aster Pharmacies Group L.L.C)
+- Zest Pharmacy 3 (Br of Zest Wellness Pharmacy L.L.C)
+- Trudoc Health Care LLC-(Teleconsultation Only)
+- NEW ROYAL PHARMACY LLC
+- TRUDOC HEALTH CARE LLC - BRANCH OF ABU DHABI 1
+- SHIFA MUWAILEH MEDICAL CENTER L.L.C
+- SHIFA MUWAILEH PHARMACY L.L.C
+- AL NOOR POLYCLINIC L.L.C (BRANCH)
+- MUMTAZ AL NOOR EXPRESS PHARMACY LLC
+- AMBER PHARMACY L.L.C (BRANCH)
+- Hkmat Alain Pharmacy -Sole Proprietorship L.L.C.
+- Al Roda Pharmacy - Sole Proprietorship - L.L.C.
+- Alain Modern Pharmacy - Sole Proprietorship L.L.C.
+- New Alain Pharmacy - Sole Proprietorship L.L.C.
+- National Alain Pharmacy - Sole Proprietorship L.L.C.
+- Sofitel Pharmacy - Sole Proprietorship L.L.C
+- Alain Pharmacy Bawadi Mall - Sole Proprietorship
+L.L.C.
+- Cooperative Alain Pharmacy - Sole Proprietorship
+- Alain Pharmacy - Sole Proprietorship L.L.C. - Branch
+- Alain Central Pharmacy - Sole Proprietorship L.L.C.
+- Nahel Alain Pharmacy - Sole Proprietorship L.L.C.
+- Alain Pharmacy Zakher - Sole Proprietorship L.L.C.
+- Alain Pharmacy Umm Ghafa- Sole Proprietorship L.L.C.
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 1
+- Alain Pharmacy - Sole Proprietorship L.L.C. - Branch 2
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 4
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 3
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 5
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 6
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 7
+- Alain Pharmacy - Sole Proprietorship L.L.C.-Branch 8
+- Alain Pharmacy - Sole Proprietorship L.L.C.-Branch 9
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 13
+- Alain Pharmacy - Sole Proprietorship L.L.C. - Branch
+- APOTEKE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- New Alain Pharmacy - Sole Proprietorship L.L.C - Branhc
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 14
+- Al Ain Pharmacy - Sole Proprietorship L.L.C.- BRANCH 16
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 18
+- New Alain Pharmacy - Sole Proprietorship L.L.C - Branhc
+- Alain Pharmacy - Sole Proprietorship L.L.C.-Branch
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. -BRANCH
+- Alain Pharmacy Sole Proprietorship L.L.C.- Branch 22
+- Alain Pharmacy- Sole Proprietorhip L.L.C.- Branch 24
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. -BRANCH
+- Alain Pharmacy Sole Prorietorship Llc- Branch 25
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. -BRANCH
+- AL AIN PHARMACY SOLE PROPRIETORSHIP L L C BRANCH
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. -BRANCH
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- Elegance Medical Center Pharmacy
+- The Heart Medical Center Pharmacy L.L.C.
+- Arabian Specialist Medical Center Pharmacy L.L.C.
+- Spanish Center Pharmacy L.L.C.
+- MARJAN MEDICAL CENTER PHARMACY - L.L.C - S.P.C - BRANCH
+- AL RAHMANIAH MEDICAL CENTER LLC
+- AL RAHMANIAH PHARMACY LLC
+- New Medical Centre Pharmacy LTD Branch (JAFZA)
+- SONDOS PHARMACY LLC BRANCH
+- DAR AL NUJOOM PHARMACY LLC
+- LIFECARE CLINIC LLC BRANCH 5
+- LLH AL RAZEEN CLINIC LLC
+- LIFECARE INTERNATIONAL PHARMACY L.L.C. - BRANCH 5
+- LIFECARE INTERNATIONAL PHARMACY L.L.C. - BRANCH 4
+- MEDEOR MEDICAL CENTRE LLC
+- LLH PHARMACY AL MUSAFFAH LLC BRANCH 2
+- LLH PHARMACY AL RAZEEN LLC
+- MEDICOM PHARMACY 38 LLC BRANCH
+- LLH CLINIC LLC BRANCH 1
+- GRAND MURIAT PHARMACY LLC
+- AL BARASHI PHARMACY LLC
+- AL NAHDHA PHARMACY LLC
+- AL PLAZA PHARMACY L.L.C.(BRANCH ) MAMZAR
+- Alya Medical Center LLC
+- Alya Pharmacy LLC
+- AL AMTHAL OCCUPATIONAL MEDICINE L.L.C
+- HAKIM MEDICAL CENTER L.L.C.SP
+- LIFE PHARMACY L.L.C - Branch 39
+- LIFE PHARMACY L.L.C. BRANCH OF ABUDHABI 23 (MAKANI MAL)
+- LIFE PHARMACY 194 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 201 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 203 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 191 (BR OF LIFE PHARMACY L.L.C)
+- HEALTH & GLOW PHARMACY 2 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 40
+- Land Mark Medicare Pharmacy â€“ Sole Proprietorship L.L.C
+- PARK BETTER LIFE PHARMACY (L.LC) (BRANCH)
+- NEOM PHARMACY - L.L.C - O.P.C
+- LENOX MEDICAL AND DENTAL CENTER LLC
+- ELITECARE MEDICAL CENTRE-SOLE PROPRIETORSHIP LLC
+- SHEIKHA PHARMACY LLC
+- IBN SINA 72 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH GLOBAL CARE
+- IBN SINA 59 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH Al Qana
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - BRANCH 10
+- IBN SINA GROUP PHARMACIES (L.L.C) (BRANCH)
+- IBN SINA 46 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 65 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 56 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 88 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA Pharmacy LLC OPC - Branch 4
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - SHJ. BR - BRANCH 14
+- Ibn Sina Group Pharmacies (LLC) (Expo City Dubai
+- IBN SINA SOLEPROPRIETORSHIP LLC SHJ BR 13
+- IBN SINA PHARMACY 84 (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 53 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP L.L.C FUJAIRAH BRANCH 3
+- IBN SINA 49 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- ABEER AL NOOR PHARMACY LLC-BRANCH
+- L L H MEDICAL CENTER L.L.C (BRANCH)
+- LLH MEDICAL CENTER LLC PHARMACY BRANCH
+- BAB AL TEB MEDICAL CENTRE- SOLE PROPRIETORSHIP L.L.C.
+- PESHAWAR PHARMACY - L.L.C - O.P.C (ABU DHABI)
+- Tadawi Health Care LLC (Branch) IMPZ
+- Tadawi Health Care LLC (Branch) DIP
+- LIFE PHARMACY 189 EXPRESS CLINIC
+- CO OPERATIVE PHARMACY
+- DR JAMEELA CLINIC LLC
+- ALSHAMSI PHARMACY LLC
+- Aster Pharmacy 197 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 209 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 210 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 212 (Br Of Aster Pharmacies Group L.L.C)
+- Zest Wellness Pharmacy LLC. DWC-Branch
+- Aster Pharmacies Group LLC - Shj. Br - Branch 9
+- LIFE TIME PHARMACY L.L.C.SP
+- LIFE TIME PHARMACY L.L.C.SP - BRANCH 1
+- RIGHT CHOICE HEALTH PHARMACY
+- AL FARABI MEDICAL LABORATORIES LLC
+- 800PHARMA1 PHARMACY CO. L.L.C - BRANCH 01
+- 24HOUR PHARMACY CO. L.L.C
+- 800PHARMA1 PHARMACY CO. L.L.C (BRANCH)
+- 24 HOUR PHARMACY CO.LLC - SHJ. BR 1
+- NOOR AL SHIFA MEDICAL CENTER
+- AL TALAL PHARMACY LLC BRANCH 1
+- SPECIALTY PHARMACY L.L.C.
+- ROYAL SABA MEDICAL CLINIC
+- ROYAL SABA MEDICAL CLINIC PHARMACY
+- JAVIDA MEDICAL CENTER L.L.C.
+- ISLAMABAD MEDICAL CLINIC LLC BR
+- GOLD LIFE MEDICAL CLINIC LLC
+- CITY RELIEF PHARMACY LLC
+- CITY RELIEF EXPRESS CLINIC LLC
+- CRX PHARMACY LLC
+- CRX EXPRESS CLINIC LLC
+- FIRST HEALTH MEDICAL CENTER LLC
+- HEALTH FIRST PHARMACY 65 (BR OF HEALTH FIRST INVESTMENT L.L.C)
+- AL MUSTAQEEM MEDICAL CENTER L.L.C
+- LIFE PHARMACY 190 EXPRESS CLINIC
+- Peshawar Medicine and Dentistry LLC
+- PARADISE PLUS POLY CLINIC L.L.C (BRANCH)
+- PARADISE PLUS POLY CLINIC LLC (BRANCH) AMBULATORY PHARMACY
+- CARE 7 MEDICAL CENTER L.L.C
+- CARE 7 PHARMACY L.L.C
+- PHARMACY FOR LESS BRANCH1
+- LIFE PHARMACY 204 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C (BRANCH) (DSO)
+- LIFE PHARMACY GLOBAL VILLAGE (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 41
+- LIFE PHARMACY L.L.C (Ajman city center )
+- ARMADA ONE DAY SURGICAL CENTER DMCC
+- ARMADA MEDICAL CENTRE DMCC
+- Aster Pharmacy 207 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 215 (Br of Aster Pharmacies Group L.L.C)
+- PESHAWAR PHARMACY LLC (SHARJAH)
+- CARE POINT CLINIC- L.L.C
+- MEDI CURE PHARMACY L.L.C
+- LIRA PHARMACY
+- MEDHUB MEDICAL CENTER L.L.C(BRANCH)
+- MEDHUB PHARMACY L.L.C (Branch)
+- Sheikh Tahnoon Bin Mohammed Medical City
+- Outpatient Pharmacy Sheikh Tahnoon Bin Mohammed Medical City
+- Sheikh Tahnoon Bin Mohammed Medical City - Rehabilitation Hospital
+- Outpatient Pharmacy - Sheikh Tahnoon Bin Mohammed Medical City Rehabilitation Hospital
+- Inpatient Pharmacy -Sheikh Tahnoon Bin Mohammed Medical City
+- Hisn Al Dhafra Pharmacy
+- Hisn Al Dhafra Medical Center
+- SEHA Kidney Care Center - Abu Dhabi Pharmacy
+- YAS MOBILE CLICNIC
+- AL NIYADAT HEALTHCARE CENTER PHARMACY
+- SAKINA FOR CHILDREN PHARMACY
+- SALMA REHABILITATION HOSPITAL - L.L.C - S.P.C
+- RAINBOW MEDICAL CENTRE
+- HESSA MEDICAL CLINIC
+- MOOPANS POLYCLINIC L.L.C
+- MOOPANS PHARMACY L.L.C
+- HEALTHLINE PRIMARY HEALTHCARE PHARMACY (Formerly Mayo Care One Pharmacy)
+- BADR AL SAMAA PHARMACY LLC - DUBAI
+- INARA MEDICAL CENTER LLC SP
+- AL BEDAYA PHARMACY L.L.C.SP
+- ZAIN CURA MEDICAL CENTER L.L.C
+- Aster Pharmacy 213 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 219 (Br Of Aster Pharmacies Group L.L.C)
+- Zest Wellness Pharmacy L.L.C - Branch Of Abu Dhabi
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI (SHIAB AL ASHKAR)
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI (SHAWAMEKH CENTRAL MALL)
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI (SARAB MALL)
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI (THE H TOWER PLAZA)
+- LIFE PHARMACY L.L.C (BRANCH) (DSO)
+- LIFE PHARMACY 210 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 206 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 43 (AL KHAN)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 44 (AL NAHDAآ SHARJAH)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 42 (AL SHAHBA)
+- LIFE PHARMACY L.L.C - Branch 44 (AL JURF AJMAN)
+- Droncall LTD
+- Droncall Home Healthcare llc
+- HOUSECALL HEALTH CARE
+- BETA STAR CLINIC L L C
+- AL BARSHA AL NOOR POLYCLINIC LLC
 ```
-#### 41. Providers in Dubai Remedy 6
-- intent: error
-- tool: None
-- plan: None
-- classification: REVIEW
-- reason: Runtime parsing/handling error requires deterministic guard.
+#### 21. Providers in Dubai Remedy 6
+- intent: plan_network_city_type
+- tool: list_basic_plus_providers
+- plan: Remedy 06
+- classification: GOOD
+- reason: Deterministic supported response returned.
 - output:
 ```text
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 39, in <module>
-    main()
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 26, in main
-    print(json.dumps(result, ensure_ascii=False, indent=2))
-  File "C:\Users\H Dos\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1256.py", line 19, in encode
-    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeEncodeError: 'charmap' codec can't encode character '\u200b' in position 20254: character maps to <undefined>
+[NETWORK]
+Dubai (s) (HN Basic Plus):
+- Advanced Diagnostic Center LLC
+- Advanced Diagnostic Center LLC BR
+- AIRIS IMAGING AND DIAGNOSTIC CENTER LLC
+- AL ABBAR LABORATORY BR OF GHI
+- AL BORJ LABORATORY
+- AL DIYAFA MEDICAL DIAGNOSTIC CENTER
+- AMERICAN UPRIGHT MRI
+- ASTER IMAGING CENTRE AL  MUTEENA (BR OF DM HEALTHCARE LLC)
+- BIOHEALTH DIAGNOSTIC CENTRE
+- DEIRA CITY MEDICAL DIAGNOSTIC CENTER
+- DUBAI MEDICAL LABORATORY BR OF GHI
+- HISTOPATHOLOGY & SPECIALTY LABORATORY
+- INTEL LAB LLC (EX. DR. FARIS MEDICAL LABORATORY)
+- LAB247 DIAGNOSTICS L.L.C
+- LIFENITY INTERNATIONAL CLINICAL LABORATORY  LLC
+- MEDICAL DIAGNOSTIC & IMAGING CENTRE
+- MEDINOVA DIAGNOSTIC CENTER
+- MEGA SCAN CENTRE
+- MICRO HEALTH MEDICAL LAB
+- MICRO HEALTH MEDICAL LAB
+- MINERVA DIAGNOSTIC LABORATORY
+- PH DIAGNOSTICS LLC
+- R N S DIAGNOSTICS AND IMAGING
+- STAR METROPOLIS CLINICAL LABORATORIES
+- AVM LABS L.L.C (EX. THYROCARE LABORATORIES LLC)
+- ASTER DAY SURGERY CENTRE LLC
+- ASTER HOSPITAL BR OF ASTER DM HEALTHCARE FZC- Al Qusais
+- ASTER HOSPITAL- Mankhool
+- ASTER HOSPITAL SONAPUR
+- CEDARS JEBEL ALI INTERNATIONAL HOSPITAL
+- DR. ISMAIL DAY SURGICAL CENTRE
+- DUBAI MEDICAL UNIVERSITY HOSPITAL
+- HATTA HOSPITAL
+- INTERNATIONAL MODERN HOSPITAL
+- MEDEOR 24X7 HOSPITAL LLC
+- MEDSTAR HEALTHCARE LLC
+- MYHEALTH  DAY SURGICAL CENTER LLC
+- NMC ROYAL HOSPITAL LLC(DXB)
+- NMC SPECIALTY HOSPITAL - DXB
+- NMC SPECIALTY HOSPITAL DIP (Br of N M C ROYAL HOSPITAL LTD) (Dubai Branch)
+- ABBARA POLYCLINIC
+- ABEER AL NOOR POLY CLINIC LLC BRANCH
+- ABRIS MEDICAL CENTRE LLC
+- ABSOLUTE WELLNESS MEDICAL CENTRE
+- ACCESS CLINIC ALQUOZ
+- ACCESS CLINIC BUR DUBAI
+- ACCESS CLINIC DIC BR DM HEALTHCARE LLC
+- ACCESS CLINIC DIP
+- ACCESS CLINIC DIP 2 BR OF DM HEALTHCARE LLC
+- ACCESS CLINIC FREEZONE
+- ACCESS CLINIC INTERNATIONAL CITY
+- ACCESS CLINIC PERSIA CLUSTER
+- ACCESS CLINIC SONAPUR
+- ACCESS CLINIC SONAPUR 2 BR OF DM HEALTHCARE LLC (EX. AFIF MEDICAL CENTER)
+- ADVANCED CARE MEDICAL CENTER
+- ADVANCED CARE MEDICAL CENTER  LLC (BRANCH)
+- ADVANCED CARE MEDICAL CENTER BRANCH
+- ADVANCED CARE MEDICAL CENTER LLC (BRANCH)
+- ADVANCED CARE MEDICAL CENTER LLC BRANCH
+- ADVANCED CARE MEDICAL CENTER LLC BRANCH-GRAND CITY MALL
+- ADVANCED CARE MEDICAL CENTRE L.L.C (BRANCH )- DIP 1
+- AL ABRAH CLINIC
+- AL AMAL POLYCLINIC
+- AL AMAN MEDICAL CENTER
+- AL AZHAR CLINIC
+- AL AZHAR CLINIC BR DIP 2
+- AL AZHAR CLINIC BRANCH
+- Al Azhar Clinic Branch 3
+- Al Azhar Clinic LLC 4
+- AL DHAFRA MEDICAL CENTRE
+- Al Fahim Clinic
+- AL FALAH MEDICAL CLINIC
+- AL HANA MEDICAL CENTER LLC
+- AL HANA MODERN MEDICAL CENTER LLC
+- AL KHAIL MEDICAL CENTER
+- AL KHAIL MEDICAL CENTRE BRANCH
+- AL MASHAHER MEDICAL CENTRE
+- AL MURJAN MEDICAL CENTER
+- AL NOOR POLYCLINIC - BR OF GHI AL SATWA
+- AL NOOR POLYCLINIC - BR OF GHI DEIRA
+- AL NOOR POLYCLINIC BR OF GHI AL RIGGA (AMBER)
+- WELLCARE ADVANCED POLY CLINIC L.L.C (EX. AL QUOZ CITY STAR POLYCLINIC)
+- AL QUSAIS STAR POLYCLINIC
+- SONAPUR STAR POLYCLINIC L.L.C (EX. AL QUSAIS STAR POLYCLINIC (BRANCH))
+- AL RASHIDIYAH AL NOOR POLYCLINIC
+- AL SANAIYA MEDICAL CLINIC
+- AL SANAIYA MEDICAL CLINIC-BRANCH
+- AL SHAAB MEDICAL CENTRE
+- AL SHIFA AL KHALEEJI MEDICAL CENTER
+- Al Shifa Al Khaleeji Medical Centre Branch LLC-DIP
+- AL SHIFA INTERNATIONAL CLINIC
+- AL SHIFA INTERNATIONAL CLINIC LLC- BRANCH
+- AL TADAWI MEDICAL CENTRE
+- AL TAIF MEDICAL CENTER
+- AL WAHA CLINIC
+- ALDIA MEDICAL CENTER L.L.C
+- ALHABAB GENERAL CLINIC
+- ALI MEDICAL CLINIC
+- AMALA MEDICAL CENTRE
+- AMIRUDDIN CLINIC
+- ANAYA MEDICAL CENTER LLC
+- ANAYA MEDICAL CENTER LLC BRANCH
+- APPLE CLINIC
+- APPLE INTERNATIONAL POLY CLINIC
+- ARIN CARE POLYCLINIC L.L.C
+- ASH TREE CLINIC LLC
+- ASHOKAN MEDICAL CLINIC
+- ASTER CEDARS CLINIC
+- ASTER JABAL ALI MEDICAL CENTRE
+- Aster Medical Centre Oud Metha (Br Of D M Healthcare LLC)
+- ASTER MEDICAL CENTRE ABU HAIL BR OF DM HEALTHCARE
+- ASTER MEDICAL CENTRE AL QUSAIS
+- ASTER MEDICAL CENTRE DUBAI LAND
+- ASTER MEDICAL CENTRE INTERNATIONAL CITY(Gynaecology and Paediatrics services only)
+- ASTER MEDICAL CENTRE REMRAAM (BR OF D M HEALTHCARE)
+- BADR AL SAMAA MEDICAL CENTER
+- BEST HEALTH MEDICAL CENTER L.L.C
+- BIO VISTA MEDICAL CENTRE LLC
+- BLUE BELL MEDICAL CENTRE
+- BRIGHT LIFE MEDICAL CENTER LLC
+- CARE AND CURE MEDICAL CENTER L.L.C
+- CARE ONE POLY CLINIC LLC
+- CARE PLUS MEDICAL CENTER
+- CLINICARE BR OF IMARA HEALTH CARE LLC
+- CLINICARE SAMARI BR OF IMARA HEALTH CARE LLC
+- COMMUNITY MEDICAL CENTRE
+- COSMOPOLITAN MEDICAL CENTRE
+- DOCIB CLINIC LLC
+- DOCTORS CLINIC
+- DOCTORS CLINIC DIAGNOSTIC CENTRE FZ-LLC
+- DR. IBRAHIM ABBARA CLINIC
+- DR. ISMAIL MEDICAL CENTRE - AL MUHAISANAH
+- DR. ISMAIL MEDICAL CENTRE - AL QUOZ
+- DR. ISMAIL POLYCLINIC BRANCH-DISCOVERY GARDEN
+- DR. ISMAIL POLYCLINIC BRANCH-JEBEL ALI
+- DR. ISMAIL POLYCLINIC KARAMA
+- DR. JOHN CLINIC
+- DR. JOSEPHâ€™S POLYCLINIC-KARAMA BR OF GHI
+- DR. KAMKAR MEDICAL & PHYSIOTHERAPY CENTRE
+- DR. KOYA CLINIC
+- DR. MOOPENS' AL QUOZ MEDICAL CENTRE
+- DR. MOOPEN'S MEDICAL CENTER - KARAMA
+- DR. MUHAMMED KUNHI MEDICAL CLINIC
+- DR. RADAKRISHNAN MEDICAL CENTRE
+- DR. SANJAY MEDICAL CENTER - DUBAI
+- DR. SHANIL MEDICAL CENTRE LLC
+- DR.ABDULLAS CLINIC
+- DULSCO MEDICAL CLINIC
+- DULSCO MEDICAL CLINIC BRANCH
+- DURRAIYA KAMAL MEDICAL CLINIC
+- EXCEL HEALTHCARE ICARE CLINICS DISCOVERY GARDEN
+- FAITH JABAL MEDICAL CENTER L.L.C
+- FALCON MEDICAL CLINIC
+- FAMILY CLINIC
+- FIRST MEDICAL CENTRE
+- FULLCARE MEDICAL CENTER
+- Globehealth General Clinic  LLC
+- GOODWILL CLINIC LLC
+- GRAND INFINITY MEDICAL CENTER LLC
+- GRAND INFINITY MEDICAL CENTER LLC BRANCH
+- GREEN CITY MEDICAL CENTER L.L.C. (EX: NEW AL MUSALLA MEDICAL CENTER BRANCH)
+- HARLEY INTERNATIONAL MEDICAL CLINIC
+- HARLEY INTERNATIONAL MEDICAL CLINIC (BRANCH)
+- Harley International Medical Clinic LLC Branch
+- HOPECARE POLYCLINIC L.L.C
+- HOUSTON MEDICAL CLINIC LLC
+- HOUSTON MEDICAL CLINIC LLC (Branch)
+- HTK Medical Centre
+- ICARE ALREFFA BR OF EXCEL HEALTHCARE LLC
+- ICARE OASIS BRANCH OF EXCEL HEALTHCARE
+- Islamabad Medical Clinic LLC( Ex: Globe HealthPolyclinic)
+- JANSON MEDICAL CLINIC
+- JOSEPH'S QUSAIS POLYCLINIC
+- JUPITER AL NAHDA POLYCLINIC
+- JUPITER AL QUSAIS POLYCLINIC
+- JUPITER SPECIALTY MEDICAL CENTER
+- KARAMA MEDICAL CENTER - DIP BRANCH
+- KARAMA MEDICAL CENTER AL QUOZ MALL BRANCH
+- KARAMA MEDICAL CENTRE
+- KARAMA MEDICAL CENTRE - AL QUOZ BRANCH
+- KARAMA MEDICAL CENTRE BR  JV
+- KARAMA MEDICAL CENTRE BR, BURJUMAN
+- KARAMA MEDICAL CENTRE BR. AL KHAIL GATE
+- KARAMA MEDICAL CENTRE BR. MUHAISNAH
+- KEERTHI MEDICAL CENTER (PREVIOUSLY DR. KEERTHI CLINIC)
+- KHALIDHA MEDICAL CENTRE LLC
+- KIMS MEDICAL CENTRE
+- KINGS MEDICAL CENTER LLC
+- LAVERA CLINIC LLC
+- LIFEGUARD GENERAL CLINIC L.L.C (EX. OUR CARE AND CURE MEDICAL CENTER LLC )
+- LIFENITY INTERNATIONAL ADVANCED POLY CLINIC L.L.C
+- LIFENITY INTERNATIONAL ADVANCED POLY CLINIC L.L.C (BRANCH)
+- LIVE CARE CLINIC LLC
+- LOTUS MEDICAL CENTER
+- MAG Health Clinic
+- MARHABA MEDICAL CENTER-DXB
+- MATHEW MEDICAL CLINIC LLC
+- MED ONE MEDICAL CENTER LLC (EX. AQUA MEDICAL CENTER)
+- Medi Family Polyclinic FZE
+- MEDICURE CENTRE
+- MEDICURE CENTRE BRANCH
+- Medicure Polyclinic L.L.C Branch- Al Manara
+- MEDILIFE POLYCLINIC LLC
+- MEDILITE MEDICAL CENTRE
+- MEDZE CLINIC LLC
+- MID EAST POLY CLINIC
+- Miracure Medical Centre  LLC
+- Mobile Home Healthcare Services LLC
+- MUHAISNA SPECIALIST MEDICAL CENTRE LLC
+- MULTI CARE MEDICAL CENTRE
+- MVR DIAGNOSTIC CLINIC L.L.C (EX. MVR Medical Center)
+- NAIF MEDICAL CENTER LLC
+- NASSER CLINIC
+- NEW AL MUSALLA MEDICAL CENTER
+- NEW APOLLO POLYCLINIC
+- NEW EMIRATES MEDICAL CENTER
+- NEW LOTUS MEDICAL CENTER
+- NEW MEDICAL CENTER (Ex:Reena Beegum clinic branch)
+- NEW MEDICAL CENTRE LLC
+- NEW MEDILIFE MEDICAL CENTRE L.L.C
+- NEW SANAIYA CLINIC
+- NEW SANAIYA CLINIC BRANCH - HORALANZ
+- NEW SANAIYA CLINIC BRANCH-DIP
+- NMC DIC CLINIC AND PHARMACY BR OF NMC ROYAL HOSPITAL LTD DUBAI BRANCH
+- NMC POLYCLINIC BRANCH OF NMC HOSPITAL LLC
+- Noor Al Shefa Branch 3
+- NOOR AL SHEFA CLINIC - JEBEL ALI MALL
+- NOOR AL SHEFA CLINIC BRANCH - AL QUOZ
+- NOOR AL SHEFA CLINIC BRANCH - RAS AL KHOR
+- Noor Al Shefa Clinic Branch. 4
+- NOVITAS CLINIC L.L.C BRANCH
+- NOVITAS CLINIC LLC
+- OXFORD MEDICAL CENTER
+- PAKISTAN MEDICAL CENTER
+- Paradise Plus Poly Clinic LLC
+- PESHAWAR MEDICAL CENTRE- DUBAI
+- PHYSIOVEDA MEDICAL CENTER L.L.C
+- PHYSIOVEDA MEDICAL CENTER L.L.C (BRANCH)
+- PRIME MEDICAL CENTER AL QUSAIS (BR OF PRIME MEDICAL CENTER LLC)
+- PRIME MEDICAL CENTER DUBAI AIRPORT (BR OF PRIME MEDICAL CENTER LLC)
+- PRIMECORP MEDICAL CENTER AL QUSAIS (BR OF PRIMECORP MEDICAL CENTER LLC)
+- PRIMECORP MEDICAL CENTER AL WARSAN (BR OF PRIMECORP MEDICAL CENTER L.L.C)
+- PRIMECORP MEDICAL CENTER ALQUOZ LLC BRANCH
+- PRIMECORP MEDICAL CENTER DWC BR OF PRIMECORP MEDICAL CENTER LLC
+- PRIMECORP MEDICAL CENTER L L C DIP BRANCH
+- PRIMECORP MEDICAL CENTER LLC
+- PRIMECORP MEDICAL CENTER LLC  JABAL ALI BRANCH
+- QAMAR AL MADINA MEDICAL CENTER L.L.C
+- RASHIDIYA PRIVATE POLYCLINIC
+- Releaf Medical Centre (DIP)
+- Releaf Medical Centre (J Mart)
+- Releaf Medical Centre(Al Qouz 2)
+- Releaf Medical Centre(Jabal Ali)
+- REMEDY PLUS MEDICAL CLINIC LLC
+- RIAZ MEDICAL CENTRE - DUBAI
+- RUBY CLINIC
+- SALEEM POLYCLINIC
+- SHEIKH MANNA BIN HASHER AL MAKTOUM POLYCLINIC
+- SIRAJUDEEN MEDICAL CENTER
+- SYED SADIQ GENERAL PRACTITIONER CLINIC LLC
+- THE DOCTORS HUB POLYCLINIC L.L.C (EX. DR. JOSEPH GHRAYEB POLYCLINIC)
+- TORONTO MEDICAL CENTER LLC
+- VCARE POLYCLINIC LLC
+- VIDA CLINICS- BURDUBAI
+- VIDA CLINICS LLC BRANCH-MUHAISANAH
+- Zahrat Al Shefa Medical Centre LLC
+- ZEN LIFE POLYCLINIC CO LLC
+- ZIYATH ANSAR POLY CLINIC L.L.C
+- CARE BLUE CLINIC FZCO
+- DOHA PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- HALA PHARMACY 13 EXPRESS CLINIC (GP CLINIC ONLY)
+- JADAF LIFE PHARAMCY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE AL QUSAIS PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE DWTC PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE MURAQABAT PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PEARL PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 16 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 25 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 74 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 77 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY BARSHA SOUTH FOURTH EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- NATURES LIFE EXPRESS CLINIC LLC (GP CLINIC ONLY)
+- NEW AL KANZ PHARAMCY BRANCH EXPRESS CLINIC (GP CLINIC ONLY)
+- RAMADA LIFE EXPRESS CLINIC (GP CLINIC ONLY)
+- ROYAL LIFE EXPRESS CLINIC (GP CLINIC ONLY)
+- 800 PHARMACY FZ-LLC
+- 800 PHARMACY LLC
+- 800 PHARMACY LLC BRANCH
+- Abeer Al Noor Pharmacy LLC
+- ABEER PHARMACY
+- ABRIS PHARMACY LLC
+- ABWAB AL KHEIR PHARMACY L.L.C
+- ACCESS PHARMACY
+- ACCESS PHARMACY 2
+- ACCESS PHARMACY 3
+- ADVANCED CARE PHARMACY LLC
+- ADVANCED CARE PLUS PHARMACY LLC
+- ADVANCED STAR PHARMACY LLC
+- AHB HEALTHCARE PHARMACY LLC
+- AHLAM PHARMACY
+- AIWA PHARMACY
+- AJMAL PHARMACY
+- AL AFDHAL PHARMACY 1
+- AL AMEEN PHARMACY
+- AL AMEEN PHARMACY LLC BRANCH
+- AL ANBER PHARMACY
+- AL AWEER SOCIETY PHARMACY (BR OF AL SHAFAR PHARM GRP.)
+- AL AZHAR AL JADEEDA PHARMACY
+- AL AZHAR PHARMACY
+- AL BAIROONI PHARMACY
+- AL BARAKA PHARMACY
+- AL BASHAER PHARMACY
+- AL CORNICHE PHARMACY
+- AL DORRA PHARMACY
+- AL EHSAN PHARMACY
+- AL ENAYA AL FAEQA PHARMACY L.L.C
+- AL FAHAIDI PHARMACY
+- AL FAISAL PHARMACY LLC
+- AL FALAH PHARMACY
+- AL FANAR PHARMACY
+- AL FARAH PHARMACY DUBAI
+- AL FARDOOS PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- AL GARHOUD PHARMACY
+- AL GHUBAIBA PHARMACY
+- AL HAMRIYA COMMUNITY PHARMACY
+- AL HAWI PHARMACY
+- AL HIKMAH PHARMACY
+- AL HOKAMAA PHARMACY
+- AL JAMEYA AL TAAWENYA PHARMACY
+- AL JAZEERAH PHARMACY - DUBAI
+- AL JUMA PHARMACY
+- AL JUMEIRAH PHARMACY
+- AL KANZ PHARMACY (L.L.C.)
+- AL KANZ PHARMACY LLC
+- AL KHAIR COMMUNITY PHARMACY
+- AL KHAN PHARMACY LLC- DXB
+- AL MADINA AL SANAIYA PHARMACY
+- AL MANARA GARDEN PHARMACY
+- AL MANARA PHARMACY-MAKTOUM STREET
+- AL MANARA SUNSET PHARMACY
+- AL MANKHOOL PHARMACY
+- AL MANZIL AL JADEED PHARMACY LLC
+- AL MANZIL PHARMACY
+- AL MURAGGABAT PHARMACY
+- AL MUSAIF PHARMACY
+- AL MUSSALA PHARMACY
+- AL MUTEENA PHARMACY
+- AL NADA PHARMACY LLC
+- AL NASEEM PHARMACY
+- AL NEEM GRAND PHARMACY L.L.C
+- AL NEEM GREEN PHARMACY L.L.C
+- AL NEEM PHARMACY L.L.C (Branch)
+- AL NEEM STAR PHARMACY LLC
+- AL OMARRA PHARMACY
+- AL PETRA PHARMACY
+- AL QUOZ PHARMACY
+- AL RAFAH PHARMACY
+- AL RAHA PHARMACY
+- AL RAIS PHARMACY
+- Al Rawda Pharmacy LLC Br DIP
+- AL RAWDHA PHARMACY
+- AL RAYAN PHARMACY
+- AL RAZI PHARMACY
+- AL SANAIYA PHARMACY
+- AL SEHA AL KUBRA PHARMACY
+- AL SHAN PHARMACY
+- AL SHIFA PHARMACY
+- AL SHIHHE PHARMACY
+- AL SHINDAGA PHARMACY
+- AL SHOHOB PHARMACY LLC
+- AL TADAWI PHARMACY
+- AL TOWAR PHARMACY
+- AL WARQA PHARMACY
+- AL WASEL COMMUNITY PHARMACY
+- AL ZAHRA PHARMACY LLC
+- ALFA PHARMACY
+- ALICO ADVANCED CAREPHARMACY L.L.C
+- ALMURJAN PHARMACY LLC
+- Alpha Care International Pharmacy
+- Alpha International Pharmacy JLT
+- Alpha Peoples Pharmacy LLC
+- Alpha Peoples Pharmacy LLC Branch
+- Alpha Star Pharmacy LLC
+- ALQUOZ ADVANCED CARE PHARMACY LLC
+- ALQUSAIS STAR PHARMACY (LLC)
+- SONAPUR STAR PHARMACY L.L.C (EX. ALQUSAIS STAR PHARMACY (LLC) (BRANCH))
+- AMAAN PHARMACY
+- AMBER CLINIC LLC COMMUNITY PHARMACY
+- AMIGO PHARMACY LLC
+- APEX ATRIUM PHARMACY LLC
+- APOTEC GRAND PHARMACY L.L.C
+- APOTEC HUDAIBA PHARMACY L.L.C
+- APOTEC PHARMACY LLC
+- APOTEC PHARMACY LLC BRANCH
+- APPLE CARE PHARMACY
+- APPLE CARE PHARMACY LLC BRANCH
+- ARABELLA PHARMACY
+- ARABELLA PHARMACY (L.L.C.) (BRANCH)
+- Arabella Pharmacy LLC Branch
+- Arabella Pharmacy LLC Branch 2
+- ARABIAN HOME PHARMACY
+- ARAFA PHARMACY
+- ARDH AL NASEEM PHARMACY LLC
+- AREEJ PHARMACY
+- ARIN CARE PHARMACY
+- ASH TREE PHARMACY L.L.C
+- ASIA PHARMACY
+- ASMA PHARMACY
+- Aster Al hayat Pharmacy(Br of Aster Pharmacies Group LLC)
+- ASTER AL SHAFAR PHARMACY (PREVIOUSLY LAMCY PHARMACY)
+- ASTER DAY SURGERY CENTRE PHARMACY LLC
+- Aster DCC Pharmacy LLC
+- ASTER DIP PHARMACY
+- ASTER GRAND PHARMACY
+- Aster Healthcare Hypermarket(Br of Aster Pharmacies Group LLC)
+- ASTER HOSPITAL PHARMACY BR OF ASTER DM HEALTHCARE- Al Qusais
+- ASTER HOSPITAL PHARMACY- Mankhool
+- ASTER HOSPITAL PHARMACY SONAPUR
+- ASTER JBR PHARMACY
+- ASTER JEBEL ALI PHARMACY
+- Aster Medical Center Pharmacy Al Muhaisna Br of DM Healthcare LLC
+- Aster medical centre  Arabian Ranches Pharmacy Br of DM Healthcare LLC
+- Aster Pharmacies Group LLC (DMCC Branch)
+- Aster Pharmacies Group LLC Branch
+- ASTER PHARMACY 1
+- ASTER PHARMACY 101
+- ASTER PHARMACY 102 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 103
+- ASTER PHARMACY 104
+- ASTER PHARMACY 104 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 105
+- ASTER PHARMACY 109
+- ASTER PHARMACY 110
+- ASTER PHARMACY 111
+- ASTER PHARMACY 112
+- ASTER PHARMACY 113
+- ASTER PHARMACY 114
+- ASTER PHARMACY 115
+- ASTER PHARMACY 116
+- ASTER PHARMACY 117
+- ASTER PHARMACY 118
+- ASTER PHARMACY 119
+- ASTER PHARMACY 120
+- ASTER PHARMACY 123
+- ASTER PHARMACY 124
+- ASTER PHARMACY 126
+- ASTER PHARMACY 127
+- ASTER PHARMACY 128 BR OF ASTER PHARMACIES GROU LLC
+- ASTER PHARMACY 129
+- ASTER PHARMACY 130
+- Aster Pharmacy 131(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 132 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 134
+- ASTER PHARMACY 135 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 136
+- ASTER PHARMACY 137 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 138 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 141(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 142(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 143(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 144-BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 145(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 146(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 147-BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 148(BR OF ASTER PHARMACIES GROUP LLC)
+- ASTER PHARMACY 149 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 150 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 152(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 155 (Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 156 BROF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 157(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 158(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 160 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 161 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 162 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 164 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 165 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 167 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 168 (Br of Aster Pharmacies Group LLC)
+- Aster pharmacy 169 (Br of Aster pharmacies Group LLC)
+- Aster Pharmacy 170 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 172 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 173 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 175 (Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 2 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 200(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 201 (BR OF ASTER PHARMACIES GROUP LLC)
+- ASTER PHARMACY 202 (BR OF ASTER PHARMACIES GROUP LLC)
+- Aster Pharmacy 204(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 205 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 206 (Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 3
+- ASTER PHARMACY 5 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 6
+- ASTER PHARMACY 98 BRANCH OF ASTER PHARMACY LLC
+- ASTER PHARMACY TCOM
+- ATLAS HEALTHCARE PHARMACY LLC
+- ATLAS STAR PHARMACY LLC
+- AVENUE PHARMACY LLC
+- BAB AL HAYAT PHARMACY LLC
+- BAB AL NOOR PHARMACY LLC
+- BADER PHARMACY
+- BAIT AL MAQDES PHARMACY LLC
+- BAIT AL SHIFA PHARMACY L.L.C. DUBAI BRANCH
+- BAIT AL SHIFAA NEW  PHARMACY
+- BALSAM AL HADEETHA PHARMACY
+- BALSAM AL JADEEDHA PHARMACY
+- BALSAM PHARMACY
+- BANIYAS LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- BARSHA ROSE GARDENS PHARMACY LLC
+- BASMAT AL IFRAH PHARMACY LLC
+- BAY SQUARE PHARMACY L.L.C
+- BETA PHARMACY
+- BETTER LIFE PHARMACY
+- BIN SERAY PHARMACY LLC
+- BIN SINA 21 PHARMACY
+- BIN SINA 29 PHARMACY
+- BIN SINA 54 PHARMACY
+- BIN SINA GRAND PHARMACY
+- BIN SINA PHARMACY - MALL OF EMIRATES
+- BIN SINA SCIENTIFIC PHARMACY
+- BINSINA 44
+- BINSINA PHARMACY 40
+- BINSINA PHARMACY 43
+- BINSINA PHARMACY 50
+- BINSINA PHARMACY 51
+- BINSINA PHARMACY 52
+- BINSINA PHARMACY 55
+- BINSINA PHARMACY 56
+- BINSINA PHARMACY 60
+- BINSINA PHARMACY 61
+- BINSINA PHARMACY 62
+- BINSINA PHARMACY 74
+- BINSINA PHARMACY 75
+- BINSINA PHARMACY 78
+- BINSINA PHARMACY 82
+- BIO VISTA PHARMACY LLC
+- BLUE BELL INTERNATIONAL PHARMACY LLC
+- BURJEEL AL HAYYAT PHARMACY
+- BURJUMAN PHARMACY
+- C C M LIFE PHARMACY BR OF LIFE PHARMACY
+- C C S LIFE PHARMACY BR OF LIFE PHARMACY
+- CAMBRIDGE PHARMACY
+- CARE AND CURE PHARMACY LLC
+- CARE WELL PHARMACY
+- CEDARS JEBEL ALI INTERNATIONAL HOSPITAL PHARMACY
+- CENTRAL MARKET PHARMACY
+- Central United Pharmacy(Br of United Pharmacy Investment LLC)
+- CITY LAND LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- CITY LIFE PHARMACY L.L.C
+- CO-OPERATIVE PHARMACY
+- COUNTRY PHARMACY
+- CREEK LIFE PHARMACY BR OF LIFE
+- CREEK LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- DAR AL NASEEM PHARMACY LLC
+- DAR ALWAFA PHARMACY LLC
+- DEIRA LIFE PHARMACY L.L.C
+- DIAMOND 3 PHARMACY L.L.C
+- DOCIB PHARMACY LLC
+- DOCTORS PHARMACY
+- DOHA PHARMACY
+- DR ABDULLA S PHARMACY L.L.C
+- Dr. Joseph Polyclinic LLC Branch of Gulf Healthcare International LLC Community (outpatient )Pharmacy
+- DRAGON MART PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- DRAGON PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- Dragon Pharmacy (Br of Aster Al Shafar Pharmacies Group LLC)
+- DREAM PHARMACY
+- DUBAI LIFE PHARMACY LLC
+- DULSCO PHARMACY BR OF DULSCO LLC
+- DULSCO PHARMACY LLC
+- EAST HILL PHARMACY
+- EL ASHRAFIA PHARMACY 1
+- EL ASHRAFIA PHARMACY 10
+- EL ASHRAFIA PHARMACY 3 BR OF EL ASHRAFIA INVESTMENTS LLCâ€‹
+- EL ASHRAFIA PHARMACY 4 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 5 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 6 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 7 BR OF EL ASHRAFIA INVESTMENT LLC
+- EL ASHRAFIA PHARMACY 8 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 9 BR OF EL ASHRAFIA INVESTMENTS LLC
+- ELAJ PHARMACY
+- ELIXIR PHARMACY
+- EMIRATES PHARMACY LLC BRANCH (MOTOR CITY)
+- EXPERTS PHARMACY
+- EXTRA LIFE PHARMACY
+- FAJER MIRDIF PHARMACY LLC BRANCH
+- LIVIX PLUS PHARMACY L.L.C (BRANCH) (EX. FAJR AL MADINA PHARMACY L.L.C BRANCH)
+- LIVIX PLUS PHARMACY L.L.C (EX. FAJR AL MADINA PHARMACY LLC)
+- FAR BEYOND PHARMACY LLC
+- FAWAGEE PHARMACY LLC
+- FAWAGEE SCIENTIFIC PHARMACY LLC
+- FESTIVAL LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- FIT FOR LIFE PHARMACY LLC
+- FOUR SEASONS PHARAMCY LLC
+- Galleria United Pharmacy(Br of United Pharmacy Investment LLC)
+- GATE BETTER LIFE PHARMACY
+- GHAZAL AL JABAL PHARMACY
+- Gigi Pharmacy
+- Globehealth Pharmacy LLC
+- Gold Life Pharmacy Br of Life Pharmacy LLC
+- GOLDEN LIFE PHARMACY LLC
+- GOLDEN SANDS PHARMACY
+- GOODWILL PHARMACY LLC
+- GRAND INFINITY PHARMACY  LLC BRANCH
+- GRAND INFINITY PHARMACY LLC
+- GRAND LIFE PHARMACY
+- GRAND ROYAL PHARMACY
+- Grand United Pharmacy(Br of United Pharmacy Investment)
+- GREEN APPLES PHARMACY
+- GREEN COMMUNITY PHARMACY
+- HAFSA PHARMACY
+- HALA PHARMACY 13 LLC
+- HALA PHARMACY 14 LLC
+- HALA PHARMACY 15 LLC
+- HALA PHARMACY 16 LLC
+- HALA PHARMACY 19 L.L.C
+- HALA PHARMACY BR OF LIFE PHARMACY
+- HALA PHARMACY BR OF LIFE PHARMACY LLC
+- HAMRIYA LIFE PHARMACY L L C
+- HARLEY INTERNATIONAL MEDICAL CLINIC PHARMACY BRANCH
+- HATTA PHARMACY LLC
+- HEALTH EXPERT PHARMACY LLC
+- HEALTH FIRST PHARMACY  1
+- HEALTH FIRST PHARMACY 11
+- HEALTH FIRST PHARMACY 2
+- HEALTH FIRST PHARMACY 23
+- HEALTH FIRST PHARMACY 24
+- HEALTH FIRST PHARMACY 25
+- HEALTH FIRST PHARMACY 27
+- HEALTH FIRST PHARMACY 29
+- HEALTH FIRST PHARMACY 3
+- HEALTH FIRST PHARMACY 30
+- HEALTH FIRST PHARMACY 31
+- HEALTH FIRST PHARMACY 32
+- HEALTH FIRST PHARMACY 33
+- HEALTH FIRST PHARMACY 34
+- HEALTH FIRST PHARMACY 35
+- Health First Pharmacy 36
+- HEALTH FIRST PHARMACY 37
+- HEALTH FIRST PHARMACY 38
+- HEALTH FIRST PHARMACY 39
+- HEALTH FIRST PHARMACY 4
+- HEALTH FIRST PHARMACY 40
+- HEALTH FIRST PHARMACY 41
+- HEALTH FIRST PHARMACY 42
+- HEALTH FIRST PHARMACY 43
+- HEALTH FIRST PHARMACY 45
+- HEALTH FIRST PHARMACY 47
+- Health First Pharmacy 48
+- HEALTH FIRST PHARMACY 5
+- HEALTH FIRST PHARMACY 52
+- HEALTH FIRST PHARMACY 55
+- HEALTH FIRST PHARMACY 56 (BR OF HEALTH FIRST INVESTMENT LLC)
+- HEALTH FIRST PHARMACY 58
+- HEALTH FIRST PHARMACY 6
+- HEALTH FIRST PHARMACY 60
+- HEALTH FIRST PHARMACY 7
+- HEALTH FIRST PHARMACY 8
+- HEALTH FIRST PHARMACY 9
+- HEALTH POINT PHARMACY LLC
+- HEALTHY LIFE PHARMACY
+- HIGHWAY PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- HILL LIFE PHARMACY LLC
+- HILLS COMMUNITY PHARMACY
+- HOPECARE PHARMACY LLC
+- HORIZON HEALTH CARE PHARMCY
+- HTK Pharmacy
+- IBIN SINA 30 PHARMACY
+- IBIN SINA 38 PHARMACY
+- IBN AL AZWAR PHARMACY
+- IBN AL HAITHAM PHARMACY
+- IBN ROSHID MODERN PHARMACY
+- IBN ROSHID PHARMACY
+- IBN SINA 31 PHARMACY
+- IBN SINA 33 PHARMACY
+- IBN SINA 34 PHARMACY
+- IBN SINA 35 PHARMACY
+- IBN SINA 36 PHARMACY
+- IBN SINA 39 PHARMACY-Al BARSHA 2
+- IBN SINA 41 PHARMACY - BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 45 PHARMACY
+- IBN SINA 58 PHARMACY
+- IBN SINA 63 PHARMACY BR OF IBN SINA GROUP PHARMACIES
+- IBN SINA 64 PHARMACY (BR OF IBN SINA GROUP PHARMACIES L.L.C)
+- IBN SINA 71 PHARMACY
+- IBN SINA 73 PHARMACY
+- IBN SINA 76 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 77 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 79 PHARMACY LLC
+- IBN SINA 80 PHARMACY
+- IBN SINA 81 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 83 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 84 PHARMACY
+- IBN SINA 85 PHARMACY
+- IBN SINA 86 PHARMACY
+- IBN SINA 87 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 88 PHARMACY
+- IBN SINA 89 PHARMACY
+- IBN SINA 90 PHARMACY (BR OF IBN SINA GROUP PHARMACIES L.L.C)
+- IBN SINA 92 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 94 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 96 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 97 PHARMACY
+- IBN SINA 98 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 99 PHARMACY )BR OF IBN SINA GROUP PHARMACIES )L.L.C
+- IBN SINA GROUP OF PHARMACIES L.L.C - (DMCC BRANCH)
+- IBN SINA PHARMACY
+- IBN SINA PHARMACY BR. 32
+- IBN SINA TWENTY FIVE PHARMACY
+- INTERNATIONAL MODERN HOSPITAL PHARMACY
+- IQRA PHARMACY
+- MURSHID PHARMACY L.L.C (EX. IRAN PHARMACY)
+- J.B.R. LIFE PHARMACY
+- JABAL ALI GARDENS PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- JADAF LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- JBR BAHAR PHARMACY EST.
+- JBR LIFE PHARMACY 2 BR OF LIFE PHARMACY LLC
+- JBR MURJAN PHARMACY EST.
+- JBR SADAF PHARMACY EST.
+- JBR SHAMS PHARMACY LLC
+- JEBAL ALI ADVANCED CARE PHARMACY LLC
+- JUMEIRA BETTER LIFE PHARMACY
+- JVC LIFE PHARMACY LLC
+- JVT LIFE PHARMACY LLC
+- Karama Life Pharmacy Br Of Life Pharmacy L L C
+- KARAMA ONE PHARMACY L.L.C
+- KHALIDHA PHARMACY LLC
+- KIMS PHARMACY LLC
+- LA RIVIERA LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- LIFE ABU HAIL PHARMACY LLC
+- LIFE AL BADAA PHARMACY L.L.C
+- LIFE AL BARSHA FOURTH 2 BR OF LIFE PHARMACY LLC
+- LIFE AL BARSHA PHARMACY LLC
+- LIFE AL BARSHA SOUTH FOURTH BR OF LIFE PHARMACY L L C
+- LIFE AL HAMRIYA BR OF LIFE PHARMACY LLC
+- LIFE AL KARAMA PHARMACY
+- LIFE AL MIZHAR FIRST BR OF LIFE PHARMACY
+- LIFE AL NAHDA PHARMACY L.L.C
+- LIFE AL QUSAIS PHARMACY LLC
+- LIFE AL RIQQA PHARMACY L.L.C
+- LIFE AL RIQQA2 BR OF LIFE PHARMACY LLC
+- LIFE AL SHAB PHARMACY L.L.C
+- LIFE AL WARQA 2 BR OF LIFE PHARMACY LLC
+- LIFE AL WARQA PHARMACY LLC
+- LIFE AL YALAYIS 1 (BR OF LIFE PHARMACY 3 L.L.C)
+- LIFE CHECK PHARMACY LLC
+- LIFE DIP PHARMACY LLC
+- LIFE EXPRESS PHARMACY
+- LIFE GUARD PHARMACY L.L.C
+- LIFE MAYFAIR PHARMACY L.L.C
+- LIFE MORE PHARMACY LLC
+- LIFE MURAQABAT PHARMACY LLC
+- LIFE ONE PHARMACY
+- LIFE PEARL PHARMACY L.L.C
+- LIFE PHARAMCY 106 BR OF LIFE PHARMACY L.L.C
+- LIFE PHARMACY 10 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 101 Br of Life Pharmacy LLC
+- Life Pharmacy 102 Br of Life Pharmacy LLC
+- Life Pharmacy 103 Br. Of Life Pharmacy LLC
+- LIFE PHARMACY 104 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 107 BR of Life Pharmacy LLC
+- LIFE PHARMACY 109 (BR. OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 11 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 110 (Br. Of Life Pharmacy LLC)
+- Life Pharmacy 118 (Br. Of Life Pharmacy LLC)
+- LIFE PHARMACY 12 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 12 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 120 Br. Of Life Pharmacy LLC
+- LIFE PHARMACY 178 (EX. LIFE PHARMACY 13 BR OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 16 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 17 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 19 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 20 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 21 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 22 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 23 BR OF LIFE PHARMCY LLC
+- LIFE PHARMACY 24 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 25 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 26 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 27 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 29 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 3 LLC
+- LIFE PHARMACY 3 LLC (BRANCH)
+- LIFE PHARMACY 3 LLC BRANCH
+- LIFE PHARMACY 4 LLC
+- LIFE PHARMACY 44 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 45 Br. Of Life Pharmacy LLC
+- LIFE PHARMACY 46 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 47 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 48 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 5 LLC
+- LIFE PHARMACY 51 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 53 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 54 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 56 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 58 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 59 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 65 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 68 BR OF LIFE PHARMCY LLC
+- LIFE PHARMACY 7 LLC
+- LIFE PHARMACY 70 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 71 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 72 BR  OF LIFE PHARMACY LLC
+- LIFE PHARMACY 73 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 74 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 76 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 77 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 78 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 79 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 8 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 80 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 81 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 82 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 83 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 84 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 85 BR OF LIFE PHARMACY
+- LIFE PHARMACY 86 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 87 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 88 BR OF LIFE
+- LIFE PHARMACY 94 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 95 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 96 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 97 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 98(BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY BARSHA HEIGHTS BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY DAMASCUS BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY DFC BR OF LIFE PHARMACY LLC
+- Life Pharmacy DIP 2 Br of Life Pharmacy L L C
+- LIFE PHARMACY DUSSELDORF BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY DWTC BR OF LIFE PHARMACY LLC
+- Life Pharmacy FZ-LLC-DHCC
+- LIFE PHARMACY HILLS BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY I B M 2 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY I B M BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY JVT 2 BR OF LIFE PHARMACY LLC
+- Life Pharmacy L L C Branch
+- LIFE PHARMACY LLC (BRANCH)
+- LIFE PHARMACY LLC BR
+- Life Pharmacy LLC DMCC Br
+- LIFE PHARMACY LLC DMCC BR
+- LIFE PHARMACY MARINA BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY MARINA WALK BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY N K MALL BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY VILLAGE MALL BR OF LIFE PHARMACY LLC
+- LIFE PLUS PHARMACY LLC
+- LIFE ROSE PHARMACY LLC
+- LIFE SILICON PHARMACY LLC
+- LIFE TWO PHARMACY LLC BRANCH
+- LIFE VISION PHARMACY LLC
+- LIFENITY INTERNATIONAL ADVANCED PHARMACY L.L.C
+- LIVE CARE PHARMACY LLC
+- LIWA PHARMACY
+- LIWAN PHARMACY LLC
+- LOTUS PHARMACY LLC
+- LULU BARSHA PHARMACY
+- LULU CENTER PHARMACY
+- LULU KARAMA PHARMACY
+- MANCHESTER COMMUNITY PHARMACY
+- MANSION PHARMACY L.L.C
+- MARIAM NEW PHARMACY
+- MARINA ALKHAWANEEEJ PHARMACY (BR MARINA PHARMACY LLC)
+- MARINA CARE PHARMACY
+- MARINA CENTER PHARMACY
+- MARINA GREENS PHARMACY (LLC)
+- MARINA LIFE PHARMACY LLC
+- MARINA PEARL PHARMACY
+- MARINA PHARMACY
+- MARINA PHARMACY (BRANCH)
+- MARINA PHARMACY ALMUSTAQBAL BR OF MARINA PHARMACY LLC
+- Marina Pharmacy Atlantis (Br of Marina Pharmacy (L.L.C)
+- MARINA PHARMACY AVENUE (BR OF MARINA PHARMACY LLC)
+- MARINA PHARMACY BORJ STATION LLC
+- MARINA PHARMACY BRIDGE BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE 3 BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE 5 BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE TWO BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE1-BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CITY CENTER STATION LLC
+- MARINA PHARMACY CITY WALK-BR OF MARINA PHARMACY
+- MARINA PHARMACY GATE
+- MARINA PHARMACY GOLDEN MILE ONE
+- MARINA PHARMACY GOLDEN MILE TWO
+- Marina Pharmacy NAD Alshiba(BR of Marina Pharmacy (LLC))
+- MARINA PHARMACY OLD TOWN (LLC)
+- MARINA PHARMACY ONE CENTRAL BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY PALM FZCO
+- MARINA PHARMACY SHOROOQ BR OF MARINA PHARMACY LLC
+- Marina Pharmacy South Br of Marina Pharmacy LLC
+- MARINA VIEW PHARMACY LLC
+- MARSA COMMUNITY PHARMACY
+- MARSA LIFE PHARMACY L.L.C
+- MARYAM PHARMACY
+- MAS LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- MEADOWS LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- MED ONE PHARMACY
+- MED SAVE PHARMACY
+- MED X PHARMACY LLC
+- Medcare Medical Centre Barsha South Pharmacy Br of Medcare Hospital LLC
+- MEDEOR 24X7 PHARMACY
+- MEDI GREEN PHARMACY LLC
+- MEDI PRIME AL MIZHAR PHARMACY LLC
+- MEDI PRIME PHARMACY AL QUSAIS(BR OF MEDI PRIME PHARMACY LLC)
+- MEDI PRIME PHARMACY AL WARQA (BR OF MEDI PRIME PHARMACY (LLC))
+- MEDI PRIME PHARMACY BARSHA HEIGHTS (BR OF MEDI PRIME PHARMACY (L.L.C)
+- MEDI PRIME PHARMACY JUMEIRAH BRANCH LLC
+- MEDI PRIME PHARMACY LLC
+- MEDI PRIME PHARMACY MOTOR CITY(BR OF MEDI PRIME PHARMACY(LLC))
+- MEDI PRIME PHARMACY REEF MALL BR OF MEDI PRIME PHARMACY LLC
+- MEDI PRIME PHARMACY RTA BRANCH
+- MEDIC PLUS PHARMACY LLC
+- MEDICINA 1 PHARMACY
+- MEDICINA 10
+- MEDICINA 2 PHARMACY
+- MEDICINA 5 PHARMACY
+- MEDICINA 8
+- MEDICINA AL FAHIDI PHARMACY
+- MEDICINA BEACH ROAD PHARMACY
+- MEDICINA FIRST PHARMACY
+- MEDICINA PHARMACY
+- MEDICINA PHARMACY 11
+- MEDICINA PHARMACY 3
+- MEDICINA PHARMACY 4
+- MEDICINA PHARMACY 6
+- MEDICINA PHARMACY 7
+- MEDICINE SHOPPE MICRO PHARMACY
+- MEDICINE SHOPPE PHARMACY
+- MEDICOM PHARMACY (PREV. AL PHARABI)
+- MEDICOM PHARMACY 1 (PREV. AL JAMEYA)
+- MEDICOM PHARMACY 10 (PREV. AL SABA)
+- MEDICOM PHARMACY 11 (PREV. NEW FLAME)
+- MEDICOM PHARMACY 12 (PREV. DUBAI CENTURY)
+- MEDICOM PHARMACY 13 (PREV. HOME)
+- MEDICOM PHARMACY 14 (PREV. NEW HOME)
+- MEDICOM PHARMACY 15
+- MEDICOM PHARMACY 16 (PREV. MAKKA)
+- MEDICOM PHARMACY 2 (PREV. AL WASL)
+- MEDICOM PHARMACY 3 (PREV. WORLD)
+- MEDICOM PHARMACY 33 LLC
+- MEDICOM PHARMACY 34 LLC
+- MEDICOM PHARMACY 4 (PREV. TOWN)
+- MEDICOM PHARMACY 5 (PREV. EMIRATES COOP. SOCIETY)
+- MEDICOM PHARMACY 6 (PREV. MAZAYA)
+- MEDICOM PHARMACY 7 (PREV. FLAME)
+- MEDICOM PHARMACY 8 (PREV. CENTURY)
+- MEDICOM PHARMACY 9 (PREV. AL QEMMA)
+- MEDICURE PHARMACY
+- MEDICURE PHARMACY BRANCH LLC
+- MEDILIFE PHARMACY LLC
+- MEDILUX PHARMACY LLC
+- MEDSEVEN PHARMACY LTD
+- MEDSHOP GARDEN PHARMACY
+- MEDY MART PHARMACY LLC
+- MERCATO FAMILY PHARMACY CO
+- MERCURY PLUS PHARMACY LLC
+- MEZHAR LIFE PHARMACY
+- MIRDIF PHARMACY
+- MODERN IBN SINA PHARMACY
+- MODERN LIFE PHARMACY
+- MODERN MEDI PRIME PHARMACY LLC
+- MODERN PHARMACY
+- MOTHER CARE PHARMACY
+- MOTHER PHARMACY
+- MOTOR COMMUNITY PHARMACY
+- MUHAISNA STAR PHARMACY LLC
+- MULTICARE PHARMACY
+- MUSALAH AL QUOZE PHARMACY
+- MUSALLA SONAPOOR PHARMACY
+- NAD SHAMMA PHARMACY LLC
+- NAEEM PHARMACY
+- NAHDA SAHARA PHARMACY
+- NAJMA AL MUSALLAH PHARMACY LLC
+- NAJMAT AL SHAMS PHARMACY LLC
+- NATURE'S LIFE PHARMACY
+- Neo Pharmacy L.L.C Branch
+- Neo Pharmacy L.L.C Branch
+- Neo Pharmacy LLC
+- Neo Pharmacy LLC BRANCH
+- NEW ADVANCED CARE PHARMACY LLC
+- NEW AL KANZ PHARMACY (MAG214)
+- NEW AL KANZ PHARMACY BRANCH
+- NEW AL NAHDA PHARMACY - DUBAI
+- NEW AL NEEM PHARMACY LLC
+- NEW AL QUOZ PHARMACY
+- NEW AL SHAIMAA PHARMACY
+- NEW AL SHIFA PHARMACY
+- NEW ALHADIQA PHARMCY L.L.C
+- NEW ASTER PHARMACY JLT
+- NEW BETTER LIFE PHARMACY
+- NEW DOHA PHARMACY
+- NEW GRAND 1 PHARMACY
+- NEW GRAND MURQABAT PHARMACY L.L.C
+- NEW IBN SINA PHARMACY
+- NEW MAMZAR PHARMACY LLC
+- NEW MANKHOOL PHARMACY
+- NEW MAZAYA PHARMACY EST.
+- NEW MEDI PRIME PHARMACY LLC
+- NEW MEDICINA PHARMACY
+- NEW MEDILIFE PHARMACY LLC
+- NEW MOTOR CITY PHARMACY L.L.C
+- NEW RASHED PHARMACY
+- NEW SALAHALDIN PHARMACY FZE
+- NEW SANAIYA PHARMACY
+- NEW SILICON PHARMACY BR OF LIFE PHARMACY
+- NEW SMILE PHARMACY
+- NEW SPRING PHARMACY (BR OF LIFE PHARMACY LLC)
+- NEW SUPERCARE PHARMACY-MEDIA CITY
+- NEW VIDA PHARMACY LLC
+- NICE LIFE PHARMACY- Br of Aster Pharmacies Group LLC
+- NILE PHARMACY LLC
+- NMC DIC CLINIC AND PHARMACY BR OF NMC ROYAL HOSPITAL LTD DUBAI BRANCH
+- NMC ROYAL HOSPITAL PHARMACY
+- NMC SPECIALITY HOSPITAL PHARMACY
+- NMC SPECIALTY HOSPITAL PHARMACY DIP (Br of N M C ROYAL HOSPITAL LTD) (Dubai Branch)
+- NOOR AL IMAN PHARMACY - DUBAI
+- NOOR AL MADINA PHARMACY
+- NOOR AL MAMZAR PHARMACY
+- NOOR AL SHEFAA PHARMACY LLC
+- NOVA ADVANCED CARE PHARMACY LLC
+- BETA STAR PHARMACY L L
+- NOVITAS PHARMACY LLC
+- NOVO PHARMACY BRANCH
+- NOVO PHARMACY LLC
+- NOVO PHARMACY LLC (BRANCH)- DEIRA
+- NOVO PHARMACY LLC (BRANCH)- KARAMA
+- OASIS LIFE PHARMACY
+- OASIS PHARMACY LLC
+- OMAN PHARMACY
+- ONYX PHARMACY
+- ONYX PHARMACY II
+- ORION FAMILY PHARMACY LLC
+- OUR LIFE GUARD PHARMACY L L C
+- Outlet By Life Pharmacy LLC
+- PALM STRIP PHARMACY
+- PANACEA PHARMACY - MADINAT
+- PANACEA PHARMACY - REEF
+- PANORAMA RX PHARMACY
+- Paradise Plus Pharmacy LLC
+- PARK BETTER LIFE PHARMACY
+- Peoples Pharmacy
+- PHARMA ONE PHARMACY
+- Premier Pharmacy
+- PRIMACARE PHARMACY L.L.C
+- PRIMECORP MEDICAL CENTER AL WARSAN PHARMACY (BR OF PRIMECORP MEDICAL CENTER)
+- PRISTINE PHARMACY L.L.C
+- PROTECTION PHARMACY
+- QAMAR AL MADINA PHARMACY LLC
+- RAHEQ ALAZHAR PHARMACY  L.L.C
+- RAMADA LIFE PHARMACY
+- RAS AL KHOOR PHARMACY
+- RASHID PHARMACY
+- REAL 10 PHARMACY LLC
+- REAL 3 PHARMACY L.L.C
+- REAL 4 PHARMACY L.L.C
+- REAL 5 PHARAMACY LLC
+- REAL 6 PHARMACY L.L.C
+- REAL 7 PHARMACY DMCC
+- REAL 7 PHARMACY DMCC
+- REAL 7 PHARMACY DMCC BRANCH
+- RIGHT AID PHARMACY
+- RIGHT HEALTH PHARMACY L.L.C  (BRANCH)
+- RIGHT HEALTH PHARMACY LLC
+- RIVIERA LIFE PHARMACY LLC
+- ROSARY PHARMACY - SPRINGS
+- ROYAL GRAND PHARMACY
+- ROYAL LIFE PHARMACY LLC
+- ROYAL MARINA PHARMACY
+- ROYAL MEMZAR PHARMACY
+- ROYAL PHARMACY
+- ROYAL RUBY PHARMACY
+- RUBY PHARMACY
+- RX PHARMACY
+- S B N 2 PHARMACY
+- S B N Pharmacy
+- S Z R LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- SAFA SOCIETY PHARMACY
+- SAHARA AL MANKHOOL PHARMACY
+- SAHARA PHARMACY
+- SAHARA STAR PHARMACY
+- SALAH ALDIN PHARMACY
+- SAMARI RX PHARMACY
+- Samary Pharmacy LLC
+- SAMER PHARMACY LLC
+- SANDS COMMUNITY PHARMACY
+- SARA PHARMACY LLC
+- SEHA PHARMACY LLC
+- SEIF PHARMACIES BR OF EL ASHRAFIA INVESTMENTS LLC
+- SEREENA PHARMACY
+- SHAJARAT AL NEEM PHARMACY LLC
+- SMILE PHARMACY
+- SONDOS PHARMACY
+- SOUKARE PHARMACY
+- STAR MIRDIF PHARMACY
+- SULTAN PHARMACY
+- SUPER CARE JUMEIRAH PHARMACY
+- SUPER CARE PHARMACY 26
+- SUPER CARE PHARMACY 27
+- SUPER CARE PHARMACY 28
+- SUPER CARE PHARMACY 39
+- SUPER CARE PHARMACY AL THANYA
+- SUPER CARE PHARMACY DIP
+- SUPER CARE PHARMACY DMCC
+- SUPER CARE PHARMACY L.L.C - BRANCH- MEYDAN HEIGHTS
+- Super Care Pharmacy L.L.C - Branch Of Abu Dhabi 6
+- SUPER CARE PHARMACY L.L.C (BRANCH)
+- SUPER CARE PHARMACY L.L.C (BRANCH)
+- SUPER CARE PHARMACY L.L.C (BRANCH)
+- SUPER CARE PHARMACY L.L.C (BRANCH)- FESTIVAL PLAZA
+- Super Care Pharmacy L.L.C. Meaisem
+- Super Care Pharmacy LLC (DMCC Branch)
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- SUPER CARE PHARMACY LLC BRANCH- CENTRAL MALL
+- SUPER CARE PHARMACY LLC BRANCH- DUBAI MARINA
+- SUPER CARE PHARMACY LLC BRANCH- Q MALL
+- Super Care Pharmacy LLC Branch(Wadi Al Safa 7)
+- Super Care Pharmacy LLC Branch-Al Barsha 3
+- SUPER CARE PHARMACY LLC BRANCH-Al Ghurair mall
+- SUPER CARE PHARMACY LLC- MOTOR CITY
+- SUPER CARE PHARMACY MIRDIF 2 (OR DHA-F-0245928)
+- SUPER LIFE PHARMACY LLC
+- SUPERCARE EMIRATES PHARMACY
+- SUPERCARE GARDENS PHARMACY
+- SUPERCARE MANKHOOL PHARMACY
+- SUPERCARE PHARMACY - ASWAAQ UMM SUQEIM
+- SUPERCARE PHARMACY - DCC
+- SUPERCARE PHARMACY - JLT
+- SUPERCARE PHARMACY - MARSA
+- SUPERCARE PHARMACY - MIRDIF
+- SUPERCARE PHARMACY - SHEIKH ZAYED ROAD
+- SUPERCARE PHARMACY - SILICON
+- SUPERCARE PHARMACY - UMM SUQEIM
+- SUPERCARE PHARMACY - WASL SQUARE
+- SuperCare Pharmacy 29
+- SuperCare Pharmacy 31
+- SuperCare Pharmacy 33 DMCC
+- SuperCare Pharmacy 34
+- SUPERCARE PHARMACY 38
+- SUPERCARE PHARMACY 41
+- SUPERCARE PHARMACY 43
+- SUPERCARE PHARMACY 44
+- SUPERCARE PHARMACY ARABIAN PLAZA
+- SUPERCARE PHARMACY DUBAI MALL
+- SUPERCARE PHARMACY FESTIVAL CITY
+- Supercare Pharmacy LLC Branch
+- SuperCare Pharmacy LLC Branch
+- SuperCare Pharmacy LLC Branch
+- SuperCare Pharmacy LLC Branch
+- SUPERCARE PHARMACY OASIS CENTRE
+- SUPERCARE PHARMACY SAFA
+- SUSTAINABLE LIFE PHARMACY LLC
+- TAJ PHARMACY
+- TAREQ PHARMACY
+- THE POINTE LIFE PHARMACY BR OF LIFE PHARMACY  LLC
+- THORAYA AL MADENA PHARMACY LLC
+- MODERN PHARMACY L.L.C (BRANCH) (BURDUBAI)  (EX. THUMBAY PHARMACY 5 BRANCH OF THUMBAY PHARMACY LLC)
+- MODERN PHARMACY L.L.C (BRANCH) (AL BARSHA 2) (EX. THUMBAY PHARMACY 7 BRANCH OF THUMBAY PHARMACY LLC)
+- MODERN PHARMACY L.L.C (BRANCH) (SATWA)  (EX. THUMBAY PHARMACY 8 BRANCH OF THUMBAY PHARMACY LLC)
+- TOWN LIFE PHARMACY
+- TOWN SQUARE LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- TRACKS PHARMACY
+- TRAM LIFE PHARMACY L.L.C
+- TRUSTCARE PHARMACY LLC
+- UDS PHARMACY LLC
+- UMM HURAIR PHARMACY
+- UNICARE PHARMACY LLC
+- UNICARE STAR PHARMACY
+- UNION PHARMACY
+- United Pharmacy 2(Br of United Pharmacy Investment LLC)
+- United Pharmacy IBN Battuta(Br of United Pharmacy Investment( LLC)
+- United Pharmacy(Br of United Pharmacy Investment LLC)
+- UNITY PHARMACY LLC
+- UPTOWN COMMUNITY PHARMACY
+- UPTOWN PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- VCARE PHARMACY LLC
+- VITA CARE PHARMACY L.L.C
+- Vita United Pharmacy(Br of United Pharmacy Investment LLC)
+- VIVA PHARMACY LLC
+- WARSAN LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- We Care Pharmacy (L.L.C.)
+- WECARE E R X PHARMACY LLC( Ex : Kap Pharmacy)
+- WELLCARE PHARMACY LLC
+- WELLFAST PHARMACY
+- WELLMART PHARMACY LLC
+- WEST HILL PHARMACY
+- YACOUB PHARMACY
+- YARA PHARMACY
+- YASMED PHARMACY LLC
+- YASSAT LIFE PHARMACY LLC
+- YAZ PHARMACY LLC
+- ZABEEL PHARMACY LLC
+- Zabeel Pharmacy LLC
+- ZAHRAT AL NOOR PHARMACY LLC
+- Zahrat Al Shefa Pharmacy
+- ZAMZAM PHARMACY
+- ZAYD PHARMACY
+- ZEN LIFE PHARMACY CO LLC
+- ZULEKHA PHARMACY
+- AXON MEDICA POLYCLINIC, BR. AXON MEDICA INVESTMENT MANAGEMENT L.L.C
+- AXON MEDICA PHARMA L.L.C
+- AXON MEDICA POLYCLINIC
+- AXON MEDICA PHARMA L.L.C
+- DR ISMAIL POLYCLINIC
+MALL BR OF DR. ISMAIL
+POLYCLINIC
+- JUPITER AL QUSAIS POLYCLINIC LLC PHARMACY
+- Emirates Hospitals & Clinics LLC Branch, Pharmacy
+- APOLLO CLINIC LLC (EX. NEW CITY CLINIC LLC)
+- APL PHARMACY LLC
+- AXIOS HOME CARE SERVICES L.L.C
+- Modern Family Clinic LLC
+- LIFE PHARMACY 44 EXPRESS CLINIC (GP CLINIC ONLY)
+- Evercare Medical Center
+- NAVEEN PHARMACY
+- LIFE PHARMACY 116 (BR OF LIFE PHARMACY)
+- LIFE PHARMACY 117 (BR. OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 122 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 121 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 108 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 105 (BR OF LIFE PHARMACY L.L.C)
+- FUTURE LIFE GENERAL MEDICAL CLINIC
+- AL AHRAM PHARMACY LLC
+- AL TAMIMI NEW PHARMACY LLC
+- AL TAMIMI NEW PHARMACY LLC BRANCH
+- AL SAFA AL QUOZ PHARMACY L.L.C
+- FAITH ACACIA PHARMACY LLC
+- FAITH AHLAN PHARMACY LLC
+- FAITH CAP 1 PHARMACY LLC
+- FAITH EUROPEAN PHARMACY LLC
+- MEDIGREEN PHARMACY LLC (BRANCH)
+- AL TAMIMI PHARMACY L.L.C
+- FAITH WAY PHARMACY L.L.C
+- NAD AL HAMAR PHARMACY L.L.C
+- FAITH PHARMACY L.L.C
+- MODERN FAMILY CLINIC L.L.C (BRANCH)
+- MODERN FAMILY PHARMACY L.L.C
+- SuperCare Pharmacy LLC (Branch)
+- SuperCare Pharmacy LLC (Branch)
+- Aster Pharmacy 166 (Br Of Aster Pharmacies Group L.L.C)
+- Aster pharmacy 176 ( Br of Aster pharmacies Group L.L.C)
+- Aster Pharmacy 179 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 180 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 181 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 182 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 183 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Royal Clinic Downtown Pharmacy Br Of Dm Healthcare LLc
+- HEALTH FIRST PHARMACY 61(BR OF HEALTH FIRST INVESTMENT LLC)
+- GULF PHARMACY
+- AMBER PHARMACY L.L.C
+- JANSONS PHARMACY L.L.C
+- DR ABDUL LATIF CLINIC LLC
+- LIFE PHARMACY 119 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 125 (BR OF LIFE PHARMACY L.L.C)
+- LIVERPOOL MEDICAL CLINIC L.L.C
+- LIVERPOOL PHARMACY L.L.C
+- Life Pharmacy 128 br of Life Pharmacy LLC
+- Life Pharmacy 126 Br of Life Pharmacy LLC
+- Life Pharmacy 132 Br of Life Pharmacy LLC
+- Life Pharmacy 130 (Br of Life Pharmacy L.L.C)
+- Life Pharmacy 135 br of Life pharmacy LLC
+- LIFE PHARMACY 119 BR OF LIFE PHARMACY LLC
+- FAITH JABAL PHARMACY LLC
+- FAITHWAY PHARMACY LLC (BRANCH)
+- YOUR CENTER POLY CLINIC L.L.C
+- YOUR CENTER PHARMACY L.L.C
+- LIFENITY GENOMIC LABORATORY DMCC
+- OXFORD PHARMACY L.L.C
+- MODERN FAMILY CLINIC L.L.C (BRANCH)
+- MODERN FAMILY PHARMACY L.L.C (BRANCH)
+- MBM SPECIALITY MEDICAL CENTER L.L.C
+- SuperCare Pharmacy LLC Branch-Al Warqa
+- SuperCare Pharmacy LLC Branch-Mizhar
+- GULF CARE DIAGNSOTIC CENTER L.L.C
+- YASSAT LIFE PHARMACY
+- SANA PHARMACY  LLC
+- REAL ONE PHARMACY L.L.C
+- NOOR AL AHALIA PHARMACY
+- NOOR AL AHALIA MEDICAL CENTER
+- LIFE TWO PHARMACY L.L.C
+- LIFE TRIDENT PHARMACY L.L.C
+- LIFE PHARMACY 45 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 18 BR OF LIFE PHARMACY LLC
+- ARIFA PHARMACY
+- AL SHAWAB PHARMACY LLC
+- ASTER PHARMACY 174 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 184 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 178 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 188 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 189 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ZEST PHARMACY 1 (BR OF ZEST WELLNESS PHARMACY L.L.C)
+- ASTER ROYAL CLINIC SPRINGS SOUK PHARMACY BR OF D M HEALTHCARE L L C
+- ALOKA EYE CLINIC LLC
+- ABEER AL NOOR PHARMACY LLC-BRANCH
+- AL HANA PHARMACY L.L.C
+- MEDCOME HEALTH CARE CENTER
+- BRIGHT CARE CLINIC L.L.C
+- SEHA AL NOOR PHARMACY L.L.C
+- FAITH AL KHAIL PHARMACY L.L.C
+- FAITH WALK PHARMACY LLC
+- MASHREQ PHARMACY L.L.C
+- MURIAT PHARMACY L.L.C
+- QALB AL IMAN PHARMACY L.L.C
+- G M G MEDICAL CENTER L.L.C
+- TruDoc Pharmacy LLC
+- AL RASHEEDآ PHARMACYآ LLC
+- DAR AL NOOR PHARMACY LLC
+- MADINAT AL QOUZ PHARMACY LLC
+- NEW AL SUWAIDI PHARMACY LLC
+- NEW HEALTH SIGN PHARMACY LLC
+- NOOR AL QUSAIS PHARMACY LLC
+- NOOR AL SATWAآ PHARMACY LLC
+- ORBITآ STAR PHARMACYآ LLC
+- ROCK STAR PHARMACY LLC
+- FAJER MIRDIF PHARMACY LLC
+- KHAYBER MEDICAL CENTER
+- ASCENT ENT SPECIALITY CENTRE LLC
+- ASCENT PHARMACY LLC
+- STEPS POLYCLINIC LLC
+- STEPS PHARMACY L.L.C
+- Life Pharmacy 127 Br of Life Pharmacy LLC
+- Life Pharmacy 112 br of Life phy LLC
+- Life Pharmacy 124 (Br. Of Life Pharmacy LLC)
+- Life Pharmacy 125 Br. Of Life Pharmacy LLC
+- Life pharmacy 123 Br of Life Pharmacy LLC
+- Life Pharmacy 139 Br of Life Pharmacy LLC
+- Life Pharamcy 142 Br of Life Pharmacy LLC
+- Life Pharmacy 138 br of Life Pharmacy LLC
+- LIFE PHARMACY 143 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 131 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 144 (BR OF LIFE PHARMACY L.L.C)
+- Life Pharmacy 136(Br of Life Pharmacy LLC)
+- Life Pharmacy 141 (Br of Life Pharmacy LLC)
+- LLH Medical Center LLC Pharmacy
+- DR. ISMAIL POLYCLINIC (BRANCH)
+- HAFSA PHARMACY (BRANCH)
+- Zainab Al Shareefi Pharmacy L.L.C
+- SEHA AL NOOR CLINIC LLC
+- SEHA AL NOOR PHARMACY LLC BRANCH
+- SARAH ALI PHARMACY L.L.C
+- Medicom Pharmacy 1 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 187 (Br of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 185
+- Medcare Medical Centre Al Furjan West Pharmacy Br Of Medcare Hospital LLC
+- Al Bayan Medical Center LLC
+- PRIMECORP MEDICAL CENTER DIP PHARMACY
+- NAHDI PHARMACY LLC
+- NAHDI PHARMACY BRANCH
+- NAHDI PHARMACY BRANCH 1
+- NAHDI PHARMACY BRANCH 2
+- NAHDI PHARMACY BRANCH 3
+- NAHDI PHARMACY BRANCH 4
+- NAHDI PHARMACY BRANCH 5
+- NAHDI PHARMACY BRANCH 6
+- NAHDI PHARMACY BRANCH 7
+- NAHDI PHARMACY BRANCH 9
+- NAHDI PHARMACY BRANCH 10
+- NAHDI PHARMACY BRANCH 11
+- NAHDI PHARMACY BRANCH 12
+- Medicom pharmacy 31 LLC
+- MED DOC PHARMACY L.L.C (EX. SONDOS PHARMACY LLC BRANCH)
+- ADVANCED CARE MEDICAL CENTER BRANCH LLC
+- GRAND ADVANCED CARE PHARMACY LL
+- RALS HEALTHCARE (AL QUSAIS)  (EX. MINI VM POLYCLINIC)
+- RALS PHARMACY (AL QUSAIS) DUBAI
+- RALS PHARMACY BR OF ABDULWAHED BIN SHABIB INVESTMENT GROUP L L C (AL SOUQI) DUBAI
+- RALS HEALTHCARE PHARMACY (BR OF ABD ULWAHED BIN SHABIB INVESTMENT GROUP L.L.C (AL FAHIDI) DUBAI
+- RALS HEALTHCARE BR OF ABD ULWAHED BIN SHABIB INVESTMENT GROUP L.L.C (JABAL ALI) DUBAI
+- RALS PHARMACY BR OF ABD ULWAHED BIN SHABIB INVESTMENT GROUP LLC (JABAL ALI) DUBAI
+- Oud Al Muteena Medical Center
+- NOOM MEDICAL CLINIC L.L.C
+- NOOM PHARMACY LLC
+- RELIEF PHARMACY LLC
+- MEDICOM PHARMACY 36 LLC
+- MEDICOM PHARMACY 38 LLC
+- MEDICOM PHARMACY 38 LLC(BRANCH)2
+- MEDICOM PHARMACY 35 LLC
+- SUPERCARE PHARMACY LLC BRANCH
+- SUPERCARE PHARMACY LLC BRANCH
+- SUPERCARE PHARMACY LLC BRANCH
+- 800 PHARMA FZ-LLC
+- 800 PHARMA PHARMACY LLC
+- AL NEEM PHARMACY L.L.C BRANCH (JAFZA SOUTH)
+- CARE MARK PHARMACY FZCO
+- LANA PHARMACY L.L.C (DUBAI)
+- LANA PHARMACY L.L.C BRANCH
+- MEDON FIRST PHARMACY LLC
+- MEDON FIRST PHARMACY LLC (BRANCH)
+- MEDON FIRST PHARMACY LLC (BRANCH) 3
+- PULSE LIFE PHARMACY LLC
+- ZAHRAT AL OUD PHARMACY LLC
+- ZARA PHARMACY LLC
+- SHAMS AL AHALIA MEDICAL CENTER
+- SHAMS AL AHALIA MEDICAL  CENTER PHARMACY
+- FAITH AL QUOZ PHARMACY LLC
+- FAITH HAYAA PHARMACY LLC
+- FAITH HILLS PHARMACY LLC
+- GREEN BELT PHARMACY LLC
+- MED CARE PHARMACY LLC
+- AL PLAZA PHARMACY LLC BRANCH
+- AL NAHDA PHARMACY LLC
+- MEDICOM PHARMACY 37 LLC
+- VIDA PHARMACY L.L.C
+- ZMC HEALTH CLINIC L.L.C
+- ZMC PHARMACY L.L.C
+- LIFE PHARMACY 146 (BR OF LIFE PHARMACY L.L.C)
+- LIFE TWO PHARMACY L.L.C (JVC)
+- LIFE PHARMACY 149 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 152 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 162 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 155 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 163 (BR OF LIFE PHARMACY L.L.C)
+- PHARMACY FOR LESS (BR OF LIFE PHARMACY L.L.C)
+- LIFE HEALTH AND WELLNESS TRADING LLC
+- LIFE PHARMACY 154 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 129 (BR OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 161 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 164 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 167 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 158 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 156 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C BRANCH (DSO)
+- LIFE PHARMACY 159 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 166 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 153 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 147 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 148 (BR OF LIFE PHARMACY L.L.C)
+- MODERN FAMILY PHARMACY LLC BRANCH
+- BLUEBELL MEDICAL CENTRE LLC PHARMACY
+- LIFE PHARMACY 133 (BR OF LIFE PHARMACY L.L.C)
+- Houston Pharmacy LLC
+- GSM MEDICAL CENTRE LLC (BRANCH)
+- GSM GREENS PHARMACY LLC
+- Life Pharmacy 113 Br of Life Pharmacy LLC
+- Life Pharmacy 145 Br of Life Pharmacy LLC-
+- LIFE PHARMACY 134 (BR OF LIFE PHARMACY L.L.C)
+- GOOD LIFE MEDICAL CENTER L.L.C
+- AL MULAYIM PHARMACY L.L.C
+- BLOOM PLUS POLY CLINIC L.L.C
+- BLOOM PLUS PHARMACY L.L.C
+- AL MARIFFA MEDICAL CENTER L.L.C (DUBAI)
+- BEST LIFE GENERAL CLINIC L.L.C
+- CALLADOC TELEHEALTH SERVICES L.L.C
+- AFRIDI MEDICAL CENTER L.L.C
+- AFRIDI PHARMACY LLC
+- DEANS LIFE PHARMACY L.L.C
+- SHARE AND CARE MEDICAL CENTER L L C
+- FORTE CLINICAL LABORATORY L.L.C
+- Aster Pharmacy 186 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 191 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 192 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 196 (Br Of Aster Pharmacies Group L.L.C)
+- IBN SINA 95 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 100 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- Ibn Sina Pharmacy 66
+- IBN SINA 91 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 75 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA SCIENTIFIC PHARMACY(BR OF IBN SINA GROUP PHARMACIES)
+- IBN SINA 67 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 68 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 77 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 76 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 82 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 86 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 50 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 81 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 57 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 93 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 69 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- CWH PHARMACY L.L.C
+- CWH Pharmacy LLC Branch
+- LIFE PHARMACY 160 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 165 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 177 (BR OF LIFE PHARMACY L.L.C)
+- Life Pharmacy 176 ( Br Of Life Pharmacy LLC)
+- ROYAL PHOENIX CLINIC L.L.C
+- ROYAL PHOENIX CLINIC L.L.C - PHARMACY
+- MARHABA PHARMACY L.L.C (DUBAI)
+- LIFE PHARMACY 175 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 169 (BR OF LIFE PHARMACY L.L.C)
+- JEBEL ALI EMERGENCY AND TRAUMA CENTER
+- AL SHIFA UROPI PHARMACY L.L.C (DUBAI)
+- AL SHIFA UROPI PHARMACY DWC LLC
+- ABSOLUTE WELLNESS MEDICAL  CENTRE PHARMACY
+- JANAH PHARMACY FZ LLC
+- ADAMS PHARMACY L.L.C (BRANCH)
+- ADAMS PHARMACY L.L.C
+- LIFE PHARMACY 172 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 170 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 174 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 181 (BR OF LIFE PHARMACY L.L.C)
+- Aster Pharmacy 171 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 177 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 195 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 194 (Br Of Aster Pharmacies Group L.L.C)
+- Life Pharmacy and Express Clinic FZ LLC
+- Health First Pharmacy 55
+- Health First Pharmacy 57
+- HEALTH FIRST PHARMACY 64
+- Ferdows Medical Center L.L.C
+- LIFE PHARMACY 168 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 179 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 183 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 173 (BR OF LIFE PHARMACY L.L.C)
+- INSTACARE PHARMACY L.L.C
+- Peshawar Medical Center LLC (International City)
+- NEXA PHARMACY L.L.C
+- Aster Pharmacies Group LLC (DMCC Branch) (MEDORE Residential Tower)
+- Medcare Medical Centre Arabian Ranches 3 Pharmacy Br Of Medcare Hospital LLC
+- Medcare Medical Centre The Valley Pharmacy Br Of Medcare Hospital L.L.C
+- LIFE PHARMACY 188 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 180 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 185 (BR OF LIFE PHARMACY L.L.C)
+- SHIFA AL BAIROONI PHARMACY LLC
+- SAFA AL BAIROONI PHARMACY LLC
+- RUKN AL MAMZAR PHARMACY LLC
+- Life Pharmacy 180 Express Clinic
+- LIFE PHARMACY 173 BR OF LIFE PHARMACY (GENERAL CLINIC)
+- MADAWAH HEALTHCARE CLINIC L.L.C
+- SAFA ALNOOR POLYCLINIC LLC
+- MUMTAZ AL NOOR EXPRESS PHARMACY CLINIC LLC
+- GRAND DR ISMAIL POLYCLINIC L.L.C
+- GRAND DR ISMAIL POLYCLINIC L.L.C PHARMACY
+- PMC PHARMACY LLC
+- Pak Satwa Poly Clinic Co. LLC
+- Nucleus Clinic LLC (DUBAI MARINA)
+- Aster Pharmacy 208 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 211 (Br Of Aster Pharmacies Group L.L.C)
+- Medcare Medical Center Nad Al Sheba Pharmacy Br of Medcare Hospital LLC
+- PROHEALTH PHARMACY L.L.C
+- MEDHUB MEDICAL CENTER L.L.C
+- MEDHUB PHARMACY L.L.C
+- MEDHUB PHARMACY L.L.C (BRANCH)
+- ABEER ALNOOR POLYCLINIC LLC PHARMACY BRANCH(MUHAISNAH)
+- AL BARSHA ALNOOR POLYCLINIC L.L.C
+- INNOVATION FAMILY PHARMACY L.L.C
+- DURAIYA KAMAL MEDICAL CLINIC-PHARMACY
+- DYNAMIC LIFE CLINIC L.L.C
+- DYNAMIC LIFE CLINIC LLC BRANCH
+- ICARE AL REFFA BR OF EXCEL HEALTHCARE LLC-Pharmacy
+- IRIS DENTAL CLINIC LLC
+- LIFE PHARMACY L.L.C (BRANCH)-DSO
+- LIFE PHARMACY 186 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 196 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 190 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 189 (BR OF LIFE PHARMACY L.L.C)
+- PHARMACY FOR LESS 1 (BR OF PHARMACY FOR LESS L.L.C)
+- LIFE PHARMACY 182 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 198 (Br of LIFE PHARMACY L.L.C)
+- Aster Pharmacy 199 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 190 (Br Of Aster Pharmacies Group L.L.C)
+- Zest Pharmacy 3 (Br of Zest Wellness Pharmacy L.L.C)
+- Trudoc Health Care LLC-(Teleconsultation Only)
+- AL NOOR POLYCLINIC L.L.C (BRANCH)
+- MUMTAZ AL NOOR EXPRESS PHARMACY LLC
+- AMBER PHARMACY L.L.C (BRANCH)
+- New Medical Centre Pharmacy LTD Branch (JAFZA)
+- SONDOS PHARMACY LLC BRANCH
+- DAR AL NUJOOM PHARMACY LLC
+- MEDICOM PHARMACY 38 LLC BRANCH
+- GRAND MURIAT PHARMACY LLC
+- AL PLAZA PHARMACY L.L.C.(BRANCH ) MAMZAR
+- LIFE PHARMACY 194 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 201 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 203 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 191 (BR OF LIFE PHARMACY L.L.C)
+- HEALTH & GLOW PHARMACY 2 (BR OF LIFE PHARMACY L.L.C)
+- PARK BETTER LIFE PHARMACY (L.LC) (BRANCH)
+- IBN SINA 72 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 59 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA GROUP PHARMACIES (L.L.C) (BRANCH)
+- IBN SINA 46 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 65 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 56 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 88 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- Ibn Sina Group Pharmacies (LLC) (Expo City Dubai
+- IBN SINA PHARMACY 84 (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 53 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 49 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- ABEER AL NOOR PHARMACY LLC-BRANCH
+- L L H MEDICAL CENTER L.L.C (BRANCH)
+- LLH MEDICAL CENTER LLC PHARMACY BRANCH
+- Tadawi Health Care LLC (Branch) IMPZ
+- Tadawi Health Care LLC (Branch) DIP
+- LIFE PHARMACY 189 EXPRESS CLINIC
+- Aster Pharmacy 197 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 209 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 210 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 212 (Br Of Aster Pharmacies Group L.L.C)
+- Zest Wellness Pharmacy LLC. DWC-Branch
+- 24HOUR PHARMACY CO. L.L.C
+- 800PHARMA1 PHARMACY CO. L.L.C (BRANCH)
+- SPECIALTY PHARMACY L.L.C.
+- ROYAL SABA MEDICAL CLINIC
+- ROYAL SABA MEDICAL CLINIC PHARMACY
+- JAVIDA MEDICAL CENTER L.L.C.
+- ISLAMABAD MEDICAL CLINIC LLC BR
+- CITY RELIEF PHARMACY LLC
+- CITY RELIEF EXPRESS CLINIC LLC
+- CRX PHARMACY LLC
+- CRX EXPRESS CLINIC LLC
+- HEALTH FIRST PHARMACY 65 (BR OF HEALTH FIRST INVESTMENT L.L.C)
+- LIFE PHARMACY 190 EXPRESS CLINIC
+- PARADISE PLUS POLY CLINIC L.L.C (BRANCH)
+- PARADISE PLUS POLY CLINIC LLC (BRANCH) AMBULATORY PHARMACY
+- CARE 7 MEDICAL CENTER L.L.C
+- CARE 7 PHARMACY L.L.C
+- PHARMACY FOR LESS BRANCH1
+- LIFE PHARMACY 204 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C (BRANCH) (DSO)
+- LIFE PHARMACY GLOBAL VILLAGE (Br of LIFE PHARMACY L.L.C)
+- ARMADA ONE DAY SURGICAL CENTER DMCC
+- ARMADA MEDICAL CENTRE DMCC
+- Aster Pharmacy 207 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 215 (Br of Aster Pharmacies Group L.L.C)
+- MEDHUB MEDICAL CENTER L.L.C(BRANCH)
+- MEDHUB PHARMACY L.L.C (Branch)
+- MOOPANS POLYCLINIC L.L.C
+- MOOPANS PHARMACY L.L.C
+- BADR AL SAMAA PHARMACY LLC - DUBAI
+- ZAIN CURA MEDICAL CENTER L.L.C
+- Aster Pharmacy 213 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 219 (Br Of Aster Pharmacies Group L.L.C)
+- LIFE PHARMACY L.L.C (BRANCH) (DSO)
+- LIFE PHARMACY 210 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 206 (Br of LIFE PHARMACY L.L.C)
+- Droncall Home Healthcare llc
+- BETA STAR CLINIC L L C
+- AL BARSHA AL NOOR POLYCLINIC LLC
 ```
-#### 42. Dubai providers Remedy 6
-- intent: error
-- tool: None
-- plan: None
-- classification: REVIEW
-- reason: Runtime parsing/handling error requires deterministic guard.
+#### 22. Dubai providers Remedy 6
+- intent: plan_network_city_type
+- tool: list_basic_plus_providers
+- plan: Remedy 06
+- classification: GOOD
+- reason: Deterministic supported response returned.
 - output:
 ```text
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 39, in <module>
-    main()
-  File "C:\Projects\NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS\src\agent_entrypoint.py", line 26, in main
-    print(json.dumps(result, ensure_ascii=False, indent=2))
-  File "C:\Users\H Dos\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1256.py", line 19, in encode
-    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeEncodeError: 'charmap' codec can't encode character '\u200b' in position 46961: character maps to <undefined>
+[NETWORK]
+ (s) (HN Basic Plus):
+- ACCURACY PLUS MEDICAL LABORATORY
+- AL BORG DIAGNOSTIC CENTRE FOR LABORATORIES L.L.C.
+- AL FARHAN MEDICAL LABORATORY - L L C
+- Dar Al Mouasah Diagnostic Centre
+- IDEAL CLINICAL LABORATORIES
+- MENA LABS MEDICAL LABORATORY LLC
+- PROFICIENCY SPECIALIST LABORATORIES
+- QUALITY DIAGNOSTIC LABORATORY L.L.C
+- THE OPEN MRI CENTER -LLC
+- UNILABS DIAGNOSTICS L.L.C
+- YAS CLINIC ONE DAY SURGERY - SOLE PROPRIETORSHIP L.L.C
+- AL AHALI HOSPITAL COMPANY LLC BRANCH 1
+- AL AHLI HOSPITAL COMPANY -WLL
+- AL ANAMEL MEDICAL CENTER
+- AL DHANNAH HOSPITAL (EX. RUWAIS HOSPITAL)
+- AL MAZROUI MEDICAL CENTRE ONE DAY SURGERY LLC
+- BAREEN INTERNATIONAL HOSPITAL
+- DELMA HOSPITAL
+- GHIATHY HOSPITAL
+- HEART BEAT MEDICAL CENTER & ONE DAY SURGERY L.L.C.
+- LIFECARE  HOSPITAL LLC
+- LIFECARE HOSPITAL LLC BRANCH 1
+- LIWA HOSPITAL
+- LLH HOSPITAL LLC
+- LLH HOSPITAL LLC - MUSSAFAH
+- MADINAT ZAYED HOSPITAL
+- MARFA HOSPITAL
+- MEDICAL PARK CONSULTANTS ONE DAY SURGERY CENTRE`
+- MILLENNIUM HOSPITAL LLC
+- Nation Hospital
+- NMC ROYAL FAMILY MEDICAL CENTRE LTD (EX. NMC DAY SURGERY CENTER LLC)
+- NMC SPECIALTY HOSPITAL - AUH
+- PHOENIX  HOSPITAL LLC ( Ex: Al Bustan Speciality Hospital)
+- SILA HOSPITAL
+- TAJMEEL SPECIALIZED MEDICAL CENTER L.L.C
+- UNIQUE ALAHALIA OPHTHALMOLOGY ONE DAY SURGERY MEDICAL CENTER
+- WELLNESS ONE DAY SURGERY CENTER LLC
+- FIRST CITY MEDICAL CENTER LLC
+- A L D MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C
+- A M C MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C
+- A M H MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C.
+- ABU AL-ABYAD CLINIC
+- ABU SALMAN MEDICAL CENTER
+- Acacia Medical Center
+- ADAM & EVE SPECIALIZED MEDICAL CENTRE L.L.C. - BRANCH
+- ADAM AND EVE SPECIALIZED MEDICAL CENTER LLC
+- AIC MEDICAL CENTER - SOLE PROPRIETORSHIP L.L.C
+- AILABOUNY MEDICAL CENTRE LLC
+- Al Amal Medical Center LLC
+- AL AMEEN MEDICAL CENTER
+- AL AMEEN MEDICAL CENTRE LLC â€“BRANCH 1
+- AL DHAFARA FAMILY MEDICINE CENTER
+- Al Dhafra Mobile Mammography Unit
+- AL DHAFRA MODERN CLINIC
+- AL FARHAN MEDICAL CENTRE
+- LLH MEDICAL CENTRE ALNAJDA LLC (EX. AL FUAD MEDICAL CENTRE L.L.C.)
+- Al Jasrain Medical Center
+- AL KAMAL MEDICAL POLY CLINICS - L.L.C - S.P.C (EX. AL KAMAL MEDICAL CENTER)
+- AL KHAZNA MEDICAL CENTER
+- AL MARIA MEDICAL CENTER
+- AL MUROJ MEDICAL CENTER
+- AL NASEEM MEDICALCENTER LLC
+- Al Qabail Medical Centre LLC
+- AL QUDWAH MEDICAL CENTER
+- AL TADAMON MEDICAL CENTRE
+- AL WAHDA MEDICAL CENTRE
+- ALAFIA GHYATHI MEDICAL CENTRE L.L.C
+- Alpha Medical Centre L L C
+- ANSARI MEDICAL CENTRE - L L C
+- APOLLO MEDICAL CENTRE
+- ASTER PRIMARY CARE L.L.C.
+- BANIYAS AHALIA MEDICAL CENTER
+- BANIYAS MEDICAL CLINICS
+- BASEL MEDICAL CENTRE
+- BEDA AL MUTAWA CLINIC
+- BLUE OCEAN MEDICAL CENTER
+- BREEZE MEDICAL CENTRE L.L.C.
+- BURJEEL OASIS MEDICAL CENTRE L.L.C
+- CANADIAN MEDICAL CENTER LLC
+- CANADIAN MEDICAL CENTER LLC BRANCH-2
+- CENTRAL CLINIC LLC
+- Charisma Medical Center LLC
+- CHC MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C.
+- CONSULTANTâ€™S MEDICAL CENTRE
+- COSMPOLITAIN MEDICAL CENTRE
+- MISBAH MEDICAL CENTER - L.L.C - O.P.C (EX. DAAR AL MISBAH MEDICAL CENTER)
+- DAR AL SHIFA MEDICAL CENTRE
+- DIAMOND  MEDICAL CENTER
+- DOCTOR ATIQUR RAHMAN POLYCLINIC LLC
+- DR. GUPTA MEDICAL CLINIC
+- EASTERN AL AHILI MEDICAL CENTER - BRANCH 1
+- EASTERN AL AHLI MEDICAL CENTER
+- EMERALD MEDICAL CENTRE LLC
+- HEALTHLINE PRIMARY HEALTHCARE (EX. EMIRATES FILIPINO MEDICAL CLINIC)
+- Dijla Medical Center L.L.C - O.P.C (EX. EMIRATES JORDANIAN MEDICAL CENTER)
+- EVER CARE MEDICAL CLINIC
+- EXCELLENT MEDICAL CENTER L.L.C
+- EXPRESS GHAYATHI CLINIC
+- FAMOUS MEDICAL CENTRE LLC
+- FREEDOM MEDICAL POLY CLINIC
+- FUTURE MEDICAL CENTRE
+- GENET DENTAL CENTER L.L.C
+- GERMAN ADVANCE MEDICAL CENTER L.L.C.
+- GLITTER DRINGENDEN CLINIC
+- GOLDEN HEALTH MEDICAL CENTER
+- H H C MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C.
+- HADDAD MEDICAL & DENTAL CENTRE LLC
+- LLH MEDICAL CENTRE ALDHAFRA - L.L.C (EX. HALA MEDICAL CENTRE)
+- HEALTH & STYLE MEDICAL CENTRE -L L C
+- HEALTH SHEILD MEDICAL CENTER L.L.C
+- HEALTH TIME MEDICAL CENTRE
+- HEALTHLINE MEDICAL CENTER L. L. C.
+- HealthShades Medical Centre LLC
+- HIGH LIFE MEDICAL CENTER
+- Holistic Medical Centre
+- HOLISTIC MEDICAL CENTRE -SOLE PROPRIETORSHIP L.L.C BRANCH
+- Home Health Medical Centre LLC
+- HOPE MEDICAL CENTER LLC
+- IBN SINA MEDICAL CENTRE
+- IBN SINA MEDICAL CENTRE- BRANCH 1
+- ICON CLINIC LLC
+- ILLC MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C
+- INDUS MEDICAL CENTRE LLC
+- INFINITI MEDICAL CENTER LLC
+- IVORY MEDICAL CENTER - SOLE PROPRIETORSHIP LLC
+- KHYBER MEDICAL CENTRE
+- KHYBER POLY CLINIC
+- LAHORE MEDICAL CENTRE
+- LIFE MEDICAL CENTRE
+- LIFECARE CLINIC L.L.C
+- LIFECARE CLINIC L.L.C - BRANCH 3
+- LIFECAREآ CLINICآ  L.L.C.آ - BRANCH
+- LIWA MEDICAL CENTRE L.LC
+- LLH MEDICAL CENTRE AL MUSAFFAH L.L.C - BRANCH 1
+- LLH MEDICAL CENTRE AL MUSAFFAH L.L.C - BRANCH 3
+- LLH MEDICAL CENTRE AL MUSAFFAH LLC
+- LLH MEDICAL CENTRE LLC
+- LLH MEDICAL CENTRE LLC
+- MARDAN MEDICAL CENTER - SOLE PROPRIETORSHIP L.L.C.
+- MARIAM MEDICAL CENTER L.L.C
+- MAXIM MEDICAL CENTRE L.L.C
+- MEDICAL SPECIALITY CENTRE LLC
+- MEDLINK MEDICAL CENTRE
+- MEDLUX MEDICAL CENTER LLC
+- Medstar ICAD Medical Center
+- MESK ALMADINA MEDICAL CENTRE L.L.C.
+- MEZYAD MEDICAL CENTER
+- MUBARAK MEDICAL CENTER L.L.C. - BRANCH 1
+- NATURAL HEALTH MEDICAL CENTER L.L.C.
+- NEW AL MAZROUI MEDICAL CENTRE
+- NEW FAMOUS MEDICAL CENTRE LLC
+- NEW HYDERABAD CLINIC
+- NEW LOOK MEDICAL CENTER L.L.C.
+- NEW NATIONAL MEDICAL CENTRE
+- NEW NATIONAL MEDICAL CENTRE LLC BR 1
+- NEW HEALTHLINE MEDICAL CENTER (EX. NEW SADD MAAREB MEDICAL CENTRE)
+- NMC ROYAL MEDICAL CENTER L.L.C - BRANCH SHAHAMA
+- NMC ROYAL MEDICAL CENTER L.L.C. - AL KARAMA BRANCH
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 2
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 3
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 4
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 6
+- NOOR ALAHLI MEDICAL CENTER - BRANCH 6
+- OASIS MEDICAL CENTER
+- OASIS MEDICAL CENTRE - BRANCH 1
+- OCCU MED CLINIC LLC
+- Peshawar Medical Centre
+- PROFICIENCY MEDICAL CLINIC
+- PROVIDENCE INTERNATIONAL MEDICAL & COSMETIC CENTER L.L.C.
+- QUALITY CARE MEDICAL CENTER LLC
+- RAHAT MEDICAL CENTRE
+- RIGHT CHOICE MEDICAL CENTER
+- Royal International Medical Center
+- SADIQ POLYCLINIC  (OWNER BY ZAIN ALI SALEH - SOLE PROPRIETORSHIP)
+- Sahara Medical Center LLC
+- SEHATY MEDICAL CENTER- SOLE PROPRIETORSHIP L.L.C.
+- Sir Baniyas Clinic
+- STANFORD MEDICAL CENTER - SOLE PROPRIETORSHIP L.L.C. (EX. GHANIM MEDICAL CLINIC)
+- STAR AL AHALIA MEDICAL CENTER L.L.C.
+- SWAT MEDICAL POLY CLINIC
+- TABIBAK MEDICAL CLINIC L.L.C.
+- TAHA MEDICAL CENTRE
+- TAJMEEL KIDS PARK MEDICAL CENTRE L.L.C.
+- TAJMEEL SPECIALIZED MEDICAL CENTER L.L.C - BRANCH
+- TIME CURE MEDICAL CENTER
+- TOP CARE MEDICAL CENTRE
+- WAZIRUSTAN MEDICAL CENTRE L.L.C.
+- WESTERN TOWERS AL AHLIA MEDICAL CENTER
+- YAS HEALTHCARE BRANCH 1
+- YAS HEALTHCARE LLC
+- ZIA MEDICAL CENTER
+- RAHMATH SILA CLINIC
+- FUTURE INTERNATIONAL PHARMACY L.L.C
+- ABU AL-ABYAD CLINIC O.P. PHARMACY
+- ADVANCED CARE PHARMACY L.L.C.
+- AL AFDAL PHARMACY
+- AL AHALIA NATIONAL PHARMACY L.L.C. - BRANCH 1
+- AL AHALIA NATIONAL PHARMACY LLC
+- AL AMAZON PHARMACY
+- AL ANQOOD PHARMACY
+- AL ASAALA PHARMACY LLC
+- AL BATEEN PHARMACY
+- AL BUROOJ PHARMACY LLC
+- AL DAMAN PHARMACY
+- AL DHAFRA FIELDS PHARMACY
+- AL DHANNAH HOSPITAL PHARMACY (EX. RUWAIS HOSPITAL PHARMACY)
+- AL DHARFA FAMILI MEDICINE CENTER PHARMACY
+- AL FALAH LAND MARK PHARMACY
+- AL FURQAN PHARMACY
+- AL HANEEN PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- AL HOSN PHARMACY
+- AL KAMAL PHARMACY
+- AL MANARA AL BAHIA PHARMACY
+- AL MANARA AL RUWAIS PHARMACY
+- Al Manara DAS Island  Pharmacy
+- AL MANARA GLOBAL PHARMACY  (PREVIOUSLY DALIA PHARMACY)
+- AL MANARA INTERNATIONLA PHARMACY
+- AL MANARA NEW PHARMACY
+- AL MANARA PHARMACY - BRANCH 16
+- AL MANARA PHARMACY - MARINAL MALL
+- AL MANARA PHARMACY AL CORNICHE
+- AL MANARA PHARMACY BRANCH 13
+- Al Manara Pharmacy BRANCH 2
+- Al Manara Pharmacy BRANCH 3
+- AL MANARA PHARMACY -BRANCH 5
+- AL MANARA PHARMACY CAPITAL MALL
+- AL MANARA PHARMACY WORLD TRADE CENTER
+- AL MANARA PHARMACY-KHALIFA
+- AL MANARA PHARMACY-KHALIFA CITY
+- Al Manara Yas Mall  Pharmacy
+- AL MARINA PHAMACY L.L.C BRANCH 1
+- AL MARINA PHARMACY
+- AL MAZROUI PHARMACY
+- AL MULLA PHARMACY
+- AL MUROJ PHARMACY
+- AL NAJAH PHARMACY
+- AL REDHA PHARMACY
+- AL SAHAB PHARMACY
+- AL SILA PHARMACY
+- AL TADAWI PHARMACY
+- AL TAHANI PHARMACY
+- AL THIQA AL ALMYIAH PHARMACY
+- AL THIQA AL DOWALIAH PHARMACY LLC
+- AL THURAYYA PHARMACY
+- Health First Pharmacy L.L.C. - Branch 2(EX. AL WATHBA PHARMACY)
+- Al Zia Pharmacy
+- ALMANARA AL SHAWAMEKH Pharmacy
+- ALMANARA PHARMACY  AL FORZAN BRANCH 8
+- ALMANARA PHARMACY AL REEF BRANCH 7
+- ALMANARA PHARMACY BAWABAT ALSHARQ
+- ALMANARA PHARMACY BRANCH 1
+- ALMANARA PHARMACY MASDAR
+- ALMANARA PHARMACY MUROOR BRANCH 11
+- ALMANARA PHARMACY MUSHRIF  BRANCH 4
+- ALMANARA PHARMACY NEW ABU DHABI MALL BRANCH 10
+- ALMANARA PHARMACY NEW YORK UNIVERSITY BRANCH 6
+- ALMANARA PHARMACY SAADIYAT-ALRAEDA
+- Alpha Care Pharmacy L L C
+- ALQASER ALAINY PHARMACY
+- ALRAWDHA PHARMACY
+- ALTHAKHASYSIYA ALTHIQA PHARMACY L.L.C
+- AMAL PHARMACY - SOLE PROPRIETORSHIP L.L.C (EX. AMAL PHARMACY)
+- APOLLO PHARMACY LLC
+- Aster Pharmacies Group  LLC- Branch of Abudhabi 4
+- Aster Pharmacies Group L.L.C  Abu Dhabi Branch 11
+- Aster Pharmacies Group L.L.C - Abu Dhabi Branch 15
+- Aster Pharmacies Group L.L.C - Branch of Abu Dhabi 14
+- Aster Pharmacies Group L.L.C (Branch of Dubai) Branch of Abu Dhabi 12
+- Aster Pharmacies Group L.L.C Branch Abu Dhabi 10
+- Aster Pharmacies Group L.L.C- Branch of Abu Dhabi 6
+- Aster Pharmacies Group L.L.C- Branch of Abu Dhabi 7
+- Aster Pharmacies Group L.L.C- Branch of Abu Dhabi 8
+- Aster Pharmacies Group L.L.C Branch of Abu Dhabi 9
+- ASTER PHARMACIES GROUP LLC - BRANCH OF ABU DHABI 1
+- ASTER PHARMACIES GROUP LLC - BRANCH OF ABU DHABI 3
+- Aster pharmacies Group LLC Branch Abudhabi 13
+- ASTER PHARMACIES GROUP LLC -BRANCH OF ABU DHABI 5
+- ASTER PHARMACIES GROUP LLC-BRANCH OF ABU DHABI 2
+- ASTER PHARMACY LLC
+- IBN NAFEES MEDICAL CENTER PHARMACY L.L.C (EX. BABIL PHARMACY)
+- BAIN AL QASRAIN PHARMACY
+- BANGASH PHARMACY - LLC
+- BAREEN PHARMACY
+- BASSEM PHARMACY
+- BEAUTY TRICK PHARMACY LLC
+- BENEFICIAL PHARMACY LLC
+- BETTER LIFE PHARMACY
+- BETTER LIFE PHARMACY LLC BRANCH 1
+- BIDA MUTAWA CLINIC O.P. PHARMACY
+- BIN  SINA DELMA MALL NEW PHARMACY
+- BIN  SINA DELMA MALL PHARMACY
+- BIN SINA - AL MUROOR PHARMACY
+- BIN SINA - DANA PLAZA PHARMACY
+- BIN SINA AL KHALIDIYA PHARMACY
+- BIN SINA BANIYAS PHARMACY
+- BIN SINA DUTY FREE PHARMACY
+- BIN SINA PARAGON MALL PHARMACY
+- BIN SINA PHARMACY
+- BIN SINA PHARMACY - BRANCH 9
+- BIN SINA PHARMACY AL MARYAH ISLAND
+- BLUE OCEAN PHARMACY
+- BRIGHT POINT PHARMACY LLC
+- Burjeel Pharmacy Branch 10
+- Charisma Pharmacy LLC
+- CLINIX PHARMACY - BRANCH
+- DELMA HOSPITAL O.P.D PHARMACY
+- DOT COM PHARMACY
+- DREAM PHARMACY
+- EASTERN AL AHLI PHARMACY
+- Health First Pharmacy L.L.C. - Branch 7(EX. ELITE MODERN PHARMACY)
+- ELYAZIA PHARMACY
+- EMERALD PHARMACY  LLC
+- EMIRATES JORDANIAN PHARMACY L L C
+- EXCELLENT PHARMACY L.L.C
+- EXPRESS GHAYATHI PHARMACY
+- FALCON PHARMACY L.L.C
+- FUTURE PHARMACY LLC
+- GALAXY PHARMACY
+- GAYATHY HOSPITAL IN PATIENT PHARMACY
+- GHIATHY HOSPITAL O.P.D PHARMACY
+- GHIYATHI PHARMACY
+- GIANT PHARMACY L.L.C.
+- GOLDEN HEALTH PHARMACY
+- GOOD CARE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- GREEN CARE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- GREEN LIFE PHARMACY
+- GULF APOLLO PHARMACY LLC
+- HEALING PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- Health First Pharmacy L.L.C. - Branch 3(EX. HEALTH FIRST AL JAZEERAH PHARMACY)
+- Health First Pharmacy L.L.C. - Branch 5(EX. HEALTH FIRST AL SADIQ PHARMACY)
+- Health First Pharmacy L.L.C. - Branch 6(EX. HEALTH FIRST JOUDY PHARMACY)
+- HEALTH FIRST PHARMACY
+- HEALTH FIRST PHARMACY - BRANCH 12
+- HEALTH FIRST PHARMACY - BRANCH 13
+- HEALTH FIRST PHARMACY - BRANCH 15
+- Health First Pharmacy L.L.C. - Branch (EX. HEALTH FIRST PHARMACY- BRANCH 18)
+- Health First Pharmacy L.L.C. - Branch 4(EX. HEALTH FIRST ROYAL PHARMACY)
+- HEALTH POINT PHARMACY LLC
+- HEALTH SHEILD MEDICAL CENTER PHARMACY
+- HEALTH TIME PHARMACY
+- Health First Pharmacy L.L.C. - Branch 9(EX. HEALTHFIRST PLANET PHARMACY)
+- HOPE PHARMACY  L.L.C
+- HORIZONS PHARMACY L.L.C.
+- IBN SINA PHARMACY AL MUSAFAH
+- IBN SINA PHARMACY L.L.-BRANCH ALCORNICHE
+- IBN SINA PHARMACY L.L.C. - BRANCH 13
+- IBN SINA PHARMACY L.L.C. - BRANCH 15
+- IBN SINA PHARMACY L.L.C. - BRANCH 16
+- IBN SINA PHARMACY L.L.C. - BRANCH 17
+- IBN SINA PHARMACY L.L.C. - BRANCH 20
+- IBN SINA PHARMACY L.L.C. - BRANCH 26
+- IBN SINA PHARMACY L.L.C. - BRANCH 27
+- IBN SINA PHARMACY L.L.C. - BRANCH 3
+- IBN SINA PHARMACY LLC. -BRANCH 18
+- IBN SINA UNITED SQUARE PHARMACY
+- JUNAID PHARMACY BRANCH 1
+- JUNAID PHARMACY L.L.C
+- KHALID BIN AL WALEED PHARMACY
+- KHYBER PHARMACY LLC
+- KNIGHTS PHARMACY
+- KNIGHTS PHARMACY - LLC - KHALIFA BRANCH
+- Lahore Pharmacy
+- LAND MARK PLAZA PHARMACY
+- LARA PHARMACY
+- LIFE CARE INTERNATIONAL PHARMACY L.L.C. - BRANCH
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 14
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 2
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 33
+- LIFE PHARMACY LLC - BRANCH OF ABUDHABI 13
+- LIFE PHARMACY LLC - BRANCH OF ABUDHABI 6
+- LIFE PHARMACY LLC BRANCH 10 - BRANCH OF ABU DHABI 53
+- LIFE PHARMACY LLC BRANCH 12 - BRANCH OF ABU DHABI 55
+- LIFE PHARMACY LLC BRANCH 15 - BRANCH OF ABU DHABI 76
+- LIFE PHARMACY LLC BRANCH 16 - BRANCH OF ABU DHABI 77
+- LIFE PHARMACY LLC BRANCH 17 - BRANCH OF ABU DHABI 63
+- LIFE PHARMACY LLC BRANCH 18 BRANCH OF ABUDHABI 64
+- LIFE PHARMACY LLC BRANCH 19 BRANCH OF ABUDHABI 65
+- LIFE PHARMACY LLC BRANCH 21
+- LIFE PHARMACY LLC BRANCH 31 BRANCH OF 6 BRANCH OF ABU DHABI 12
+- LIFE PHARMACY LLC BRANCH 34 - BRANCH OF ABU DHABI 15
+- LIFE PHARMACY LLC BRANCH 36 BRANCH OF ABU DHABI 17
+- LIFE PHARMACY LLC BRANCH 37 BRANCH OF ABU DHABI 18
+- LIFE PHARMACY LLC BRANCH 39 - BRANCH OF ABUDHABI 96
+- Life Pharmacy LLC Branch 42 - Branch of Abu Dhabi 24
+- LIFE PHARMACY LLC BRANCH 43 BRANCH OF ABU DHABI 25
+- Life Pharmacy LLC Branch 44 - Branch of Abu Dhabi 37
+- LIFE PHARMACY LLC BRANCH 47 BRANCH OF ABU DHABI 29
+- LIFE PHARMACY LLC BRANCH OF ABU DHABI 1
+- LIFE PHARMACY LLC BRANCH OF ABU DHABI 5
+- Life Pharmacy LLC Branch of Abu Dhabi 9
+- LIFE PHARMACY LLC BRANCH OF ABUDHABI 7
+- LIFE PHARMACY LLC BRANCH OF ABUDHABI 8
+- Life Pharmacy LLC Branch of Dubai - Branch of Abu Dhabi 1
+- Life Pharmacy LLC Branch of Dubai - Branch of Abu Dhabi 2
+- LIFECARE INTERNATIONAL PHARMACY LLC
+- LIFECARE INTERNATIONAL PHARMACY LLC-BRANCH 1
+- LIFELINE PHARMACY - MUSAFFAH
+- LIWA HOSPITAL O.P.D PHARMACY
+- LLH HOSPITAL PHARMACY LLC
+- LLH PHARMACY ALMUSAFFAH L.L.C
+- LOTUS PHARMACY LLC- NMC GROUP
+- LULU KHALIDYA PHARMACY
+- LULU RAHA PHARMACY
+- LUMIERE PHARMACY L.L.C - BRRANCH 1
+- MADINA ZAYED AL AHALIA PHARMACY
+- MADINAT ZAYED HOSPITAL INPATIENT PHARMACY
+- MADINAT ZAYED HOSPITAL OPD IN PHARMACY
+- MAKEEN PHARMACY
+- MARFA HOSPITAL O.P.D PHARMACY
+- MARIAM PHARMACY LLC
+- MED CARE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- MEDCINA PHARMACY
+- MEDICAL PARK PHARMACY LLC
+- MEDICINA A FALAH
+- MEDICINA AL MUNEERA PHARMACY
+- MEDICINA BRANCH 1
+- MEDICINA BRANCH 3
+- MEDICINA GULF PHY
+- MEDICINA INTERNATIONAL
+- MEDICINA PHARMACY BRANCH 2
+- MEDISERV PHARMACY - SOLE PROPRIETORSHIP LLC
+- MEDLUX PHARMACY
+- MEDMAX PHARMACY L.L.C
+- Medstar Hamdan Pharmacy
+- Medstar Pharmacy ICAD Residential
+- MERAL PHARMACY
+- MILLENNIUM HOSPITAL PHARMACY LLC
+- MODERN DAR AL SHIFA PHARMACY
+- MODERN DAR AL SHIFA PHARMACY-MUSSAFAH
+- MODERN PHARMACY
+- MOUNT PHARMACY
+- MUBARAK PHARMACY L.L.C. â€“ BRANCH 1
+- NATION PHARMACY L.L.C
+- NATURAL LIFE PHARMACY LLC
+- NAZEK PHARMACY - SOLE PROPRIETORSHIP L.L.C
+- NEW ABU DHABI PHARMACY
+- NEW AL DAMAN PHARMACY
+- NEW AL SHAM PHARMACY
+- Health First Pharmacy L.L.C. - Branch 8(EX. NEW AL WATHBA PHARMCY)
+- NEW AMAREETA PHARMACY
+- NEW LAND MARK PHARMACY
+- NEW NATIONAL MEDICAL CENTER PHARMACY
+- NEW NATIONAL MEDICAL CENTRE PHARMACY LLC BRANCH 1
+- NEW PHARMACY COMPANY WLL
+- NEW PHARMACY COMPANY WLL BRANCH 2
+- NEW PHARMACY COMPANY WLL- BRANCH 7
+- New Pharmacy Company WLL Branch 8
+- New Sadd Maareb Pharmacy
+- NEXT HEALTH PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- NIDHAM GHIYATHI PHARMACY
+- NMC PHARMACY
+- NMC PHARMACY - BRANCH
+- NOOR AL AHLI PHARMACY
+- NOOR AL SHIFA PHARMACY
+- NOOR ALAHLI PHARMACY - BRANCH 2
+- NOOR ALAHLI PHARMACY - BRANCH 3
+- NOOR ALAHLI PHARMACY - BRANCH 4
+- NOOR ALAHLI PHARMACY - BRANCH 5
+- NOOR ALAHLI PHARMACY - BRANCH 6
+- NOOR ALAHLI PHARMACY - BRANCH 7
+- NOOR ALAHLI PHARMACY - BRANCH 8
+- NOOR ALAHLI PHARMACY -BRANCH 1
+- Orchid Pharmacy
+- PARAGON PHARMACY
+- PATTAYA PHARMACY
+- PHOENIX HOSPITAL PHARMACY L.L.C.
+- ALTHIQA ELITE PHARMACY - L.L.C. - S.P.C. (EX. PRIME CURE PHARMACY)
+- PUBLIC HEALTH PHARMACY L.L.C.
+- REAL 7 PHARMACY DMCC BRANCH- ABU DHABI
+- RIX PHARMACY
+- Royal International Pharmacy
+- SADD MAAREB MEDICAL CENTER PHARMACY L.L.C.
+- Sadd Maareb Pharmacy
+- Sahara Pharmacy LLC
+- SELECT PHARMACY LLC
+- SILA HOSPITAL IN PATIENT PHARMACY
+- SILA HOSPITAL O.P.D PHARMACY
+- SIR BANIYAS CLINIC PHARMACY
+- SKY LINE PHARMACY LLC
+- SPECIALIST PHARMACY LLC
+- STAR AL AHALIA PHARMACY
+- Super Care Pharmacy LLC Branch
+- SUPER CARE PHARMACY-BRANCH OF ABU DHABI 1
+- SuperCare Pharmacy - Branch of Abu Dhabi 2
+- SUPERCARE PHARMACY L.L.C â€“ BRANCH OF ABU DHABI 8
+- SuperCare Pharmacy L.L.C - Branch Of Abu Dhabi 9
+- SuperCare Pharmacy LLC - Branch Of Abu Dhabi 4
+- SuperCare Pharmacy LLC - Branch Of Abu Dhabi 7
+- SUPERCARE PHARMACY-BRANCH OF ABU DHABI 3
+- SWAT PHARMACY
+- TAHA PHARMACY
+- TALAT PHARMACY AL MUSAFFAH
+- Target Pharmacy
+- TIME CURE PHARMACY
+- TOP CARE PHARMACY
+- TOP CARE PHARMACY- BRANCH 1
+- TOWN LIFE PHARMACY L.L.C
+- TRUE WISH PHARMACY L.L.C
+- UNIQUE AL AHALIA PHARMACY
+- UNIQUE AL AHALIA PHARMACY - BRANCH 2
+- UNIVERSAL PHARMACY
+- VENUS PHARMACY
+- VIVID PHARMACY LLC
+- WAHEEDA PHARMACY
+- WELL CARE PHARMACY
+- Wellness Pharmacy LLC
+- WESTERN TOWERS AL AHLIA PHARMACY
+- WHITE PHARMACY L.L.C
+- ZANBAQ AL MADINA PHARMACY LLC.
+- Biotech  Medical Lab -Ajman
+- AJMAN SPECIALITY GENERAL HOSPITAL
+- AMINA HOSPITAL LLC
+- THUMBAY HOSPITAL (LLC) - Ajman
+- THUMBAY UNIVERSITY HOSPITAL COMPLEX LLC (HOSPITAL, DENTAL & PT)
+- AALIYAH  MEDICAL CENTRE LLC
+- ABDUL AZIZ MEDICAL CENTER
+- ACCESS MEDICAL CENTRE
+- ADVANCED MEDICAL CENTRE
+- AHALIA MEDICAL CENTRE
+- AJMAN MEDICAL CENTRE
+- AL AIN MEDICAL CENTER
+- AL BUSTAN MEDICAL CLINIC
+- AL ELAJ MEDICAL CENTRE
+- AL ENAYA MEDICAL CLINIC LLC
+- AL GHARAFA MEDICAL CENTER
+- AL HIRA MEDICAL CENTRE
+- AL JARAF MEDICAL CENTER
+- AL NUAIMIA MEDICAL CENTRE CLINIC
+- AL SANAIYA CLINIC
+- AL SHIFA MEDICAL SPECIALIST CENTRE LLC
+- ASTER MEDICAL CENTRE AJMAN
+- ASTER SPECIALIST MEDICAL CENTER
+- AURA MEDICAL CENTER LLC
+- CAREPLUS MEDICAL CENTER LLC
+- COST CARE MEDICAL CENTER
+- DEAR HEALTH MEDICAL CENTER
+- ELAJ MEDICAL CENTRE L.L.C 01
+- EMIRATES PRIVATE MEDICAL CENTER
+- EVE MEDICAL CENTER
+- FAMILY MEDICAL CENTER
+- SHEIKHA CLINIC LLC (EX. FIRSTAID CLINIC LLC)
+- IBIN SINA MEDICAL CENTER
+- IBTESAM MEDICAL CENTER
+- INTERNATIONAL SPECIALISTS MEDICAL CENTRE
+- KHALID LALA GENERAL CLINIC LLC
+- LLH SPECIALIST MEDICAL CENTER
+- MAPLE MEDICAL CENTER LLC
+- MEDO MEDICAL CENTRE(Ex:KHALID GENERAL CLINIC)
+- METRO MEDICAL CENTRE
+- MODERN MEDICAL CENTER
+- NASEEM ALMANAMA SPECIALIZED CENTER
+- NATIONAL CLINIC
+- NEW IBINSINA MEDICAL CENTER
+- NMC MEDICAL CENTER AJMAN LLC
+- NOOR AL SHIFA CLINIC L.L.C
+- NORTHERN AL AHLIAH MEDICAL CENTER
+- PRIME MEDICAL CENTER AJM-LLC
+- RED MAPLE MEDICAL CENTER L.L.C
+- RIGHT HEALTH CLINIC JURF LLC
+- SEHA MEDICAL CENTER
+- SHIFA AL JAZEERA MEDICAL CENTRE LLC- AJMAN
+- SHIFA AL JAZEERAH MEDICAL CENTRE - L.L.C - Branch 01
+- THUMBAY CLINIC LLC AL RASHIDEYA 1
+- WELLCURE MEDICAL CENTRE L.L.C
+- AL NAHRAIN MEDICAL CENTER 1 L.L.C
+- ACCESS PHARMACY AJMAN
+- AJMAN SPECIALTY GENERAL HOSPITAL PHARMACY
+- AL ABRAR PHARMACY LLC
+- AL ADIL PHARMACY LLC
+- AL AFDHAL PHARMACY
+- AL AIN PHARMACY
+- AL BUSTAN PHARMACY AJMAN
+- AL ELAJ PHARMACY LLC
+- AL EMAN PHARMACY
+- AL GHARAFA PHARMACY LLC
+- AL HEKMAH PHARMACY
+- AL ISRA PHARMACY LLC
+- AL KHALEEJ PHARMACY
+- AL MURTADHA PHARMACY
+- AL MUSALLA PHARMACY
+- AL NAHRAIN PHARMACY
+- AL NAHRAIN PHARMACY 1 L.L.C
+- AL NEEM PHARMACY L.L.C
+- AL NUAIMIA PHARMACY
+- AL OMAIR PHARMACY LLC
+- AL RIDA PHARMACY L.L.C.
+- AL SANAIYA PHARMACY -SOLE PROPRIETORSHIP L.L.C
+- Al Saqer Pharmacy L.L.C
+- Al Seha Pharmacy LLC
+- AL ZAMAN PHARMACY L.L.C
+- ALYA PHARMACY
+- AMINA HOSPITAL PHARMACY LLC
+- ASTER PHARMACY - AJMAN
+- Aster Pharmacy 154  (BR OF ASTER PHARMACIES GROUP)
+- Aster Pharmacy 159 Br of Aster Pharmacies Group LLC
+- ASTER PHARMACY 163 BR OF ASTER PHARMACIES GROUP LLC
+- AURA PHARMACY LLC
+- BAIT AL NEEM PHARMACY LLC
+- BAYN AL NAHRAIN PHARMACY LLC
+- BIN BAKHEET PHARMACY
+- CENTRAL MAKKAH PHARMACY
+- DEAR HEALTH PHARMACY
+- DOOA PHARMACY - AJMAN
+- ELAJ MEDICAL CENTRE PHAMACY LLC
+- ELAJ MEDICAL CENTRE PHARMACY L.L.C 01
+- EMIRATES PHARMACY
+- EVE PHARMACY (EX:AL WAHA PHARMACY)
+- FIRSTAID PHARMACY LLC
+- GRAND MAKKAH PHARMACY
+- GRAND PHARMACY
+- HALA PHARMACY BR 54
+- HALA PHARMACY LLC - BRANCH 01
+- HALA PHARMACY LLC - BRANCH 49
+- HALA PHARMACY LLC - BRANCH 50
+- HEALTH FIRST PHARMACY â€“ BRANCH 01
+- KHALID LALA PHARMACY
+- KHALIDHA PHARMACY L.L.C.
+- LIFE PHARMACY
+- LIFE PHARMACY 28 BR OF LIFE PHARMCY LLC
+- LIFE PHARMACY 32 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY LLC BRANCH 62
+- LULU PHARMACY
+- MAKKAH PHARMACY LLC - AJMAN
+- MANSOUR PHARMACY L.L.C
+- MAPLE PHARMACY L.L.C
+- MASOOD PHARMACY - L.L.C
+- MAWJOOD PHARMACY L.L.C
+- MEDI PRIME PHARMACY AJM-LLC
+- MEDICINA PHARMACY 29
+- MEDICINE HOME PHARMACY L.L.C
+- MEDICOM PHARAMACY 27
+- MEDICOM PHARMACY 18 (PREV. AL ALAM)
+- METRO MEDS PHARMACY
+- METRO PHARMACY
+- Modern Pharmacy- Ajman
+- NASEEM AL MANAMA PHARMACY
+- NEW DOOA PHARMACY
+- NEW GRAND PHARMACY
+- NEW MEDICAL CENTRE PHARMACY BRANCH
+- NEW SANAIYA PHARMACY â€“ AJMAN
+- NOOR AL SHIFA PHARMACY
+- NOOR MAKKAH PHARMACY
+- NORTHERN AL AHLIA PHARMACY
+- PHARMACY AHALIA
+- RAZAN PHARMACY LLC
+- RIGHT HEALTH PHARMACY JURF LLC
+- SHAMS MAKKAH PHARMACY LLC
+- SHIFA AL JAZEERA CENTRE PHARMCY LLC
+- SHIFA ALJZEERAH CENTRE PHARMACY - L.L.C - Branch 01
+- SUPERCARE PHARMACY - AJMAN
+- SuperCare Pharmacy LLC -Branch 01
+- THUMBAY HOSPITAL PHARMACY
+- THUMBAY UNIVERSITY HOSPITAL COMPLEX PHARMACY - LLC
+- TOPCARE PHARMACY AL JADEEDA L.L.C
+- TOPCARE PLUS PHARMACY LLC
+- ACCU CARE MEDICAL LABORATORY - SOLE PROPRIETORSHIP L.L.C
+- ADVANCED MEDICAL CENTER
+- AL BORG DIAGNOSTIC CENTRE FOR LABORATORIES L.L.C. - BRANCH 1
+- AL TAJ MEDICAL LABORATORY
+- EMIRATES INTERNATIONAL HOSPITAL
+- NMC SPECIALTY HOSPITAL - AL AIN
+- AL AAHED MEDICAL CENTRE - SOLE PROPRIETORSHIP L.L.C.
+- AL AIN AHALIA MEDICAL CENTER
+- AL BASHEER MEDICAL CENTRE L.L.C.
+- AL FARABI MEDICAL CENTRE LLC
+- AL MAGD MEDICAL CENTER - SOLE PROPRIETORSHIP L.L.C
+- AL MUKHTAR MEDICAL CENTER
+- AL RANEEN MEDICAL CENTRE
+- AL SULTAN ADVANCED MEDICAL CLINICS
+- AL WAQAR MEDICAL CENTRE
+- MOON LIGHT MEDICAL CENTER L.L.C (EX. ALOSTORA MEDICAL CENTER)
+- ALPINE MEDICAL CENTRE
+- ARABIAN SPECIALIST MEDICAL CENTER L.L.C
+- ARABIC CANADIAN MEDICAL CENTER
+- DHIYARA MEDICAL CENTER
+- EMIRATES CLINIC & MEDICAL SERVICES CENTER
+- EMIRATES CONFIDENTY MEDICAL CENTER
+- EMIRATES CONFIDENTY MEDICAL CENTER BRANCH 1
+- EMIRATES INTERNATIONAL POLY CLINIC
+- CURE ARENA MEDICAL CENTER - L.L.C (EX. HAMDAN MEDICAL CENTER)
+- MARJAN MEDICAL CENTER
+- Medstar Clinics Sanaiya Alain
+- METRO INTERNATIONAL MEDICAL CENTER
+- MISSION MEDICAL CENTER
+- MODERN CENTER
+- MUBARAK MEDICAL CENTER L.L.C.
+- MUNICH MEDICAL & REHABILITION CENTER L.L.C.
+- NAZEK MEDICAL CENTER
+- NEW AL AIN MEDICAL CLINICS CENTER LLC
+- NEW LOOK MEDICAL CENTER L.L.C. - BRANCH 1
+- NEW LOOK MEDICAL CENTER L.L.C. - BRANCH 2
+- NEW LOOK MEDICAL CENTER L.L.C. - BRANCH 3
+- NOOR ALAHLI MEDICAL CENTER
+- ORTHOPLUS BONE AND JOINT CENTER L.L.C.
+- REAL HEALTH CENTER
+- REVIERA MEDICAL CENTRE LLC
+- ROYAL CARE MEDICAL CENTRE
+- SPECTRUM MEDICAL CENTER
+- SPECTRUM MEDICAL CENTER-BRANCH 1
+- SULTAN MEDICAL CENTER
+- SUN MEDICAL CLINIC
+- SUN MEDICAL CLINIC BRANCH 1
+- TAJMEEL COSMO CLINIC L.L.C
+- TRUE LIFE PRIMARY CARE CENTER - SOLE PROPRIETORSHIP LLC
+- Ultra Medical Center
+- HUB MEDICAL CENTRE - SOLE PROPRIETORSHIP L.L.C (EX.URGENT CARE MEDICAL CENTER)
+- WLDY MEDICAL CENTER
+- Advanced Al Ain Pharmacy LLC
+- AL AIN AHALIA PHARMACY
+- Al Ain Pharmacy LLC
+- AL MAGD CENTER PHARMACY L.L.C - SOLE PROPRIETORSHIP L.L.C.
+- AL MANARA PHARMACY - BAWADI MALL
+- AL MANARA PHARMACY BOUTIK MALL
+- AL MANARA PHARMACY-AL AIN BRANCH
+- AL NASR PHARMACY
+- Al Raneen Pharmacy LLC
+- AL SANA'AYA PHARMACY
+- ALMANARA PHARMACY BRANCH 12
+- ALMANARA PHARMACY BRANCH 9
+- ALMANARA PHARMACY HILI MALL
+- ALMAQAM PHARMACY - SOLE PROPRIETORSHIP L.L.C
+- MOON LIGHT MEDICAL CENTER PHARMACY L.L.C (EX. ALOSTORA MEDICAL CENTER PHARMACY)
+- BIN SINA PHARMACY - HILI MALL
+- EMIRATES INTERNATIONAL HOSPITAL PHARMACY
+- EMIRATES PHARMACY
+- FAIZAN PHARMACY
+- FALAJ HAZAA PHARMACY
+- Health First Pharmacy L.L.C.- Branch 11(EX. HEALTH FIRST AL AIN PHARMACY)
+- Health First Pharmacy L.L.C. - Branch 1(EX. HEALTH FIRST NATIONAL PHARMACY)
+- Health First Pharmacy - Branch 14
+- Home Health Pharmacy
+- LIFE PHARMACY LLC BRANCH 25 - BRANCH OF ABUDHABI 85
+- LIFE PHARMACY LLC BRANCH 26 - BRANCH OF ABU DHABI 86
+- LIFE PHARMACY LLC BRANCH 28 - BRANCH OF ABU DHABI 88
+- LIFE PHARMACY LLC BRANCH 35 - BRANCH OF ABU DHABI 58
+- LIFE PHARMACY LLC BRANCH 38 - BRANCH OF ABUDHABI 95
+- LIFE PHARMACY LLC BRANCH 41 - BRANCH OF ABU DHABI 104
+- LIFE PHARMACY LLC BRANCH 52 - BRANCH OF ABUDHABI 105
+- LIFE PHARMACY LLC BRANCH 61 - BRANCH OF ABUDHABI 118
+- LONDON PHARMACY
+- LULU AL AIN PHARMACY
+- LULU AL AIN PHARMACY - BRANCH
+- LULU AL FOAH PHARMACY LLC
+- MAJED PHARMACY
+- MARJAN MEDICAL CENTER PHARMACY
+- MAX CARE PHARMACY
+- Medstar Pharmacy Sanaiya Alain
+- MODERN IBN SINA PHARMACY
+- MUBARAK PHARMACY L.L.C.
+- MUNICH MEDICAL CENTER PHARMACY L.L.C.
+- NEW LOOK MEDICAL CENTER PHARMACY L.L.C.
+- NEW MEDICAL CENTRE PHARMACY LLC
+- PRIDE PHARMACY
+- RAFA PHARMACY
+- ROOTS PHARMACY  LLC
+- ROYAL CARE PHARMACY
+- TAIBAH ALAIN PHARMACY -LLC
+- TRUE LIFE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- Ultra Medical Center Pharmacy
+- AL MANARA PHARMACY - DHCC
+- ASTER PHARMACY 100 (PREV. PANACEA PHARMACY DHCC)
+- IBN SINA PHARMACY 66
+- LIFE HOME HEALTHCARE FZ LLC
+- NEW BIN SINA PHARMACY
+- Advanced Diagnostic Center LLC
+- Advanced Diagnostic Center LLC BR
+- AIRIS IMAGING AND DIAGNOSTIC CENTER LLC
+- AL ABBAR LABORATORY BR OF GHI
+- AL BORJ LABORATORY
+- AL DIYAFA MEDICAL DIAGNOSTIC CENTER
+- AMERICAN UPRIGHT MRI
+- ASTER IMAGING CENTRE AL  MUTEENA (BR OF DM HEALTHCARE LLC)
+- BIOHEALTH DIAGNOSTIC CENTRE
+- DEIRA CITY MEDICAL DIAGNOSTIC CENTER
+- DUBAI MEDICAL LABORATORY BR OF GHI
+- HISTOPATHOLOGY & SPECIALTY LABORATORY
+- INTEL LAB LLC (EX. DR. FARIS MEDICAL LABORATORY)
+- LAB247 DIAGNOSTICS L.L.C
+- LIFENITY INTERNATIONAL CLINICAL LABORATORY  LLC
+- MEDICAL DIAGNOSTIC & IMAGING CENTRE
+- MEDINOVA DIAGNOSTIC CENTER
+- MEGA SCAN CENTRE
+- MICRO HEALTH MEDICAL LAB
+- MICRO HEALTH MEDICAL LAB
+- MINERVA DIAGNOSTIC LABORATORY
+- PH DIAGNOSTICS LLC
+- R N S DIAGNOSTICS AND IMAGING
+- STAR METROPOLIS CLINICAL LABORATORIES
+- AVM LABS L.L.C (EX. THYROCARE LABORATORIES LLC)
+- ASTER DAY SURGERY CENTRE LLC
+- ASTER HOSPITAL BR OF ASTER DM HEALTHCARE FZC- Al Qusais
+- ASTER HOSPITAL- Mankhool
+- ASTER HOSPITAL SONAPUR
+- CEDARS JEBEL ALI INTERNATIONAL HOSPITAL
+- DR. ISMAIL DAY SURGICAL CENTRE
+- DUBAI MEDICAL UNIVERSITY HOSPITAL
+- HATTA HOSPITAL
+- INTERNATIONAL MODERN HOSPITAL
+- MEDEOR 24X7 HOSPITAL LLC
+- MEDSTAR HEALTHCARE LLC
+- MYHEALTH  DAY SURGICAL CENTER LLC
+- NMC ROYAL HOSPITAL LLC(DXB)
+- NMC SPECIALTY HOSPITAL - DXB
+- NMC SPECIALTY HOSPITAL DIP (Br of N M C ROYAL HOSPITAL LTD) (Dubai Branch)
+- ABBARA POLYCLINIC
+- ABEER AL NOOR POLY CLINIC LLC BRANCH
+- ABRIS MEDICAL CENTRE LLC
+- ABSOLUTE WELLNESS MEDICAL CENTRE
+- ACCESS CLINIC ALQUOZ
+- ACCESS CLINIC BUR DUBAI
+- ACCESS CLINIC DIC BR DM HEALTHCARE LLC
+- ACCESS CLINIC DIP
+- ACCESS CLINIC DIP 2 BR OF DM HEALTHCARE LLC
+- ACCESS CLINIC FREEZONE
+- ACCESS CLINIC INTERNATIONAL CITY
+- ACCESS CLINIC PERSIA CLUSTER
+- ACCESS CLINIC SONAPUR
+- ACCESS CLINIC SONAPUR 2 BR OF DM HEALTHCARE LLC (EX. AFIF MEDICAL CENTER)
+- ADVANCED CARE MEDICAL CENTER
+- ADVANCED CARE MEDICAL CENTER  LLC (BRANCH)
+- ADVANCED CARE MEDICAL CENTER BRANCH
+- ADVANCED CARE MEDICAL CENTER LLC (BRANCH)
+- ADVANCED CARE MEDICAL CENTER LLC BRANCH
+- ADVANCED CARE MEDICAL CENTER LLC BRANCH-GRAND CITY MALL
+- ADVANCED CARE MEDICAL CENTRE L.L.C (BRANCH )- DIP 1
+- AL ABRAH CLINIC
+- AL AMAL POLYCLINIC
+- AL AMAN MEDICAL CENTER
+- AL AZHAR CLINIC
+- AL AZHAR CLINIC BR DIP 2
+- AL AZHAR CLINIC BRANCH
+- Al Azhar Clinic Branch 3
+- Al Azhar Clinic LLC 4
+- AL DHAFRA MEDICAL CENTRE
+- Al Fahim Clinic
+- AL FALAH MEDICAL CLINIC
+- AL HANA MEDICAL CENTER LLC
+- AL HANA MODERN MEDICAL CENTER LLC
+- AL KHAIL MEDICAL CENTER
+- AL KHAIL MEDICAL CENTRE BRANCH
+- AL MASHAHER MEDICAL CENTRE
+- AL MURJAN MEDICAL CENTER
+- AL NOOR POLYCLINIC - BR OF GHI AL SATWA
+- AL NOOR POLYCLINIC - BR OF GHI DEIRA
+- AL NOOR POLYCLINIC BR OF GHI AL RIGGA (AMBER)
+- WELLCARE ADVANCED POLY CLINIC L.L.C (EX. AL QUOZ CITY STAR POLYCLINIC)
+- AL QUSAIS STAR POLYCLINIC
+- SONAPUR STAR POLYCLINIC L.L.C (EX. AL QUSAIS STAR POLYCLINIC (BRANCH))
+- AL RASHIDIYAH AL NOOR POLYCLINIC
+- AL SANAIYA MEDICAL CLINIC
+- AL SANAIYA MEDICAL CLINIC-BRANCH
+- AL SHAAB MEDICAL CENTRE
+- AL SHIFA AL KHALEEJI MEDICAL CENTER
+- Al Shifa Al Khaleeji Medical Centre Branch LLC-DIP
+- AL SHIFA INTERNATIONAL CLINIC
+- AL SHIFA INTERNATIONAL CLINIC LLC- BRANCH
+- AL TADAWI MEDICAL CENTRE
+- AL TAIF MEDICAL CENTER
+- AL WAHA CLINIC
+- ALDIA MEDICAL CENTER L.L.C
+- ALHABAB GENERAL CLINIC
+- ALI MEDICAL CLINIC
+- AMALA MEDICAL CENTRE
+- AMIRUDDIN CLINIC
+- ANAYA MEDICAL CENTER LLC
+- ANAYA MEDICAL CENTER LLC BRANCH
+- APPLE CLINIC
+- APPLE INTERNATIONAL POLY CLINIC
+- ARIN CARE POLYCLINIC L.L.C
+- ASH TREE CLINIC LLC
+- ASHOKAN MEDICAL CLINIC
+- ASTER CEDARS CLINIC
+- ASTER JABAL ALI MEDICAL CENTRE
+- Aster Medical Centre Oud Metha (Br Of D M Healthcare LLC)
+- ASTER MEDICAL CENTRE ABU HAIL BR OF DM HEALTHCARE
+- ASTER MEDICAL CENTRE AL QUSAIS
+- ASTER MEDICAL CENTRE DUBAI LAND
+- ASTER MEDICAL CENTRE INTERNATIONAL CITY(Gynaecology and Paediatrics services only)
+- ASTER MEDICAL CENTRE REMRAAM (BR OF D M HEALTHCARE)
+- BADR AL SAMAA MEDICAL CENTER
+- BEST HEALTH MEDICAL CENTER L.L.C
+- BIO VISTA MEDICAL CENTRE LLC
+- BLUE BELL MEDICAL CENTRE
+- BRIGHT LIFE MEDICAL CENTER LLC
+- CARE AND CURE MEDICAL CENTER L.L.C
+- CARE ONE POLY CLINIC LLC
+- CARE PLUS MEDICAL CENTER
+- CLINICARE BR OF IMARA HEALTH CARE LLC
+- CLINICARE SAMARI BR OF IMARA HEALTH CARE LLC
+- COMMUNITY MEDICAL CENTRE
+- COSMOPOLITAN MEDICAL CENTRE
+- DOCIB CLINIC LLC
+- DOCTORS CLINIC
+- DOCTORS CLINIC DIAGNOSTIC CENTRE FZ-LLC
+- DR. IBRAHIM ABBARA CLINIC
+- DR. ISMAIL MEDICAL CENTRE - AL MUHAISANAH
+- DR. ISMAIL MEDICAL CENTRE - AL QUOZ
+- DR. ISMAIL POLYCLINIC BRANCH-DISCOVERY GARDEN
+- DR. ISMAIL POLYCLINIC BRANCH-JEBEL ALI
+- DR. ISMAIL POLYCLINIC KARAMA
+- DR. JOHN CLINIC
+- DR. JOSEPHâ€™S POLYCLINIC-KARAMA BR OF GHI
+- DR. KAMKAR MEDICAL & PHYSIOTHERAPY CENTRE
+- DR. KOYA CLINIC
+- DR. MOOPENS' AL QUOZ MEDICAL CENTRE
+- DR. MOOPEN'S MEDICAL CENTER - KARAMA
+- DR. MUHAMMED KUNHI MEDICAL CLINIC
+- DR. RADAKRISHNAN MEDICAL CENTRE
+- DR. SANJAY MEDICAL CENTER - DUBAI
+- DR. SHANIL MEDICAL CENTRE LLC
+- DR.ABDULLAS CLINIC
+- DULSCO MEDICAL CLINIC
+- DULSCO MEDICAL CLINIC BRANCH
+- DURRAIYA KAMAL MEDICAL CLINIC
+- EXCEL HEALTHCARE ICARE CLINICS DISCOVERY GARDEN
+- FAITH JABAL MEDICAL CENTER L.L.C
+- FALCON MEDICAL CLINIC
+- FAMILY CLINIC
+- FIRST MEDICAL CENTRE
+- FULLCARE MEDICAL CENTER
+- Globehealth General Clinic  LLC
+- GOODWILL CLINIC LLC
+- GRAND INFINITY MEDICAL CENTER LLC
+- GRAND INFINITY MEDICAL CENTER LLC BRANCH
+- GREEN CITY MEDICAL CENTER L.L.C. (EX: NEW AL MUSALLA MEDICAL CENTER BRANCH)
+- HARLEY INTERNATIONAL MEDICAL CLINIC
+- HARLEY INTERNATIONAL MEDICAL CLINIC (BRANCH)
+- Harley International Medical Clinic LLC Branch
+- HOPECARE POLYCLINIC L.L.C
+- HOUSTON MEDICAL CLINIC LLC
+- HOUSTON MEDICAL CLINIC LLC (Branch)
+- HTK Medical Centre
+- ICARE ALREFFA BR OF EXCEL HEALTHCARE LLC
+- ICARE OASIS BRANCH OF EXCEL HEALTHCARE
+- Islamabad Medical Clinic LLC( Ex: Globe HealthPolyclinic)
+- JANSON MEDICAL CLINIC
+- JOSEPH'S QUSAIS POLYCLINIC
+- JUPITER AL NAHDA POLYCLINIC
+- JUPITER AL QUSAIS POLYCLINIC
+- JUPITER SPECIALTY MEDICAL CENTER
+- KARAMA MEDICAL CENTER - DIP BRANCH
+- KARAMA MEDICAL CENTER AL QUOZ MALL BRANCH
+- KARAMA MEDICAL CENTRE
+- KARAMA MEDICAL CENTRE - AL QUOZ BRANCH
+- KARAMA MEDICAL CENTRE BR  JV
+- KARAMA MEDICAL CENTRE BR, BURJUMAN
+- KARAMA MEDICAL CENTRE BR. AL KHAIL GATE
+- KARAMA MEDICAL CENTRE BR. MUHAISNAH
+- KEERTHI MEDICAL CENTER (PREVIOUSLY DR. KEERTHI CLINIC)
+- KHALIDHA MEDICAL CENTRE LLC
+- KIMS MEDICAL CENTRE
+- KINGS MEDICAL CENTER LLC
+- LAVERA CLINIC LLC
+- LIFEGUARD GENERAL CLINIC L.L.C (EX. OUR CARE AND CURE MEDICAL CENTER LLC )
+- LIFENITY INTERNATIONAL ADVANCED POLY CLINIC L.L.C
+- LIFENITY INTERNATIONAL ADVANCED POLY CLINIC L.L.C (BRANCH)
+- LIVE CARE CLINIC LLC
+- LOTUS MEDICAL CENTER
+- MAG Health Clinic
+- MARHABA MEDICAL CENTER-DXB
+- MATHEW MEDICAL CLINIC LLC
+- MED ONE MEDICAL CENTER LLC (EX. AQUA MEDICAL CENTER)
+- Medi Family Polyclinic FZE
+- MEDICURE CENTRE
+- MEDICURE CENTRE BRANCH
+- Medicure Polyclinic L.L.C Branch- Al Manara
+- MEDILIFE POLYCLINIC LLC
+- MEDILITE MEDICAL CENTRE
+- MEDZE CLINIC LLC
+- MID EAST POLY CLINIC
+- Miracure Medical Centre  LLC
+- Mobile Home Healthcare Services LLC
+- MUHAISNA SPECIALIST MEDICAL CENTRE LLC
+- MULTI CARE MEDICAL CENTRE
+- MVR DIAGNOSTIC CLINIC L.L.C (EX. MVR Medical Center)
+- NAIF MEDICAL CENTER LLC
+- NASSER CLINIC
+- NEW AL MUSALLA MEDICAL CENTER
+- NEW APOLLO POLYCLINIC
+- NEW EMIRATES MEDICAL CENTER
+- NEW LOTUS MEDICAL CENTER
+- NEW MEDICAL CENTER (Ex:Reena Beegum clinic branch)
+- NEW MEDICAL CENTRE LLC
+- NEW MEDILIFE MEDICAL CENTRE L.L.C
+- NEW SANAIYA CLINIC
+- NEW SANAIYA CLINIC BRANCH - HORALANZ
+- NEW SANAIYA CLINIC BRANCH-DIP
+- NMC DIC CLINIC AND PHARMACY BR OF NMC ROYAL HOSPITAL LTD DUBAI BRANCH
+- NMC POLYCLINIC BRANCH OF NMC HOSPITAL LLC
+- Noor Al Shefa Branch 3
+- NOOR AL SHEFA CLINIC - JEBEL ALI MALL
+- NOOR AL SHEFA CLINIC BRANCH - AL QUOZ
+- NOOR AL SHEFA CLINIC BRANCH - RAS AL KHOR
+- Noor Al Shefa Clinic Branch. 4
+- NOVITAS CLINIC L.L.C BRANCH
+- NOVITAS CLINIC LLC
+- OXFORD MEDICAL CENTER
+- PAKISTAN MEDICAL CENTER
+- Paradise Plus Poly Clinic LLC
+- PESHAWAR MEDICAL CENTRE- DUBAI
+- PHYSIOVEDA MEDICAL CENTER L.L.C
+- PHYSIOVEDA MEDICAL CENTER L.L.C (BRANCH)
+- PRIME MEDICAL CENTER AL QUSAIS (BR OF PRIME MEDICAL CENTER LLC)
+- PRIME MEDICAL CENTER DUBAI AIRPORT (BR OF PRIME MEDICAL CENTER LLC)
+- PRIMECORP MEDICAL CENTER AL QUSAIS (BR OF PRIMECORP MEDICAL CENTER LLC)
+- PRIMECORP MEDICAL CENTER AL WARSAN (BR OF PRIMECORP MEDICAL CENTER L.L.C)
+- PRIMECORP MEDICAL CENTER ALQUOZ LLC BRANCH
+- PRIMECORP MEDICAL CENTER DWC BR OF PRIMECORP MEDICAL CENTER LLC
+- PRIMECORP MEDICAL CENTER L L C DIP BRANCH
+- PRIMECORP MEDICAL CENTER LLC
+- PRIMECORP MEDICAL CENTER LLC  JABAL ALI BRANCH
+- QAMAR AL MADINA MEDICAL CENTER L.L.C
+- RASHIDIYA PRIVATE POLYCLINIC
+- Releaf Medical Centre (DIP)
+- Releaf Medical Centre (J Mart)
+- Releaf Medical Centre(Al Qouz 2)
+- Releaf Medical Centre(Jabal Ali)
+- REMEDY PLUS MEDICAL CLINIC LLC
+- RIAZ MEDICAL CENTRE - DUBAI
+- RUBY CLINIC
+- SALEEM POLYCLINIC
+- SHEIKH MANNA BIN HASHER AL MAKTOUM POLYCLINIC
+- SIRAJUDEEN MEDICAL CENTER
+- SYED SADIQ GENERAL PRACTITIONER CLINIC LLC
+- THE DOCTORS HUB POLYCLINIC L.L.C (EX. DR. JOSEPH GHRAYEB POLYCLINIC)
+- TORONTO MEDICAL CENTER LLC
+- VCARE POLYCLINIC LLC
+- VIDA CLINICS- BURDUBAI
+- VIDA CLINICS LLC BRANCH-MUHAISANAH
+- Zahrat Al Shefa Medical Centre LLC
+- ZEN LIFE POLYCLINIC CO LLC
+- ZIYATH ANSAR POLY CLINIC L.L.C
+- CARE BLUE CLINIC FZCO
+- DOHA PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- HALA PHARMACY 13 EXPRESS CLINIC (GP CLINIC ONLY)
+- JADAF LIFE PHARAMCY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE AL QUSAIS PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE DWTC PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE MURAQABAT PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PEARL PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 16 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 25 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 74 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY 77 EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY BARSHA SOUTH FOURTH EXPRESS CLINIC (GP CLINIC ONLY)
+- LIFE PHARMACY EXPRESS CLINIC (GP CLINIC ONLY)
+- NATURES LIFE EXPRESS CLINIC LLC (GP CLINIC ONLY)
+- NEW AL KANZ PHARAMCY BRANCH EXPRESS CLINIC (GP CLINIC ONLY)
+- RAMADA LIFE EXPRESS CLINIC (GP CLINIC ONLY)
+- ROYAL LIFE EXPRESS CLINIC (GP CLINIC ONLY)
+- 800 PHARMACY FZ-LLC
+- 800 PHARMACY LLC
+- 800 PHARMACY LLC BRANCH
+- Abeer Al Noor Pharmacy LLC
+- ABEER PHARMACY
+- ABRIS PHARMACY LLC
+- ABWAB AL KHEIR PHARMACY L.L.C
+- ACCESS PHARMACY
+- ACCESS PHARMACY 2
+- ACCESS PHARMACY 3
+- ADVANCED CARE PHARMACY LLC
+- ADVANCED CARE PLUS PHARMACY LLC
+- ADVANCED STAR PHARMACY LLC
+- AHB HEALTHCARE PHARMACY LLC
+- AHLAM PHARMACY
+- AIWA PHARMACY
+- AJMAL PHARMACY
+- AL AFDHAL PHARMACY 1
+- AL AMEEN PHARMACY
+- AL AMEEN PHARMACY LLC BRANCH
+- AL ANBER PHARMACY
+- AL AWEER SOCIETY PHARMACY (BR OF AL SHAFAR PHARM GRP.)
+- AL AZHAR AL JADEEDA PHARMACY
+- AL AZHAR PHARMACY
+- AL BAIROONI PHARMACY
+- AL BARAKA PHARMACY
+- AL BASHAER PHARMACY
+- AL CORNICHE PHARMACY
+- AL DORRA PHARMACY
+- AL EHSAN PHARMACY
+- AL ENAYA AL FAEQA PHARMACY L.L.C
+- AL FAHAIDI PHARMACY
+- AL FAISAL PHARMACY LLC
+- AL FALAH PHARMACY
+- AL FANAR PHARMACY
+- AL FARAH PHARMACY DUBAI
+- AL FARDOOS PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- AL GARHOUD PHARMACY
+- AL GHUBAIBA PHARMACY
+- AL HAMRIYA COMMUNITY PHARMACY
+- AL HAWI PHARMACY
+- AL HIKMAH PHARMACY
+- AL HOKAMAA PHARMACY
+- AL JAMEYA AL TAAWENYA PHARMACY
+- AL JAZEERAH PHARMACY - DUBAI
+- AL JUMA PHARMACY
+- AL JUMEIRAH PHARMACY
+- AL KANZ PHARMACY (L.L.C.)
+- AL KANZ PHARMACY LLC
+- AL KHAIR COMMUNITY PHARMACY
+- AL KHAN PHARMACY LLC- DXB
+- AL MADINA AL SANAIYA PHARMACY
+- AL MANARA GARDEN PHARMACY
+- AL MANARA PHARMACY-MAKTOUM STREET
+- AL MANARA SUNSET PHARMACY
+- AL MANKHOOL PHARMACY
+- AL MANZIL AL JADEED PHARMACY LLC
+- AL MANZIL PHARMACY
+- AL MURAGGABAT PHARMACY
+- AL MUSAIF PHARMACY
+- AL MUSSALA PHARMACY
+- AL MUTEENA PHARMACY
+- AL NADA PHARMACY LLC
+- AL NASEEM PHARMACY
+- AL NEEM GRAND PHARMACY L.L.C
+- AL NEEM GREEN PHARMACY L.L.C
+- AL NEEM PHARMACY L.L.C (Branch)
+- AL NEEM STAR PHARMACY LLC
+- AL OMARRA PHARMACY
+- AL PETRA PHARMACY
+- AL QUOZ PHARMACY
+- AL RAFAH PHARMACY
+- AL RAHA PHARMACY
+- AL RAIS PHARMACY
+- Al Rawda Pharmacy LLC Br DIP
+- AL RAWDHA PHARMACY
+- AL RAYAN PHARMACY
+- AL RAZI PHARMACY
+- AL SANAIYA PHARMACY
+- AL SEHA AL KUBRA PHARMACY
+- AL SHAN PHARMACY
+- AL SHIFA PHARMACY
+- AL SHIHHE PHARMACY
+- AL SHINDAGA PHARMACY
+- AL SHOHOB PHARMACY LLC
+- AL TADAWI PHARMACY
+- AL TOWAR PHARMACY
+- AL WARQA PHARMACY
+- AL WASEL COMMUNITY PHARMACY
+- AL ZAHRA PHARMACY LLC
+- ALFA PHARMACY
+- ALICO ADVANCED CAREPHARMACY L.L.C
+- ALMURJAN PHARMACY LLC
+- Alpha Care International Pharmacy
+- Alpha International Pharmacy JLT
+- Alpha Peoples Pharmacy LLC
+- Alpha Peoples Pharmacy LLC Branch
+- Alpha Star Pharmacy LLC
+- ALQUOZ ADVANCED CARE PHARMACY LLC
+- ALQUSAIS STAR PHARMACY (LLC)
+- SONAPUR STAR PHARMACY L.L.C (EX. ALQUSAIS STAR PHARMACY (LLC) (BRANCH))
+- AMAAN PHARMACY
+- AMBER CLINIC LLC COMMUNITY PHARMACY
+- AMIGO PHARMACY LLC
+- APEX ATRIUM PHARMACY LLC
+- APOTEC GRAND PHARMACY L.L.C
+- APOTEC HUDAIBA PHARMACY L.L.C
+- APOTEC PHARMACY LLC
+- APOTEC PHARMACY LLC BRANCH
+- APPLE CARE PHARMACY
+- APPLE CARE PHARMACY LLC BRANCH
+- ARABELLA PHARMACY
+- ARABELLA PHARMACY (L.L.C.) (BRANCH)
+- Arabella Pharmacy LLC Branch
+- Arabella Pharmacy LLC Branch 2
+- ARABIAN HOME PHARMACY
+- ARAFA PHARMACY
+- ARDH AL NASEEM PHARMACY LLC
+- AREEJ PHARMACY
+- ARIN CARE PHARMACY
+- ASH TREE PHARMACY L.L.C
+- ASIA PHARMACY
+- ASMA PHARMACY
+- Aster Al hayat Pharmacy(Br of Aster Pharmacies Group LLC)
+- ASTER AL SHAFAR PHARMACY (PREVIOUSLY LAMCY PHARMACY)
+- ASTER DAY SURGERY CENTRE PHARMACY LLC
+- Aster DCC Pharmacy LLC
+- ASTER DIP PHARMACY
+- ASTER GRAND PHARMACY
+- Aster Healthcare Hypermarket(Br of Aster Pharmacies Group LLC)
+- ASTER HOSPITAL PHARMACY BR OF ASTER DM HEALTHCARE- Al Qusais
+- ASTER HOSPITAL PHARMACY- Mankhool
+- ASTER HOSPITAL PHARMACY SONAPUR
+- ASTER JBR PHARMACY
+- ASTER JEBEL ALI PHARMACY
+- Aster Medical Center Pharmacy Al Muhaisna Br of DM Healthcare LLC
+- Aster medical centre  Arabian Ranches Pharmacy Br of DM Healthcare LLC
+- Aster Pharmacies Group LLC (DMCC Branch)
+- Aster Pharmacies Group LLC Branch
+- ASTER PHARMACY 1
+- ASTER PHARMACY 101
+- ASTER PHARMACY 102 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 103
+- ASTER PHARMACY 104
+- ASTER PHARMACY 104 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 105
+- ASTER PHARMACY 109
+- ASTER PHARMACY 110
+- ASTER PHARMACY 111
+- ASTER PHARMACY 112
+- ASTER PHARMACY 113
+- ASTER PHARMACY 114
+- ASTER PHARMACY 115
+- ASTER PHARMACY 116
+- ASTER PHARMACY 117
+- ASTER PHARMACY 118
+- ASTER PHARMACY 119
+- ASTER PHARMACY 120
+- ASTER PHARMACY 123
+- ASTER PHARMACY 124
+- ASTER PHARMACY 126
+- ASTER PHARMACY 127
+- ASTER PHARMACY 128 BR OF ASTER PHARMACIES GROU LLC
+- ASTER PHARMACY 129
+- ASTER PHARMACY 130
+- Aster Pharmacy 131(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 132 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 134
+- ASTER PHARMACY 135 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 136
+- ASTER PHARMACY 137 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 138 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 141(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 142(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 143(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 144-BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 145(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 146(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 147-BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 148(BR OF ASTER PHARMACIES GROUP LLC)
+- ASTER PHARMACY 149 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 150 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 152(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 155 (Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 156 BROF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 157(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 158(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 160 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 161 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 162 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 164 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 165 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 167 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 168 (Br of Aster Pharmacies Group LLC)
+- Aster pharmacy 169 (Br of Aster pharmacies Group LLC)
+- Aster Pharmacy 170 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 172 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 173 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 175 (Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 2 BR OF ASTER PHARMACIES GROUP LLC
+- Aster Pharmacy 200(Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 201 (BR OF ASTER PHARMACIES GROUP LLC)
+- ASTER PHARMACY 202 (BR OF ASTER PHARMACIES GROUP LLC)
+- Aster Pharmacy 204(Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 205 (Br of Aster Pharmacies Group LLC)
+- Aster Pharmacy 206 (Br of Aster Pharmacies Group LLC)
+- ASTER PHARMACY 3
+- ASTER PHARMACY 5 BR OF ASTER PHARMACIES GROUP LLC
+- ASTER PHARMACY 6
+- ASTER PHARMACY 98 BRANCH OF ASTER PHARMACY LLC
+- ASTER PHARMACY TCOM
+- ATLAS HEALTHCARE PHARMACY LLC
+- ATLAS STAR PHARMACY LLC
+- AVENUE PHARMACY LLC
+- BAB AL HAYAT PHARMACY LLC
+- BAB AL NOOR PHARMACY LLC
+- BADER PHARMACY
+- BAIT AL MAQDES PHARMACY LLC
+- BAIT AL SHIFA PHARMACY L.L.C. DUBAI BRANCH
+- BAIT AL SHIFAA NEW  PHARMACY
+- BALSAM AL HADEETHA PHARMACY
+- BALSAM AL JADEEDHA PHARMACY
+- BALSAM PHARMACY
+- BANIYAS LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- BARSHA ROSE GARDENS PHARMACY LLC
+- BASMAT AL IFRAH PHARMACY LLC
+- BAY SQUARE PHARMACY L.L.C
+- BETA PHARMACY
+- BETTER LIFE PHARMACY
+- BIN SERAY PHARMACY LLC
+- BIN SINA 21 PHARMACY
+- BIN SINA 29 PHARMACY
+- BIN SINA 54 PHARMACY
+- BIN SINA GRAND PHARMACY
+- BIN SINA PHARMACY - MALL OF EMIRATES
+- BIN SINA SCIENTIFIC PHARMACY
+- BINSINA 44
+- BINSINA PHARMACY 40
+- BINSINA PHARMACY 43
+- BINSINA PHARMACY 50
+- BINSINA PHARMACY 51
+- BINSINA PHARMACY 52
+- BINSINA PHARMACY 55
+- BINSINA PHARMACY 56
+- BINSINA PHARMACY 60
+- BINSINA PHARMACY 61
+- BINSINA PHARMACY 62
+- BINSINA PHARMACY 74
+- BINSINA PHARMACY 75
+- BINSINA PHARMACY 78
+- BINSINA PHARMACY 82
+- BIO VISTA PHARMACY LLC
+- BLUE BELL INTERNATIONAL PHARMACY LLC
+- BURJEEL AL HAYYAT PHARMACY
+- BURJUMAN PHARMACY
+- C C M LIFE PHARMACY BR OF LIFE PHARMACY
+- C C S LIFE PHARMACY BR OF LIFE PHARMACY
+- CAMBRIDGE PHARMACY
+- CARE AND CURE PHARMACY LLC
+- CARE WELL PHARMACY
+- CEDARS JEBEL ALI INTERNATIONAL HOSPITAL PHARMACY
+- CENTRAL MARKET PHARMACY
+- Central United Pharmacy(Br of United Pharmacy Investment LLC)
+- CITY LAND LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- CITY LIFE PHARMACY L.L.C
+- CO-OPERATIVE PHARMACY
+- COUNTRY PHARMACY
+- CREEK LIFE PHARMACY BR OF LIFE
+- CREEK LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- DAR AL NASEEM PHARMACY LLC
+- DAR ALWAFA PHARMACY LLC
+- DEIRA LIFE PHARMACY L.L.C
+- DIAMOND 3 PHARMACY L.L.C
+- DOCIB PHARMACY LLC
+- DOCTORS PHARMACY
+- DOHA PHARMACY
+- DR ABDULLA S PHARMACY L.L.C
+- Dr. Joseph Polyclinic LLC Branch of Gulf Healthcare International LLC Community (outpatient )Pharmacy
+- DRAGON MART PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- DRAGON PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- Dragon Pharmacy (Br of Aster Al Shafar Pharmacies Group LLC)
+- DREAM PHARMACY
+- DUBAI LIFE PHARMACY LLC
+- DULSCO PHARMACY BR OF DULSCO LLC
+- DULSCO PHARMACY LLC
+- EAST HILL PHARMACY
+- EL ASHRAFIA PHARMACY 1
+- EL ASHRAFIA PHARMACY 10
+- EL ASHRAFIA PHARMACY 3 BR OF EL ASHRAFIA INVESTMENTS LLCâ€‹
+- EL ASHRAFIA PHARMACY 4 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 5 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 6 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 7 BR OF EL ASHRAFIA INVESTMENT LLC
+- EL ASHRAFIA PHARMACY 8 BR OF EL ASHRAFIA INVESTMENTS LLC
+- EL ASHRAFIA PHARMACY 9 BR OF EL ASHRAFIA INVESTMENTS LLC
+- ELAJ PHARMACY
+- ELIXIR PHARMACY
+- EMIRATES PHARMACY LLC BRANCH (MOTOR CITY)
+- EXPERTS PHARMACY
+- EXTRA LIFE PHARMACY
+- FAJER MIRDIF PHARMACY LLC BRANCH
+- LIVIX PLUS PHARMACY L.L.C (BRANCH) (EX. FAJR AL MADINA PHARMACY L.L.C BRANCH)
+- LIVIX PLUS PHARMACY L.L.C (EX. FAJR AL MADINA PHARMACY LLC)
+- FAR BEYOND PHARMACY LLC
+- FAWAGEE PHARMACY LLC
+- FAWAGEE SCIENTIFIC PHARMACY LLC
+- FESTIVAL LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- FIT FOR LIFE PHARMACY LLC
+- FOUR SEASONS PHARAMCY LLC
+- Galleria United Pharmacy(Br of United Pharmacy Investment LLC)
+- GATE BETTER LIFE PHARMACY
+- GHAZAL AL JABAL PHARMACY
+- Gigi Pharmacy
+- Globehealth Pharmacy LLC
+- Gold Life Pharmacy Br of Life Pharmacy LLC
+- GOLDEN LIFE PHARMACY LLC
+- GOLDEN SANDS PHARMACY
+- GOODWILL PHARMACY LLC
+- GRAND INFINITY PHARMACY  LLC BRANCH
+- GRAND INFINITY PHARMACY LLC
+- GRAND LIFE PHARMACY
+- GRAND ROYAL PHARMACY
+- Grand United Pharmacy(Br of United Pharmacy Investment)
+- GREEN APPLES PHARMACY
+- GREEN COMMUNITY PHARMACY
+- HAFSA PHARMACY
+- HALA PHARMACY 13 LLC
+- HALA PHARMACY 14 LLC
+- HALA PHARMACY 15 LLC
+- HALA PHARMACY 16 LLC
+- HALA PHARMACY 19 L.L.C
+- HALA PHARMACY BR OF LIFE PHARMACY
+- HALA PHARMACY BR OF LIFE PHARMACY LLC
+- HAMRIYA LIFE PHARMACY L L C
+- HARLEY INTERNATIONAL MEDICAL CLINIC PHARMACY BRANCH
+- HATTA PHARMACY LLC
+- HEALTH EXPERT PHARMACY LLC
+- HEALTH FIRST PHARMACY  1
+- HEALTH FIRST PHARMACY 11
+- HEALTH FIRST PHARMACY 2
+- HEALTH FIRST PHARMACY 23
+- HEALTH FIRST PHARMACY 24
+- HEALTH FIRST PHARMACY 25
+- HEALTH FIRST PHARMACY 27
+- HEALTH FIRST PHARMACY 29
+- HEALTH FIRST PHARMACY 3
+- HEALTH FIRST PHARMACY 30
+- HEALTH FIRST PHARMACY 31
+- HEALTH FIRST PHARMACY 32
+- HEALTH FIRST PHARMACY 33
+- HEALTH FIRST PHARMACY 34
+- HEALTH FIRST PHARMACY 35
+- Health First Pharmacy 36
+- HEALTH FIRST PHARMACY 37
+- HEALTH FIRST PHARMACY 38
+- HEALTH FIRST PHARMACY 39
+- HEALTH FIRST PHARMACY 4
+- HEALTH FIRST PHARMACY 40
+- HEALTH FIRST PHARMACY 41
+- HEALTH FIRST PHARMACY 42
+- HEALTH FIRST PHARMACY 43
+- HEALTH FIRST PHARMACY 45
+- HEALTH FIRST PHARMACY 47
+- Health First Pharmacy 48
+- HEALTH FIRST PHARMACY 5
+- HEALTH FIRST PHARMACY 52
+- HEALTH FIRST PHARMACY 55
+- HEALTH FIRST PHARMACY 56 (BR OF HEALTH FIRST INVESTMENT LLC)
+- HEALTH FIRST PHARMACY 58
+- HEALTH FIRST PHARMACY 6
+- HEALTH FIRST PHARMACY 60
+- HEALTH FIRST PHARMACY 7
+- HEALTH FIRST PHARMACY 8
+- HEALTH FIRST PHARMACY 9
+- HEALTH POINT PHARMACY LLC
+- HEALTHY LIFE PHARMACY
+- HIGHWAY PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- HILL LIFE PHARMACY LLC
+- HILLS COMMUNITY PHARMACY
+- HOPECARE PHARMACY LLC
+- HORIZON HEALTH CARE PHARMCY
+- HTK Pharmacy
+- IBIN SINA 30 PHARMACY
+- IBIN SINA 38 PHARMACY
+- IBN AL AZWAR PHARMACY
+- IBN AL HAITHAM PHARMACY
+- IBN ROSHID MODERN PHARMACY
+- IBN ROSHID PHARMACY
+- IBN SINA 31 PHARMACY
+- IBN SINA 33 PHARMACY
+- IBN SINA 34 PHARMACY
+- IBN SINA 35 PHARMACY
+- IBN SINA 36 PHARMACY
+- IBN SINA 39 PHARMACY-Al BARSHA 2
+- IBN SINA 41 PHARMACY - BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 45 PHARMACY
+- IBN SINA 58 PHARMACY
+- IBN SINA 63 PHARMACY BR OF IBN SINA GROUP PHARMACIES
+- IBN SINA 64 PHARMACY (BR OF IBN SINA GROUP PHARMACIES L.L.C)
+- IBN SINA 71 PHARMACY
+- IBN SINA 73 PHARMACY
+- IBN SINA 76 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 77 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 79 PHARMACY LLC
+- IBN SINA 80 PHARMACY
+- IBN SINA 81 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 83 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 84 PHARMACY
+- IBN SINA 85 PHARMACY
+- IBN SINA 86 PHARMACY
+- IBN SINA 87 PHARMACY BR OF IBN SINA GROUP PHARMACIES LLC
+- IBN SINA 88 PHARMACY
+- IBN SINA 89 PHARMACY
+- IBN SINA 90 PHARMACY (BR OF IBN SINA GROUP PHARMACIES L.L.C)
+- IBN SINA 92 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 94 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 96 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 97 PHARMACY
+- IBN SINA 98 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 99 PHARMACY )BR OF IBN SINA GROUP PHARMACIES )L.L.C
+- IBN SINA GROUP OF PHARMACIES L.L.C - (DMCC BRANCH)
+- IBN SINA PHARMACY
+- IBN SINA PHARMACY BR. 32
+- IBN SINA TWENTY FIVE PHARMACY
+- INTERNATIONAL MODERN HOSPITAL PHARMACY
+- IQRA PHARMACY
+- MURSHID PHARMACY L.L.C (EX. IRAN PHARMACY)
+- J.B.R. LIFE PHARMACY
+- JABAL ALI GARDENS PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- JADAF LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- JBR BAHAR PHARMACY EST.
+- JBR LIFE PHARMACY 2 BR OF LIFE PHARMACY LLC
+- JBR MURJAN PHARMACY EST.
+- JBR SADAF PHARMACY EST.
+- JBR SHAMS PHARMACY LLC
+- JEBAL ALI ADVANCED CARE PHARMACY LLC
+- JUMEIRA BETTER LIFE PHARMACY
+- JVC LIFE PHARMACY LLC
+- JVT LIFE PHARMACY LLC
+- Karama Life Pharmacy Br Of Life Pharmacy L L C
+- KARAMA ONE PHARMACY L.L.C
+- KHALIDHA PHARMACY LLC
+- KIMS PHARMACY LLC
+- LA RIVIERA LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- LIFE ABU HAIL PHARMACY LLC
+- LIFE AL BADAA PHARMACY L.L.C
+- LIFE AL BARSHA FOURTH 2 BR OF LIFE PHARMACY LLC
+- LIFE AL BARSHA PHARMACY LLC
+- LIFE AL BARSHA SOUTH FOURTH BR OF LIFE PHARMACY L L C
+- LIFE AL HAMRIYA BR OF LIFE PHARMACY LLC
+- LIFE AL KARAMA PHARMACY
+- LIFE AL MIZHAR FIRST BR OF LIFE PHARMACY
+- LIFE AL NAHDA PHARMACY L.L.C
+- LIFE AL QUSAIS PHARMACY LLC
+- LIFE AL RIQQA PHARMACY L.L.C
+- LIFE AL RIQQA2 BR OF LIFE PHARMACY LLC
+- LIFE AL SHAB PHARMACY L.L.C
+- LIFE AL WARQA 2 BR OF LIFE PHARMACY LLC
+- LIFE AL WARQA PHARMACY LLC
+- LIFE AL YALAYIS 1 (BR OF LIFE PHARMACY 3 L.L.C)
+- LIFE CHECK PHARMACY LLC
+- LIFE DIP PHARMACY LLC
+- LIFE EXPRESS PHARMACY
+- LIFE GUARD PHARMACY L.L.C
+- LIFE MAYFAIR PHARMACY L.L.C
+- LIFE MORE PHARMACY LLC
+- LIFE MURAQABAT PHARMACY LLC
+- LIFE ONE PHARMACY
+- LIFE PEARL PHARMACY L.L.C
+- LIFE PHARAMCY 106 BR OF LIFE PHARMACY L.L.C
+- LIFE PHARMACY 10 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 101 Br of Life Pharmacy LLC
+- Life Pharmacy 102 Br of Life Pharmacy LLC
+- Life Pharmacy 103 Br. Of Life Pharmacy LLC
+- LIFE PHARMACY 104 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 107 BR of Life Pharmacy LLC
+- LIFE PHARMACY 109 (BR. OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 11 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 110 (Br. Of Life Pharmacy LLC)
+- Life Pharmacy 118 (Br. Of Life Pharmacy LLC)
+- LIFE PHARMACY 12 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 12 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 120 Br. Of Life Pharmacy LLC
+- LIFE PHARMACY 178 (EX. LIFE PHARMACY 13 BR OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 16 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 17 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 19 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 20 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 21 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 22 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 23 BR OF LIFE PHARMCY LLC
+- LIFE PHARMACY 24 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 25 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 26 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 27 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 29 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 3 LLC
+- LIFE PHARMACY 3 LLC (BRANCH)
+- LIFE PHARMACY 3 LLC BRANCH
+- LIFE PHARMACY 4 LLC
+- LIFE PHARMACY 44 BR OF LIFE PHARMACY LLC
+- Life Pharmacy 45 Br. Of Life Pharmacy LLC
+- LIFE PHARMACY 46 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 47 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 48 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 5 LLC
+- LIFE PHARMACY 51 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 53 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 54 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 56 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 58 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 59 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 65 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 68 BR OF LIFE PHARMCY LLC
+- LIFE PHARMACY 7 LLC
+- LIFE PHARMACY 70 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 71 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 72 BR  OF LIFE PHARMACY LLC
+- LIFE PHARMACY 73 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 74 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 76 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 77 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 78 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 79 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 8 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 80 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 81 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 82 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 83 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 84 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 85 BR OF LIFE PHARMACY
+- LIFE PHARMACY 86 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 87 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 88 BR OF LIFE
+- LIFE PHARMACY 94 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 95 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 96 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 97 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 98(BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY BARSHA HEIGHTS BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY DAMASCUS BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY DFC BR OF LIFE PHARMACY LLC
+- Life Pharmacy DIP 2 Br of Life Pharmacy L L C
+- LIFE PHARMACY DUSSELDORF BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY DWTC BR OF LIFE PHARMACY LLC
+- Life Pharmacy FZ-LLC-DHCC
+- LIFE PHARMACY HILLS BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY I B M 2 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY I B M BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY JVT 2 BR OF LIFE PHARMACY LLC
+- Life Pharmacy L L C Branch
+- LIFE PHARMACY LLC (BRANCH)
+- LIFE PHARMACY LLC BR
+- Life Pharmacy LLC DMCC Br
+- LIFE PHARMACY LLC DMCC BR
+- LIFE PHARMACY MARINA BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY MARINA WALK BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY N K MALL BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY VILLAGE MALL BR OF LIFE PHARMACY LLC
+- LIFE PLUS PHARMACY LLC
+- LIFE ROSE PHARMACY LLC
+- LIFE SILICON PHARMACY LLC
+- LIFE TWO PHARMACY LLC BRANCH
+- LIFE VISION PHARMACY LLC
+- LIFENITY INTERNATIONAL ADVANCED PHARMACY L.L.C
+- LIVE CARE PHARMACY LLC
+- LIWA PHARMACY
+- LIWAN PHARMACY LLC
+- LOTUS PHARMACY LLC
+- LULU BARSHA PHARMACY
+- LULU CENTER PHARMACY
+- LULU KARAMA PHARMACY
+- MANCHESTER COMMUNITY PHARMACY
+- MANSION PHARMACY L.L.C
+- MARIAM NEW PHARMACY
+- MARINA ALKHAWANEEEJ PHARMACY (BR MARINA PHARMACY LLC)
+- MARINA CARE PHARMACY
+- MARINA CENTER PHARMACY
+- MARINA GREENS PHARMACY (LLC)
+- MARINA LIFE PHARMACY LLC
+- MARINA PEARL PHARMACY
+- MARINA PHARMACY
+- MARINA PHARMACY (BRANCH)
+- MARINA PHARMACY ALMUSTAQBAL BR OF MARINA PHARMACY LLC
+- Marina Pharmacy Atlantis (Br of Marina Pharmacy (L.L.C)
+- MARINA PHARMACY AVENUE (BR OF MARINA PHARMACY LLC)
+- MARINA PHARMACY BORJ STATION LLC
+- MARINA PHARMACY BRIDGE BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE 3 BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE 5 BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE TWO BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CARE1-BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY CITY CENTER STATION LLC
+- MARINA PHARMACY CITY WALK-BR OF MARINA PHARMACY
+- MARINA PHARMACY GATE
+- MARINA PHARMACY GOLDEN MILE ONE
+- MARINA PHARMACY GOLDEN MILE TWO
+- Marina Pharmacy NAD Alshiba(BR of Marina Pharmacy (LLC))
+- MARINA PHARMACY OLD TOWN (LLC)
+- MARINA PHARMACY ONE CENTRAL BR OF MARINA PHARMACY LLC
+- MARINA PHARMACY PALM FZCO
+- MARINA PHARMACY SHOROOQ BR OF MARINA PHARMACY LLC
+- Marina Pharmacy South Br of Marina Pharmacy LLC
+- MARINA VIEW PHARMACY LLC
+- MARSA COMMUNITY PHARMACY
+- MARSA LIFE PHARMACY L.L.C
+- MARYAM PHARMACY
+- MAS LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- MEADOWS LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- MED ONE PHARMACY
+- MED SAVE PHARMACY
+- MED X PHARMACY LLC
+- Medcare Medical Centre Barsha South Pharmacy Br of Medcare Hospital LLC
+- MEDEOR 24X7 PHARMACY
+- MEDI GREEN PHARMACY LLC
+- MEDI PRIME AL MIZHAR PHARMACY LLC
+- MEDI PRIME PHARMACY AL QUSAIS(BR OF MEDI PRIME PHARMACY LLC)
+- MEDI PRIME PHARMACY AL WARQA (BR OF MEDI PRIME PHARMACY (LLC))
+- MEDI PRIME PHARMACY BARSHA HEIGHTS (BR OF MEDI PRIME PHARMACY (L.L.C)
+- MEDI PRIME PHARMACY JUMEIRAH BRANCH LLC
+- MEDI PRIME PHARMACY LLC
+- MEDI PRIME PHARMACY MOTOR CITY(BR OF MEDI PRIME PHARMACY(LLC))
+- MEDI PRIME PHARMACY REEF MALL BR OF MEDI PRIME PHARMACY LLC
+- MEDI PRIME PHARMACY RTA BRANCH
+- MEDIC PLUS PHARMACY LLC
+- MEDICINA 1 PHARMACY
+- MEDICINA 10
+- MEDICINA 2 PHARMACY
+- MEDICINA 5 PHARMACY
+- MEDICINA 8
+- MEDICINA AL FAHIDI PHARMACY
+- MEDICINA BEACH ROAD PHARMACY
+- MEDICINA FIRST PHARMACY
+- MEDICINA PHARMACY
+- MEDICINA PHARMACY 11
+- MEDICINA PHARMACY 3
+- MEDICINA PHARMACY 4
+- MEDICINA PHARMACY 6
+- MEDICINA PHARMACY 7
+- MEDICINE SHOPPE MICRO PHARMACY
+- MEDICINE SHOPPE PHARMACY
+- MEDICOM PHARMACY (PREV. AL PHARABI)
+- MEDICOM PHARMACY 1 (PREV. AL JAMEYA)
+- MEDICOM PHARMACY 10 (PREV. AL SABA)
+- MEDICOM PHARMACY 11 (PREV. NEW FLAME)
+- MEDICOM PHARMACY 12 (PREV. DUBAI CENTURY)
+- MEDICOM PHARMACY 13 (PREV. HOME)
+- MEDICOM PHARMACY 14 (PREV. NEW HOME)
+- MEDICOM PHARMACY 15
+- MEDICOM PHARMACY 16 (PREV. MAKKA)
+- MEDICOM PHARMACY 2 (PREV. AL WASL)
+- MEDICOM PHARMACY 3 (PREV. WORLD)
+- MEDICOM PHARMACY 33 LLC
+- MEDICOM PHARMACY 34 LLC
+- MEDICOM PHARMACY 4 (PREV. TOWN)
+- MEDICOM PHARMACY 5 (PREV. EMIRATES COOP. SOCIETY)
+- MEDICOM PHARMACY 6 (PREV. MAZAYA)
+- MEDICOM PHARMACY 7 (PREV. FLAME)
+- MEDICOM PHARMACY 8 (PREV. CENTURY)
+- MEDICOM PHARMACY 9 (PREV. AL QEMMA)
+- MEDICURE PHARMACY
+- MEDICURE PHARMACY BRANCH LLC
+- MEDILIFE PHARMACY LLC
+- MEDILUX PHARMACY LLC
+- MEDSEVEN PHARMACY LTD
+- MEDSHOP GARDEN PHARMACY
+- MEDY MART PHARMACY LLC
+- MERCATO FAMILY PHARMACY CO
+- MERCURY PLUS PHARMACY LLC
+- MEZHAR LIFE PHARMACY
+- MIRDIF PHARMACY
+- MODERN IBN SINA PHARMACY
+- MODERN LIFE PHARMACY
+- MODERN MEDI PRIME PHARMACY LLC
+- MODERN PHARMACY
+- MOTHER CARE PHARMACY
+- MOTHER PHARMACY
+- MOTOR COMMUNITY PHARMACY
+- MUHAISNA STAR PHARMACY LLC
+- MULTICARE PHARMACY
+- MUSALAH AL QUOZE PHARMACY
+- MUSALLA SONAPOOR PHARMACY
+- NAD SHAMMA PHARMACY LLC
+- NAEEM PHARMACY
+- NAHDA SAHARA PHARMACY
+- NAJMA AL MUSALLAH PHARMACY LLC
+- NAJMAT AL SHAMS PHARMACY LLC
+- NATURE'S LIFE PHARMACY
+- Neo Pharmacy L.L.C Branch
+- Neo Pharmacy L.L.C Branch
+- Neo Pharmacy LLC
+- Neo Pharmacy LLC BRANCH
+- NEW ADVANCED CARE PHARMACY LLC
+- NEW AL KANZ PHARMACY (MAG214)
+- NEW AL KANZ PHARMACY BRANCH
+- NEW AL NAHDA PHARMACY - DUBAI
+- NEW AL NEEM PHARMACY LLC
+- NEW AL QUOZ PHARMACY
+- NEW AL SHAIMAA PHARMACY
+- NEW AL SHIFA PHARMACY
+- NEW ALHADIQA PHARMCY L.L.C
+- NEW ASTER PHARMACY JLT
+- NEW BETTER LIFE PHARMACY
+- NEW DOHA PHARMACY
+- NEW GRAND 1 PHARMACY
+- NEW GRAND MURQABAT PHARMACY L.L.C
+- NEW IBN SINA PHARMACY
+- NEW MAMZAR PHARMACY LLC
+- NEW MANKHOOL PHARMACY
+- NEW MAZAYA PHARMACY EST.
+- NEW MEDI PRIME PHARMACY LLC
+- NEW MEDICINA PHARMACY
+- NEW MEDILIFE PHARMACY LLC
+- NEW MOTOR CITY PHARMACY L.L.C
+- NEW RASHED PHARMACY
+- NEW SALAHALDIN PHARMACY FZE
+- NEW SANAIYA PHARMACY
+- NEW SILICON PHARMACY BR OF LIFE PHARMACY
+- NEW SMILE PHARMACY
+- NEW SPRING PHARMACY (BR OF LIFE PHARMACY LLC)
+- NEW SUPERCARE PHARMACY-MEDIA CITY
+- NEW VIDA PHARMACY LLC
+- NICE LIFE PHARMACY- Br of Aster Pharmacies Group LLC
+- NILE PHARMACY LLC
+- NMC DIC CLINIC AND PHARMACY BR OF NMC ROYAL HOSPITAL LTD DUBAI BRANCH
+- NMC ROYAL HOSPITAL PHARMACY
+- NMC SPECIALITY HOSPITAL PHARMACY
+- NMC SPECIALTY HOSPITAL PHARMACY DIP (Br of N M C ROYAL HOSPITAL LTD) (Dubai Branch)
+- NOOR AL IMAN PHARMACY - DUBAI
+- NOOR AL MADINA PHARMACY
+- NOOR AL MAMZAR PHARMACY
+- NOOR AL SHEFAA PHARMACY LLC
+- NOVA ADVANCED CARE PHARMACY LLC
+- BETA STAR PHARMACY L L
+- NOVITAS PHARMACY LLC
+- NOVO PHARMACY BRANCH
+- NOVO PHARMACY LLC
+- NOVO PHARMACY LLC (BRANCH)- DEIRA
+- NOVO PHARMACY LLC (BRANCH)- KARAMA
+- OASIS LIFE PHARMACY
+- OASIS PHARMACY LLC
+- OMAN PHARMACY
+- ONYX PHARMACY
+- ONYX PHARMACY II
+- ORION FAMILY PHARMACY LLC
+- OUR LIFE GUARD PHARMACY L L C
+- Outlet By Life Pharmacy LLC
+- PALM STRIP PHARMACY
+- PANACEA PHARMACY - MADINAT
+- PANACEA PHARMACY - REEF
+- PANORAMA RX PHARMACY
+- Paradise Plus Pharmacy LLC
+- PARK BETTER LIFE PHARMACY
+- Peoples Pharmacy
+- PHARMA ONE PHARMACY
+- Premier Pharmacy
+- PRIMACARE PHARMACY L.L.C
+- PRIMECORP MEDICAL CENTER AL WARSAN PHARMACY (BR OF PRIMECORP MEDICAL CENTER)
+- PRISTINE PHARMACY L.L.C
+- PROTECTION PHARMACY
+- QAMAR AL MADINA PHARMACY LLC
+- RAHEQ ALAZHAR PHARMACY  L.L.C
+- RAMADA LIFE PHARMACY
+- RAS AL KHOOR PHARMACY
+- RASHID PHARMACY
+- REAL 10 PHARMACY LLC
+- REAL 3 PHARMACY L.L.C
+- REAL 4 PHARMACY L.L.C
+- REAL 5 PHARAMACY LLC
+- REAL 6 PHARMACY L.L.C
+- REAL 7 PHARMACY DMCC
+- REAL 7 PHARMACY DMCC
+- REAL 7 PHARMACY DMCC BRANCH
+- RIGHT AID PHARMACY
+- RIGHT HEALTH PHARMACY L.L.C  (BRANCH)
+- RIGHT HEALTH PHARMACY LLC
+- RIVIERA LIFE PHARMACY LLC
+- ROSARY PHARMACY - SPRINGS
+- ROYAL GRAND PHARMACY
+- ROYAL LIFE PHARMACY LLC
+- ROYAL MARINA PHARMACY
+- ROYAL MEMZAR PHARMACY
+- ROYAL PHARMACY
+- ROYAL RUBY PHARMACY
+- RUBY PHARMACY
+- RX PHARMACY
+- S B N 2 PHARMACY
+- S B N Pharmacy
+- S Z R LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- SAFA SOCIETY PHARMACY
+- SAHARA AL MANKHOOL PHARMACY
+- SAHARA PHARMACY
+- SAHARA STAR PHARMACY
+- SALAH ALDIN PHARMACY
+- SAMARI RX PHARMACY
+- Samary Pharmacy LLC
+- SAMER PHARMACY LLC
+- SANDS COMMUNITY PHARMACY
+- SARA PHARMACY LLC
+- SEHA PHARMACY LLC
+- SEIF PHARMACIES BR OF EL ASHRAFIA INVESTMENTS LLC
+- SEREENA PHARMACY
+- SHAJARAT AL NEEM PHARMACY LLC
+- SMILE PHARMACY
+- SONDOS PHARMACY
+- SOUKARE PHARMACY
+- STAR MIRDIF PHARMACY
+- SULTAN PHARMACY
+- SUPER CARE JUMEIRAH PHARMACY
+- SUPER CARE PHARMACY 26
+- SUPER CARE PHARMACY 27
+- SUPER CARE PHARMACY 28
+- SUPER CARE PHARMACY 39
+- SUPER CARE PHARMACY AL THANYA
+- SUPER CARE PHARMACY DIP
+- SUPER CARE PHARMACY DMCC
+- SUPER CARE PHARMACY L.L.C - BRANCH- MEYDAN HEIGHTS
+- Super Care Pharmacy L.L.C - Branch Of Abu Dhabi 6
+- SUPER CARE PHARMACY L.L.C (BRANCH)
+- SUPER CARE PHARMACY L.L.C (BRANCH)
+- SUPER CARE PHARMACY L.L.C (BRANCH)
+- SUPER CARE PHARMACY L.L.C (BRANCH)- FESTIVAL PLAZA
+- Super Care Pharmacy L.L.C. Meaisem
+- Super Care Pharmacy LLC (DMCC Branch)
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- Super Care Pharmacy LLC Branch
+- SUPER CARE PHARMACY LLC BRANCH- CENTRAL MALL
+- SUPER CARE PHARMACY LLC BRANCH- DUBAI MARINA
+- SUPER CARE PHARMACY LLC BRANCH- Q MALL
+- Super Care Pharmacy LLC Branch(Wadi Al Safa 7)
+- Super Care Pharmacy LLC Branch-Al Barsha 3
+- SUPER CARE PHARMACY LLC BRANCH-Al Ghurair mall
+- SUPER CARE PHARMACY LLC- MOTOR CITY
+- SUPER CARE PHARMACY MIRDIF 2 (OR DHA-F-0245928)
+- SUPER LIFE PHARMACY LLC
+- SUPERCARE EMIRATES PHARMACY
+- SUPERCARE GARDENS PHARMACY
+- SUPERCARE MANKHOOL PHARMACY
+- SUPERCARE PHARMACY - ASWAAQ UMM SUQEIM
+- SUPERCARE PHARMACY - DCC
+- SUPERCARE PHARMACY - JLT
+- SUPERCARE PHARMACY - MARSA
+- SUPERCARE PHARMACY - MIRDIF
+- SUPERCARE PHARMACY - SHEIKH ZAYED ROAD
+- SUPERCARE PHARMACY - SILICON
+- SUPERCARE PHARMACY - UMM SUQEIM
+- SUPERCARE PHARMACY - WASL SQUARE
+- SuperCare Pharmacy 29
+- SuperCare Pharmacy 31
+- SuperCare Pharmacy 33 DMCC
+- SuperCare Pharmacy 34
+- SUPERCARE PHARMACY 38
+- SUPERCARE PHARMACY 41
+- SUPERCARE PHARMACY 43
+- SUPERCARE PHARMACY 44
+- SUPERCARE PHARMACY ARABIAN PLAZA
+- SUPERCARE PHARMACY DUBAI MALL
+- SUPERCARE PHARMACY FESTIVAL CITY
+- Supercare Pharmacy LLC Branch
+- SuperCare Pharmacy LLC Branch
+- SuperCare Pharmacy LLC Branch
+- SuperCare Pharmacy LLC Branch
+- SUPERCARE PHARMACY OASIS CENTRE
+- SUPERCARE PHARMACY SAFA
+- SUSTAINABLE LIFE PHARMACY LLC
+- TAJ PHARMACY
+- TAREQ PHARMACY
+- THE POINTE LIFE PHARMACY BR OF LIFE PHARMACY  LLC
+- THORAYA AL MADENA PHARMACY LLC
+- MODERN PHARMACY L.L.C (BRANCH) (BURDUBAI)  (EX. THUMBAY PHARMACY 5 BRANCH OF THUMBAY PHARMACY LLC)
+- MODERN PHARMACY L.L.C (BRANCH) (AL BARSHA 2) (EX. THUMBAY PHARMACY 7 BRANCH OF THUMBAY PHARMACY LLC)
+- MODERN PHARMACY L.L.C (BRANCH) (SATWA)  (EX. THUMBAY PHARMACY 8 BRANCH OF THUMBAY PHARMACY LLC)
+- TOWN LIFE PHARMACY
+- TOWN SQUARE LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- TRACKS PHARMACY
+- TRAM LIFE PHARMACY L.L.C
+- TRUSTCARE PHARMACY LLC
+- UDS PHARMACY LLC
+- UMM HURAIR PHARMACY
+- UNICARE PHARMACY LLC
+- UNICARE STAR PHARMACY
+- UNION PHARMACY
+- United Pharmacy 2(Br of United Pharmacy Investment LLC)
+- United Pharmacy IBN Battuta(Br of United Pharmacy Investment( LLC)
+- United Pharmacy(Br of United Pharmacy Investment LLC)
+- UNITY PHARMACY LLC
+- UPTOWN COMMUNITY PHARMACY
+- UPTOWN PHARMACY (BR OF AL SHAFAR PHARM GRP)
+- VCARE PHARMACY LLC
+- VITA CARE PHARMACY L.L.C
+- Vita United Pharmacy(Br of United Pharmacy Investment LLC)
+- VIVA PHARMACY LLC
+- WARSAN LIFE PHARMACY BR OF LIFE PHARMACY LLC
+- We Care Pharmacy (L.L.C.)
+- WECARE E R X PHARMACY LLC( Ex : Kap Pharmacy)
+- WELLCARE PHARMACY LLC
+- WELLFAST PHARMACY
+- WELLMART PHARMACY LLC
+- WEST HILL PHARMACY
+- YACOUB PHARMACY
+- YARA PHARMACY
+- YASMED PHARMACY LLC
+- YASSAT LIFE PHARMACY LLC
+- YAZ PHARMACY LLC
+- ZABEEL PHARMACY LLC
+- Zabeel Pharmacy LLC
+- ZAHRAT AL NOOR PHARMACY LLC
+- Zahrat Al Shefa Pharmacy
+- ZAMZAM PHARMACY
+- ZAYD PHARMACY
+- ZEN LIFE PHARMACY CO LLC
+- ZULEKHA PHARMACY
+- GULF DIAGNOSTIC MEDICAL CENTRE
+- THUMBAY HOSPITAL LLC FUJAIRAH BRANCH
+- AL AHLI MEDICAL CENTER-FUJAIRAH
+- AL HAYL MEDICAL CENTRE
+- AL SHARQ MEDICAL CENTER - AL ETIHAD
+- AL SHARQ MEDICAL CENTER - DIBBA
+- AL SHARQ MEDICAL CENTRE - COSMOMED
+- ALFA CLINICA LLC- FUJAIRAH
+- ASTER MEDICAL CENTRE - FUJEIRAH
+- FATHIMA MEDICAL CENTER
+- Fujairah Port Medical Centre
+- LIFE CARE MEDICAL CENTER
+- LIFE CARE MEDICAL CLINIC LLC
+- Makah Medical Clinic
+- MAKKAH MEDICAL CENTER
+- NORTHERN AL AHLIAH MEDICAL CENTRE
+- SUHA MEDICAL CENTER
+- AL ASDIQAA PHARMACY
+- AL HASHMI PHARMACY
+- AL KHAN PHARMACY
+- AL NASR PHARMACY
+- AL SHARQ FAMILY PHARMACY
+- AL SHARQ MODERN PHARMACY
+- AL SHARQ PHARMACY - DIBBA
+- AL ZAYTOON PHARMACY
+- ASTER PHARMACY 139
+- ASTER PHARMACY 8
+- ASTER PHARMACY FUJAIRAH BRANCH LLC
+- BETTER LIFE PHARMACY
+- EAST COAST AHALIA PHARMACY
+- HEALTH CURE PHARMACY
+- HEALTH FIRST 19 PHARMACY
+- HEALTH FIRST 20 PHARMACY
+- HEALTH FIRST PHARMACY 16
+- HEALTH FIRST PHARMACY 17 (PREV. TOWER PHARMACY)
+- HEALTH FIRST PHARMACY 18
+- HEALTH FIRST PHARMACY 21
+- HEALTH FIRST PHARMACY 26
+- Health First Pharmacy 59 Fujairah Branch
+- LABAIK PHARMACY
+- LIFE CARE PHARMACY
+- LIFE PHARMACY LLC FUJAIRAH BR 1
+- Life Pharmacy LLC Fujairah Branch 2
+- LULU DIBBA PHARMACY - DIBBA
+- MEDICINA PHARMACY 20 FUJAIRAH BRANCH
+- MEDICINA PHARMACY 28
+- NATIONAL MEDICAL CENTRE PHARMACY
+- SUHA PHARMACY
+- TAIBA PHARMACY
+- THUMBAY HOSPITAL PHARMACY
+- AL ENWAN MEDICAL CENTRE
+- BAWABAT AL ENWAN PHARMACY
+- BIOTECH MEDICAL LAB L.L.C- RAK
+- INTERNATIONAL RADIOLOGY CENTER - RAK
+- AL ORAIBI HOSPITAL
+- AL ZAHRAWI HOSPITAL
+- AL AFIA MEDICAL CENTRE - RAK
+- AL SAADA SPECIALIST CLINIC
+- AL SHIFA MEDICAL CENTER-RAK
+- ALAHLIA MEDICAL CENTRE
+- ASTER MEDICAL CENTRE RAK BRANCH
+- CARE POINT MEDICAL CENTER LLC
+- EMIRATES CARDIOLOGY CLINIC LLC
+- EMIRATES HOSPITALS AND CLINICS LLC RAS AL KHAIMAH 1
+- HEALTH MEDICAL CENTER
+- LIFE CHECK MEDICAL CENTER LLC
+- LIFE CHECK PHARMACY
+- MARHABA MEDICAL CENTRE- RAK
+- MAXCARE MEDICAL CENTER
+- NEXUS MEDICAL CLINIC
+- NMC ROYAL MEDICAL CENTRE
+- Ras Al Khaimah Medical Center Al Hamra - RAK
+- Ras Al Khaimah Medical Center Ghalilla - RAK
+- Ras Al Khaimah Medical Centre Al Jazeera - RAK
+- SHIFA AL JAZEERA MEDICAL CENTRE LLC- RAK
+- THUMBAY CLINIC RAK BRANCH
+- UNION MEDICAL &DENTAL CENTER LLC
+- AL ABRAR PHARMACY
+- AL AFIA PHARMACY
+- AL AHD PHARMACY
+- AL AHLIA PHARMACY RAK BRANCH
+- AL DOAA PHARMACY
+- AL GHAIL PHARMACY-RAK
+- AL HARMEEN PHARMACY
+- AL HSAYAT PHARMACY
+- AL HUDA PHARMACY
+- AL LULU RAK PHARMACY
+- AL MANARA PHARMACY - RAK
+- AL MARKEZIA PHARMACY
+- AL MUNTASER PHARMACY
+- AL SHAMAL PHARMACY LLC
+- AL WATANIA PHARMACY
+- AL ZAHRAWI PHARMACY
+- ASTER PHARMACIES GROUP LLC BRANCH 1
+- Aster Pharmacies Group LLC Branch 2
+- ASTER PHARMACIES GROUP LLC RAK BRANCH
+- BALSAM PHARMACY
+- CAREPOINT PHARMACY
+- Emirates Dubai Pharmacy LLC RAK Branch
+- HALA PHARMACY 25
+- HALA PHARMACY 34 LLC
+- HALA PHARMACY 36 LLC
+- HALA PHARMACY21
+- HALA PHARMACY22 (RAK)
+- HEALTH FIRST PHARMACY 14
+- HEALTH FIRST PHARMACY 22
+- HEALTH FIRST PHARMACY 50
+- HEALTH FIRST PHARMACY 54
+- IBN SINA PHARMACY - HAMRA MALL -RAK
+- IBN SINA PHARMACY 1
+- IBN SINA PHARMACY 2
+- IBN SINA Pharnacy-Branch 3
+- JABAL AL NOOR PHARMACY
+- LIFE PHARMACY
+- LIFE PHARMACY LLC - RAK BRANCH 1
+- MARHABA PHARMACY
+- MARHABTAIN PHARMACY
+- MEDICINA 27 PHARMACY
+- MEDICOM PHARMACY 23 (PREV. AL ENAYA)
+- NEXUS PHARMACY LLC
+- NMC ROYAL PHARMACY
+- NOOR AL SHEFAA PHARMACY L.L.C
+- Oxygen Pharmacy LLC
+- Ras Al Khaimah Al Jazira Al Hamra Pharmacy - RAK
+- Ras Al Khaimah Ghalila Pharmacy - RAK
+- RAZAN PHARMACY LLC
+- RUKN AL HAYAT PHARMACY L.L.C
+- SHIFA AL JAZEERA PHARMACY LLC
+- Super Care Pharmacy LLC - RAK Branch
+- U M D C PHARMACY LLC
+- YAMAMAH PHARMACY
+- ZAHRAT NOOR AL SHEFAA PHARMACY
+- Al Ola Pharmacy Br Aster Pharmacies Group LLC
+- AL BURJ MEDICAL LAB-SHARJAH
+- AL DURRAH RADIOLOGY CENTRE
+- AL SAFWA RADIOLOGY CENTER
+- AL SARH MEDICAL LAB
+- ASTER DIAGNOSTIC CENTER
+- BIO TECH MEDICAL LAB- SHARJAH
+- EMIRATES MEDICAL LABORATORY
+- INTERNATIONAL RADIOLOGY AND DIAGNOSTIC SERVICES CENTRE LLC-BRANCH 1
+- INTERNATIONAL RADIOLOGY CENTER
+- MEDI PLUS DIAGNOSTIC CENTER
+- REEM MEDICAL DIAGNOSTIC CENTRE
+- TEXAS MEDICAL LAB
+- AL NAKHEEL ONE DAY SURGERY HOSPITAL
+- AL SAHA WA AL SHIFAA HOSPITAL FOR ONE DAY SURGERY
+- BURJEEL SPECIALTY HOSPITAL LLC- SHARJAH
+- CENTRAL HOSPITAL LLC( EX: Central Private Hospital)
+- EMIRATES EUROPEAN HOSPITAL LLC ONE DAY SURGERY
+- ORIANA HOSPITAL FOR ONE DAY SURGERY
+- ROYAL HOSPITAL
+- THUMBAY HOSPITAL DAYCARE - MUWAILAH
+- ABRAHAMS MEDICAL CENTRE
+- ACCESS AL ROLLA MEDICAL CENTRE
+- ACCESS AL SAJAA CLINIC
+- ACCESS CLINIC MUWAILAH
+- AHALIA REGIONAL MEDICAL CENTER
+- AL AFDAL MEDICAL CENTER
+- AL AFYA MEDICAL CENTRE
+- AL AMANA MEDICAL CENTRE
+- AL AMUMAH MEDICAL CENTER
+- AL ARIF HEART & CHILDRENS MEDICAL CENTRE LLC
+- AL AZHAR MEDICAL CLINIC
+- AL BARAKAH MEDICAL CLINIC
+- AL BURJ AL THAHBI MEDICAL CENTRE LLC
+- AL DARARY MEDICAL CENTRE
+- AL DHAID MEDICAL CENTRE
+- AL DUNIA MEDICAL CENTER LLC
+- AL EMARAT NATIONAL MEDICAL CENTER LLC
+- AL FAIEZ MEDICAL CENTRE
+- AL LUBNANI MEDICAL CENTER LLC (LEBANON MEDICAL CENTER)
+- AL MAHER MEDICAL CENTER LLC
+- AL MALIHA MEDICAL CENTRE
+- AL MANSOUR MEDICAL CENTRE
+- AL NAHDA MEDICAL CENTER
+- AL NASEEM  MEDICAL CENTRE- SHJ
+- AL QASIMIAH MEDICAL CLINIC
+- AL RABEE MEDICAL CENTER
+- AL RAHAH MEDICAL CENTRE
+- AL SAFI MEDICAL CENTER LLC
+- Al Shifa Al Khaleeji Medical Centre
+- AL YAMAMAH MEDICAL CENTRE
+- ALBAYAN MEDICAL CENTER
+- ALIBTESAMAH AL RAIEAA MEDICAL CENTRE
+- ASTER ABU SHAGARA MEDICAL CENTRE
+- ASTER ABUTINA MEDICAL CENTRE
+- ASTER MUWAILEH MEDICAL CENTER
+- BAB AL SAJAAH CLINIC LLC
+- BRISTOL MEDICAL CENTRE LLC
+- BUSHRA SPECIALIST MEDICAL CENTRE
+- CLASS MEDICAL CENTRE
+- DAR AL SALAM MEDICAL CENTER LLC
+- DEEPA CLINIC
+- DR.SABA MEDICAL CENTRE
+- OAKLAND MEDICAL CENTRE L.L.C (EX. EMIRATES INTERNATIONAL MEDICAL CENTER)
+- EMIRATES MEDICAL CENTRE
+- EVE MEDICAL CENTER LLC
+- FIRST GULF MEDICAL CENTER
+- HANNOVER MEDICAL CENTER
+- Health Vision Medical Center LLC
+- IDEAL MEDICAL CENTRE
+- LIBERTY MEDICAL CENTER
+- MAMPILLI MEDICAL CENTER
+- MARINA MEDICAL CENTER
+- MGM MEDICAL CENTRE LLC
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.1
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.2
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.3
+- N.M.C MEDICAL CENTER L.L.C SHJ BR.4
+- NATHANI MEDICAL CENTER
+- NEW MEDICAL CENTRE - SHARJAH
+- NOOR AL MADINAH MEDICAL CENTER
+- ORCHID MEDICAL CENTRE- SHARJAH
+- PESHAWAR MEDICAL CENTRE- SHARJAH
+- PREMIER MEDICAL CENTRE LLC
+- PRIME MEDICAL CENTRE AL QASIMIA
+- PRIMECORP MEDICAL CENTER L.L.C SHJ 1
+- REGAL MEDICAL CENTRE
+- RIAZ MEDICAL CENTRE - SHARJAH
+- SABAH AL NOOR MEDICAL CENTER
+- SAHARA MEDICAL CENTRE
+- SAIFZONE MEDICAL CENTRE (FZC)
+- SANA HABIB MEDICAL CENTRE LLC
+- SHAMAAL AL AHALIA MEDICAL CENTRE
+- SHIFA AL JAZEERA MEDICAL CENTRE- SHARJAH
+- SIYAD SPECIALIST MEDICAL CENTRE
+- STARCARE MEDICAL CENTER L.L.C
+- SUNNY HALWAN SPECIALITY MEDICAL CENTRE LLC
+- SUNNY MAYSLOON SPECIALITY MEDICAL CENTRE LLC
+- SUNNY SHARQAN MEDICAL  CENTRE LLC
+- Thumbay Clinic LLC Br 1
+- Thumbay Clinic LLC Branch 2
+- THUMBAY MEDICAL & DENTAL SPECIALITY CENTRE - Sharjah
+- TRUE CARE MEDICAL CLINIC
+- UNICARE MEDICAL CENTRE LLC
+- UNION MEDICAL CENTRE
+- VENNIYIL MEDICAL CENTRE
+- YAS MEDICAL CENTER LLC
+- ZAFERULLA MEDICAL CENTRE
+- 800 PHARMACY LLC - SHJ.BR
+- ABUDHABI PHARMACY
+- AKNAF BAIT AL MAQDES PHARMACY LLC
+- AL AFDHAL PHARMACY
+- AL AHLIAH PHARMACY
+- AL AHSAN PHARMACY
+- AL AMAL PHARMACY
+- AL AMAN PHARMACY
+- AL AMANI PHARMACY
+- AL AZHAR PHARMACY
+- AL BADR AL KAMIL PHARMACY LLC
+- AL BAHR PHARMACY
+- AL BASSAM PHARMACY
+- AL BURJ AL THAHBI PHARMACY LLC
+- AL BUSTAN PHARMACY LLC
+- Al Courniche pharmacy LLC
+- AL DALIL PHARMACY LLC
+- AL DAWA AND AL JAMAL PHARAMCY  LLC
+- AL DHIA PHARMACY LLC
+- AL DUNIA PHARMACY LLC
+- AL ELAJ PHARMACY LLC
+- AL FAISAL PHARMACY LLC
+- AL FAJER PHARMACY
+- AL FARAH PHARMACY
+- AL FARAJ PHARMACY
+- AL FARDAN CENTRE PHARMACY LLC
+- AL FARES PHARMACY
+- AL GHAITH PHARMACY
+- AL GHRAIF PHARMACY
+- AL HIJRAH PHARMACY LLC
+- AL HIKMAH PHARMACY - SHARJAH
+- AL INAYA AL MUTAQADIMAH PHAMRACY LLC  (PREVIOUSLY AL QASSIM PHARMACY)
+- AL INAYA PHARMACY
+- AL ITEKAL PHARMACY
+- AL ITIHAD PHARMACY
+- AL KHAIR PHARMACY
+- AL KINDI PHARMACY
+- AL MAJAZ PHARMACY
+- AL MALEHA PHARMACY
+- AL MANARAH PHARMACY
+- AL MANSOOR PHARMACY
+- AL MAWADAH PHARMACY
+- AL MEENA PHARMACY LLC
+- AL MOAALAJ PHARMACY LLC
+- AL MUSALLA PHARMACY
+- AL NABAA PHARMACY
+- AL NADIA PHARMACY LLC
+- AL NAHAR PHARMACY LLC
+- AL NAJIM AL LAMEE PHARMACY
+- AL NAS PHARMACY L.L.C
+- AL NASEEM PHARMACY
+- AL NUZHA PHARMACY
+- AL OROUBA PHARMACY
+- AL QADSYAH PHARMACY
+- AL QASIMIAH PHARMACY
+- AL RAJAA PHARMACY
+- AL RAWAA PHARMACY LLC
+- AL RAYA PHARMACY
+- AL RAYAN PHARMACY LLC
+- AL RIYADH PHARMACY
+- AL RUAYAH PHARMACY
+- AL SABAH PHARMACY L.L.C
+- AL SADAF PHARMACY
+- AL SADIQ PHARMACY
+- AL SAFI PHARAMCY LLC
+- AL SAHA AND AL JAMAL PHARMACY LLC
+- AL SAHA PHARMACY LLC
+- AL SAIF PHARMACY
+- AL SALAMAH PHARMACY
+- AL SAMHA PHARMACY LLC
+- AL SEHA AL KUBRA PHARMACY LLC
+- AL SHALAL PHARMACY
+- AL SHIFA AL AFIAH PHARMACY
+- AL TAIF PHARMACY
+- AL TAJ PHARMACY
+- AL TAQWA PHARMACY LLC
+- AL WAAD PHARMACY
+- AL WADI PHARMACY
+- AL WASFA PHARMACY LLC
+- ALBARSHA PHARMACY
+- ALNAJIM ALAZRAQ PHARMACY
+- ANAS PHARMACY
+- ANWAR BAIT AL MAQDES PHARMACY LLC
+- Arabian Home health pharmacy
+- ARABIAN PHARMACY - SHARJAH
+- ASIA PHARMACY LLC
+- ASMA PHARMACY
+- ASTER AL BUHAIRA PHARMACY
+- Aster Pharmacies Group LLC -SHJ BR
+- Aster Pharmacies Group LLC- SHJ BR - Branch 3
+- Aster Pharmacies Group LLC- SHJ BR - Branch 5
+- Aster Pharmacies Group LLC -SHJ BR -Branch 1
+- Aster Pharmacies Group LLC -SHJ BR -Branch 2
+- Aster Pharmacies Group LLC -SHJ BR -Branch 4
+- ASTER PHARMACY - SHARJAH
+- ASTER PHARMACY 106
+- ASTER PHARMACY 107
+- ASTER PHARMACY 108
+- ASTER PHARMACY 121
+- ASTER PHARMACY 122
+- ASTER PHARMACY 125
+- ASTER PHARMACY 133
+- ASTER PHARMACY 140
+- ASTER PHARMACY 151
+- Aster Pharmacy 153
+- Aster Pharmacy 203
+- ATLAS PHARMACY
+- BAIT AL DAWAA PHARMACY
+- BAIT AL HIKMA PHARMACY
+- BAIT AL MAQDES AL JADEEDAH PHARMACY
+- BAIT AL MAQDES PHARMACY LLC
+- BAIT AL SHIFA PHARMACY - SHARJAH
+- BANIYAS PHARMACY
+- BILAL PHARMACY  LLC
+- BIN SINA PHARMACY
+- BOORJ AL ROLLA PHARMACY LLC
+- BORJ SARAH PHARMACY
+- BURJEEL SPECIALTY HOSPITAL PHARMACY
+- CENTRAL PRIVATE HOSPITAL PHARMACY
+- CITY LIFE PHARMACY LLC BRANCH SHARJAH
+- CONSULTANT'S PHARMACY
+- CRISTAL PHARMACY
+- DAR AL DAWAA PHARMACY L.L.C
+- DAR AL HAYAT PHARMACY L.L.C.
+- DAR AL HIKMAH PHARMACY LLC
+- DAR AL NEEM PHARMACY LLC
+- DEIRA PHARMACY LLC
+- DELMON PHARMACY
+- DOCTORS PHARMACY
+- DUAA PHARMACY
+- EMIRATES EUROPEAN HOSPITAL PHARMACY
+- EXPERTS PHARMACY
+- FATIMA AL ZAHRAA PHARMACY
+- GARDEN PHARMACY LLC
+- GOLDEN LIFE PHARMACY
+- GRAND HAMAD PHARMACY
+- GULF PHARMACY LLC
+- HALA PHARMACY BR 45
+- HALA PHARMACY BR 55
+- HALA PHARMACY LLC
+- HALA PHARMACY LLC - BRANCH 28
+- HALA PHARMACY LLC - BRANCH 38
+- HALA PHARMACY LLC - BRANCH 42
+- HALA PHARMACY LLC - BRANCH 44
+- HALA PHARMACY LLC - BRANCH 46
+- HALA PHARMACY LLC - BRANCH 51
+- HALA PHARMACY LLC BR 52
+- HALA PHARMACY LLC BRANCH 27
+- HALA PHARMACY LLC BRANCH 33
+- HALA PHARMACY LLC BRANCH 35
+- HALA PHARMACY LLC BRANCH 37
+- HALA PHARMACY LLC BRANCH 40
+- HALA PHARMACY LLC BRANCH 43
+- HALA PHARMACY LLC BRANCH 47
+- HALA PHARMACY LLC BRANCH 48
+- HALA PHARMACY LLC BRANCH 56
+- HALA PHARMACY LLC-Branch 1
+- HALA PHARMACY LLC-Branch 10
+- HALA PHARMACY LLC-BRANCH 11
+- HALA PHARMACY LLC-Branch 12
+- HALA PHARMACY LLC-BRANCH 18
+- HALA PHARMACY LLC-BRANCH 19
+- HALA PHARMACY LLC-Branch 2
+- HALA PHARMACY LLC-BRANCH 20
+- HALA PHARMACY LLC-BRANCH 26
+- HALA PHARMACY LLC-Branch 3
+- HALA PHARMACY LLC-Branch 4
+- HALA PHARMACY LLC-Branch 5
+- HALA PHARMACY LLC-Branch 6
+- HALA PHARMACY LLC-Branch 7
+- HALA PHARMACY LLC-Branch 8
+- HALA PHARMACY LLC-Branch 9
+- HAMAD AL IHTERAFEYA PHARMACY LLC
+- HAMAD AL MUMAYAZAH PHARMACY LLC
+- HAMAD AL OULA PHARMACY LLC
+- HAMAD PHARMACY
+- HARAMAIN PHARMACY
+- HEALTH FIRST PHARMACY
+- Health First Pharmacy Br 6
+- HEALTH FIRST PHARMACY BR2
+- HEALTH FIRST PHARMACY BR3
+- HEALTH FIRST PHARMACY BR4
+- HEALTH FIRST PHARMACY BRANCH 10
+- Health First Pharmacy Branch 8
+- HEALTH FIRST PHARMACY BRANCH 9
+- HEALTHCARE PHARMACY LLC
+- HUSSEIN PHARMACY
+- IBN BATUTA PHARMACY
+- IBN HAYAN PHARMACY SHARJAH
+- IBN SEENA PHARMACY 70
+- IBN SINA AL KUBRA PHARMACY
+- IBN SINA AL RAHMANIA PHARMACY
+- IBN SINA AL ZAHIAH PHARMACY
+- Ibn Sina Pharmacy 37
+- IBN SINA PHARMACY-SOLE PROPRIETORSHIP L.L.C
+- IBN ZOHR PHARMACY
+- ISHAQ BIN OMRAN PHARMACY LLC
+- JABAL JAIS PHARMACY LLC
+- LAMIA PHARMACY
+- LIFE PHARMACY LLC BRANCH SHJ
+- LIFE PHARMACY LLC SHJ BR 3
+- LIFE PHARMACY LLC SHJ BR BRANCH 1
+- LIFE PHARMACY LLC SHJ BR BRANCH 2
+- LIFE PHARMACY LLC SHJ BRANCH 6
+- LIFE PHARMACY LLC SHJ BRANCH 7
+- LUBNA PHARMACY
+- LULU AL FALAH PHARMACY LLC-SHARJAH
+- LULU AL NAHDA PHARMACY LLC-SHARJAH
+- MAJID PHARMACY
+- MAKKAH PHARMACY LLC - SHARJAH
+- MARHABA PHARMACY
+- MASAFI PHARMACY
+- MAY PHARMACY
+- MEDI PRIME AL MAJAZ PHARMACY LLC -BRANCH 1
+- MEDI PRIME AL NAHDA PHARMACY LLC
+- MEDI PRIME AL QASIMIAH PHARMACY
+- MEDI PRIME PHARMACY
+- MEDICARE PHARMACY
+- MEDICINA 22 PHARMACY
+- MEDICINA 23 PHARMACY
+- MEDICINA 24 PHARMACY
+- MEDICINA 25 PHARMACY
+- MEDICINA 31
+- MEDICOM PHARMACY 17 (PREV.AL ANSAR)
+- MERCURY PHARMACY LLC
+- MERCURY STAR PHARMACY LLC
+- MILAN PHARMACY LLC
+- MILLENNIUM PHARMACY
+- Modern Al Riqqa Pharmacy
+- MODERN BAIT AL MAQDES PHARMACY LLC
+- MUHAMMAD AYAZ PHARMACY
+- Najm Al Qasimia Pharmacy
+- NAJMATH SAHARA AL JADEEDA PHARMACY
+- NATIONAL MEDICAL CENTER PHARMACY
+- NEW AL WAFA PHARMACY
+- NEW BIN SINA PHARMACY
+- NEW CITY PHARMACY
+- NEW MEDICAL CENTER PHARMACY
+- NMC MEDICAL CENTRE PHARMACY -LLC N.M.C Branch 1
+- NOORA PHARMACY
+- ORCHID PHARMACY ALKHAN LLC
+- ORIANA PHARMACY
+- Palmyra Pharmacy
+- PHARMACY ONE LLC
+- RASHA PHARMACY
+- RAWABINA PHARMACY
+- RAZAN PHARMACY LLC
+- REEM AL NAHDAH PHARMACY LLC
+- ROYAL GARDEN PHARMACY LLC
+- RUKN ABU SHAGHARAH PHARAMCY
+- RUKN AL DAWAA PHARMACY LLC
+- RUKN AL JAWDAH PHARMACY
+- RUKN AL SALAM PHARMACY
+- RUKN ALYASMEEN PHARMACY
+- SAHARA AL JAZEERA PHARMACY
+- SAHARA LIFE PHARMACY LLC
+- SAIF AL KHAN PHARMACY LLC
+- SAIFZONE PHARMACY (FZC)
+- SALALAH PHARAMCY LLC
+- SALIM PHARMACY
+- SALSABEEL PHARMACY
+- SAMA MUWAILEH PHARMACY LLC
+- SCIENTIFIC PHARMACY
+- SHAMS AL NAHDA PHARMACY LLC
+- SHARJAH AHALIA PHARMACY
+- SHARJAH PHARMACY
+- SHARQAN PHARMACY
+- SIR ALSHIFFAA PHARMACY
+- STARCARE PHARMACY LLC
+- Super Care Pharmacy LLC - SHJ BR - Branch 2
+- Super Care Pharmacy LLC - SHJ BR - Branch 3
+- SUPERCARE PHARMACY
+- TAIBAH PHARMACY
+- United Pharmacy AL Zahiah LLC
+- UNITED PHARMACY AL ZAHIAH LLC - BRANCH 1
+- UNITED PHARMACY AL ZAHIAH LLC - BRANCH 2
+- WAJEAT AL KHOOR PHARMACY - SHARJAH
+- WASEEM PHARMACY
+- YAS PHARMACY LLC
+- ZAHRAT ALRABIE PHARMACY
+- AL HAYAT MEDICAL CENTER
+- AL KHALEEJ MEDICAL CENTRE
+- DAR AL HAYAT MEDICAL CENTER L.L.C
+- NEW AL KHALEEJ MEDICAL CENTRE
+- THUMBAY CLINIC UAQ BRANCH
+- YASMED MEDICAL CENTER
+- AL NEEM PHARMACY LLC
+- AL SAFA PHARMACY
+- Aster Pharmacies Group LLC UAQ Branch
+- DANA PHARMACY
+- DOOA PHARMACY - UAQ
+- HEALTH FIRST PHARMACY 12
+- HEALTH FIRST PHARMACY 13
+- HEALTH FIRST PHARMACY 28
+- IBN BATUTA PHARMACY LLC
+- LIFE PHARMACY
+- LIFE PHARMACY L.L.C - BRANCH 1
+- LIFE PHARMACY LLC BRANCH 2
+- LULU CENTER PHARMACY LLC
+- MEDICOM PHARMACY 26
+- MEDICOM PHARMACY 33 LLC UAQ BRANCH
+- ROUA PHARMACY LLC
+- TAJERAN PHARMACY
+- YASMED PHARMACY
+- AXON MEDICA POLYCLINIC, BR. AXON MEDICA INVESTMENT MANAGEMENT L.L.C
+- AXON MEDICA PHARMA L.L.C
+- AXON MEDICA POLYCLINIC
+- AXON MEDICA PHARMA L.L.C
+- DR ISMAIL POLYCLINIC
+MALL BR OF DR. ISMAIL
+POLYCLINIC
+- JUPITER AL QUSAIS POLYCLINIC LLC PHARMACY
+- Emirates Hospitals & Clinics LLC Branch, Pharmacy
+- SHIFA AL RABEE MEDICAL CENTRE
+- SHIFA AL JAZEERAH CENTRE PHARMACY .LLC â€“ SHJ.BR
+- AL YAMAMA PHARMACY
+- AL TALAL PHARMACY
+- AL MISBAH PHARMACY L L C
+- AL ALIYA PHARMACY
+- HEY LAB FOR MEDICAL ANALYSIS
+- APOLLO CLINIC LLC (EX. NEW CITY CLINIC LLC)
+- APL PHARMACY LLC
+- AXIOS HOME CARE SERVICES L.L.C
+- OCCU MED CLINIC LLC FUJAIRAH BRANCH 1
+- Modern Family Clinic LLC
+- THUMBAY LABS LLC â€“ BRANCH 01
+- LIFE PHARMACY 44 EXPRESS CLINIC (GP CLINIC ONLY)
+- Evercare Medical Center
+- NAVEEN PHARMACY
+- LIFE PHARMACY 116 (BR OF LIFE PHARMACY)
+- LIFE PHARMACY 117 (BR. OF LIFE PHARMACY LLC)
+- LIFE PHARMACY LLC FUJAIRAH BRANCH 3
+- LIFE PHARMACY LLC - RAK BRANCH 2
+- LIFE PHARMACY LLC BRANCH 57 - BRANCH OF ABU DHABI 114
+- LIFE PHARMACY LLC BRANCH 32 - BRANCH OF ABU DHABI 92
+- LIFE PHARMACY 122 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 121 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC BRANCH 56 - BRANCH OF ABU DHABI 112
+- LIFE PHARMACY 108 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC BRANCH 58 - BRANCH OF ABU DHABI 115
+- LIFE PHARMACY LLC BRANCH 51 - BRANCH OF ABU DHABI 103
+- LIFE PHARMACY LLC BRANCH 33 - BRANCH OF ABU DHABI 93
+- LIFE PHARMACY LLC BRANCH 46 - BRANCH OF ABU DHABI 99
+- LIFE PHARMACY LLC BRANCH 53 - BRANCH OF ABU DHABI 1
+- LIFE PHARMACY LLC BRANCH 24 - BRANCH OF ABU DHABI 80
+- LIFE PHARMACY 105 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 11
+- LIFE PHARMACY LLC BRANCH 49 - BRANCH OF ABU DHABI 101
+- LIFE PHARMACY LLC BRANCH 40 - BRANCH OF ABU DHABI 97
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 123
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 124
+- LIFE PHARMACY LLC BRANCH 22 - BRANCH OF ABU DHABI 69
+- LIFE PHARMACY LLC DIBBA BR
+- LIFE PHARMACY LLC FUJAIRAH BRANCH 5
+- FUTURE LIFE GENERAL MEDICAL CLINIC
+- AL NAJEM PHARMACY LLC
+- AL ENWAN PHARMACY LLC
+- AL AJWAH PHARMACY LLC
+- AL AQSA PHARMACY L.L.C
+- AL FAROOQ PHARMACY L.L.C
+- AL TAWAR PHARMACY LLC
+- AL RAZY PHARMACY L.L.C
+- AL HAMRIA PHARMACY
+- AL AHRAM PHARMACY LLC
+- AL TAMIMI NEW PHARMACY LLC
+- AL TAMIMI NEW PHARMACY LLC BRANCH
+- AL SAFA AL QUOZ PHARMACY L.L.C
+- FAITH ACACIA PHARMACY LLC
+- FAITH AHLAN PHARMACY LLC
+- FAITH CAP 1 PHARMACY LLC
+- FAITH EUROPEAN PHARMACY LLC
+- MEDIGREEN PHARMACY LLC (BRANCH)
+- DAJLA PHARMACY LLC
+- AL TAMIMI PHARMACY L.L.C
+- DAR AL FARAH PHARMACY LLC
+- FAITH WAY PHARMACY L.L.C
+- NAD AL HAMAR PHARMACY L.L.C
+- NAWAIEM PHARMACY LLC
+- AL TEMOUH PHARMACY LLC
+- MUZEIRA MEDICAL CENTER L.L.C(AL SHAMS)
+- SHAMS MUZEIRA PHARMACY LLC
+- BUPA PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- FAITH PHARMACY L.L.C
+- AL AFDAL MEDICAL CENTER L.L.C
+- MODERN FAMILY CLINIC L.L.C (BRANCH)
+- MODERN FAMILY PHARMACY L.L.C
+- SuperCare Pharmacy LLC (Branch)
+- SuperCare Pharmacy LLC (Branch)
+- Arabella Pharmacy L.L.C - Branch Of Abu Dhabi 1
+- ARABIAN MEDICAL CENTRE
+- PHARMACY ONE R PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- SURE MEDI PHARMACY - SOLE PROPRIETORSHIP L.L.C
+- Aster Pharmacy 166 (Br Of Aster Pharmacies Group L.L.C)
+- Aster pharmacy 176 ( Br of Aster pharmacies Group L.L.C)
+- Aster Pharmacy 179 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 180 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 181 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 182 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 183 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Royal Clinic Downtown Pharmacy Br Of Dm Healthcare LLc
+- Aster Pharmacies Group L.L.C - Branch Of Abu Dhabi 16
+- Aster Pharmacies Group L.L.C - Branch Of Abu Dhabi 17
+- HEALTH FIRST PHARMACY 63 LLC
+- HEALTH FIRST PHARMACY 61(BR OF HEALTH FIRST INVESTMENT LLC)
+- Al saah pharmacy L.L.C
+- GULF PHARMACY
+- AL ABEER MEDICAL CENTER DAY SURGERY UNIT L.L.C
+- AL ABEER PHARMACY LLC
+- AMBER PHARMACY L.L.C
+- Healthline Daycare Surgery LLC
+- HEALTH LINE PHARMACY L.L.C.
+- DANA MEDICAL CENTER L.L.C
+- DANA MEDICAL CENTER PHARMACY L.L.C
+- HEALTH LINE PHARMACY L.L.C. - BRANCH
+- Health First Pharmacy - Branch 11
+- SUPER CARE PHARMACY L.L.C - BRANCH OF ABU DHABI 10
+- JANSONS PHARMACY L.L.C
+- PRIMACARE SPECIALITY CLINICS L.L.C - SHJ. BR
+- DR ABDUL LATIF CLINIC LLC
+- LIFE PHARMACY 119 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 125 (BR OF LIFE PHARMACY L.L.C)
+- LIVERPOOL MEDICAL CLINIC L.L.C
+- LIVERPOOL PHARMACY L.L.C
+- Al Sherouq Medical Centre LLC
+- WOW MEDICAL CENTER
+- ASTER MEDICAL CENTRE - BR OF (D M HEALTHCARE) LLC UMM AL QUWAIN BRANCH
+- LAIKA MEDICAL CENTER
+- PUBLIC LIFE PHARMACY L.L.C.
+- M37 PHARMACY L.L.C.
+- AL NOOR AL SAATE PHARMACY LLC
+- BADAR PHARMACY LLC
+- MEDICINE WORLD LLC
+- SAMARA PHARMACY LLC
+- MUSHEIRIF PHARMACY LLC
+- AROOS AL BAHER PHARMACY LLC
+- AL AFLAJ PHARMACY LLC
+- MAKKAH PHARMACY LLC
+- LABIBAH PHARMACY LLC
+- LIFE PHARMACY LLC BRANCH 50 - BRANCH ABUDHABI 102
+- LIFE PHARMACY LLC BRANCH 27 BRANCH OF ABUDHABI 87
+- LIFE PHARMACY LLC BRANCH 55 - BRANCH OF ABUDHABI 111
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 127
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 122
+- LIFE PHARMACY LLC BRANCH 62 - BRANCH OF ABUDHABI 119
+- Life Pharmacy 128 br of Life Pharmacy LLC
+- Life Pharmacy LLC Branch Br of Sharjah 11
+- Life Pharmacy 126 Br of Life Pharmacy LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 130
+- Life Pharmacy LLC - SHJ. BR. Branch 13
+- Life Pharmacy 132 Br of Life Pharmacy LLC
+- Life Pharmacy 130 (Br of Life Pharmacy L.L.C)
+- Life Pharmacy 135 br of Life pharmacy LLC
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 17
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 133
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 134
+- LIFE PHARMACY LLC BRANCH 135 - BRANCH - BRANCH OF ABU DHABI 1
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 155
+- LIFE PHARMACY 119 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY LLC BRANCH 141 - BRANCH OF ABU DHABI 140
+- LIFE PHARMACY L.L.C - Branch 33
+- LIFE PHARMACY L.L.C - Branch 31
+- MUZEIRA PHARMACY LLC
+- FAITH JABAL PHARMACY LLC
+- FAITHWAY PHARMACY LLC (BRANCH)
+- YOUR CENTER POLY CLINIC L.L.C
+- YOUR CENTER PHARMACY L.L.C
+- AL MUFEED CLINIC GENERAL MEDICINE L.L.C
+- LIFENITY GENOMIC LABORATORY DMCC
+- OXFORD PHARMACY L.L.C
+- MODERN FAMILY CLINIC L.L.C (BRANCH)
+- MODERN FAMILY PHARMACY L.L.C (BRANCH)
+- MBM SPECIALITY MEDICAL CENTER L.L.C
+- MEDICARE MEDICAL CENTRE L.L.C
+- SuperCare Pharmacy LLC Branch-Al Warqa
+- SuperCare Pharmacy LLC Branch-Mizhar
+- GULF CARE DIAGNSOTIC CENTER L.L.C
+- Zest Wellness Pharmacy LLC - Branch Of Abu Dhabi 1
+- A B C PLUS MEDICAL CENTER
+- ABC PLUS PHARMACY
+- ABC PLUS PHARMACY - BRANCH
+- YASSAT LIFE PHARMACY
+- W WILSON HOSPITAL PHARMACY
+- SANA PHARMACY  LLC
+- RIGHT HEALTH PHARMACY JURF 2
+- RIGHT HEALTH CLINIC JURF 2 LLC
+- REEM AL NAHDA MEDICAL DIAGNOSTIC CENTER
+- REAL ONE PHARMACY L.L.C
+- NOOR ALAHLI MEDICAL CCENTER -BRANCH 5
+- NOOR AL AHALIA PHARMACY
+- NOOR AL AHALIA MEDICAL CENTER
+- NAJMAT MUWEILAH PHARMACY LLC
+- LULU AL BUHAIRA PHARMACY LLC
+- LIFE TWO PHARMACY L.L.C
+- LIFE TRIDENT PHARMACY L.L.C
+- LIFE PHARMACY 45 BR OF LIFE PHARMACY LLC
+- LIFE PHARMACY 18 BR OF LIFE PHARMACY LLC
+- Hala Pharmacy 23
+- EXPERT PHARMACY LLC
+- EXPERT MEDICAL CLINIC-SOLE PROPRIETORSHIP.L.L.C
+- ARIFA PHARMACY
+- AL SHAWAB PHARMACY LLC
+- AL SANA PHARMACY LLC
+- AL SAMA PHARMACY LLC
+- AL JAWDAH MEDICAL CENTRE
+- ASTER PHARMACIES GROUP LLC FUJAIRAH BRANCH 2
+- ASTER PHARMACY 174 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 184 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- AL SHUALLA PHARMACY
+- ASTER PHARMACIES GROUP L.L.C - ABU DHABI BRANCH 20
+- ASTER PHARMACIES GROUP L.L.C - BRANCH OF ABU DHABI 18
+- ASTER PHARMACIES GROUP L.L.C - BRANCH OF ABU DHABI 19
+- ASTER PHARMACIES GROUP L.L.C - BRANCH OF ABU DHABI 21
+- ASTER PHARMACY 178 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 188 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ASTER PHARMACY 189 (BR OF ASTER PHARMACIES GROUP L.L.C)
+- ZEST PHARMACY 1 (BR OF ZEST WELLNESS PHARMACY L.L.C)
+- ASTER PHARMACIES GROUP LLC - SHJ.BR - BRANCH 7
+- ASTER ROYAL CLINIC SPRINGS SOUK PHARMACY BR OF D M HEALTHCARE L L C
+- ALOKA EYE CLINIC LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 156
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 18
+- ABEER AL NOOR PHARMACY LLC-BRANCH
+- AL HANA PHARMACY L.L.C
+- MEDCOME HEALTH CARE CENTER
+- BRIGHT CARE CLINIC L.L.C
+- SEHA AL NOOR PHARMACY L.L.C
+- VISTA PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- LIFE PHARMACY L.L.C - Branch 29
+- DELTA AL DHAID PHARMACY
+- DELTA AL MAMZAR PHARMACY
+- DELTA MODERN PHARMACY
+- DELTA PHARMACY
+- FAITH AL KHAIL PHARMACY L.L.C
+- FAITH WALK PHARMACY LLC
+- Faith Zone Pharmacy FZC
+- MASHREQ PHARMACY L.L.C
+- MURIAT PHARMACY L.L.C
+- NASEEM AL BATAEH PHARMACY LLC
+- QALB AL IMAN PHARMACY L.L.C
+- G M G MEDICAL CENTER L.L.C
+- SARAH MEDICAL CENTRE
+- Al Dhafrah Pharmacy LLC
+- Liwa Pharmacy LLC
+- MAX GRAND PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- TruDoc Pharmacy LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 150
+- AL BURHAN PHARMACY LLC
+- AL MUBARAK CENTRE PHARMACY LLC
+- AL NAHDA PHARMACY LLC
+- AL RASHEEDآ PHARMACYآ LLC
+- AL RAWDHAآ PHARMACYآ LLC
+- AL TAMIMI PHARMACY LLC
+- DAR AL NOOR PHARMACY LLC
+- DAR AL SAJAA PHARMACY LLC
+- MADINAT AL QOUZ PHARMACY LLC
+- NAJMAT ABU SHAGARA PHARMACYآ LLC
+- NEW AL SUWAIDI PHARMACY LLC
+- NEW HEALTH SIGN PHARMACY LLC
+- NOOR AL QUSAIS PHARMACY LLC
+- NOOR AL SATWAآ PHARMACY LLC
+- ORBITآ STAR PHARMACYآ LLC
+- ROCK STAR PHARMACY LLC
+- ZAHRAT AL MADINAH PHARMACY LLC
+- AL GHAD AL AFDAL PHARMACY LLC
+- FAJER MIRDIF PHARMACY LLC
+- NAJMAT AL ROLLA PHARMACY LLC
+- KHAYBER MEDICAL CENTER
+- ASCENT ENT SPECIALITY CENTRE LLC
+- ASCENT PHARMACY LLC
+- STEPS POLYCLINIC LLC
+- STEPS PHARMACY L.L.C
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI 19
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 148
+- Life Pharmacy 127 Br of Life Pharmacy LLC
+- Life Pharmacy 112 br of Life phy LLC
+- Life Pharmacy 124 (Br. Of Life Pharmacy LLC)
+- Hala Pharmacy 22 LLC
+- Life Pharmacy LLC SHJ Br Branch 9
+- Life Pharmacy 125 Br. Of Life Pharmacy LLC
+- Life Pharmacy LLC Br 34
+- Life Pharmacy LLC Branch Br of Sharjah 8
+- Life pharmacy 123 Br of Life Pharmacy LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 136
+- HALA PHARMACY 21 LLC Branch
+- Life Pharmacy 139 Br of Life Pharmacy LLC
+- Life Pharamcy 142 Br of Life Pharmacy LLC
+- Life Pharmacy LLC  -  Branch of Abu Dhabi 172
+- Life Pharmacy 138 br of Life Pharmacy LLC
+- Life Pharmacy L.L.C - Branch of Abu Dhabi 164
+- LIFE PHARMACY 143 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 131 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 144 (BR OF LIFE PHARMACY L.L.C)
+- Life Pharmacy 136(Br of Life Pharmacy LLC)
+- Life Pharmacy 141 (Br of Life Pharmacy LLC)
+- EMIRATES INTERNATIONAL MEDICAL CENTER BRANCH -1
+- APEX MEDICAL CENTRE LLC
+- BLACK FALCON PHARMACY LLC
+- LLH Medical Center LLC Pharmacy
+- DR. ISMAIL POLYCLINIC (BRANCH)
+- HAFSA PHARMACY (BRANCH)
+- Zainab Al Shareefi Pharmacy L.L.C
+- SEHA AL NOOR CLINIC LLC
+- SEHA AL NOOR PHARMACY LLC BRANCH
+- SARAH ALI PHARMACY L.L.C
+- Medicom Pharmacy 1 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 187 (Br of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 185
+- Aster Pharmacies Group LLC - Shj. Br - Branch 8
+- Medcare Medical Centre Al Furjan West Pharmacy Br Of Medcare Hospital LLC
+- LA ROSA MEDICAL CENTER L.L.C
+- EARTH PHARMACY - L.L.C - O.P.C
+- Al Bayan Medical Center LLC
+- PRIMECORP MEDICAL CENTER DIP PHARMACY
+- PINE PHARMACY LLC - SPC
+- AL MARJAN PHARMACY LLC
+- Rayhan Gulf Medical Center LLC
+- Rayhan Gulf Pharmacy LLC
+- NAHDI PHARMACY LLC
+- NAHDI PHARMACY BRANCH
+- NAHDI PHARMACY BRANCH 1
+- NAHDI PHARMACY BRANCH 2
+- NAHDI PHARMACY BRANCH 3
+- NAHDI PHARMACY BRANCH 4
+- NAHDI PHARMACY BRANCH 5
+- NAHDI PHARMACY BRANCH 6
+- NAHDI PHARMACY BRANCH 7
+- NAHDI PHARMACY BRANCH 9
+- NAHDI PHARMACY BRANCH 10
+- NAHDI PHARMACY BRANCH 11
+- NAHDI PHARMACY BRANCH 12
+- NAHDI PHARMACY L L C BRANCH OF ABU DHABI 1
+- NAHDI PHARMACY L.L.C - BRANCH OF ABU DHABI 2
+- NAHDI PHARMACY - BRANCH OF ABU DHABI 3
+- NAHDI PHARMACY - BRANCH OF ABU DHABI 4
+- NAHDI PHARMACY L.L.C - SHJ. BR
+- NAHDI PHARMACY L.L.C - SHJ. BR - BRANCH 1
+- NAHDI PHARMACY L.L.C - BRANCH 01
+- NAHDI PHARMACY LLC - RAK BRANCH
+- NAHDI PHARMACY L L C RAK BRANCH 1
+- MED DOC PHARMACY - L.L.C - O.P.C
+- Medicom pharmacy 31 LLC
+- MED DOC PHARMACY L.L.C (EX. SONDOS PHARMACY LLC BRANCH)
+- FAMILY STAR MEDICAL CENTRE
+- FAMILY STAR PHARMACY
+- ADVANCED CARE MEDICAL CENTER BRANCH LLC
+- GRAND ADVANCED CARE PHARMACY LL
+- RALS HEALTHCARE (AL QUSAIS)  (EX. MINI VM POLYCLINIC)
+- RALS PHARMACY (AL QUSAIS) DUBAI
+- RALS PHARMACY BR OF ABDULWAHED BIN SHABIB INVESTMENT GROUP L L C (AL SOUQI) DUBAI
+- RALS HEALTHCARE PHARMACY (BR OF ABD ULWAHED BIN SHABIB INVESTMENT GROUP L.L.C (AL FAHIDI) DUBAI
+- RALS HEALTHCARE BR OF ABD ULWAHED BIN SHABIB INVESTMENT GROUP L.L.C (JABAL ALI) DUBAI
+- RALS PHARMACY BR OF ABD ULWAHED BIN SHABIB INVESTMENT GROUP LLC (JABAL ALI) DUBAI
+- Oud Al Muteena Medical Center
+- MEDCITY MEDICAL CENTER LLC
+- NOOM MEDICAL CLINIC L.L.C
+- NOOM PHARMACY LLC
+- RELIEF PHARMACY LLC
+- MEDICOM 37 PHARMACY LLC RAK BRANCH
+- MEDICOM PHARMACY 36 LLC
+- MEDICOM PHARMACY 37 LLC SHJ BR (AL KHAN) SHARJAH
+- MEDICOM PHARMACY 38 LLC
+- MEDCOM 45 PHARMACY
+- MEDICOM PHARMACY 38 LLC(BRANCH)2
+- AL AFDHAL PHY RAK
+- AL WASL PHARMACY
+- MEDICOM PHARMACY 35 LLC
+- IRVINE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- IRVINE PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- HUMAN TOUCH AHALIA PHARMACY - L.L.C - O.P.C
+- SUPERCARE PHARMACY LLC BRANCH
+- SUPERCARE PHARMACY LLC - SHJ BR - BRANCH 4
+- SUPERCARE PHARMACY L.L.C - BRANCH OF ABU DHABI 11
+- SUPERCARE PHARMACY LLC BRANCH
+- SUPERCARE PHARMACY LLC BRANCH
+- GOLDEN STAR PHARMACY L L C
+- RUKN AL AFRAH PHARMACY L.L.C
+- SAMEENA MEDICAL CENTRE LLC
+- 800 PHARMA FZ-LLC
+- 800 PHARMA PHARMACY LLC
+- 800 PHARMA PHARMACY LLC-SHJ.BR
+- AL FARAH AL HADITHAH PHARMACYLLC
+- AL HADHAR PHARMACY LLC
+- AL MATAR PHARMACY LLC
+- AL NEEM PHARMACY L.L.C
+- AL NEEM PHARMACY L.L.C BRANCH (JAFZA SOUTH)
+- AL RAFEAH PHARMACY LLC
+- CARE MARK PHARMACY FZCO
+- DAR AL FARAJ PHARMACY LLC
+- JANAH PHARMACY L.L.C (SHARJAH)
+- JANAH PHARMACY L.L.C BRANCH-2
+- JANAH PHARMACY LLC (AJMAN)
+- LANA PHARMACY L.L.C (DUBAI)
+- LANA PHARMACY L.L.C (AJMAN)
+- LANA PHARMACY L.L.C (SHARJAH)
+- LANA PHARMACY L.L.C BRANCH
+- MEDON FIRST PHARMACY LLC
+- MEDON FIRST PHARMACY LLC (BRANCH)
+- MEDON FIRST PHARMACY LLC (BRANCH) 3
+- MEDON PHARMACY LLC
+- MEDON PHARMACY LLC RAK Branch
+- PHARMACY SABEEL L.L.C - SHJ. BR 1
+- PHARMACY SABEEL LLC
+- PULSE LIFE PHARMACY LLC
+- RUKN AL RAFEAH PHARMACY LLC
+- RUKN AL UFUQ PHARMACY LLC
+- ZAHRAT AL OUD PHARMACY LLC
+- ZARA PHARMACY LLC
+- MARYAM PHARMACY LLC
+- SHAMS AL AHALIA MEDICAL CENTER
+- SHAMS AL AHALIA MEDICAL  CENTER PHARMACY
+- AL HAJIS PHARMACY L.L.C
+- FAITH AL QUOZ PHARMACY LLC
+- AL KAYAN PHARMACY LLC
+- AIWA PHARMACY LLC
+- FAITH CARE PHARMACY LLC
+- WAHAT AL TAIBAH PHARMACY L.L.C
+- AL JAREENA PHARMACY LLC
+- FAITH HAYAA PHARMACY LLC
+- FAITH CAP 2 PHARMACY LLC
+- AIWA PHARMACY LLC BRANCH 01
+- TABOOK PHARMACY LLC
+- ORCHID AL RGAYEB PHARMACY LLC
+- FAITH HILLS PHARMACY LLC
+- GREEN BELT PHARMACY LLC
+- MED CARE PHARMACY LLC
+- WHAT AL DHAIT PHARMACY LLC
+- AL PLAZA PHARMACY LLC BRANCH
+- AL NAHDA PHARMACY LLC
+- FAMILY PHARMACY
+- MEDICOM PHARMACY 37 LLC
+- MEDCOM 44 PHARMACY
+- VIDA PHARMACY L.L.C
+- ZMC HEALTH CLINIC L.L.C
+- ZMC PHARMACY L.L.C
+- WELL CARE MEDICAL CENTER LLC
+- B F MEDICAL CENTER
+- B F PHARMACY
+- LIFE PHARMACY 146 (BR OF LIFE PHARMACY L.L.C)
+- LIFE TWO PHARMACY L.L.C (JVC)
+- LIFE PHARMACY 149 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 152 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 162 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 155 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 163 (BR OF LIFE PHARMACY L.L.C)
+- PHARMACY FOR LESS (BR OF LIFE PHARMACY L.L.C)
+- LIFE HEALTH AND WELLNESS TRADING LLC
+- LIFE PHARMACY 154 (BR OF LIFE PHARMACY L.L.C)
+- HALA 37 PHARMACY LLC OPC
+- LIFE PHARMACY 129 (BR OF LIFE PHARMACY LLC)
+- LIFE PHARMACY 161 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 164 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 167 (BR OF LIFE PHARMACY L.L.C)
+- HALA 37 PHARMACY LLC OPC BRANCH 1
+- LIFE PHARMACY 158 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 156 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C BRANCH (DSO)
+- LIFE PHARMACY 159 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 166 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 153 (BR OF LIFE PHARMACY L.L.C)
+- HALA 37 PHARMACY LLC OPC -BRANCH 3
+- LIFE PHARMACY L.L.C - SHJ. BR 22
+- LIFE PHARMACY LLC. SHJ. BR - BRANCH 26
+- LIFE PHARMACY L.L.C - SHJ. BR 23
+- LIFE PHARMACY 147 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 148 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 27
+- LIFE PHARMACY LLC BRANCH AL REEM 1
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI AL WAHA
+- MODERN FAMILY PHARMACY LLC BRANCH
+- MODERN FAMILY PHARMACY LLC SHJ BR
+- BLUEBELL MEDICAL CENTRE LLC PHARMACY
+- THUMBAY CLINIC (S.P.S - L.L.C)
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 163
+- LIFE PHARMACY 133 (BR OF LIFE PHARMACY L.L.C)
+- LA FAMI MEDICAL COMPLEX - L.L.C
+- HEALTH PLUS PHARMACY SPS LLC (AJMAN)
+- PALMA MEDICAL CENTER LLC
+- Houston Pharmacy LLC
+- GSM MEDICAL CENTRE LLC (BRANCH)
+- GSM GREENS PHARMACY LLC
+- NEW ROYAL MEDICAL AND DENTAL CENTER LLC
+- HARMONICA MEDICAL CENTER L.L.C
+- PURE PATH MEDICAL CENTER L.L.C.SP
+- PURE PATH PHARMACY L.L.C.SP
+- Life Pharmacy 113 Br of Life Pharmacy LLC
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 190
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 173
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 187
+- Life Pharmacy 145 Br of Life Pharmacy LLC-
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 189
+- LIFE PHARMACY 134 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC AL REEM
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI SHABANA
+- LIFE PHARMACY LLC Fujairah Branch 6
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 212
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI 214
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI KHALIDIYA
+- LIFE PHARMACY L.L.C - BRANCH OF ABU DHABI
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 21
+- GOOD LIFE MEDICAL CENTER L.L.C
+- AL MULAYIM PHARMACY L.L.C
+- BLOOM PLUS POLY CLINIC L.L.C
+- BLOOM PLUS PHARMACY L.L.C
+- ALIBTESAMA JATHABA MEDICAL CENTER
+- ALNOOR ALNAHDA POLY CLINIC L.L.C(old Al Shifa Al Uropi Medical Center )
+- AL MARIFFA MEDICAL CENTER L.L.C (DUBAI)
+- AL MARIFFA MEDICAL CENTRE (SHARJAH)
+- ARD AL KHAN PHARMACY L.L.C
+- BEST LIFE GENERAL CLINIC L.L.C
+- AL SHIFA MEDICAL CENTER -  UAQ
+- CALLADOC TELEHEALTH SERVICES L.L.C
+- AL TAJ AL FADHI CLINIC
+- AFRIDI MEDICAL CENTER L.L.C
+- AFRIDI PHARMACY LLC
+- DEANS LIFE PHARMACY L.L.C
+- SHARE AND CARE MEDICAL CENTER L L C
+- FORTE CLINICAL LABORATORY L.L.C
+- MEDPLUS MEDICAL CENTER LLC
+- MEDPLUS PHARMACY LLC
+- Care For You Medical Centre
+- MOTHER PHARMACY L.L.C
+- ABDULLA PHARMACY - L.L.C
+- Zest Wellness Pharmacy L LC - Shj. Br
+- Aster Pharmacies Group Llc - Shj. Br - Branch 6
+- Aster Pharmacy 186 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 191 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 192 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 196 (Br Of Aster Pharmacies Group L.L.C)
+- NEW IBN SINA PHARMACY (BR OF IBN SINA GROUP PHARMACIES) LLC
+- IBN SINA 95 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 100 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- Ibn Sina Pharmacy 66
+- IBN SINA 91 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 75 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA SCIENTIFIC PHARMACY(BR OF IBN SINA GROUP PHARMACIES)
+- IBN SINA 67 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - BRANCH 3
+- IBN SINA 68 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 77 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP LLC - SPC Fujairah Branch 1
+- IBN SINA 76 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 82 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - SHJ. BR - BRANCH 9
+- IBN SINA 86 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 50 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 81 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 57 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 93 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA 69 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - BRANCH 11
+- CWH PHARMACY L.L.C
+- CWH Pharmacy LLC Branch
+- LIFE PHARMACY L.L.C - Branch 37
+- LIFE PHARMACY L.L.C - Branch 36
+- LIFE PHARMACY 160 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 165 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 177 (BR OF LIFE PHARMACY L.L.C)
+- Life Pharmacy 176 ( Br Of Life Pharmacy LLC)
+- LIFE PHARMACY L.L.C - DIBBA BR 2
+- HALA 37 PHARMACY LLC OPC - Branch 2
+- LIFE PHARMACY LLC - SHJ.BR-BRANCH 16
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 10
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 18
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 19
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 20
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 28
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 32
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 31
+- LIFE PHARMACY L.L.C BRANCH 3
+- ROYAL PHOENIX CLINIC L.L.C
+- ROYAL PHOENIX CLINIC L.L.C - PHARMACY
+- Kripa Medical Centre
+- AL MUBARAK MEDICAL CENTER SPS - LLC
+- SHIFA AL MUBARAK PHARMACY SPS LLC
+- AL JIMI MEDICAL POLYCLINICS L.L.C. - BRANCH
+- NEDHAL PHARMACY L.L.C
+- NEDHAL PHARMACY L.L.C. - BRANCH
+- SHAHEEN MEDICAL CENTER
+- MANSOUR PHARMACY
+- REGAL HOUSE PHARMACY
+- MARHABA PHARMACY L.L.C (DUBAI)
+- Right Care Pharmacy L L C SP
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 30
+- LIFE PHARMACY L.L.C - Branch 38
+- LIFE PHARMACY 175 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 35
+- LIFE PHARMACY 169 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY LLC - SPC Fujairah Branch 8
+- JEBEL ALI EMERGENCY AND TRAUMA CENTER
+- SANIMED INTERNATIONAL LAB AND MANAGEMENT L.L.C.
+- AL SHIFA UROPI PHARMACY L.L.C (SHARJAH)
+- JESR AL SHIFA PHARMACY - L.L.C
+- AL SHIFA UROPI PHARMACY L.L.C (DUBAI)
+- AL SHIFA UROPI PHARMACY DWC LLC
+- WELLNESS MEDICAL CENTER L.L.C (UAQ)
+- WELLNESS PHARMACY (UAQ)
+- Sharmin Akter Medical  Center - L.L.C
+- Sharmin Akter Pharmacy - L.L.C
+- AL AMAL MEDICAL CENTRE LLC
+- AL HEMAYA GENERAL CLINIC LLC (JURF) - AJMAN
+- ABSOLUTE WELLNESS MEDICAL  CENTRE PHARMACY
+- SMART MEDICAL CENTRE L.L.C
+- SMART PHARMACY L.L.C
+- JANAH PHARMACY FZ LLC
+- ADAMS PHARMACY L.L.C (BRANCH)
+- ADAMS PHARMACY L.L.C
+- DAOUD PHARMACY L.L.C.SP
+- LIFE PHARMACY 172 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 170 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 174 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 181 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 34
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 38
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 37
+- Aster Pharmacy 171 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 177 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 195 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 194 (Br Of Aster Pharmacies Group L.L.C)
+- RUKN AL MAJAZ PHARMACY L.L.C
+- SANIMED INTERNATIONAL LAB AND MANGEMENT L.L.C - SHJ. BR
+- Life Pharmacy and Express Clinic FZ LLC
+- Life Pharmacy LLC Fujairah Branch 4
+- Health First Pharmacy LLC - Branch 10
+- Health First Pharmacy 53
+- Health First Pharmacy 55
+- Health First Pharmacy - Branch 7
+- Health First Pharmacy 57
+- Health First Pharmacy 62
+- HEALTH FIRST PHARMACY 64
+- Ferdows Medical Center L.L.C
+- SUHA MEDICAL CENTER LLC FUJAIRAH BRANCH 1
+- SUHA PHARMACY LLC FUJAIRAH BRANCH 1
+- M26 MEDICAL CENTER
+- M26 PHARMACY
+- CARE AND CURE MEDICAL AND DENTAL CENTER LLC
+- CARE AND CURE PHARMACY LLC
+- MERASHID PHARMACY LLC - SPC
+- BANGLADESH PHARMACY LLC
+- AHLAN PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- LIFE PHARMACY 168 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 179 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 36
+- LIFE PHARMACY 183 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 173 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - Branch 40
+- LIFE PHARMACY L.L.C - Branch 43
+- VPM INTERNATIONAL HEALTH CARE - L.L.C
+- RASLAN MEDICAL CENTRE L.L.C.SP
+- INSTACARE PHARMACY L.L.C
+- Peshawar Medical Center LLC (International City)
+- NEXA PHARMACY L.L.C
+- DAR AL HIKMAH MEDICAL LAB
+- AL SANABIL MEDICAL CENTER L.L.C
+- Regional Medical And Dental Center LLC
+- Zain Care Medical And Dental  Center LLC OPC
+- NAFEESA MEDICAL CENTER L.L.C
+- RELAX HEALTH INTERNATIONAL MEDICAL CENTER
+- Aster Pharmacies Group LLC (DMCC Branch) (MEDORE Residential Tower)
+- Medcare Medical Centre Arabian Ranches 3 Pharmacy Br Of Medcare Hospital LLC
+- Medcare Medical Centre The Valley Pharmacy Br Of Medcare Hospital L.L.C
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 25
+- LIFE PHARMACY 188 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 180 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 17
+- LIFE PHARMACY 185 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - Branch 47
+- SHIFA AL BAIROONI PHARMACY LLC
+- SAFA AL BAIROONI PHARMACY LLC
+- RUKN AL MAMZAR PHARMACY LLC
+- Life Pharmacy 180 Express Clinic
+- LIFE PHARMACY 173 BR OF LIFE PHARMACY (GENERAL CLINIC)
+- MADAWAH HEALTHCARE CLINIC L.L.C
+- LLH CLINIC L.L.C.
+- LLH Pharmacy Al Musaffah L.L.C. - Branch
+- LLH MEDICAL CENTRE AL AIN-LLC
+- LLH CLINIC L.L.C. - BRANCH
+- HEALTH ONE MEDICAL CENTER
+- AL HILAL PHARMACY LLC
+- SAFA ALNOOR POLYCLINIC LLC
+- MUMTAZ AL NOOR EXPRESS PHARMACY CLINIC LLC
+- GRAND DR ISMAIL POLYCLINIC L.L.C
+- GRAND DR ISMAIL POLYCLINIC L.L.C PHARMACY
+- DR SABAH AL SAKBAN MEDICAL CLINIC - L.L.C - S.P.C
+- BASHIRA SPECIALIZED MEDICAL CLINIC  - L.L.C - S.P.C
+- AL DIYAFA PHARMACY (ABU DHABI)
+- Peshawar Medical Center L.L.C (Ajman)
+- PMC PHARMACY LLC
+- Pak Satwa Poly Clinic Co. LLC
+- AL HAYAT PHARMACY LLC
+- DAR AL HAYAT PHARMACY
+- Nucleus Clinic LLC (DUBAI MARINA)
+- NANDA MEDICAL CENTER
+- FIRST STEP PHARMACY L.L.C.SP
+- Aster Pharmacy 208 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 211 (Br Of Aster Pharmacies Group L.L.C)
+- Medcare Medical Center Nad Al Sheba Pharmacy Br of Medcare Hospital LLC
+- PROHEALTH PHARMACY L.L.C
+- AL IMAN PHARMACY LLC (RAK)
+- AL IMAN PHARMACY LLC (UAQ)
+- AHLAN PHARMACY LLC (RAK)
+- AL RAYYAN PHARMACY - L.L.C
+- SELENA PHARMACY - L.L.C - O.P.C
+- ACTIVE HEALTH CARE PHARMACY-L.L.C-O.P.C
+- MEDHUB MEDICAL CENTER L.L.C
+- MEDHUB PHARMACY L.L.C
+- MEDHUB PHARMACY L.L.C (BRANCH)
+- ABEER ALNOOR POLYCLINIC LLC PHARMACY BRANCH(MUHAISNAH)
+- AL BARSHA ALNOOR POLYCLINIC L.L.C
+- INNOVATION FAMILY PHARMACY L.L.C
+- DURAIYA KAMAL MEDICAL CLINIC-PHARMACY
+- DYNAMIC LIFE CLINIC L.L.C
+- DYNAMIC LIFE CLINIC LLC BRANCH
+- ICARE AL REFFA BR OF EXCEL HEALTHCARE LLC-Pharmacy
+- FAMILY CARE MEDICAL CENTER LLC
+- SADAF AL SAJAH MEDICAL CENTER
+- SADAF AL SAJAH PHARMACY
+- AL NEEL PHARMACY L.L.C.S.P
+- ALAHRAR PHARMACY L.L.C.S.P
+- TULIP PHARMACY LLC SP
+- IRIS DENTAL CLINIC LLC
+- LIFE PHARMACY L.L.C (BRANCH)-DSO
+- LIFE PHARMACY 186 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - Branch 42
+- LIFE PHARMACY 196 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 190 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - Branch 41
+- LIFE PHARMACY L.L.C - Branch 46
+- LIFE PHARMACY 189 (BR OF LIFE PHARMACY L.L.C)
+- PHARMACY FOR LESS 1 (BR OF PHARMACY FOR LESS L.L.C)
+- LIFE PHARMACY 182 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 198 (Br of LIFE PHARMACY L.L.C)
+- Aster Pharmacy 199 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 190 (Br Of Aster Pharmacies Group L.L.C)
+- Zest Pharmacy 3 (Br of Zest Wellness Pharmacy L.L.C)
+- Trudoc Health Care LLC-(Teleconsultation Only)
+- NEW ROYAL PHARMACY LLC
+- TRUDOC HEALTH CARE LLC - BRANCH OF ABU DHABI 1
+- SHIFA MUWAILEH MEDICAL CENTER L.L.C
+- SHIFA MUWAILEH PHARMACY L.L.C
+- AL NOOR POLYCLINIC L.L.C (BRANCH)
+- MUMTAZ AL NOOR EXPRESS PHARMACY LLC
+- AMBER PHARMACY L.L.C (BRANCH)
+- Hkmat Alain Pharmacy -Sole Proprietorship L.L.C.
+- Al Roda Pharmacy - Sole Proprietorship - L.L.C.
+- Alain Modern Pharmacy - Sole Proprietorship L.L.C.
+- New Alain Pharmacy - Sole Proprietorship L.L.C.
+- National Alain Pharmacy - Sole Proprietorship L.L.C.
+- Sofitel Pharmacy - Sole Proprietorship L.L.C
+- Alain Pharmacy Bawadi Mall - Sole Proprietorship
+L.L.C.
+- Cooperative Alain Pharmacy - Sole Proprietorship
+- Alain Pharmacy - Sole Proprietorship L.L.C. - Branch
+- Alain Central Pharmacy - Sole Proprietorship L.L.C.
+- Nahel Alain Pharmacy - Sole Proprietorship L.L.C.
+- Alain Pharmacy Zakher - Sole Proprietorship L.L.C.
+- Alain Pharmacy Umm Ghafa- Sole Proprietorship L.L.C.
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 1
+- Alain Pharmacy - Sole Proprietorship L.L.C. - Branch 2
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 4
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 3
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 5
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 6
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 7
+- Alain Pharmacy - Sole Proprietorship L.L.C.-Branch 8
+- Alain Pharmacy - Sole Proprietorship L.L.C.-Branch 9
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 13
+- Alain Pharmacy - Sole Proprietorship L.L.C. - Branch
+- APOTEKE PHARMACY - SOLE PROPRIETORSHIP L.L.C.
+- New Alain Pharmacy - Sole Proprietorship L.L.C - Branhc
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 14
+- Al Ain Pharmacy - Sole Proprietorship L.L.C.- BRANCH 16
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch 18
+- New Alain Pharmacy - Sole Proprietorship L.L.C - Branhc
+- Alain Pharmacy - Sole Proprietorship L.L.C.-Branch
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch
+- Alain Pharmacy - Sole Proprietorship L.L.C.- Branch
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. -BRANCH
+- Alain Pharmacy Sole Proprietorship L.L.C.- Branch 22
+- Alain Pharmacy- Sole Proprietorhip L.L.C.- Branch 24
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. -BRANCH
+- Alain Pharmacy Sole Prorietorship Llc- Branch 25
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. -BRANCH
+- AL AIN PHARMACY SOLE PROPRIETORSHIP L L C BRANCH
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. -BRANCH
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- ALAIN PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- Elegance Medical Center Pharmacy
+- The Heart Medical Center Pharmacy L.L.C.
+- Arabian Specialist Medical Center Pharmacy L.L.C.
+- Spanish Center Pharmacy L.L.C.
+- MARJAN MEDICAL CENTER PHARMACY - L.L.C - S.P.C - BRANCH
+- AL RAHMANIAH MEDICAL CENTER LLC
+- AL RAHMANIAH PHARMACY LLC
+- New Medical Centre Pharmacy LTD Branch (JAFZA)
+- SONDOS PHARMACY LLC BRANCH
+- DAR AL NUJOOM PHARMACY LLC
+- LIFECARE CLINIC LLC BRANCH 5
+- LLH AL RAZEEN CLINIC LLC
+- LIFECARE INTERNATIONAL PHARMACY L.L.C. - BRANCH 5
+- LIFECARE INTERNATIONAL PHARMACY L.L.C. - BRANCH 4
+- MEDEOR MEDICAL CENTRE LLC
+- LLH PHARMACY AL MUSAFFAH LLC BRANCH 2
+- LLH PHARMACY AL RAZEEN LLC
+- MEDICOM PHARMACY 38 LLC BRANCH
+- LLH CLINIC LLC BRANCH 1
+- GRAND MURIAT PHARMACY LLC
+- AL BARASHI PHARMACY LLC
+- AL NAHDHA PHARMACY LLC
+- AL PLAZA PHARMACY L.L.C.(BRANCH ) MAMZAR
+- Alya Medical Center LLC
+- Alya Pharmacy LLC
+- AL AMTHAL OCCUPATIONAL MEDICINE L.L.C
+- HAKIM MEDICAL CENTER L.L.C.SP
+- LIFE PHARMACY L.L.C - Branch 39
+- LIFE PHARMACY L.L.C. BRANCH OF ABUDHABI 23 (MAKANI MAL)
+- LIFE PHARMACY 194 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 201 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 203 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 191 (BR OF LIFE PHARMACY L.L.C)
+- HEALTH & GLOW PHARMACY 2 (BR OF LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 40
+- Land Mark Medicare Pharmacy â€“ Sole Proprietorship L.L.C
+- PARK BETTER LIFE PHARMACY (L.LC) (BRANCH)
+- NEOM PHARMACY - L.L.C - O.P.C
+- LENOX MEDICAL AND DENTAL CENTER LLC
+- ELITECARE MEDICAL CENTRE-SOLE PROPRIETORSHIP LLC
+- SHEIKHA PHARMACY LLC
+- IBN SINA 72 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH GLOBAL CARE
+- IBN SINA 59 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C.))
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP L.L.C. - BRANCH Al Qana
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - BRANCH 10
+- IBN SINA GROUP PHARMACIES (L.L.C) (BRANCH)
+- IBN SINA 46 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 65 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 56 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 88 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA Pharmacy LLC OPC - Branch 4
+- IBN SINA PHARAMCY SOLE PROPRIETORSHIP L.L.C - SHJ. BR - BRANCH 14
+- Ibn Sina Group Pharmacies (LLC) (Expo City Dubai
+- IBN SINA SOLEPROPRIETORSHIP LLC SHJ BR 13
+- IBN SINA PHARMACY 84 (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA 53 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- IBN SINA PHARMACY - SOLE PROPRIETORSHIP L.L.C FUJAIRAH BRANCH 3
+- IBN SINA 49 PHARMACY (BR OF IBN SINA GROUP PHARMACIES (L.L.C))
+- ABEER AL NOOR PHARMACY LLC-BRANCH
+- L L H MEDICAL CENTER L.L.C (BRANCH)
+- LLH MEDICAL CENTER LLC PHARMACY BRANCH
+- BAB AL TEB MEDICAL CENTRE- SOLE PROPRIETORSHIP L.L.C.
+- PESHAWAR PHARMACY - L.L.C - O.P.C (ABU DHABI)
+- Tadawi Health Care LLC (Branch) IMPZ
+- Tadawi Health Care LLC (Branch) DIP
+- LIFE PHARMACY 189 EXPRESS CLINIC
+- CO OPERATIVE PHARMACY
+- DR JAMEELA CLINIC LLC
+- ALSHAMSI PHARMACY LLC
+- Aster Pharmacy 197 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 209 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 210 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 212 (Br Of Aster Pharmacies Group L.L.C)
+- Zest Wellness Pharmacy LLC. DWC-Branch
+- Aster Pharmacies Group LLC - Shj. Br - Branch 9
+- LIFE TIME PHARMACY L.L.C.SP
+- LIFE TIME PHARMACY L.L.C.SP - BRANCH 1
+- RIGHT CHOICE HEALTH PHARMACY
+- AL FARABI MEDICAL LABORATORIES LLC
+- 800PHARMA1 PHARMACY CO. L.L.C - BRANCH 01
+- 24HOUR PHARMACY CO. L.L.C
+- 800PHARMA1 PHARMACY CO. L.L.C (BRANCH)
+- 24 HOUR PHARMACY CO.LLC - SHJ. BR 1
+- NOOR AL SHIFA MEDICAL CENTER
+- AL TALAL PHARMACY LLC BRANCH 1
+- SPECIALTY PHARMACY L.L.C.
+- ROYAL SABA MEDICAL CLINIC
+- ROYAL SABA MEDICAL CLINIC PHARMACY
+- JAVIDA MEDICAL CENTER L.L.C.
+- ISLAMABAD MEDICAL CLINIC LLC BR
+- GOLD LIFE MEDICAL CLINIC LLC
+- CITY RELIEF PHARMACY LLC
+- CITY RELIEF EXPRESS CLINIC LLC
+- CRX PHARMACY LLC
+- CRX EXPRESS CLINIC LLC
+- FIRST HEALTH MEDICAL CENTER LLC
+- HEALTH FIRST PHARMACY 65 (BR OF HEALTH FIRST INVESTMENT L.L.C)
+- AL MUSTAQEEM MEDICAL CENTER L.L.C
+- LIFE PHARMACY 190 EXPRESS CLINIC
+- Peshawar Medicine and Dentistry LLC
+- PARADISE PLUS POLY CLINIC L.L.C (BRANCH)
+- PARADISE PLUS POLY CLINIC LLC (BRANCH) AMBULATORY PHARMACY
+- CARE 7 MEDICAL CENTER L.L.C
+- CARE 7 PHARMACY L.L.C
+- PHARMACY FOR LESS BRANCH1
+- LIFE PHARMACY 204 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C (BRANCH) (DSO)
+- LIFE PHARMACY GLOBAL VILLAGE (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 41
+- LIFE PHARMACY L.L.C (Ajman city center )
+- ARMADA ONE DAY SURGICAL CENTER DMCC
+- ARMADA MEDICAL CENTRE DMCC
+- Aster Pharmacy 207 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 215 (Br of Aster Pharmacies Group L.L.C)
+- PESHAWAR PHARMACY LLC (SHARJAH)
+- CARE POINT CLINIC- L.L.C
+- MEDI CURE PHARMACY L.L.C
+- LIRA PHARMACY
+- MEDHUB MEDICAL CENTER L.L.C(BRANCH)
+- MEDHUB PHARMACY L.L.C (Branch)
+- Sheikh Tahnoon Bin Mohammed Medical City
+- Outpatient Pharmacy Sheikh Tahnoon Bin Mohammed Medical City
+- Sheikh Tahnoon Bin Mohammed Medical City - Rehabilitation Hospital
+- Outpatient Pharmacy - Sheikh Tahnoon Bin Mohammed Medical City Rehabilitation Hospital
+- Inpatient Pharmacy -Sheikh Tahnoon Bin Mohammed Medical City
+- Hisn Al Dhafra Pharmacy
+- Hisn Al Dhafra Medical Center
+- SEHA Kidney Care Center - Abu Dhabi Pharmacy
+- YAS MOBILE CLICNIC
+- AL NIYADAT HEALTHCARE CENTER PHARMACY
+- SAKINA FOR CHILDREN PHARMACY
+- SALMA REHABILITATION HOSPITAL - L.L.C - S.P.C
+- RAINBOW MEDICAL CENTRE
+- HESSA MEDICAL CLINIC
+- MOOPANS POLYCLINIC L.L.C
+- MOOPANS PHARMACY L.L.C
+- HEALTHLINE PRIMARY HEALTHCARE PHARMACY (Formerly Mayo Care One Pharmacy)
+- BADR AL SAMAA PHARMACY LLC - DUBAI
+- INARA MEDICAL CENTER LLC SP
+- AL BEDAYA PHARMACY L.L.C.SP
+- ZAIN CURA MEDICAL CENTER L.L.C
+- Aster Pharmacy 213 (Br Of Aster Pharmacies Group L.L.C)
+- Aster Pharmacy 219 (Br Of Aster Pharmacies Group L.L.C)
+- Zest Wellness Pharmacy L.L.C - Branch Of Abu Dhabi
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI (SHIAB AL ASHKAR)
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI (SHAWAMEKH CENTRAL MALL)
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI (SARAB MALL)
+- LIFE PHARMACY LLC - BRANCH OF ABU DHABI (THE H TOWER PLAZA)
+- LIFE PHARMACY L.L.C (BRANCH) (DSO)
+- LIFE PHARMACY 210 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY 206 (Br of LIFE PHARMACY L.L.C)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 43 (AL KHAN)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 44 (AL NAHDAآ SHARJAH)
+- LIFE PHARMACY L.L.C - SHJ. BR - BRANCH 42 (AL SHAHBA)
+- LIFE PHARMACY L.L.C - Branch 44 (AL JURF AJMAN)
+- Droncall LTD
+- Droncall Home Healthcare llc
+- HOUSECALL HEALTH CARE
+- BETA STAR CLINIC L L C
+- AL BARSHA AL NOOR POLYCLINIC LLC
 ```
-#### 43. هل Burjeel Hospital داخل الشبكة؟
+#### 23. هل Burjeel Hospital داخل الشبكة؟
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -1383,7 +9906,7 @@ UnicodeEncodeError: 'charmap' codec can't encode character '\u200b' in position 
 ```text
 YES: burjeel hospital
 ```
-#### 44. هل مستشفى برجيل داخل الشبكة؟
+#### 24. هل مستشفى برجيل داخل الشبكة؟
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -1391,29 +9914,9 @@ YES: burjeel hospital
 - reason: Deterministic supported response returned.
 - output:
 ```text
-YES: مستشفى برجيل
+YES: burjeel hospital
 ```
-#### 45. Burjeel Hospital في اي شبكة؟
-- intent: unsupported
-- tool: None
-- plan: None
-- classification: REVIEW
-- reason: Unsupported phrasing or out-of-scope query needs triage.
-- output:
-```text
-عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم.
-```
-#### 46. في أي شبكة Burjeel Hospital
-- intent: unsupported
-- tool: None
-- plan: None
-- classification: REVIEW
-- reason: Unsupported phrasing or out-of-scope query needs triage.
-- output:
-```text
-عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم.
-```
-#### 47. هل ACCURACY PLUS MEDICAL LABORATORY في شبكة بيسك بلس؟
+#### 25. Burjeel Hospital في اي شبكة؟
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -1421,9 +9924,9 @@ YES: مستشفى برجيل
 - reason: Deterministic supported response returned.
 - output:
 ```text
-[NETWORK] المزود ACCURACY PLUS MEDICAL LABORATORY داخل شبكة HN Basic Plus. النوع: DIAGNOSTIC CENTER. المدينة: ABU DHABI.
+Networks for Burjeel Hospital: hn_exclusive, hn_premier
 ```
-#### 48. هل AL FARHAN MEDICAL LABORATORY - L L C في بيسك بلس؟
+#### 26. في أي شبكة Burjeel Hospital
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -1431,9 +9934,29 @@ YES: مستشفى برجيل
 - reason: Deterministic supported response returned.
 - output:
 ```text
-[NETWORK] المزود AL FARHAN MEDICAL LABORATORY - L L C داخل شبكة HN Basic Plus. النوع: DIAGNOSTIC CENTER. المدينة: ABU DHABI.
+Networks for Burjeel Hospital: hn_exclusive, hn_premier
 ```
-#### 49. هاتلي مستشفيات في الشارقة
+#### 27. هل ACCURACY PLUS MEDICAL LABORATORY في شبكة بيسك بلس؟
+- intent: network_lookup
+- tool: network_lookup
+- plan: None
+- classification: GOOD
+- reason: Deterministic supported response returned.
+- output:
+```text
+[NETWORK] ط§ظ„ظ…ط²ظˆط¯ ACCURACY PLUS MEDICAL LABORATORY ط¯ط§ط®ظ„ ط´ط¨ظƒط© HN Basic Plus. ط§ظ„ظ†ظˆط¹: DIAGNOSTIC CENTER. ط§ظ„ظ…ط¯ظٹظ†ط©: ABU DHABI.
+```
+#### 28. هل AL FARHAN MEDICAL LABORATORY - L L C في بيسك بلس؟
+- intent: network_lookup
+- tool: network_lookup
+- plan: None
+- classification: GOOD
+- reason: Deterministic supported response returned.
+- output:
+```text
+[NETWORK] ط§ظ„ظ…ط²ظˆط¯ AL FARHAN MEDICAL LABORATORY - L L C ط¯ط§ط®ظ„ ط´ط¨ظƒط© HN Basic Plus. ط§ظ„ظ†ظˆط¹: DIAGNOSTIC CENTER. ط§ظ„ظ…ط¯ظٹظ†ط©: ABU DHABI.
+```
+#### 29. هاتلي مستشفيات في الشارقة
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -1442,7 +9965,7 @@ YES: مستشفى برجيل
 - output:
 ```text
 [NETWORK]
-مستشفيات الشارقة (HN Basic Plus):
+ظ…ط³طھط´ظپظٹط§طھ ط§ظ„ط´ط§ط±ظ‚ط© (HN Basic Plus):
 - AL NAKHEEL ONE DAY SURGERY HOSPITAL
 - AL SAHA WA AL SHIFAA HOSPITAL FOR ONE DAY SURGERY
 - BURJEEL SPECIALTY HOSPITAL LLC- SHARJAH
@@ -1452,7 +9975,7 @@ YES: مستشفى برجيل
 - ROYAL HOSPITAL
 - THUMBAY HOSPITAL DAYCARE - MUWAILAH
 ```
-#### 50. عيادات في دبي
+#### 30. عيادات في دبي
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -1461,7 +9984,7 @@ YES: مستشفى برجيل
 - output:
 ```text
 [NETWORK]
-عيادات دبي (HN Basic Plus):
+ط¹ظٹط§ط¯ط§طھ ط¯ط¨ظٹ (HN Basic Plus):
 - DR. ISMAIL DAY SURGICAL CENTRE
 - ABBARA POLYCLINIC
 - ABEER AL NOOR POLY CLINIC LLC BRANCH
@@ -1560,7 +10083,7 @@ YES: مستشفى برجيل
 - DR. ISMAIL POLYCLINIC BRANCH-JEBEL ALI
 - DR. ISMAIL POLYCLINIC KARAMA
 - DR. JOHN CLINIC
-- DR. JOSEPH’S POLYCLINIC-KARAMA BR OF GHI
+- DR. JOSEPHâ€™S POLYCLINIC-KARAMA BR OF GHI
 - DR. KAMKAR MEDICAL & PHYSIOTHERAPY CENTRE
 - DR. KOYA CLINIC
 - DR. MOOPENS' AL QUOZ MEDICAL CENTRE
@@ -1793,7 +10316,7 @@ POLYCLINIC
 ```
 
 ### comparison_questions
-#### 51. Compare Remedy 04 and Remedy 05
+#### 1. Compare Remedy 04 and Remedy 05
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Remedy 04 vs Remedy 05
@@ -1810,14 +10333,14 @@ Direct Billing: Remedy 04: Yes | Remedy 05: Yes
 Reimbursement Allowed: Remedy 04: No | Remedy 05: Yes
 Referral Required: Remedy 04: Yes | Remedy 05: No
 Area of Coverage: Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 05: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
-Network: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
+Network: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
 
-Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
+Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
 
 Recommendation:
 Both plans are very similar in their key benefits.
 ```
-#### 52. Compare Remedy 02 and Remedy 03
+#### 2. Compare Remedy 02 and Remedy 03
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Remedy 02 vs Remedy 03
@@ -1843,7 +10366,7 @@ Remedy 03 is generally better if your client is looking for stronger outpatient 
 - Higher pharmacy limit (AED 5,000 vs 3,000)
 - Stronger diagnostics benefits
 ```
-#### 53. Compare Remedy 02 and Remedy 04
+#### 3. Compare Remedy 02 and Remedy 04
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Remedy 02 vs Remedy 04
@@ -1860,16 +10383,16 @@ Direct Billing: Remedy 02: Yes | Remedy 04: Yes
 Reimbursement Allowed: Remedy 02: No | Remedy 04: No
 Referral Required: Remedy 02: Yes | Remedy 04: Yes
 Area of Coverage: Remedy 02: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
-Network: Remedy 02: HN Basic Plus | Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals
+Network: Remedy 02: HN Basic Plus | Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals
 
-Both plans are similar overall, but differ in: Pharmacy: Remedy 02=Maximum AED 3,000/year 30% payable by member on each prescription. Any medication in excess of the annual limit will not be covered, Remedy 04=Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered, Diagnostics: Remedy 02=Lab tests: 15% co-pay applied at the time of payment Covered.; Radiology: 15% co-pay applied at the time of payment, Remedy 04=Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment, Physiotherapy: Remedy 02=Covered for a maximum of 12 sessions per year 15% co-pay per session, Remedy 04=Covered for a maximum of 12 sessions per year NIL co-pay per session, Network: Remedy 02=HN Basic Plus, Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals.
+Both plans are similar overall, but differ in: Pharmacy: Remedy 02=Maximum AED 3,000/year 30% payable by member on each prescription. Any medication in excess of the annual limit will not be covered, Remedy 04=Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered, Diagnostics: Remedy 02=Lab tests: 15% co-pay applied at the time of payment Covered.; Radiology: 15% co-pay applied at the time of payment, Remedy 04=Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment, Physiotherapy: Remedy 02=Covered for a maximum of 12 sessions per year 15% co-pay per session, Remedy 04=Covered for a maximum of 12 sessions per year NIL co-pay per session, Network: Remedy 02=HN Basic Plus, Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals.
 
 Recommendation:
 Remedy 04 is generally better if your client is looking for stronger outpatient benefits:
 - Higher pharmacy limit (AED 7,500 vs 3,000)
 - Stronger diagnostics benefits
 ```
-#### 54. Compare Classic 2 and Classic 3
+#### 4. Compare Classic 2 and Classic 3
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Classic 2 vs Classic 3
@@ -1889,37 +10412,37 @@ Both plans are similar overall, but differ in: Area of Coverage: Classic 2=World
 Recommendation:
 Both plans are very similar in their key benefits.
 ```
-#### 55. Compare Classic 2R and Classic 3
+#### 5. Compare Classic 2R and Classic 3
 - intent: plan_comparison
 - tool: None
 - plan: Classic 2R vs Classic 3
 - classification: BLOCKED_OK
-- reason: Comparison boundary/safety block triggered as expected.
+- reason: Policy block behaved as expected for comparison request.
 - output:
 ```text
 Sorry, comparison is not supported or not available for one or both plans.
 ```
-#### 56. Compare Classic 2 and Classic 2R
+#### 6. Compare Classic 2 and Classic 2R
 - intent: plan_comparison
 - tool: None
 - plan: Classic 2R vs Classic 2
 - classification: BLOCKED_OK
-- reason: Comparison boundary/safety block triggered as expected.
+- reason: Policy block behaved as expected for comparison request.
 - output:
 ```text
 Sorry, comparison is not supported or not available for one or both plans.
 ```
-#### 57. Compare Classic 2R and Remedy 05
+#### 7. Compare Classic 2R and Remedy 05
 - intent: plan_comparison
 - tool: None
 - plan: Classic 2R vs Remedy 05
 - classification: BLOCKED_OK
-- reason: Comparison boundary/safety block triggered as expected.
+- reason: Policy block behaved as expected for comparison request.
 - output:
 ```text
 Sorry, comparison is not supported or not available for one or both plans.
 ```
-#### 58. Compare Remedy 4 and Remedy 5
+#### 8. Compare Remedy 4 and Remedy 5
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Remedy 04 vs Remedy 05
@@ -1936,14 +10459,14 @@ Direct Billing: Remedy 04: Yes | Remedy 05: Yes
 Reimbursement Allowed: Remedy 04: No | Remedy 05: Yes
 Referral Required: Remedy 04: Yes | Remedy 05: No
 Area of Coverage: Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 05: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
-Network: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
+Network: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
 
-Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
+Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
 
 Recommendation:
 Both plans are very similar in their key benefits.
 ```
-#### 59. قارن بين Remedy 4 و Remedy 5
+#### 9. قارن بين Remedy 4 و Remedy 5
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Remedy 04 vs Remedy 05
@@ -1951,23 +10474,23 @@ Both plans are very similar in their key benefits.
 - reason: Deterministic supported response returned.
 - output:
 ```text
-مقارنة بين Remedy 04 و Remedy 05:
-الحد السنوي: Remedy 04: AED. 150,000 | Remedy 05: AED. 150,000
-الصيدلة: Remedy 04: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered | Remedy 05: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered
-التشخيص: Remedy 04: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment | Remedy 05: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment
-العلاج الطبيعي: Remedy 04: Covered for a maximum of 12 sessions per year NIL co-pay per session | Remedy 05: Covered for a maximum of 12 sessions per year NIL co-pay per session
-الدفع المباشر: Remedy 04: Yes | Remedy 05: Yes
-التعويض: Remedy 04: No | Remedy 05: Yes
-الإحالة: Remedy 04: Yes | Remedy 05: No
-نطاق التغطية: Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 05: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
-الشبكة: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
+ظ…ظ‚ط§ط±ظ†ط© ط¨ظٹظ† Remedy 04 ظˆ Remedy 05:
+ط§ظ„ط­ط¯ ط§ظ„ط³ظ†ظˆظٹ: Remedy 04: AED. 150,000 | Remedy 05: AED. 150,000
+ط§ظ„طµظٹط¯ظ„ط©: Remedy 04: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered | Remedy 05: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered
+ط§ظ„طھط´ط®ظٹطµ: Remedy 04: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment | Remedy 05: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment
+ط§ظ„ط¹ظ„ط§ط¬ ط§ظ„ط·ط¨ظٹط¹ظٹ: Remedy 04: Covered for a maximum of 12 sessions per year NIL co-pay per session | Remedy 05: Covered for a maximum of 12 sessions per year NIL co-pay per session
+ط§ظ„ط¯ظپط¹ ط§ظ„ظ…ط¨ط§ط´ط±: Remedy 04: Yes | Remedy 05: Yes
+ط§ظ„طھط¹ظˆظٹط¶: Remedy 04: No | Remedy 05: Yes
+ط§ظ„ط¥ط­ط§ظ„ط©: Remedy 04: Yes | Remedy 05: No
+ظ†ط·ط§ظ‚ ط§ظ„طھط؛ط·ظٹط©: Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 05: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
+ط§ظ„ط´ط¨ظƒط©: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
 
-Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
+Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
 
 Recommendation:
 Both plans are very similar in their key benefits.
 ```
-#### 60. مقارنة بين Remedy 04 و Remedy 05
+#### 10. مقارنة بين Remedy 04 و Remedy 05
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Remedy 04 vs Remedy 05
@@ -1975,23 +10498,23 @@ Both plans are very similar in their key benefits.
 - reason: Deterministic supported response returned.
 - output:
 ```text
-مقارنة بين Remedy 04 و Remedy 05:
-الحد السنوي: Remedy 04: AED. 150,000 | Remedy 05: AED. 150,000
-الصيدلة: Remedy 04: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered | Remedy 05: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered
-التشخيص: Remedy 04: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment | Remedy 05: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment
-العلاج الطبيعي: Remedy 04: Covered for a maximum of 12 sessions per year NIL co-pay per session | Remedy 05: Covered for a maximum of 12 sessions per year NIL co-pay per session
-الدفع المباشر: Remedy 04: Yes | Remedy 05: Yes
-التعويض: Remedy 04: No | Remedy 05: Yes
-الإحالة: Remedy 04: Yes | Remedy 05: No
-نطاق التغطية: Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 05: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
-الشبكة: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
+ظ…ظ‚ط§ط±ظ†ط© ط¨ظٹظ† Remedy 04 ظˆ Remedy 05:
+ط§ظ„ط­ط¯ ط§ظ„ط³ظ†ظˆظٹ: Remedy 04: AED. 150,000 | Remedy 05: AED. 150,000
+ط§ظ„طµظٹط¯ظ„ط©: Remedy 04: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered | Remedy 05: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered
+ط§ظ„طھط´ط®ظٹطµ: Remedy 04: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment | Remedy 05: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment
+ط§ظ„ط¹ظ„ط§ط¬ ط§ظ„ط·ط¨ظٹط¹ظٹ: Remedy 04: Covered for a maximum of 12 sessions per year NIL co-pay per session | Remedy 05: Covered for a maximum of 12 sessions per year NIL co-pay per session
+ط§ظ„ط¯ظپط¹ ط§ظ„ظ…ط¨ط§ط´ط±: Remedy 04: Yes | Remedy 05: Yes
+ط§ظ„طھط¹ظˆظٹط¶: Remedy 04: No | Remedy 05: Yes
+ط§ظ„ط¥ط­ط§ظ„ط©: Remedy 04: Yes | Remedy 05: No
+ظ†ط·ط§ظ‚ ط§ظ„طھط؛ط·ظٹط©: Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 05: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
+ط§ظ„ط´ط¨ظƒط©: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
 
-Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
+Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
 
 Recommendation:
 Both plans are very similar in their key benefits.
 ```
-#### 61. الفرق بين Classic 2 و Classic 3
+#### 11. الفرق بين Classic 2 و Classic 3
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Classic 2 vs Classic 3
@@ -1999,39 +10522,39 @@ Both plans are very similar in their key benefits.
 - reason: Deterministic supported response returned.
 - output:
 ```text
-مقارنة بين Classic 2 و Classic 3:
-الحد السنوي: Classic 2: AED 250,000 | Classic 3: AED 250,000
-الدفع المباشر: Classic 2: Yes | Classic 3: Yes
-الإحالة: Classic 2: No | Classic 3: No
-نطاق التغطية: Classic 2: Worldwide Excluding USA and Canada | Classic 3: UAE+Home country
-الشبكة: Classic 2: Standard Plus | Classic 3: Standard
+ظ…ظ‚ط§ط±ظ†ط© ط¨ظٹظ† Classic 2 ظˆ Classic 3:
+ط§ظ„ط­ط¯ ط§ظ„ط³ظ†ظˆظٹ: Classic 2: AED 250,000 | Classic 3: AED 250,000
+ط§ظ„ط¯ظپط¹ ط§ظ„ظ…ط¨ط§ط´ط±: Classic 2: Yes | Classic 3: Yes
+ط§ظ„ط¥ط­ط§ظ„ط©: Classic 2: No | Classic 3: No
+ظ†ط·ط§ظ‚ ط§ظ„طھط؛ط·ظٹط©: Classic 2: Worldwide Excluding USA and Canada | Classic 3: UAE+Home country
+ط§ظ„ط´ط¨ظƒط©: Classic 2: Standard Plus | Classic 3: Standard
 
 Both plans are similar overall, but differ in: Area of Coverage: Classic 2=Worldwide Excluding USA and Canada, Classic 3=UAE+Home country, Network: Classic 2=Standard Plus, Classic 3=Standard.
 
 Recommendation:
 Both plans are very similar in their key benefits.
 ```
-#### 62. قارن بين Remedy 4 و Plan X
+#### 12. قارن بين Remedy 4 و Plan X
 - intent: plan_comparison
 - tool: None
 - plan: None
 - classification: BLOCKED_OK
-- reason: Comparison boundary/safety block triggered as expected.
+- reason: Policy block behaved as expected for comparison request.
 - output:
 ```text
-يرجى تحديد خطتين مدعومتين للمقارنة.
+ظٹط±ط¬ظ‰ طھط­ط¯ظٹط¯ ط®ط·طھظٹظ† ظ…ط¯ط¹ظˆظ…طھظٹظ† ظ„ظ„ظ…ظ‚ط§ط±ظ†ط©.
 ```
-#### 63. Compare Classic 2 and Plan X
+#### 13. Compare Classic 2 and Plan X
 - intent: plan_comparison
 - tool: None
 - plan: None
 - classification: BLOCKED_OK
-- reason: Comparison boundary/safety block triggered as expected.
+- reason: Policy block behaved as expected for comparison request.
 - output:
 ```text
 Comparison is not supported or not available for one or both plans. Please specify two supported plans to compare.
 ```
-#### 64. compare all plans
+#### 14. compare all plans
 - intent: unsupported
 - tool: None
 - plan: None
@@ -2041,7 +10564,7 @@ Comparison is not supported or not available for one or both plans. Please speci
 ```text
 Sorry, this query is not supported or not available. Please specify a supported plan or question.
 ```
-#### 65. Which plan is better, Classic 2 or Classic 3?
+#### 15. Which plan is better, Classic 2 or Classic 3?
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Classic 2 vs Classic 3
@@ -2061,7 +10584,7 @@ Both plans are similar overall, but differ in: Area of Coverage: Classic 2=World
 Recommendation:
 Both plans are very similar in their key benefits.
 ```
-#### 66. Can you compare all enhanced plans?
+#### 16. Can you compare all enhanced plans?
 - intent: unsupported
 - tool: None
 - plan: None
@@ -2071,7 +10594,7 @@ Both plans are very similar in their key benefits.
 ```text
 Sorry, this query is not supported or not available. Please specify a supported plan or question.
 ```
-#### 67. ما الفرق بين ريميدي 02 و ريميدي 04
+#### 17. ما الفرق بين ريميدي 02 و ريميدي 04
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Remedy 02 vs Remedy 04
@@ -2079,25 +10602,25 @@ Sorry, this query is not supported or not available. Please specify a supported 
 - reason: Deterministic supported response returned.
 - output:
 ```text
-مقارنة بين Remedy 02 و Remedy 04:
-الحد السنوي: Remedy 02: AED. 150,000 | Remedy 04: AED. 150,000
-الصيدلة: Remedy 02: Maximum AED 3,000/year 30% payable by member on each prescription. Any medication in excess of the annual limit will not be covered | Remedy 04: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered
-التشخيص: Remedy 02: Lab tests: 15% co-pay applied at the time of payment Covered.; Radiology: 15% co-pay applied at the time of payment | Remedy 04: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment
-العلاج الطبيعي: Remedy 02: Covered for a maximum of 12 sessions per year 15% co-pay per session | Remedy 04: Covered for a maximum of 12 sessions per year NIL co-pay per session
-الدفع المباشر: Remedy 02: Yes | Remedy 04: Yes
-التعويض: Remedy 02: No | Remedy 04: No
-الإحالة: Remedy 02: Yes | Remedy 04: Yes
-نطاق التغطية: Remedy 02: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
-الشبكة: Remedy 02: HN Basic Plus | Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals
+ظ…ظ‚ط§ط±ظ†ط© ط¨ظٹظ† Remedy 02 ظˆ Remedy 04:
+ط§ظ„ط­ط¯ ط§ظ„ط³ظ†ظˆظٹ: Remedy 02: AED. 150,000 | Remedy 04: AED. 150,000
+ط§ظ„طµظٹط¯ظ„ط©: Remedy 02: Maximum AED 3,000/year 30% payable by member on each prescription. Any medication in excess of the annual limit will not be covered | Remedy 04: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered
+ط§ظ„طھط´ط®ظٹطµ: Remedy 02: Lab tests: 15% co-pay applied at the time of payment Covered.; Radiology: 15% co-pay applied at the time of payment | Remedy 04: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment
+ط§ظ„ط¹ظ„ط§ط¬ ط§ظ„ط·ط¨ظٹط¹ظٹ: Remedy 02: Covered for a maximum of 12 sessions per year 15% co-pay per session | Remedy 04: Covered for a maximum of 12 sessions per year NIL co-pay per session
+ط§ظ„ط¯ظپط¹ ط§ظ„ظ…ط¨ط§ط´ط±: Remedy 02: Yes | Remedy 04: Yes
+ط§ظ„طھط¹ظˆظٹط¶: Remedy 02: No | Remedy 04: No
+ط§ظ„ط¥ط­ط§ظ„ط©: Remedy 02: Yes | Remedy 04: Yes
+ظ†ط·ط§ظ‚ ط§ظ„طھط؛ط·ظٹط©: Remedy 02: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
+ط§ظ„ط´ط¨ظƒط©: Remedy 02: HN Basic Plus | Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals
 
-Both plans are similar overall, but differ in: Pharmacy: Remedy 02=Maximum AED 3,000/year 30% payable by member on each prescription. Any medication in excess of the annual limit will not be covered, Remedy 04=Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered, Diagnostics: Remedy 02=Lab tests: 15% co-pay applied at the time of payment Covered.; Radiology: 15% co-pay applied at the time of payment, Remedy 04=Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment, Physiotherapy: Remedy 02=Covered for a maximum of 12 sessions per year 15% co-pay per session, Remedy 04=Covered for a maximum of 12 sessions per year NIL co-pay per session, Network: Remedy 02=HN Basic Plus, Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals.
+Both plans are similar overall, but differ in: Pharmacy: Remedy 02=Maximum AED 3,000/year 30% payable by member on each prescription. Any medication in excess of the annual limit will not be covered, Remedy 04=Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered, Diagnostics: Remedy 02=Lab tests: 15% co-pay applied at the time of payment Covered.; Radiology: 15% co-pay applied at the time of payment, Remedy 04=Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment, Physiotherapy: Remedy 02=Covered for a maximum of 12 sessions per year 15% co-pay per session, Remedy 04=Covered for a maximum of 12 sessions per year NIL co-pay per session, Network: Remedy 02=HN Basic Plus, Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals.
 
 Recommendation:
 Remedy 04 is generally better if your client is looking for stronger outpatient benefits:
 - Higher pharmacy limit (AED 7,500 vs 3,000)
 - Stronger diagnostics benefits
 ```
-#### 68. ايه الفرق بين Remedy 04 و Remedy 05
+#### 18. ايه الفرق بين Remedy 04 و Remedy 05
 - intent: plan_comparison
 - tool: compare_plans
 - plan: Remedy 04 vs Remedy 05
@@ -2105,45 +10628,45 @@ Remedy 04 is generally better if your client is looking for stronger outpatient 
 - reason: Deterministic supported response returned.
 - output:
 ```text
-مقارنة بين Remedy 04 و Remedy 05:
-الحد السنوي: Remedy 04: AED. 150,000 | Remedy 05: AED. 150,000
-الصيدلة: Remedy 04: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered | Remedy 05: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered
-التشخيص: Remedy 04: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment | Remedy 05: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment
-العلاج الطبيعي: Remedy 04: Covered for a maximum of 12 sessions per year NIL co-pay per session | Remedy 05: Covered for a maximum of 12 sessions per year NIL co-pay per session
-الدفع المباشر: Remedy 04: Yes | Remedy 05: Yes
-التعويض: Remedy 04: No | Remedy 05: Yes
-الإحالة: Remedy 04: Yes | Remedy 05: No
-نطاق التغطية: Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 05: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
-الشبكة: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
+ظ…ظ‚ط§ط±ظ†ط© ط¨ظٹظ† Remedy 04 ظˆ Remedy 05:
+ط§ظ„ط­ط¯ ط§ظ„ط³ظ†ظˆظٹ: Remedy 04: AED. 150,000 | Remedy 05: AED. 150,000
+ط§ظ„طµظٹط¯ظ„ط©: Remedy 04: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered | Remedy 05: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication in excess of the annual limit will not be covered
+ط§ظ„طھط´ط®ظٹطµ: Remedy 04: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment | Remedy 05: Lab tests: NIL co-pay applied at the time of payment Covered.; Radiology: NIL co-pay applied at the time of payment
+ط§ظ„ط¹ظ„ط§ط¬ ط§ظ„ط·ط¨ظٹط¹ظٹ: Remedy 04: Covered for a maximum of 12 sessions per year NIL co-pay per session | Remedy 05: Covered for a maximum of 12 sessions per year NIL co-pay per session
+ط§ظ„ط¯ظپط¹ ط§ظ„ظ…ط¨ط§ط´ط±: Remedy 04: Yes | Remedy 05: Yes
+ط§ظ„طھط¹ظˆظٹط¶: Remedy 04: No | Remedy 05: Yes
+ط§ظ„ط¥ط­ط§ظ„ط©: Remedy 04: Yes | Remedy 05: No
+ظ†ط·ط§ظ‚ ط§ظ„طھط؛ط·ظٹط©: Remedy 04: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval. | Remedy 05: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. Elective IP treatment outside UAE is subject to prior approval.
+ط§ظ„ط´ط¨ظƒط©: Remedy 04: HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals | Remedy 05: HN Basic Plus
 
-Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital – Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery – Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
+Both plans are similar overall, but differ in: Reimbursement Allowed: Remedy 04=No, Remedy 05=Yes, Referral Required: Remedy 04=Yes, Remedy 05=No, Network: Remedy 04=HN Basic Plus (OP Restricted to Clinics) with direct access to below hospitals for OP Services. Aster Hospitals (Qusais, Mankhool, Jebel Ali) Burjeel Specialty Hospital Sharjah International Modern Hospital, DXB Ajman Specialty Hospital â€“ Ajman Al Saha wa Al Shifaa Hospital For One Day Surgery â€“ Sharjah Specialist Subject to GP Referral both in Clinics and Hospitals, Remedy 05=HN Basic Plus.
 
 Recommendation:
 Both plans are very similar in their key benefits.
 ```
-#### 69. قارن بين Classic 2R و Classic 2
+#### 19. قارن بين Classic 2R و Classic 2
 - intent: plan_comparison
 - tool: None
 - plan: Classic 2R vs Classic 2
-- classification: REVIEW
-- reason: Needs manual review for routing/wording/support classification.
+- classification: BLOCKED_OK
+- reason: Policy block behaved as expected for comparison request.
 - output:
 ```text
-ط¹ط°ط±ط§ظ‹طŒ ط§ظ„ظ…ظ‚ط§ط±ظ†ط© ط؛ظٹط± ظ…ط¯ط¹ظˆظ…ط© ط£ظˆ ط؛ظٹط± ظ…طھط§ط­ط© ظ„ط®ط·ط© ط£ظˆ ط£ظƒط«ط±.
+ط·آ¹ط·آ°ط·آ±ط·آ§ط¸â€¹ط·إ’ ط·آ§ط¸â€‍ط¸â€¦ط¸â€ڑط·آ§ط·آ±ط¸â€ ط·آ© ط·ط›ط¸ظ¹ط·آ± ط¸â€¦ط·آ¯ط·آ¹ط¸ث†ط¸â€¦ط·آ© ط·آ£ط¸ث† ط·ط›ط¸ظ¹ط·آ± ط¸â€¦ط·ع¾ط·آ§ط·آ­ط·آ© ط¸â€‍ط·آ®ط·آ·ط·آ© ط·آ£ط¸ث† ط·آ£ط¸ئ’ط·آ«ط·آ±.
 ```
-#### 70. Compare Remedy 06 and Classic 3
+#### 20. Compare Remedy 06 and Classic 3
 - intent: plan_comparison
 - tool: None
 - plan: Remedy 06 vs Classic 3
 - classification: BLOCKED_OK
-- reason: Comparison boundary/safety block triggered as expected.
+- reason: Policy block behaved as expected for comparison request.
 - output:
 ```text
 Sorry, comparison is not supported or not available for one or both plans.
 ```
 
 ### recommendation_questions
-#### 71. Which plan is better for Dubai?
+#### 1. Which plan is better for Dubai?
 - intent: unsupported
 - tool: None
 - plan: None
@@ -2153,47 +10676,47 @@ Sorry, comparison is not supported or not available for one or both plans.
 ```text
 Sorry, this query is not supported or not available. Please specify a supported plan or question.
 ```
-#### 72. Which enhanced plan should I offer?
+#### 2. Which enhanced plan should I offer?
 - intent: unsupported
 - tool: None
 - plan: None
-- classification: BLOCKED_OK
-- reason: Recommendation intent intentionally blocked in deterministic scope.
+- classification: REVIEW
+- reason: Unsupported phrasing or out-of-scope query needs triage.
 - output:
 ```text
 Sorry, this query is not supported or not available. Please specify a supported plan or question.
 ```
-#### 73. best enhanced plan overall
+#### 3. best enhanced plan overall
 - intent: unsupported
 - tool: None
 - plan: None
-- classification: BLOCKED_OK
-- reason: Recommendation intent intentionally blocked in deterministic scope.
+- classification: REVIEW
+- reason: Unsupported phrasing or out-of-scope query needs triage.
 - output:
 ```text
 Sorry, this query is not supported or not available. Please specify a supported plan or question.
 ```
-#### 74. Which plan should I recommend to a family?
+#### 4. Which plan should I recommend to a family?
 - intent: unsupported
 - tool: None
 - plan: None
-- classification: BLOCKED_OK
-- reason: Recommendation intent intentionally blocked in deterministic scope.
+- classification: REVIEW
+- reason: Unsupported phrasing or out-of-scope query needs triage.
 - output:
 ```text
 Sorry, this query is not supported or not available. Please specify a supported plan or question.
 ```
-#### 75. Should I offer Classic 2R or Classic 3?
+#### 5. Should I offer Classic 2R or Classic 3?
 - intent: plan_comparison
 - tool: None
 - plan: Classic 2R vs Classic 3
 - classification: BLOCKED_OK
-- reason: Comparison boundary/safety block triggered as expected.
+- reason: Policy block behaved as expected for comparison request.
 - output:
 ```text
 Sorry, comparison is not supported or not available for one or both plans.
 ```
-#### 76. What is the best value plan?
+#### 6. What is the best value plan?
 - intent: unsupported
 - tool: None
 - plan: None
@@ -2203,17 +10726,7 @@ Sorry, comparison is not supported or not available for one or both plans.
 ```text
 Sorry, this query is not supported or not available. Please specify a supported plan or question.
 ```
-#### 77. Recommend one plan for outpatient heavy usage
-- intent: unsupported
-- tool: None
-- plan: None
-- classification: BLOCKED_OK
-- reason: Recommendation intent intentionally blocked in deterministic scope.
-- output:
-```text
-Sorry, this query is not supported or not available. Please specify a supported plan or question.
-```
-#### 78. Which plan do brokers usually sell most?
+#### 7. Recommend one plan for outpatient heavy usage
 - intent: unsupported
 - tool: None
 - plan: None
@@ -2223,29 +10736,39 @@ Sorry, this query is not supported or not available. Please specify a supported 
 ```text
 Sorry, this query is not supported or not available. Please specify a supported plan or question.
 ```
-#### 79. أفضل خطة بشكل عام؟
+#### 8. Which plan do brokers usually sell most?
 - intent: unsupported
 - tool: None
 - plan: None
-- classification: BLOCKED_OK
-- reason: Recommendation intent intentionally blocked in deterministic scope.
+- classification: REVIEW
+- reason: Unsupported phrasing or out-of-scope query needs triage.
 - output:
 ```text
-عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم.
+Sorry, this query is not supported or not available. Please specify a supported plan or question.
 ```
-#### 80. تنصحني باي خطة؟
+#### 9. أفضل خطة بشكل عام؟
 - intent: unsupported
 - tool: None
 - plan: None
-- classification: BLOCKED_OK
-- reason: Recommendation intent intentionally blocked in deterministic scope.
+- classification: REVIEW
+- reason: Unsupported phrasing or out-of-scope query needs triage.
 - output:
 ```text
-عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم.
+ط¹ط°ط±ط§ظ‹طŒ ظ‡ط°ط§ ط§ظ„ط§ط³طھظپط³ط§ط± ط؛ظٹط± ظ…ط¯ط¹ظˆظ… ط£ظˆ ط؛ظٹط± ظ…طھط§ط­. ظٹط±ط¬ظ‰ طھط­ط¯ظٹط¯ ط®ط·ط© ط£ظˆ ط³ط¤ط§ظ„ ظ…ط¯ط¹ظˆظ….
+```
+#### 10. تنصحني باي خطة؟
+- intent: unsupported
+- tool: None
+- plan: None
+- classification: REVIEW
+- reason: Unsupported phrasing or out-of-scope query needs triage.
+- output:
+```text
+ط¹ط°ط±ط§ظ‹طŒ ظ‡ط°ط§ ط§ظ„ط§ط³طھظپط³ط§ط± ط؛ظٹط± ظ…ط¯ط¹ظˆظ… ط£ظˆ ط؛ظٹط± ظ…طھط§ط­. ظٹط±ط¬ظ‰ طھط­ط¯ظٹط¯ ط®ط·ط© ط£ظˆ ط³ط¤ط§ظ„ ظ…ط¯ط¹ظˆظ….
 ```
 
 ### arabic_mixed_questions
-#### 81. كلاسيك 2R network?
+#### 1. كلاسيك 2R network?
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 2R
@@ -2255,13 +10778,13 @@ Sorry, this query is not supported or not available. Please specify a supported 
 ```text
 Plan: Classic 2R
 Code: HN_CLASSIC_2R
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
 Referral required: No
 ```
-#### 82. classic3 referral?
+#### 2. classic3 referral?
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 3
@@ -2271,13 +10794,13 @@ Referral required: No
 ```text
 Plan: Classic 3
 Code: HN_CLASSIC_3
-الشبكة: Standard
+ط§ظ„ط´ط¨ظƒط©: Standard
 Annual limit: AED 250,000
 Area: UAE+Home country
 Direct billing: Yes
 Referral required: No
 ```
-#### 83. direct billing في كلاسيك 3؟
+#### 3. direct billing في كلاسيك 3؟
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 3
@@ -2287,13 +10810,13 @@ Referral required: No
 ```text
 Plan: Classic 3
 Code: HN_CLASSIC_3
-الشبكة: Standard
+ط§ظ„ط´ط¨ظƒط©: Standard
 Annual limit: AED 250,000
 Area: UAE+Home country
 Direct billing: Yes
 Referral required: No
 ```
-#### 84. HN Classic 2R ليمت
+#### 4. HN Classic 2R ليمت
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 2R
@@ -2303,13 +10826,13 @@ Referral required: No
 ```text
 Plan: Classic 2R
 Code: HN_CLASSIC_2R
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
 Referral required: No
 ```
-#### 85. classic2r area of coverage
+#### 5. classic2r area of coverage
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 2R
@@ -2319,13 +10842,13 @@ Referral required: No
 ```text
 Plan: Classic 2R
 Code: HN_CLASSIC_2R
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
 Referral required: No
 ```
-#### 86. شبكة Classic 2R
+#### 6. شبكة Classic 2R
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 2R
@@ -2335,13 +10858,13 @@ Referral required: No
 ```text
 Plan: Classic 2R
 Code: HN_CLASSIC_2R
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
 Referral required: No
 ```
-#### 87. Summarize كلاسيك 3
+#### 7. Summarize كلاسيك 3
 - intent: plan_summary
 - tool: get_plan_summary
 - plan: Classic 3
@@ -2357,7 +10880,7 @@ Area: UAE+Home country
 Direct billing: Yes
 Referral required: No
 ```
-#### 88. Classic 2R cashless?
+#### 8. Classic 2R cashless?
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 2R
@@ -2367,13 +10890,13 @@ Referral required: No
 ```text
 Plan: Classic 2R
 Code: HN_CLASSIC_2R
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
 Referral required: No
 ```
-#### 89. كلاسيك 3 annual limit
+#### 9. كلاسيك 3 annual limit
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 3
@@ -2383,13 +10906,13 @@ Referral required: No
 ```text
 Plan: Classic 3
 Code: HN_CLASSIC_3
-الشبكة: Standard
+ط§ظ„ط´ط¨ظƒط©: Standard
 Annual limit: AED 250,000
 Area: UAE+Home country
 Direct billing: Yes
 Referral required: No
 ```
-#### 90. ينفع استخدمها في مصر؟
+#### 10. ينفع استخدمها في مصر؟
 - intent: unsupported
 - tool: None
 - plan: None
@@ -2397,9 +10920,9 @@ Referral required: No
 - reason: Unsupported phrasing or out-of-scope query needs triage.
 - output:
 ```text
-عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم.
+ط¹ط°ط±ط§ظ‹طŒ ظ‡ط°ط§ ط§ظ„ط§ط³طھظپط³ط§ط± ط؛ظٹط± ظ…ط¯ط¹ظˆظ… ط£ظˆ ط؛ظٹط± ظ…طھط§ط­. ظٹط±ط¬ظ‰ طھط­ط¯ظٹط¯ ط®ط·ط© ط£ظˆ ط³ط¤ط§ظ„ ظ…ط¯ط¹ظˆظ….
 ```
-#### 91. هل لازم referral في كلاسيك 3؟
+#### 11. هل لازم referral في كلاسيك 3؟
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 3
@@ -2409,13 +10932,13 @@ Referral required: No
 ```text
 Plan: Classic 3
 Code: HN_CLASSIC_3
-الشبكة: Standard
+ط§ظ„ط´ط¨ظƒط©: Standard
 Annual limit: AED 250,000
 Area: UAE+Home country
 Direct billing: Yes
 Referral required: No
 ```
-#### 92. تغطية كلاسيك 3
+#### 12. تغطية كلاسيك 3
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 3
@@ -2425,13 +10948,13 @@ Referral required: No
 ```text
 Plan: Classic 3
 Code: HN_CLASSIC_3
-الشبكة: Standard
+ط§ظ„ط´ط¨ظƒط©: Standard
 Annual limit: AED 250,000
 Area: UAE+Home country
 Direct billing: Yes
 Referral required: No
 ```
-#### 93. ليمت كلاسيك 2R
+#### 13. ليمت كلاسيك 2R
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 2R
@@ -2441,13 +10964,13 @@ Referral required: No
 ```text
 Plan: Classic 2R
 Code: HN_CLASSIC_2R
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
 Referral required: No
 ```
-#### 94. هل يغطي الطوارئ في كلاسيك 2R؟
+#### 14. هل يغطي الطوارئ في كلاسيك 2R؟
 - intent: unsupported
 - tool: None
 - plan: Classic 2R
@@ -2455,29 +10978,29 @@ Referral required: No
 - reason: Benefit data exists in source but intentionally not exposed in runtime.
 - output:
 ```text
-عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم.
+ط¹ط°ط±ط§ظ‹طŒ ظ‡ط°ط§ ط§ظ„ط§ط³طھظپط³ط§ط± ط؛ظٹط± ظ…ط¯ط¹ظˆظ… ط£ظˆ ط؛ظٹط± ظ…طھط§ط­. ظٹط±ط¬ظ‰ طھط­ط¯ظٹط¯ ط®ط·ط© ط£ظˆ ط³ط¤ط§ظ„ ظ…ط¯ط¹ظˆظ….
 ```
-#### 95. هل يوجد direct billing في هذه العيادة؟
+#### 15. هل يوجد direct billing في هذه العيادة؟
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
 - classification: REVIEW
-- reason: Provider lookup failed; likely alias/coverage limitation.
+- reason: Runtime or routing response needs triage.
 - output:
 ```text
 Provider not found.
 ```
-#### 96. هل هذه المستشفى ضمن الشبكة؟
+#### 16. هل هذه المستشفى ضمن الشبكة؟
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
 - classification: REVIEW
-- reason: Provider lookup failed; likely alias/coverage limitation.
+- reason: Runtime or routing response needs triage.
 - output:
 ```text
 Provider not found.
 ```
-#### 97. ما نوع المزود Burjeel Hospital؟
+#### 17. ما نوع المزود Burjeel Hospital؟
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -2487,7 +11010,7 @@ Provider not found.
 ```text
 Type for Burjeel Hospital: HOSPITAL
 ```
-#### 98. في أي مدينة يقع Burjeel Hospital؟
+#### 18. في أي مدينة يقع Burjeel Hospital؟
 - intent: network_lookup
 - tool: network_lookup
 - plan: None
@@ -2497,17 +11020,17 @@ Type for Burjeel Hospital: HOSPITAL
 ```text
 City for Burjeel Hospital: ABU DHABI
 ```
-#### 99. Burjeel Hospital في أي شبكة؟
-- intent: unsupported
-- tool: None
+#### 19. Burjeel Hospital في أي شبكة؟
+- intent: network_lookup
+- tool: network_lookup
 - plan: None
-- classification: REVIEW
-- reason: Unsupported phrasing or out-of-scope query needs triage.
+- classification: GOOD
+- reason: Deterministic supported response returned.
 - output:
 ```text
-عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم.
+Networks for Burjeel Hospital: hn_exclusive, hn_premier
 ```
-#### 100. هل Classic 2 يحتاج referral
+#### 20. هل Classic 2 يحتاج referral
 - intent: plan_core
 - tool: get_plan_core
 - plan: Classic 2
@@ -2517,7 +11040,7 @@ City for Burjeel Hospital: ABU DHABI
 ```text
 Plan: Classic 2
 Code: HN_CLASSIC_2
-الشبكة: Standard Plus
+ط§ظ„ط´ط¨ظƒط©: Standard Plus
 Annual limit: AED 250,000
 Area: Worldwide Excluding USA and Canada
 Direct billing: Yes
