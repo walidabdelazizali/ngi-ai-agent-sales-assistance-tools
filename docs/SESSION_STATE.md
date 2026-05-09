@@ -157,3 +157,71 @@ stage2-live
 - All field values confirmed against source_table_HN_CLASSIC_2R.json.
 - No product code changes were required — infrastructure was already in place.
 - Test suite: 694 passed, 2 skipped.
+
+## Latest Work Session (Operational Pressure Sprint - 200 Queries)
+
+### Operational Pressure Evidence Sprint
+1. Added deterministic evidence runner: [scripts/run_operational_pressure_200.py](scripts/run_operational_pressure_200.py).
+2. Built a 200-query pressure pack with strict required distribution:
+	- Remedy/core: 40
+	- Provider/network: 50
+	- Enhanced baseline Classic 2R: 40
+	- Comparison pressure: 30
+	- Recommendation/out-of-scope: 20
+	- Real broker-style Arabic phrasing: 20
+3. Enforced deterministic classification for each query:
+	- GOOD / REVIEW / BLOCKED_OK / GAP
+	- with reason and failure-pattern tagging.
+4. Added regression coverage for pack integrity and classifier behavior:
+	- [tests/test_operational_pressure_200.py](tests/test_operational_pressure_200.py)
+5. Generated evidence artifacts:
+	- [docs/operational_usage/operational_pressure_200_pack.md](docs/operational_usage/operational_pressure_200_pack.md)
+	- [docs/operational_usage/operational_pressure_200_results.md](docs/operational_usage/operational_pressure_200_results.md)
+	- [docs/operational_usage/operational_pressure_200_delta.md](docs/operational_usage/operational_pressure_200_delta.md)
+6. Operational replay summary (200 queries):
+	- GOOD: 111
+	- REVIEW: 22
+	- BLOCKED_OK: 66
+	- GAP: 1
+7. Safety and scope checks:
+	- Unsupported recommendation/pricing/underwriting set: 20/20 BLOCKED_OK.
+	- Enhanced unsupported benefits for Classic 2R remained blocked in pressure run.
+8. Full validation after sprint: **702 passed**.
+
+## Next Session Priority
+- Keep scope evidence-first and run a narrow hardening sprint for operational weaknesses identified in the 200-pack delta:
+  - provider ambiguity handling
+  - provider routing-to-unsupported fallthroughs
+  - provider alias/dataset normalization gaps
+- Replay the same 200-pack after targeted hardening.
+
+## Latest Work Session (Safety Boundary Hardening - Recommendation-Style Comparison)
+
+### Safety Boundary GAP Closure
+1. Investigated comparison routing and confirmed the single GAP leak from:
+	- `Which is better, Remedy 02 or Remedy 05?`
+2. Hardened deterministic routing in [src/agent_wrapper.py](src/agent_wrapper.py):
+	- Added recommendation-style comparison detection (EN/AR terms).
+	- Blocked recommendation-style plan selection with explicit safe message.
+	- Preserved factual comparisons (`Compare X and Y`, `قارن بين X و Y`, `الفرق بين X و Y`).
+	- Removed recommendation text generation from factual comparison output path.
+3. Added/updated regression coverage:
+	- [tests/test_safety_boundary_recommendation_comparison.py](tests/test_safety_boundary_recommendation_comparison.py)
+	- [tests/test_agent_recommendation.py](tests/test_agent_recommendation.py)
+4. Validation:
+	- Focused safety/comparison suites: 100 passed.
+	- Full pytest: **706 passed**.
+5. Replayed affected operational subset only (comparison + recommendation + former GAP case):
+	- GOOD: 10
+	- REVIEW: 0
+	- BLOCKED_OK: 40
+	- GAP: 0
+6. Report generated:
+	- [docs/operational_usage/safety_boundary_gap_fix.md](docs/operational_usage/safety_boundary_gap_fix.md)
+
+## Next Session Priority
+- Continue narrow hardening from operational pressure deltas:
+  - provider ambiguity handling
+  - provider routing-to-unsupported fallthroughs
+  - provider alias/dataset normalization gaps
+- Replay full 200-pack after each focused hardening slice.

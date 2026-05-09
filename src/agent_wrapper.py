@@ -91,6 +91,31 @@ COMPARISON_ALIASES = [
     "فرق",
 ]
 
+RECOMMENDATION_STYLE_COMPARISON_TERMS = [
+    # English
+    "better",
+    "best",
+    "recommend",
+    "should i choose",
+    "which plan should i choose",
+    "should i buy",
+    "most suitable",
+    "best option",
+    # Arabic
+    "أفضل",
+    "احسن",
+    "أحسن",
+    "أنسب",
+    "تنصح",
+    "تنصحني",
+    "اختار ايه",
+    "اختار إيه",
+    "أختار ايه",
+    "أختار إيه",
+    "الافضل",
+    "الأفضل",
+]
+
 NORMALIZATION_REPLACEMENTS = {
     "برجيل": "burjeel",
     "بيسك بلس": "basic plus",
@@ -169,6 +194,20 @@ def _normalize_query_text(text: str) -> str:
 def _has_comparison_alias(text: str) -> bool:
     lowered = _normalize_query_text(text)
     return any(alias in lowered for alias in COMPARISON_ALIASES)
+
+
+def _is_recommendation_style_comparison_query(text: str) -> bool:
+    lowered = _normalize_query_text(text)
+    has_rec_term = any(term.lower() in lowered for term in RECOMMENDATION_STYLE_COMPARISON_TERMS)
+    if not has_rec_term:
+        return False
+    plans = _extract_all_plan_names(lowered)
+    if len(plans) >= 2:
+        return True
+    if _has_comparison_alias(lowered):
+        return True
+    # Also block broad recommendation-style plan selection prompts.
+    return "which plan" in lowered or "خطة" in lowered
 
 
 def _is_network_lookup_query(text: str) -> bool:
@@ -251,6 +290,8 @@ def _extract_all_plan_names(text: str) -> list[str]:
 def _intent_from_query(text: str) -> Optional[str]:
     lowered = _normalize_query_text(text)
     plan_name = _extract_plan_name(lowered)
+    if _is_recommendation_style_comparison_query(lowered):
+        return "recommendation_style_comparison"
     # Special-case: route explicit "maternity limit" with plan to plan_core
     if "maternity limit" in lowered:
         if plan_name:
@@ -268,19 +309,11 @@ def _intent_from_query(text: str) -> Optional[str]:
         "hn classic 2 coverage",
     }:
         return "plan_core"
-    # Comparison/recommendation intent
-    rec_patterns = ["better", "recommend", "which one", "offer to client", "should i offer", "which should i offer", "which plan"]
+    # Comparison intent
     if _extract_comparison_plans(lowered):
-        for pat in rec_patterns:
-            if pat in lowered:
-                return "plan_comparison"
         return "plan_comparison"
-    # If two supported plans are mentioned and a rec pattern is present, treat as comparison
+    # If two supported plans are mentioned with explicit comparison phrasing, treat as comparison.
     all_plans = _extract_all_plan_names(lowered)
-    if len(all_plans) == 2:
-        for pat in rec_patterns:
-            if pat in lowered:
-                return "plan_comparison"
     if _has_comparison_alias(lowered) and all_plans:
         return "plan_comparison"
     # Allow comparison intent when phrasing is explicit but one side is unsupported.
@@ -341,6 +374,28 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
     plan_name = _extract_plan_name(user_query)
     intent = _intent_from_query(user_query)
     is_arabic = any(c in user_query for c in '\u0627\u0623\u0625\u0622\u0628\u062a\u062b\u062c\u062d\u062e\u062d\u0632\u0631\u0632\u0633\u0634\u0635\u0636\u0637\u0638\u0639\u063a\u0641\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u064a\u0621\u0649\u0629')
+
+    if intent == "recommendation_style_comparison":
+        msg = (
+            "Recommendation-style plan selection is not supported in the deterministic assistant. "
+            "Please use factual comparison phrasing like 'Compare X and Y'."
+            if not is_arabic
+            else "اختيار الخطة بصيغة التوصية غير مدعوم في المساعد الحتمي. يرجى استخدام صيغة مقارنة factual مثل: قارن بين X و Y."
+        )
+        return {
+            "ok": False,
+            "intent": "unsupported",
+            "plan_name": None,
+            "tool_name": None,
+            "data": None,
+            "message": msg,
+            "normalized": {
+                "status": "not_found",
+                "tool": None,
+                "answer": None,
+                "errors": [msg]
+            }
+        }
 
     # New: plan_network_city_type intent
     if intent == "plan_network_city_type":
@@ -624,73 +679,6 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 label = label_en
             if v1 is not None or v2 is not None:
                 lines.append(f"{label}: {plan1}: {v1 if v1 is not None else '-'} | {plan2}: {v2 if v2 is not None else '-'}")
-        # Sales-friendly recommendation section (unchanged, but do not leak internal fields)
-        def get_sales_recommendation():
-            reasons_b = []
-            reasons_a = []
-            # Pharmacy
-            pharm_a = cmp['differing'].get('pharmacy_cover_summary', {}).get('plan_a')
-            pharm_b = cmp['differing'].get('pharmacy_cover_summary', {}).get('plan_b')
-            if pharm_a and pharm_b:
-                import re
-                lim_a = re.search(r"AED[\s.]*([\d,]+)", pharm_a)
-                lim_b = re.search(r"AED[\s.]*([\d,]+)", pharm_b)
-                if lim_a and lim_b:
-                    val_a = int(lim_a.group(1).replace(",", ""))
-                    val_b = int(lim_b.group(1).replace(",", ""))
-                    if val_b > val_a:
-                        reasons_b.append(f"Higher pharmacy limit (AED {val_b:,} vs {val_a:,})")
-                    elif val_a > val_b:
-                        reasons_a.append(f"Higher pharmacy limit (AED {val_a:,} vs {val_b:,})")
-            # Physio
-            physio_a = cmp['differing'].get('physiotherapy_cover_summary', {}).get('plan_a')
-            physio_b = cmp['differing'].get('physiotherapy_cover_summary', {}).get('plan_b')
-            import re
-            def physio_sessions(val):
-                if not val:
-                    return 0
-                m = re.search(r"(\d{1,3})\s*(sessions|جلسة)", val)
-                return int(m.group(1)) if m else 0
-            s_a = physio_sessions(physio_a)
-            s_b = physio_sessions(physio_b)
-            if s_b > s_a:
-                reasons_b.append(f"Better physiotherapy coverage ({s_b} sessions vs {s_a})")
-            elif s_a > s_b:
-                reasons_a.append(f"Better physiotherapy coverage ({s_a} sessions vs {s_b})")
-            # Diagnostics (just mention if different)
-            diag_a = cmp['differing'].get('diagnostics_cover_summary', {}).get('plan_a')
-            diag_b = cmp['differing'].get('diagnostics_cover_summary', {}).get('plan_b')
-            if diag_a and diag_b and diag_a != diag_b:
-                reasons_b.append("Stronger diagnostics benefits")
-            # Referral
-            ref_a = cmp['differing'].get('referral_required', {}).get('plan_a')
-            ref_b = cmp['differing'].get('referral_required', {}).get('plan_b')
-            if ref_b is False and ref_a is not False:
-                reasons_b.append("No referral required")
-            if ref_a is False and ref_b is not False:
-                reasons_a.append("No referral required")
-            # Reimbursement
-            reimb_a = cmp['differing'].get('reimbursement_allowed', {}).get('plan_a')
-            reimb_b = cmp['differing'].get('reimbursement_allowed', {}).get('plan_b')
-            if reimb_a and not reimb_b:
-                reasons_a.append("Reimbursement flexibility is important")
-            if reimb_b and not reimb_a:
-                reasons_b.append("Reimbursement flexibility is important")
-            # Compose recommendation
-            rec_lines = ["Recommendation:"]
-            if reasons_b:
-                rec_lines.append(f"{plan2} is generally better if your client is looking for stronger outpatient benefits:")
-                for r in reasons_b:
-                    rec_lines.append(f"- {r}")
-            if reasons_a:
-                if reasons_b:
-                    rec_lines.append("")
-                rec_lines.append(f"{plan1} may be preferred if:")
-                for r in reasons_a:
-                    rec_lines.append(f"- {r}")
-            if not reasons_a and not reasons_b:
-                rec_lines.append("Both plans are very similar in their key benefits.")
-            return "\n".join(rec_lines)
         # Old similarity/difference logic for fallback
         def score(plan):
             score = 0
@@ -719,8 +707,6 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             else:
                 lines.append("")
                 lines.append("Both plans are very similar in their key benefits.")
-        lines.append("")
-        lines.append(get_sales_recommendation())
         # Filter out internal fields from message (no approval_status, tests_passed, source_trace, raw dicts)
         msg = "\n".join(lines)
         forbidden = ["approval_status", "tests_passed", "source_trace", "status", "tool", "answer", "errors", "{", "}"]

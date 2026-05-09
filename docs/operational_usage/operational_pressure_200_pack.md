@@ -1,0 +1,227 @@
+# Operational Pressure 200 Pack
+
+## Scope
+- Mode: operational pressure sprint evidence only
+- Execution path: `python -m src.agent_entrypoint --json <query>`
+- Boundaries: no feature expansion, no RAG, no embeddings, no recommendation AI, no pricing engine
+- Total questions: 200
+
+## Composition
+- Remedy/Core Plan Questions: 40
+- Provider/Network Lookup: 50
+- Enhanced Baseline (Classic 2R): 40
+- Comparison Pressure: 30
+- Recommendation / Out-of-Scope Pressure: 20
+- Real Broker-Style Arabic Phrasing: 20
+
+## Remedy/Core Plan Questions
+- 1. Summarize Remedy 02
+- 2. Give me a summary of Remedy 03
+- 3. Summary Remedy 05
+- 4. Summarize Remedy 6
+- 5. What is the annual limit for Remedy 02?
+- 6. annual limit Remedy 03
+- 7. Remedy 05 limit
+- 8. limit for Remedy 6
+- 9. What is the network for Remedy 02?
+- 10. Remedy 03 network
+- 11. network Remedy 05
+- 12. which network for Remedy 6
+- 13. Does Remedy 02 need referral?
+- 14. referral Remedy 03
+- 15. is referral required for Remedy 05?
+- 16. Remedy 6 referral?
+- 17. Is there direct billing for Remedy 02?
+- 18. direct billing Remedy 03
+- 19. Remedy 05 cashless?
+- 20. cashless Remedy 6
+- 21. What is the area of coverage for Remedy 02?
+- 22. area of coverage Remedy 03
+- 23. coverage area Remedy 05
+- 24. Remedy 6 coverage area
+- 25. What are the reimbursement rules for Remedy 02?
+- 26. reimbursement Remedy 03
+- 27. reimbursement rules Remedy 05
+- 28. Remedy 6 reimbursement
+- 29. هل ريميدي 02 فيه كاشلس؟
+- 30. شبكة ريميدي 03
+- 31. ليمت ريميدي 05
+- 32. ملخص ريميدي 06
+- 33. هل ريميدي 02 يحتاج referral؟
+- 34. direct billing في Remedy 03؟
+- 35. ما هي منطقة التغطية لخطة Remedy 05؟
+- 36. ما هي شروط التعويض لخطة Remedy 06؟
+- 37. Remedy 02 summary
+- 38. هل خطة Remedy 03 فيها direct billing؟
+- 39. annual limit for Remedy 05 please
+- 40. Does Remedy 06 cover reimbursement outside network?
+
+## Provider/Network Lookup
+- 1. Burjeel Abu Dhabi in which network?
+- 2. Burjeel AUH in which network?
+- 3. في أي شبكة Burjeel Abu Dhabi
+- 4. في أي شبكة Burjeel AUH
+- 5. Aster Qusais in which network?
+- 6. Aster Al Qusais in which network?
+- 7. في أي شبكة Aster Qusais
+- 8. Mediclinic Qusais in which network?
+- 9. في أي شبكة Mediclinic Qusais
+- 10. Burjeel Hospital network tiers?
+- 11. Which network tiers is Burjeel Hospital available in?
+- 12. NMC Royal in which network?
+- 13. Providers in Dubai Remedy 6
+- 14. Dubai providers Remedy 6
+- 15. Remedy 6 Dubai providers
+- 16. Sharjah hospitals Remedy 6
+- 17. Abu Dhabi labs Remedy 6
+- 18. diagnostic centers in Dubai Remedy 6
+- 19. labs in Abu Dhabi Remedy 6
+- 20. What type of provider is Burjeel Abu Dhabi?
+- 21. What type of provider is Aster Qusais?
+- 22. What type of provider is Mediclinic Qusais?
+- 23. هل Aster Qusais داخل الشبكة؟
+- 24. هل Mediclinic Qusais داخل الشبكة؟
+- 25. هل Burjeel Abu Dhabi داخل الشبكة؟
+- 26. providers in Dubai for Remedy 06
+- 27. Remedy 06 Abu Dhabi labs
+- 28. Dubai diagnostic providers Remedy 6
+- 29. Which network is Aster Al Qusais in?
+- 30. Which network is Burjeel Specialty Hospital Sharjah in?
+- 31. في أي شبكة Burjeel Specialty Hospital Sharjah
+- 32. Burjeel AUH في أي شبكة؟
+- 33. Aster Qusais network ايه؟
+- 34. Remedy 6 Dubai labs
+- 35. Remedy 6 Sharjah hospitals
+- 36. Which network tiers for Burjeel Abu Dhabi?
+- 37. Is Burjeel Hospital in the network?
+- 38. هل Burjeel Hospital داخل الشبكة؟
+- 39. Which network tiers for NMC Royal?
+- 40. في أي شبكة NMC Royal
+- 41. Is Royal Hospital in the network?
+- 42. هل Royal Hospital داخل الشبكة؟
+- 43. Which network is Aster Hospital in?
+- 44. في أي شبكة Aster Hospital
+- 45. Is Unknown Future Hospital in the network?
+- 46. هل Unknown Future Hospital داخل الشبكة؟
+- 47. Which network is Imaginary Clinic in?
+- 48. في أي شبكة Imaginary Clinic
+- 49. Does Nonexistent Lab belong to the network?
+- 50. هل هذه المستشفى ضمن الشبكة؟
+
+## Enhanced Baseline (Classic 2R)
+- 1. Summarize Classic 2R
+- 2. classic2r limit
+- 3. What is the annual limit for Classic 2R?
+- 4. What is the network name for Classic 2R?
+- 5. Does Classic 2R support direct billing?
+- 6. Is referral required for Classic 2R?
+- 7. Classic 2R cashless?
+- 8. area of coverage Classic 2R
+- 9. coverage Classic 2R
+- 10. HN Classic 2R limit
+- 11. شبكة Classic 2R
+- 12. ملخص كلاسيك 2R
+- 13. هل فيه كاشلس في كلاسيك 2R؟
+- 14. هل لازم referral في كلاسيك 2R؟
+- 15. direct billing في كلاسيك 2R؟
+- 16. كلاسيك 2R network?
+- 17. كلاسيك 2R annual limit
+- 18. summarize hn_classic_2r
+- 19. هل كلاسيك 2R فيه direct billing؟
+- 20. ما هي منطقة التغطية لخطة Classic 2R؟
+- 21. what countries are covered by Classic 2R?
+- 22. Classic 2R summary
+- 23. HN_CLASSIC_2R network
+- 24. Classic 2R referral?
+- 25. Classic 2R direct billing?
+- 26. شبكة كلاسيك2R
+- 27. maternity Classic 2R
+- 28. pharmacy Classic 2R
+- 29. dental Classic 2R
+- 30. optical Classic 2R
+- 31. emergency benefit Classic 2R
+- 32. private room Classic 2R
+- 33. chronic condition cover Classic 2R
+- 34. هل كلاسيك 2R يغطي maternity؟
+- 35. هل في pharmacy في كلاسيك 2R؟
+- 36. هل يغطي dental في كلاسيك 2R؟
+- 37. optical benefit في Classic 2R؟
+- 38. لو عنده chronic condition في Classic 2R؟
+- 39. inpatient room benefit Classic 2R
+- 40. does Classic 2R cover physiotherapy?
+
+## Comparison Pressure
+- 1. Compare Classic 2 and Classic 3
+- 2. قارن بين Classic 2 و Classic 3
+- 3. compare Remedy 02 and Remedy 05
+- 4. compare Remedy 03 and Remedy 06
+- 5. Compare Remedy 02 and Remedy 06
+- 6. قارن بين Remedy 02 و Remedy 05
+- 7. Compare Classic 3 and Classic 2
+- 8. compare Remedy 05 and Remedy 06
+- 9. Compare Remedy 02 و Remedy 05
+- 10. قارن Classic 2 and Classic 3
+- 11. Compare Classic 2R and Classic 3
+- 12. قارن بين Classic 2R و Classic 3
+- 13. compare all plans
+- 14. Can you compare all enhanced plans?
+- 15. compare Classic 2 and Remedy 99
+- 16. Compare Classic 2R and Remedy 05
+- 17. دي احسن ولا دي؟
+- 18. compare two best plans
+- 19. قارن
+- 20. compare Classic 2
+- 21. هل Classic 2R احسن من Classic 3؟
+- 22. compare Remedy and Classic
+- 23. قارن بين Plan A و Plan B
+- 24. Compare Classic 2R and Classic 2
+- 25. Compare Classic 2R and Classic 2R
+- 26. دي احسن ولا Classic 2؟
+- 27. Which is better, Remedy 02 or Remedy 05?
+- 28. انهي افضل Remedy 02 ولا Remedy 05؟
+- 29. compare Remedy 05 with unknown plan
+- 30. قارن بين كل الخطط
+
+## Recommendation / Out-of-Scope Pressure
+- 1. Which plan should I recommend to a family?
+- 2. Recommend one plan for outpatient heavy usage
+- 3. best enhanced plan overall
+- 4. What is the best value plan?
+- 5. Which plan do brokers usually sell most?
+- 6. تنصحني باي خطة؟
+- 7. أفضل خطة بشكل عام؟
+- 8. محتاج توصية لخطة مناسبة للعميل ده
+- 9. لو عنده chronic condition أنصحه بإيه؟
+- 10. هل دي تنفع لعيلة؟
+- 11. What is the price of Classic 2R?
+- 12. pricing for Remedy 05
+- 13. how much premium for Classic 3
+- 14. quote me for a 45-year-old diabetic
+- 15. underwriting requirements for maternity case
+- 16. what is the commission on Remedy 06
+- 17. which plan is better for diabetes?
+- 18. recommend a low-cost plan with strong network
+- 19. can you advise on underwriting acceptance?
+- 20. Which plan is cheapest with direct billing?
+
+## Real Broker-Style Arabic Phrasing
+- 1. العميل ده ينفعله ايه؟
+- 2. الشبكة دي قوية؟
+- 3. فيها كاشلس؟
+- 4. دي أفضل ولا التانية؟
+- 5. لو عنده chronic condition؟
+- 6. تنفع لعيلة؟
+- 7. المستشفى دي تبع انهي شبكة؟
+- 8. ليمت كلاسيك 2R
+- 9. ملخص ريميدي 05
+- 10. Remedy 6 في دبي فيها providers ايه؟
+- 11. برجيل أبوظبي في أي شبكة؟
+- 12. أستر القصيص في أي شبكة؟
+- 13. هل ريميدي 06 فيها direct billing؟
+- 14. كلاسيك 2 cashless؟
+- 15. مقارنة Classic 2 مع Classic 3
+- 16. Classic 2R ولا Classic 3؟
+- 17. عايز سعر كلاسيك 3
+- 18. لو عميل عنده سكر اطلعله انهي خطة؟
+- 19. الشبكة دي تبع برجيل ولا لا؟
+- 20. هل ميديكلينيك القصيص في الشبكة؟
