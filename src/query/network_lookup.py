@@ -10,6 +10,16 @@ NETWORK_ALIASES = {
     ]
 }
 
+PROVIDER_QUERY_ALIASES = {
+    # Arabic/English common provider references (minimal deterministic alias set)
+    "مستشفى برجيل": "Burjeel Hospital",
+    "برجيل ابوظبي": "Burjeel Hospital",
+    "برجيل أبوظبي": "Burjeel Hospital",
+    "برجيل الشارقة": "Burjeel Specialty Hospital Sharjah",
+    "burjeel abu dhabi": "Burjeel Hospital",
+    "burjeel specialty sharjah": "Burjeel Specialty Hospital Sharjah",
+}
+
 
 # Only one class definition should exist. All methods must be inside this class.
 import pandas as pd
@@ -20,6 +30,15 @@ import unicodedata
 NETWORK_CSV = Path("runtime_data/networks/network_list_normalized.csv")
 
 class NetworkLookup:
+    @staticmethod
+    def _apply_provider_aliases(text: str) -> str:
+        q = (text or "").strip()
+        lowered = q.lower()
+        for alias, canonical in PROVIDER_QUERY_ALIASES.items():
+            if alias in lowered:
+                return canonical
+        return q
+
     @staticmethod
     def _cleanup_provider_query(query):
         """
@@ -40,8 +59,17 @@ class NetworkLookup:
         m = re.match(r"هل\s+(.+?)\s+في الشبكة", q)
         if m:
             return m.group(1).strip().title()
+        m = re.match(r"(.+?)\s+in\s+which\s+network", q)
+        if m:
+            return m.group(1).strip().title()
+        m = re.match(r"(.+?)\s+في\s+(?:اي|أي)\s+شبكة", q)
+        if m:
+            return m.group(1).strip().title()
+        m = re.match(r"في\s+(?:اي|أي)\s+شبكة\s+(.+)", q)
+        if m:
+            return m.group(1).strip().title()
         # Otherwise, return original
-        return query.strip()
+        return NetworkLookup._apply_provider_aliases(query.strip())
     def list_basic_plus_providers(self, city=None, provider_type=None, lang="en", label_override=None):
         """
         List all providers in HN Basic Plus, optionally filtered by city and type.
@@ -105,20 +133,45 @@ class NetworkLookup:
     @staticmethod
     def extract_provider_from_query(query):
         q = query.strip()
+        q = NetworkLookup._apply_provider_aliases(q)
         # 1. Which network tiers is X available in?
         m = re.match(r"^which network tiers is (.+) available in\??$", q, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
+        m = re.match(r"^which network tiers for (.+)\??$", q, re.IGNORECASE)
         if m:
             return m.group(1).strip()
         # 2. Which network is X available in?
         m = re.match(r"^which network is (.+) available in\??$", q, re.IGNORECASE)
         if m:
             return m.group(1).strip()
+        m = re.match(r"^(.+) in which network\??$", q, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
+        m = re.match(r"^(.+) في (?:اي|أي) شبكة\??$", q, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
+        m = re.match(r"^في (?:اي|أي) شبكة (.+)\??$", q, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
         # 3. What city is X located in?
         m = re.match(r"^what city is (.+) located in\??$", q, re.IGNORECASE)
         if m:
             return m.group(1).strip()
+        m = re.match(r"^what city for (.+)\??$", q, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
+        m = re.match(r"^في أي مدينة يقع (.+)\??$", q, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
         # 4. What type of provider is X?
         m = re.match(r"^what type of provider is (.+)\??$", q, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
+        m = re.match(r"^what type is (.+)\??$", q, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
+        m = re.match(r"^ما نوع المزود (.+)\??$", q, re.IGNORECASE)
         if m:
             return m.group(1).strip()
         # 5. Which network X?
@@ -196,18 +249,16 @@ class NetworkLookup:
         return query.strip(), None
 
     def find_provider(self, name):
+        name = self._apply_provider_aliases(name)
         norm = self._normalize(name)
-        print(f"[DEBUG] find_provider: input='{name}', normalized='{norm}'")
         # 1. exact provider_name
         if norm in self.provider_name_idx:
-            print(f"[DEBUG] provider_name_idx match for '{norm}'")
             idxs = self.provider_name_idx[norm]
             if len(idxs) == 1:
                 return self.df.iloc[idxs[0]]
             return 'ambiguous' if len(idxs) > 1 else None
         # 2. exact google_name
         if norm in self.google_name_idx:
-            print(f"[DEBUG] google_name_idx match for '{norm}'")
             idxs = self.google_name_idx[norm]
             if len(idxs) == 1:
                 return self.df.iloc[idxs[0]]
@@ -407,7 +458,7 @@ class NetworkLookup:
         row = self.find_provider(extracted_provider)
         if isinstance(row, pd.Series):
             # 1. Which network tiers is X available in?
-            if re.search(r"which network tiers is .+ available in", query, re.IGNORECASE):
+            if re.search(r"which network tiers is .+ available in|which network tiers for .+|في أي شبكات", query, re.IGNORECASE):
                 tiers = []
                 for col in self.network_tier_cols:
                     val = row.get(col, "")
@@ -415,18 +466,19 @@ class NetworkLookup:
                         tiers.append(f"{col}: {val}")
                 return f"Network tiers for {extracted_provider}: {', '.join(tiers) if tiers else 'None'}"
             # 2. What city is X located in?
-            if re.search(r"what city is .+ located in", query, re.IGNORECASE):
+            if re.search(r"what city is .+ located in|what city for .+|في أي مدينة يقع", query, re.IGNORECASE):
                 city = row.get("city", "")
                 return f"City for {extracted_provider}: {city if city else 'Unknown'}"
             # 3. What type of provider is X?
-            if re.search(r"what type of provider is .+\??$", query, re.IGNORECASE):
+            if re.search(r"what type of provider is .+\??$|what type is .+\??$|ما نوع المزود", query, re.IGNORECASE):
                 ptype = row.get("type", "")
                 return f"Type for {extracted_provider}: {ptype if ptype else 'Unknown'}"
 
         # which network?
-        if re.search(r"which network|ما هي الشبكات", query, re.IGNORECASE):
-            nets = self.which_networks(provider)
-            return f"Networks for {norm_provider}: {', '.join(nets) if nets else 'None'}"
+        if re.search(r"which network|ما هي الشبكات|في أي شبكة|في اي شبكة|in which network", query, re.IGNORECASE):
+            provider_for_networks = extracted_provider if extracted_provider else provider
+            nets = self.which_networks(provider_for_networks)
+            return f"Networks for {self._normalize(provider_for_networks)}: {', '.join(nets) if nets else 'None'}"
         # details
         if re.search(r"details|تفاصيل", query, re.IGNORECASE):
             d = self.provider_details(provider)

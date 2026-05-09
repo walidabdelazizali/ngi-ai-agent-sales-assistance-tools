@@ -91,6 +91,27 @@ COMPARISON_ALIASES = [
     "فرق",
 ]
 
+NETWORK_LOOKUP_PATTERNS = [
+    r"is .+ in the network",
+    r"which network tiers is .+ available in",
+    r"which network tiers for .+",
+    r"which network is .+ available in",
+    r"what city is .+ located in",
+    r"what city for .+",
+    r"what type of provider is .+",
+    r"what type is .+",
+    r".+ in which network",
+    r"is .+ in (basic plus|hn basic plus)",
+    r"هل .+ داخل الشبكة",
+    r"هل .+ في الشبكة",
+    r"في أي شبكة .+",
+    r".+ في أي شبكة",
+    r"في اي شبكة .+",
+    r".+ في اي شبكة",
+    r"ما نوع المزود .+",
+    r"في أي مدينة يقع .+",
+]
+
 
 def _normalize_query_text(text: str) -> str:
     normalized = (text or "").lower().translate(ARABIC_INDIC_DIGITS).translate(EXT_ARABIC_INDIC_DIGITS)
@@ -108,6 +129,14 @@ def _normalize_query_text(text: str) -> str:
 def _has_comparison_alias(text: str) -> bool:
     lowered = _normalize_query_text(text)
     return any(alias in lowered for alias in COMPARISON_ALIASES)
+
+
+def _is_network_lookup_query(text: str) -> bool:
+    lowered = _normalize_query_text(text)
+    for pat in NETWORK_LOOKUP_PATTERNS:
+        if re.search(pat, lowered, re.IGNORECASE):
+            return True
+    return False
 
 
 def _contains_alias(text: str, key: str) -> bool:
@@ -217,6 +246,8 @@ def _intent_from_query(text: str) -> Optional[str]:
     # Allow comparison intent when phrasing is explicit but one side is unsupported.
     if _has_comparison_alias(lowered) and ("remedy" in lowered or "classic" in lowered):
         return "plan_comparison"
+    if _is_network_lookup_query(lowered) and not plan_name:
+        return "network_lookup"
     # Plan core
     for field in PLAN_CORE_FIELDS:
         if field in lowered:
@@ -262,6 +293,8 @@ def _intent_from_query(text: str) -> Optional[str]:
                 # "Remedy 6 Dubai providers"
                 if plan in lowered and city in lowered and prov in lowered:
                     return "plan_network_city_type"
+    if _is_network_lookup_query(lowered):
+        return "network_lookup"
     return None
 
 def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
@@ -401,6 +434,33 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                     "errors": [msg]
                 }
             }
+    if intent == "network_lookup":
+        from src.query.network_lookup import get_network_lookup
+        lookup = get_network_lookup()
+        network_result = lookup.answer_query(user_query)
+        lowered_result = str(network_result).lower()
+        not_found = (
+            "provider not found" in lowered_result
+            or "المزود غير موجود" in str(network_result)
+            or "no:" in lowered_result
+            or "ambiguous provider" in lowered_result
+            or "مزود غير محدد" in str(network_result)
+        )
+        status = "not_found" if not_found else "ok"
+        return {
+            "ok": not not_found,
+            "intent": "network_lookup",
+            "plan_name": None,
+            "tool_name": "network_lookup",
+            "data": None,
+            "message": network_result,
+            "normalized": {
+                "status": status,
+                "tool": "network_lookup",
+                "answer": network_result if not not_found else None,
+                "errors": [] if not not_found else [network_result],
+            }
+        }
     is_arabic = any(c in user_query for c in 'اأإآبتثجحخدذرزسشصضطظعغفقكلمنهويءىة')
     # Patch: Robust summary routing for mixed Arabic/English phrasing
     # If summary pattern is present and plan_name is present, force plan_summary intent
