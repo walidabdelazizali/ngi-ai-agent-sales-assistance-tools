@@ -120,3 +120,40 @@ stage2-live
 	- Added Arabic routing assertion in [tests/test_network_search_hardening.py](tests/test_network_search_hardening.py)
 7. Added evidence report: [docs/operational_usage/provider_dataset_coverage_delta.md](docs/operational_usage/provider_dataset_coverage_delta.md).
 8. Full validation is green after sprint: 675 passed, 2 skipped.
+
+### Evidence Pack Refresh (100-Query Rerun)
+1. Re-ran all 100 queries against current system post-provider-coverage sprint.
+2. Updated [docs/operational_usage/real_usage_evidence_pack_100_results.md](docs/operational_usage/real_usage_evidence_pack_100_results.md).
+3. Updated [docs/operational_usage/real_usage_evidence_pack_100_delta.md](docs/operational_usage/real_usage_evidence_pack_100_delta.md).
+4. Delta vs prior run: GOOD 63→71 (+8), REVIEW 19→16 (-3), BLOCKED_OK 13→8 (-5), GAP 5→5 (0).
+5. No product code changes.
+
+### Enhanced Plan Baseline Sprint — Classic 2R (HN_CLASSIC_2R)
+1. Confirmed Classic 2R already fully registered:
+   - [src/tools/enhanced_plan_loader.py](src/tools/enhanced_plan_loader.py): `ENHANCED_PLAN_REGISTRY` entry with `approved=True`.
+   - [src/agent_wrapper.py](src/agent_wrapper.py): `SUPPORTED_PLANS` includes all Classic 2R aliases.
+   - Source data: `data/plans/raw/HN_CLASSIC_2R/source_table_HN_CLASSIC_2R.json` — confirmed present.
+2. Verified end-to-end field values from `load_enhanced_plan("Classic 2R")`:
+   - `plan_name`: "Classic 2R", `plan_code`: "HN_CLASSIC_2R"
+   - `network_name`: "Standard Plus", `annual_limit`: "AED 250,000"
+   - `area_of_coverage`: "Worldwide Excluding USA and Canada"
+   - `direct_billing`: True, `referral_required`: False
+3. Verified unsupported benefit blocking: maternity, pharmacy, dental, optical all return `intent="unsupported"` — no data leakage.
+4. Verified Arabic alias routing: `ملخص كلاسيك 2r` → `plan_summary`, `شبكة كلاسيك 2r` → `plan_core`.
+5. Created new regression test file: [tests/test_classic2r_baseline.py](tests/test_classic2r_baseline.py) — 19 tests covering:
+   - All 6 core field values at tool-contract level (`get_plan_core`, `get_plan_summary`)
+   - End-to-end `run_agent_wrapper` data dict assertions
+   - Arabic alias routing (3 parametrized)
+   - Unsupported benefit blocking (4 parametrized: maternity, pharmacy, dental, optical)
+6. Full validation: **694 passed, 2 skipped** (up from 675; 19 new tests added, no regressions).
+
+## Next Session Priority
+- Source Boundary Lock: Patch `load_plan()` in [src/query/plan_query.py](src/query/plan_query.py) to remove dependency on legacy `output/*.json`.
+- Do not delete output files yet.
+- Do not continue Sales Core work until source boundary is secure.
+
+## End State (Post Enhanced Plan Baseline Sprint)
+- Classic 2R is fully registered, tested, and verified end-to-end as a deterministic baseline plan.
+- All field values confirmed against source_table_HN_CLASSIC_2R.json.
+- No product code changes were required — infrastructure was already in place.
+- Test suite: 694 passed, 2 skipped.
