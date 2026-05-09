@@ -4,6 +4,12 @@ from src.api.app import app
 
 client = TestClient(app)
 
+def test_home_page_serves_ui():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    assert "text/html" in resp.headers.get("content-type", "")
+    assert "Local Insurance Assistant" in resp.text
+
 def test_ask_smoke():
     resp = client.post("/ask", json={"question": "Hello"})
     assert resp.status_code == 200

@@ -54,28 +54,36 @@ stage2-live
 - Remedy 04 must remain draft/blocked.
 - Do not change approval_status.
 
-## Next session priority
-Evidence-only stabilization follow-up if needed; otherwise continue Source Boundary Lock only.
+## Latest Work Session
 
-## Next-session Copilot prompt
-Task: Source Boundary Lock only.
+### Review-driven Hardening Sprint
+1. Extracted REVIEW and GAP rows from professional simulation results.
+2. Created [docs/operational_usage/professional_simulation_review_actions.md](docs/operational_usage/professional_simulation_review_actions.md) with action classification.
+3. Applied user rules: no patches, only action planning; no pharmacy/maternity exposure; no comparison enablement.
+4. Result: all 12 items classified; none marked patch-now; defer and block decisions documented.
+5. pytest: 641 passed, 2 skipped.
 
-Do not delete output files.
+### Minimal Local Usage UI
+1. Added browser page at `GET /` to [src/api/app.py](src/api/app.py).
+2. UI displays: question textbox, Ask button, intent/plan/answer/status fields.
+3. Status classification: GOOD / REVIEW / BLOCKED_OK / GAP (client-side logic only).
+4. Reuses existing deterministic agent and /ask JSON API without behavior changes.
+5. No runtime logic changes, no routing changes, no plan expansion, no comparison enablement.
+6. Tested all five required scenarios through browser:
+   - classic3 limit → GOOD / plan_core / Classic 3 ✓
+   - classic2r limit → GOOD / plan_core / Classic 2R ✓
+   - Summarize Classic 2 → GOOD / plan_summary / Classic 2 ✓
+   - Compare Classic 2R and Classic 3 → BLOCKED_OK / plan_comparison ✓
+   - pharmacy Classic 3 → GAP / unsupported / Classic 3 ✓
+7. pytest: 642 passed, 2 skipped (added one new test for `GET /`).
 
-Patch load_plan() in src/query/plan_query.py so customer-facing answers must not trust legacy output/*.json.
+## Next Session Priority
+- Source Boundary Lock: Patch load_plan() in [src/query/plan_query.py](src/query/plan_query.py) to remove dependency on legacy output/*.json.
+- Do not delete output files yet.
+- Do not continue Sales Core work until source boundary is secure.
 
-Before patching:
-1. Show current load_plan() logic lines 341–370.
-2. Show where output/*.json is used.
-3. Show where plan data enters customer answer flow.
-4. Propose smallest safe patch that keeps tests stable.
-5. Add regression tests preventing HN-REMEDY-5 legacy values:
-	- 1,000,000
-	- hn_elite
-6. Do not continue Sales Core work.
-7. Do not commit until pytest passes and changes are reviewed.
-
-## End state
-- HN-REMEDY-5.json restored.
-- Source contamination risk still exists.
-- Work paused intentionally.
+## End State
+- Deterministic insurance assistant is now usable via browser UI.
+- All backend behavior and JSON contract unchanged.
+- Tests remain fully green (642 passed, 2 skipped).
+- Ready for daily operational usage without CLI.
