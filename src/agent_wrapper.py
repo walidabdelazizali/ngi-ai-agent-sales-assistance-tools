@@ -91,6 +91,19 @@ COMPARISON_ALIASES = [
     "فرق",
 ]
 
+NORMALIZATION_REPLACEMENTS = {
+    "برجيل": "burjeel",
+    "بيسك بلس": "basic plus",
+    "شبكة بيسك بلس": "basic plus",
+    "كاشلس": "direct billing",
+    "كاش ليس": "direct billing",
+    "ليمت": "annual limit",
+    "ريفرال": "referral",
+    "الشبكة": "network",
+    "شبكه": "network",
+    "شبكة": "network",
+}
+
 NETWORK_LOOKUP_PATTERNS = [
     r"is .+ in the network",
     r"which network tiers is .+ available in",
@@ -102,8 +115,19 @@ NETWORK_LOOKUP_PATTERNS = [
     r"what type is .+",
     r".+ in which network",
     r"is .+ in (basic plus|hn basic plus)",
+    r"show (hospitals|clinics|labs|pharmacies|medical centers?) in [a-z\s]+",
+    r"(providers in|dubai providers|remedy\s?0?6 dubai providers)",
     r"هل .+ داخل الشبكة",
+    r"هل .+ داخل network",
     r"هل .+ في الشبكة",
+    r"هل .+ في network",
+    r"هل .+ ضمن الشبكة",
+    r"هل .+ ضمن network",
+    r"هل .+ في (?:شبكة )?بيسك بلس",
+    r"هل .+ في basic plus",
+    r"هل يوجد direct billing في هذه (?:العيادة|المستشفى|المركز)",
+    r"(هاتلي )?(مستشفيات|عيادات|تحاليل|مراكز أشعة) في .+",
+    r"عيادات في .+",
     r"في أي شبكة .+",
     r".+ في أي شبكة",
     r"في اي شبكة .+",
@@ -115,12 +139,24 @@ NETWORK_LOOKUP_PATTERNS = [
 
 def _normalize_query_text(text: str) -> str:
     normalized = (text or "").lower().translate(ARABIC_INDIC_DIGITS).translate(EXT_ARABIC_INDIC_DIGITS)
+    normalized = normalized.replace("؟", "?")
+    # Canonical spacing for known plan tokens.
+    normalized = re.sub(r"classic\s*([0-9]+)\s*r", r"classic \1r", normalized)
+    normalized = re.sub(r"classic\s*([0-9]+)", r"classic \1", normalized)
+    normalized = re.sub(r"remedy\s*([0-9]+)", r"remedy \1", normalized)
+    normalized = re.sub(r"كلاسيك\s*([0-9]+)\s*r", r"كلاسيك \1r", normalized)
+    normalized = re.sub(r"كلاسيك\s*([0-9]+)", r"كلاسيك \1", normalized)
+    normalized = re.sub(r"ريميدي\s*([0-9]+)", r"ريميدي \1", normalized)
     # Minimal Arabic plan alias normalization for mixed routing.
     normalized = re.sub(r"\bريميدي\b", "remedy", normalized)
     normalized = re.sub(r"\bريمدي\b", "remedy", normalized)
     normalized = re.sub(r"\bكلاسيك\b", "classic", normalized)
+    for src, dst in NORMALIZATION_REPLACEMENTS.items():
+        normalized = normalized.replace(src, dst)
     # Minimal separator normalization for comparison parsing.
     normalized = re.sub(r"\bversus\b", "vs", normalized)
+    normalized = re.sub(r"\breferral\?", "referral", normalized)
+    normalized = re.sub(r"([0-9])(referral|network|annual|limit|direct)", r"\1 \2", normalized)
     normalized = re.sub(r"\band\b", " and ", normalized)
     normalized = re.sub(r"\s+و\s+", " and ", normalized)
     return " ".join(normalized.split())

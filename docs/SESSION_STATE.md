@@ -77,6 +77,22 @@ stage2-live
    - pharmacy Classic 3 → GAP / unsupported / Classic 3 ✓
 7. pytest: 642 passed, 2 skipped (added one new test for `GET /`).
 
+### Arabic / Mixed Query Normalization Sprint
+1. Added deterministic pre-routing normalization in [src/agent_wrapper.py](src/agent_wrapper.py) for Arabic/mixed aliases and spacing/number variants.
+2. Added deterministic network/provider query normalization in [src/query/network_lookup.py](src/query/network_lookup.py), including known transliterations and shorthand forms.
+3. Added focused regression coverage in [tests/test_arabic_mixed_normalization.py](tests/test_arabic_mixed_normalization.py).
+4. Preserved safety boundaries: no recommendation expansion, no comparison expansion, no enhanced plan expansion.
+5. Full validation: pytest 665 passed, 2 skipped.
+
+### Real Usage Evidence Rerun (100 Questions)
+1. Re-ran the same evidence pack and updated [docs/operational_usage/real_usage_evidence_pack_100_results.md](docs/operational_usage/real_usage_evidence_pack_100_results.md).
+2. Added delta analysis at [docs/operational_usage/real_usage_evidence_pack_100_delta.md](docs/operational_usage/real_usage_evidence_pack_100_delta.md).
+3. Evidence delta:
+	- GOOD: 58 -> 63 (+5)
+	- REVIEW: 24 -> 19 (-5)
+	- BLOCKED_OK: 13 -> 13
+	- GAP: 5 -> 5
+
 ## Next Session Priority
 - Source Boundary Lock: Patch load_plan() in [src/query/plan_query.py](src/query/plan_query.py) to remove dependency on legacy output/*.json.
 - Do not delete output files yet.

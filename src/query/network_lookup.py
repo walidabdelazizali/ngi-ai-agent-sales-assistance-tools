@@ -18,6 +18,16 @@ PROVIDER_QUERY_ALIASES = {
     "برجيل الشارقة": "Burjeel Specialty Hospital Sharjah",
     "burjeel abu dhabi": "Burjeel Hospital",
     "burjeel specialty sharjah": "Burjeel Specialty Hospital Sharjah",
+    "aster qusais": "Aster Hospital Al Qusais",
+    "aster al qusais": "Aster Hospital Al Qusais",
+}
+
+QUERY_NORMALIZATION_ALIASES = {
+    "في اي شبكة": "في أي شبكة",
+    "بيسك بلس": "basic plus",
+    "كاشلس": "direct billing",
+    "ليمت": "annual limit",
+    "ريفرال": "referral",
 }
 
 
@@ -30,6 +40,24 @@ import unicodedata
 NETWORK_CSV = Path("runtime_data/networks/network_list_normalized.csv")
 
 class NetworkLookup:
+    @staticmethod
+    def _normalize_query_text(text: str) -> str:
+        normalized = (text or "").strip().lower()
+        normalized = normalized.translate(str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789"))
+        normalized = normalized.translate(str.maketrans("۰۱۲۳۴۵۶۷۸۹", "0123456789"))
+        for src, dst in QUERY_NORMALIZATION_ALIASES.items():
+            normalized = normalized.replace(src, dst)
+        normalized = re.sub(r"\s+", " ", normalized)
+        return normalized.strip()
+
+    @staticmethod
+    def _display_provider_name(name: str) -> str:
+        s = (name or "").strip()
+        s = re.sub(r"[؟?]+$", "", s).strip()
+        if re.search(r"[a-zA-Z]", s):
+            return " ".join(part.capitalize() if not part.isupper() else part for part in s.split())
+        return s
+
     @staticmethod
     def _apply_provider_aliases(text: str) -> str:
         q = (text or "").strip()
@@ -45,7 +73,7 @@ class NetworkLookup:
         Remove common question phrases from provider queries for more robust matching.
         Only applies to 'Is ... in the network' and Arabic equivalents, not 'Which network ...'.
         """
-        q = query.strip().lower()
+        q = NetworkLookup._normalize_query_text(query)
         # Only strip for 'Is ... in the network' and Arabic equivalents
         # English: Is [PROVIDER] in the network?
         m = re.match(r"is\s+(.+?)\s+in the network", q)
@@ -132,7 +160,7 @@ class NetworkLookup:
         return heading + "\n" + "\n".join(lines)
     @staticmethod
     def extract_provider_from_query(query):
-        q = query.strip()
+        q = NetworkLookup._normalize_query_text(query.strip())
         q = NetworkLookup._apply_provider_aliases(q)
         # 1. Which network tiers is X available in?
         m = re.match(r"^which network tiers is (.+) available in\??$", q, re.IGNORECASE)
@@ -219,7 +247,7 @@ class NetworkLookup:
     @staticmethod
     def extract_provider_and_network_from_query(query):
         # Normalize query
-        q = query.strip().lower()
+        q = NetworkLookup._normalize_query_text(query)
         # Try to find network alias in query
         for col, aliases in NETWORK_ALIASES.items():
             for alias in aliases:
@@ -230,6 +258,10 @@ class NetworkLookup:
                     return provider, col
                 if f"في {alias}" in q:
                     parts = q.split(f"في {alias}", 1)
+                    provider = parts[0].replace("هل", "").strip(" ؟?.,:!\-\n\t")
+                    return provider, col
+                if f"في شبكة {alias}" in q:
+                    parts = q.split(f"في شبكة {alias}", 1)
                     provider = parts[0].replace("هل", "").strip(" ؟?.,:!\-\n\t")
                     return provider, col
         # Fallback: no alias found, try generic patterns
@@ -464,21 +496,25 @@ class NetworkLookup:
                     val = row.get(col, "")
                     if val and str(val).strip().lower() not in ("no", "0", "", "false", "n/a"):
                         tiers.append(f"{col}: {val}")
-                return f"Network tiers for {extracted_provider}: {', '.join(tiers) if tiers else 'None'}"
+                display_provider = self._display_provider_name(extracted_provider)
+                return f"Network tiers for {display_provider}: {', '.join(tiers) if tiers else 'None'}"
             # 2. What city is X located in?
             if re.search(r"what city is .+ located in|what city for .+|في أي مدينة يقع", query, re.IGNORECASE):
                 city = row.get("city", "")
-                return f"City for {extracted_provider}: {city if city else 'Unknown'}"
+                display_provider = self._display_provider_name(extracted_provider)
+                return f"City for {display_provider}: {city if city else 'Unknown'}"
             # 3. What type of provider is X?
             if re.search(r"what type of provider is .+\??$|what type is .+\??$|ما نوع المزود", query, re.IGNORECASE):
                 ptype = row.get("type", "")
-                return f"Type for {extracted_provider}: {ptype if ptype else 'Unknown'}"
+                display_provider = self._display_provider_name(extracted_provider)
+                return f"Type for {display_provider}: {ptype if ptype else 'Unknown'}"
 
         # which network?
         if re.search(r"which network|ما هي الشبكات|في أي شبكة|في اي شبكة|in which network", query, re.IGNORECASE):
             provider_for_networks = extracted_provider if extracted_provider else provider
             nets = self.which_networks(provider_for_networks)
-            return f"Networks for {self._normalize(provider_for_networks)}: {', '.join(nets) if nets else 'None'}"
+            display_provider = self._display_provider_name(provider_for_networks)
+            return f"Networks for {display_provider}: {', '.join(nets) if nets else 'None'}"
         # details
         if re.search(r"details|تفاصيل", query, re.IGNORECASE):
             d = self.provider_details(provider)
