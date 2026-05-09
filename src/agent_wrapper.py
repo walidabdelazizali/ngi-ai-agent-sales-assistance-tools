@@ -79,6 +79,41 @@ SUPPORTED_PLANS = {
 
 import re
 
+ARABIC_INDIC_DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789")
+EXT_ARABIC_INDIC_DIGITS = str.maketrans("۰۱۲۳۴۵۶۷۸۹", "0123456789")
+
+COMPARISON_ALIASES = [
+    "compare",
+    "قارن",
+    "مقارنة",
+    "الفرق بين",
+    "ايه الفرق",
+    "فرق",
+]
+
+
+def _normalize_query_text(text: str) -> str:
+    normalized = (text or "").lower().translate(ARABIC_INDIC_DIGITS).translate(EXT_ARABIC_INDIC_DIGITS)
+    # Minimal Arabic plan alias normalization for mixed routing.
+    normalized = re.sub(r"\bريميدي\b", "remedy", normalized)
+    normalized = re.sub(r"\bريمدي\b", "remedy", normalized)
+    normalized = re.sub(r"\bكلاسيك\b", "classic", normalized)
+    # Minimal separator normalization for comparison parsing.
+    normalized = re.sub(r"\bversus\b", "vs", normalized)
+    normalized = re.sub(r"\band\b", " and ", normalized)
+    normalized = re.sub(r"\s+و\s+", " and ", normalized)
+    return " ".join(normalized.split())
+
+
+def _has_comparison_alias(text: str) -> bool:
+    lowered = _normalize_query_text(text)
+    return any(alias in lowered for alias in COMPARISON_ALIASES)
+
+
+def _contains_alias(text: str, key: str) -> bool:
+    pattern = r"(^|[\s\-_/?:.,؛،!؟()\[\]{}])" + re.escape(key) + r"($|[\s\-_/?:.,؛،!؟()\[\]{}])"
+    return re.search(pattern, text) is not None
+
 PLAN_COMPARISON_PATTERNS = [
     r"compare (remedy|ريميدي) ?0?2 and (remedy|ريميدي) ?0?3",
     r"compare (remedy|ريميدي) ?0?2 and (remedy|ريميدي) ?0?4",
@@ -98,21 +133,19 @@ def _extract_comparison_plans(text: str) -> Optional[tuple[str, str]]:
     # Extract two plan names from the query (English or Arabic)
     # Accepts: compare Remedy 02 and Remedy 04, ما الفرق بين ريميدي 02 و ريميدي 04
     # Returns canonical names if both are supported
-    text = text.lower()
+    text = _normalize_query_text(text)
     # English
-    m = re.search(r"remedy ?0?(\d+) and remedy ?0?(\d+)", text)
+    m = re.search(r"remedy ?0?(\d+)\s*(?:and|vs|بين)\s*remedy ?0?(\d+)", text)
     if m:
         p1, p2 = m.group(1), m.group(2)
         n1, n2 = f"Remedy 0{p1}" if len(p1)==1 else f"Remedy {p1}", f"Remedy 0{p2}" if len(p2)==1 else f"Remedy {p2}"
         if n1 in SUPPORTED_PLANS.values() and n2 in SUPPORTED_PLANS.values():
             return n1, n2
-    # Arabic
-    m = re.search(r"ريميدي ?0?(\d+) و ريميدي ?0?(\d+)", text)
-    if m:
-        p1, p2 = m.group(1), m.group(2)
-        n1, n2 = f"Remedy 0{p1}" if len(p1)==1 else f"Remedy {p1}", f"Remedy 0{p2}" if len(p2)==1 else f"Remedy {p2}"
-        if n1 in SUPPORTED_PLANS.values() and n2 in SUPPORTED_PLANS.values():
-            return n1, n2
+    # Generic extraction for mixed Arabic/English and Classic plans.
+    has_separator = any(sep in text for sep in (" and ", " vs ", " بين "))
+    all_plans = _extract_all_plan_names(text)
+    if (has_separator or _has_comparison_alias(text)) and len(all_plans) >= 2:
+        return all_plans[0], all_plans[1]
     return None
 
 REIMBURSEMENT_FIELDS = [
@@ -127,27 +160,27 @@ SUMMARY_PATTERNS = [
 ]
 
 def _extract_plan_name(text: str) -> Optional[str]:
-    lowered = text.lower()
+    lowered = _normalize_query_text(text)
     found = []
     for key in sorted(SUPPORTED_PLANS.keys(), key=len, reverse=True):
         canonical = SUPPORTED_PLANS[key]
-        if key in lowered:
+        if _contains_alias(lowered, key):
             found.append(canonical)
     if found:
         return found[0]
     return None
 
 def _extract_all_plan_names(text: str) -> list[str]:
-    lowered = text.lower()
+    lowered = _normalize_query_text(text)
     found = []
     for key in sorted(SUPPORTED_PLANS.keys(), key=len, reverse=True):
         canonical = SUPPORTED_PLANS[key]
-        if key in lowered and canonical not in found:
+        if _contains_alias(lowered, key) and canonical not in found:
             found.append(canonical)
     return found
 
 def _intent_from_query(text: str) -> Optional[str]:
-    lowered = text.lower()
+    lowered = _normalize_query_text(text)
     plan_name = _extract_plan_name(lowered)
     # Special-case: route explicit "maternity limit" with plan to plan_core
     if "maternity limit" in lowered:
@@ -179,7 +212,10 @@ def _intent_from_query(text: str) -> Optional[str]:
         for pat in rec_patterns:
             if pat in lowered:
                 return "plan_comparison"
-    if "compare" in lowered and all_plans:
+    if _has_comparison_alias(lowered) and all_plans:
+        return "plan_comparison"
+    # Allow comparison intent when phrasing is explicit but one side is unsupported.
+    if _has_comparison_alias(lowered) and ("remedy" in lowered or "classic" in lowered):
         return "plan_comparison"
     # Plan core
     for field in PLAN_CORE_FIELDS:
@@ -422,7 +458,8 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             from src.tools.enhanced_plan_loader import is_enhanced_plan
             from src.query.plan_query import load_plan
             from src.validation.plan_validator import normalize_plan, validate_plan_ready
-            if is_enhanced_plan(plan1) or is_enhanced_plan(plan2):
+            allow_enhanced_pair = {plan1, plan2} == {"Classic 2", "Classic 3"}
+            if (is_enhanced_plan(plan1) or is_enhanced_plan(plan2)) and not allow_enhanced_pair:
                 return _comparison_not_available()
             for candidate in (plan1, plan2):
                 norm_candidate = normalize_plan(load_plan(candidate))
