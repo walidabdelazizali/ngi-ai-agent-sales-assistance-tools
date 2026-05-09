@@ -37,6 +37,15 @@ stage2-live
 5. Attempted quarantine/delete of output/HN-REMEDY-5.json caused test collection failures because current system still depends on output JSON.
 6. Restored output/HN-REMEDY-5.json to recover temporary stability.
 7. Stopped feature work due to Source Boundary risk and Copilot rate limit.
+8. Ran real usage evidence sprint for Classic 3.
+9. Created evidence pack at docs/rollout_validation/real_usage_validation_pack_classic3.md.
+10. Created replay report at docs/rollout_validation/real_usage_validation_run_classic3.md.
+11. Full pytest remained green at 578 passed, 2 skipped.
+12. Real-usage replay found remaining unsupported/ambiguous phrasing for a few broker-style and Arabic variants, but no internal leakage or malformed JSON.
+13. Ran broker phrasing hardening sprint for Classic 3 shorthand and mixed-language usage.
+14. Created evidence report at docs/rollout_validation/broker_phrasing_hardening_report.md.
+15. Final validation remained green at 591 passed, 2 skipped.
+16. Hardened deterministic routing for collapsed-spacing and shorthand usage while keeping plan-less Arabic prompts safely unsupported.
 
 ## Important decision
 - Do NOT continue Sales Core implementation until Source Boundary Lock is fixed.
@@ -46,7 +55,7 @@ stage2-live
 - Do not change approval_status.
 
 ## Next session priority
-Source Boundary Lock only.
+Evidence-only stabilization follow-up if needed; otherwise continue Source Boundary Lock only.
 
 ## Next-session Copilot prompt
 Task: Source Boundary Lock only.

@@ -2,6 +2,7 @@ import subprocess
 import sys
 import json
 import re
+import pytest
 
 def run_entrypoint(args):
     cmd = [sys.executable, '-m', 'src.agent_entrypoint'] + args
@@ -99,3 +100,56 @@ def test_classic3_annual_limit_json_routes_to_plan_core():
     assert data["intent"] == "plan_core"
     assert data["plan_name"] == "Classic 3"
     assert data["tool_name"] == "get_plan_core"
+
+@pytest.mark.parametrize(
+    "query,expected_intent,expected_ok",
+    [
+        ("classic3 limit", "plan_core", True),
+        ("HN Classic 3 limit", "plan_core", True),
+        ("Classic 3 cashless?", "plan_core", True),
+        ("كلاسيك3 ليمت", "plan_core", True),
+        ("classic3 limt", "plan_core", True),
+        ("classic 3 cash less", "plan_core", True),
+        ("كلاسيك 3 coverage", "plan_core", True),
+        ("What countries are covered by Classic 3?", "plan_core", True),
+        ("هل فيه direct billing؟", "unsupported", False),
+        ("هل يحتاج referral؟", "unsupported", False),
+    ],
+)
+def test_broker_shorthand_and_planless_arabic_json_smoke(query, expected_intent, expected_ok):
+    code, out, err = run_entrypoint(["--json", query])
+    assert code == 0
+    assert not err
+    data = json.loads(out)
+    assert data["ok"] is expected_ok
+    assert data["intent"] == expected_intent
+    if expected_ok:
+        assert data["plan_name"] == "Classic 3"
+        assert data["tool_name"] == "get_plan_core"
+    else:
+        assert data["plan_name"] is None
+        assert data["tool_name"] is None
+
+@pytest.mark.parametrize(
+    "query,expected_intent",
+    [
+        ("Summarize classic3", "plan_summary"),
+        ("Summarize classic-3", "plan_summary"),
+        ("Summarize Classic 03", "plan_summary"),
+        ("Summarize كلاسيك 3", "plan_summary"),
+        ("ليمت كلاسيك 3", "plan_core"),
+        ("شبكة كلاسيك 3", "plan_core"),
+        ("تغطية كلاسيك 3", "plan_core"),
+        ("هل كلاسيك 3 فيه direct billing؟", "plan_core"),
+        ("هل كلاسيك 3 يحتاج referral؟", "plan_core"),
+    ],
+)
+def test_classic3_aliases_and_arabic_json_smoke(query, expected_intent):
+    code, out, err = run_entrypoint(["--json", query])
+    assert code == 0
+    assert not err
+    data = json.loads(out)
+    assert data["ok"] is True
+    assert data["intent"] == expected_intent
+    assert data["plan_name"] == "Classic 3"
+    assert data["tool_name"] in ("get_plan_core", "get_plan_summary")

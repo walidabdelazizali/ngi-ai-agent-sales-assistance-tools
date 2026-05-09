@@ -1,8 +1,11 @@
 PLAN_CORE_FIELDS = [
     "plan name", "plan_name", "plan code", "plan_code", "network", "network name", "network_name",
     "annual limit", "annual_limit", "area of coverage", "area", "area_of_coverage",
-    "direct billing", "direct_billing", "referral required", "referral", "referral_required",
-    "اسم الخطة", "رمز الخطة", "الشبكة", "الحد السنوي", "التغطية", "الدفع المباشر", "الإحالة"
+    "direct billing", "direct_billing", "cashless", "cash less",
+    "referral required", "referral", "referral_required",
+    "limit", "limt",
+    "اسم الخطة", "رمز الخطة", "الشبكة", "شبكة", "الشبكه", "الحد السنوي",
+    "التغطية", "تغطية", "ليمت", "الدفع المباشر", "الإحالة", "تحويل", "ريفرال", "كاشلس", "كاش ليس"
 ]
 """
 Deterministic agent-ready wrapper for the validated runtime.
@@ -49,8 +52,16 @@ SUPPORTED_PLANS = {
     "hn classic 2": "Classic 2",
     # Classic 3
     "classic 3": "Classic 3",
+    "classic3": "Classic 3",
+    "classic-3": "Classic 3",
+    "classic 03": "Classic 3",
+    "hnclassic3": "Classic 3",
     "hn_classic_3": "Classic 3",
+    "hn-classic-3": "Classic 3",
     "hn classic 3": "Classic 3",
+    "كلاسيك 3": "Classic 3",
+    "كلاسيك 03": "Classic 3",
+    "كلاسيك3": "Classic 3",
 }
 
 import re
@@ -122,10 +133,14 @@ def _extract_all_plan_names(text: str) -> list[str]:
 
 def _intent_from_query(text: str) -> Optional[str]:
     lowered = text.lower()
+    plan_name = _extract_plan_name(lowered)
     # Special-case: route explicit "maternity limit" with plan to plan_core
     if "maternity limit" in lowered:
-        if _extract_plan_name(lowered):
+        if plan_name:
             return "plan_core"
+    # Classic 3 coverage phrasing is common in broker usage.
+    if plan_name == "Classic 3" and any(token in lowered for token in ("coverage", "covered")):
+        return "plan_core"
     # Comparison/recommendation intent
     rec_patterns = ["better", "recommend", "which one", "offer to client", "should i offer", "which should i offer", "which plan"]
     if _extract_comparison_plans(lowered):
@@ -166,9 +181,8 @@ def _intent_from_query(text: str) -> Optional[str]:
         "lab", "labs",
         "diagnostic center", "diagnostic centers"
     ]
-    lowered = text.lower()
     # Standard pattern
-    if any(t in lowered for t in type_words) and any(c in lowered for c in city_words) and _extract_plan_name(lowered):
+    if any(t in lowered for t in type_words) and any(c in lowered for c in city_words) and plan_name:
         return "plan_network_city_type"
     # Alias patterns for existing supported queries (no output/logic change)
     # e.g. "Dubai providers Remedy 6", "Providers in Dubai Remedy 6", "Remedy 6 Dubai providers", etc.

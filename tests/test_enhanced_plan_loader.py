@@ -91,3 +91,31 @@ def test_tool_contract_classic3_core_and_summary_no_leak():
     assert summary["plan_code"] == "HN_CLASSIC_3"
     assert summary["network_name"] == "Standard"
     assert summary["summary_text"]
+
+def test_classic3_benefit_extraction_contract_values():
+    core = get_plan_core("Classic 3")
+    summary = get_plan_summary("Classic 3")
+
+    assert core["annual_limit"] == "AED 250,000"
+    assert core["network_name"] == "Standard"
+    assert core["area_of_coverage"] == "UAE+Home country"
+    assert core["direct_billing"] is True
+    assert core["referral_required"] is False
+
+    # Stabilization guard: do not synthesize missing maternity normalization.
+    assert core.get("maternity_cover") is None
+    assert "maternity_cover" not in summary
+    assert "pharmacy_cover_summary" not in core
+    assert "physiotherapy_cover_summary" not in core
+
+def test_classic3_summary_output_no_duplicate_core_labels():
+    summary = get_plan_summary("Classic 3")
+    text = summary["summary_text"]
+    assert text
+    assert text.count("Plan:") == 1
+    assert text.count("Code:") == 1
+    assert text.count("Network:") == 1
+    assert text.count("Annual limit:") == 1
+    assert text.count("Area:") == 1
+    assert text.count("Direct billing:") == 1
+    assert text.count("Referral required:") == 1

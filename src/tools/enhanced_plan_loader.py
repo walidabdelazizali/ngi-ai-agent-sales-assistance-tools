@@ -13,7 +13,17 @@ ENHANCED_PLAN_REGISTRY = {
         "approved": True,
     },
     "Classic 3": {
-        "aliases": ["classic 3", "hn_classic_3", "hn classic 3"],
+        "aliases": [
+            "classic 3",
+            "classic3",
+            "classic-3",
+            "classic 03",
+            "hn_classic_3",
+            "hn-classic-3",
+            "hn classic 3",
+            "كلاسيك 3",
+            "كلاسيك 03",
+        ],
         "plan_code": "HN_CLASSIC_3",
         "source_path": "data/plans/raw/HN_CLASSIC_3/source_table.json",
         "parser": "parse_enhanced_plan",

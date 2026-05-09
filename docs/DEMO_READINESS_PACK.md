@@ -1,56 +1,96 @@
 # Demo Readiness Pack
 
-## 1. Current Stable Baseline
-- **Branch:** stage2-live
-- **Tag:** v1-stage2-quality-guard
-- **Tests:** 448 passed, 2 skipped
+## 1) Project Overview
+NGI AI Agent Sales Assistance Tools is a deterministic insurance Q&A platform for controlled broker and management demos. It answers supported insurance questions with fixed routing, validated data sources, approval gates, and regression-backed behavior.
 
-## 2. What the System Can Safely Demo
-- Deterministic Q&A for approved Remedy plans (02, 03, 04, 05, 06)
-- 10 core business questions for approved plans only
-- Plan core, reimbursement, and summary queries (English/Arabic)
-- Plan comparison for supported pairs
-- Consistent, safe, and repeatable answers (no AI, no RAG)
-- Robust handling of unsupported or unapproved queries
-- Telegram bot startup logic (if dependency installed)
+## 2) Current Stable Baseline
+- Branch: stage2-live
+- Stable baseline tag: v-enhanced-classic3-stable
+- Current test status: 591 passed, 2 skipped
+- Broker phrasing replay: 27/27 passed
 
-## 3. What the System Must Not Demo Yet
-- Any unapproved/draft plan answers
-- Unvalidated or AI-generated content
-- Custom plan uploads or editing
-- Unstable or experimental features
-- Telegram bot if python-telegram-bot is not installed
-- Any code or feature not covered by tests
+## 3) Supported Plans
+- Classic 2
+- Classic 3
+- Remedy 02
+- Remedy 03
+- Remedy 04
+- Remedy 05
+- Remedy 06
 
-## 4. 10 Approved Demo Questions
-1. What is the annual limit for Remedy 02?
-2. What is the network name for Remedy 03?
-3. Is direct billing available in Remedy 04?
-4. Is a referral required for Remedy 05?
-5. What is the area of coverage for Remedy 06?
-6. What are the reimbursement rules for Remedy 02?
-7. What documents are required for reimbursement in Remedy 03?
-8. Give me a summary of Remedy 04.
-9. قارن ريميدي 02 و ريميدي 03
-10. ما هي التغطية في ريميدي 05؟
+## 4) Supported Query Types
+- Plan summary
+- Annual limit lookup
+- Network lookup
+- Area of coverage lookup
+- Direct billing lookup
+- Referral requirement lookup
+- Reimbursement rules (Remedy-safe flow)
+- Deterministic unsupported-safe fallback
 
-## 5. Safe Fallback Examples
-- "Sorry, this plan is not available for customer-facing answers."
-- "Sorry, this query is not supported or not available. Please specify a supported plan or question."
-- "يرجى تحديد خطتين للمقارنة."
-- "هذه الخطة غير متاحة حالياً للإجابة على العملاء."
+## 5) Deterministic Architecture (Executive Summary)
+- No probabilistic answer generation and no hallucination layer.
+- Query routing uses deterministic alias and keyword patterns.
+- Plan loading uses canonical source mapping and approval validation.
+- Customer-facing responses are gated behind readiness checks.
+- Unsupported prompts return safe, stable envelopes and user-safe wording.
 
-## 6. Demo Operator Script
-1. Confirm you are on branch `stage2-live` and tag `v1-stage2-quality-guard`.
-2. Run: `python -m pytest -q` (expect 448 passed, 2 skipped)
-3. Open the agent interface (CLI or Telegram, if available)
-4. Ask each of the 10 approved demo questions and verify correct, safe, and consistent answers.
-5. For unsupported or unapproved queries, verify fallback messages are shown.
-6. If Telegram demo is required, ensure `python-telegram-bot` is installed and token is set.
-7. Do not attempt any unapproved, upload, or experimental features.
+See detailed architecture: docs/architecture/DETERMINISTIC_INSURANCE_CORE.md
 
-## 7. Rollback Instruction
-To restore the stable demo baseline:
-```sh
-git checkout v1-stage2-quality-guard
-```
+## 6) Safety + Validation Model
+- Canonical source boundary: controlled source loading paths only.
+- Approval boundary: only approved/ready plans return customer-facing answers.
+- Validation gates: normalize + validate before response composition.
+- Regression-first policy: behavior guarded by focused tests and full pytest.
+- Output hardening: no internal field leakage in customer-safe responses.
+
+## 7) English and Arabic Routing Examples
+
+English supported examples:
+- Summarize Classic 3
+- What is the annual limit for Classic 3?
+- What is the network name for Classic 3?
+- Is direct billing available for Classic 3?
+
+Arabic supported examples:
+- ملخص كلاسيك 3
+- ليمت كلاسيك 3
+- شبكة كلاسيك 3
+- هل كلاسيك 3 يحتاج referral؟
+
+Mixed supported examples:
+- classic 3 الشبكة
+- كلاسيك 3 coverage
+- HN classic 3 ليمت
+
+## 8) Unsupported-Safe Behavior Examples
+- هل فيه direct billing؟  (plan-less shorthand, safely unsupported)
+- هل يحتاج referral؟  (plan-less shorthand, safely unsupported)
+- Tell me about Classic 4  (out of scope plan)
+- Compare Classic 3 and Remedy 04  (scope boundary: comparison expansion not enabled)
+
+Typical safe response style:
+- Sorry, this query is not supported or not available. Please specify a supported plan or question.
+
+## 9) Scope Boundaries (Current Release)
+- No new plans beyond current approved set.
+- No comparison expansion for enhanced plans.
+- No architecture refactor.
+- No Telegram, CRM, RAG, or AI-probabilistic routing work in this demo package.
+
+## 10) Demo Operator Checklist
+1. Confirm branch and stable baseline tag.
+2. Run python -m pytest -q and verify 591 passed, 2 skipped.
+3. Run the demo query pack in docs/demo/demo_queries.md.
+4. Verify expected routing and no internal leakage.
+5. Show unsupported-safe behavior with boundary examples.
+
+## 11) Evidence References
+- docs/rollout_validation/validation_pack.md
+- docs/rollout_validation/real_usage_validation_pack_classic3.md
+- docs/rollout_validation/real_usage_validation_run_classic3.md
+- docs/rollout_validation/broker_phrasing_hardening_report.md
+- docs/rollout_validation/validation_run_03_runtime_results.md
+
+## 12) Rollback Reference
+- Stable presentation baseline tag: v-enhanced-classic3-stable

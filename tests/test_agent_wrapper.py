@@ -376,6 +376,24 @@ def test_classic3_annual_limit_routes():
     assert out["plan_name"] == "Classic 3"
     assert out["tool_name"] == "get_plan_core"
 
+def test_classic3_broker_shorthand_routes():
+    queries = [
+        "classic3 limit",
+        "HN Classic 3 limit",
+        "Classic 3 cashless?",
+        "كلاسيك3 ليمت",
+        "classic3 limt",
+        "classic 3 cash less",
+        "كلاسيك 3 coverage",
+        "What countries are covered by Classic 3?",
+    ]
+    for query in queries:
+        out = run_agent_wrapper(query)
+        assert out["ok"] is True, query
+        assert out["intent"] == "plan_core", query
+        assert out["plan_name"] == "Classic 3", query
+        assert out["tool_name"] == "get_plan_core", query
+
 def test_classic3_alias_hn_classic_3_routes():
     out = run_agent_wrapper("Summarize HN_CLASSIC_3")
     assert out["ok"] is True
@@ -387,4 +405,51 @@ def test_classic3_alias_hn_classic_3_spaced_routes():
     assert out["ok"] is True
     assert out["intent"] == "plan_core"
     assert out["plan_name"] == "Classic 3"
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "Summarize classic3",
+        "Summarize classic-3",
+        "Summarize Classic 03",
+        "Summarize كلاسيك 3",
+    ],
+)
+def test_classic3_alias_robustness_routes(query):
+    out = run_agent_wrapper(query)
+    assert out["ok"] is True
+    assert out["intent"] == "plan_summary"
+    assert out["plan_name"] == "Classic 3"
+    assert out["tool_name"] == "get_plan_summary"
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "ليمت كلاسيك 3",
+        "شبكة كلاسيك 3",
+        "تغطية كلاسيك 3",
+        "هل كلاسيك 3 فيه direct billing؟",
+        "هل كلاسيك 3 يحتاج referral؟",
+    ],
+)
+def test_classic3_arabic_phrase_routing(query):
+    out = run_agent_wrapper(query)
+    assert out["ok"] is True
+    assert out["intent"] == "plan_core"
+    assert out["plan_name"] == "Classic 3"
+    assert out["tool_name"] == "get_plan_core"
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "هل فيه direct billing؟",
+        "هل يحتاج referral؟",
+    ],
+)
+def test_planless_arabic_shorthand_stays_unsupported(query):
+    out = run_agent_wrapper(query)
+    assert out["ok"] is False
+    assert out["intent"] == "unsupported"
+    assert out["plan_name"] is None
+    assert out["tool_name"] is None
 
