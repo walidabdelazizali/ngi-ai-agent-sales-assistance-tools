@@ -19,6 +19,8 @@ def main():
     parser.add_argument('--json', action='store_true', help='Output machine-readable JSON')
     parser.add_argument('query', nargs='+', help='User query string')
     args = parser.parse_args()
+    if args.json and hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     user_query = ' '.join(args.query)
     result = run_agent_wrapper(user_query)
     # Always print valid structure, even for blocked plans

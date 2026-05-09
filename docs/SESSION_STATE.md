@@ -103,3 +103,20 @@ stage2-live
 - All backend behavior and JSON contract unchanged.
 - Tests remain fully green (642 passed, 2 skipped).
 - Ready for daily operational usage without CLI.
+
+## Latest Work Session (Provider Dataset Coverage Sprint)
+
+### Provider Dataset Coverage Sprint
+1. Hardened provider alias coverage in [src/query/network_lookup.py](src/query/network_lookup.py) for:
+	- Aster Qsais / Aster Al Qusais
+	- Burjeel AUH / Burjeel Abu Dhabi
+	- Mediclinic Qusais (Arabic transliteration path)
+2. Added Arabic/mixed normalization aliases for provider families and branch tokens (`برجيل`, `أستر/استر`, `ان ام سي`, `ميديكلينيك`, `رويال`, `qsais -> qusais`, `auh -> abu dhabi`).
+3. Implemented deterministic ambiguity-safe messaging with candidate previews for family-name matches (e.g., Burjeel/NMC Royal), instead of silent not-found behavior.
+4. Fixed wrapper routing gap for normalized Arabic phrasing (`في أي network ...`) in [src/agent_wrapper.py](src/agent_wrapper.py), so mixed Arabic/English provider-network questions route to network lookup.
+5. Fixed Windows JSON output crash in [src/agent_entrypoint.py](src/agent_entrypoint.py) by enforcing UTF-8 output only in `--json` mode.
+6. Added new regression coverage:
+	- [tests/test_provider_dataset_coverage.py](tests/test_provider_dataset_coverage.py)
+	- Added Arabic routing assertion in [tests/test_network_search_hardening.py](tests/test_network_search_hardening.py)
+7. Added evidence report: [docs/operational_usage/provider_dataset_coverage_delta.md](docs/operational_usage/provider_dataset_coverage_delta.md).
+8. Full validation is green after sprint: 675 passed, 2 skipped.

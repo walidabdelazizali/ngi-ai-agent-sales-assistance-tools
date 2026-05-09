@@ -69,3 +69,9 @@ def test_wrapper_safe_not_found_network_query():
     assert out["tool_name"] == "network_lookup"
     assert out["ok"] is False
     assert "Provider not found." in str(out["message"])
+
+
+def test_wrapper_routes_arabic_in_which_network_query():
+    out = run_agent_wrapper("Burjeel Hospital في أي شبكة؟")
+    assert out["intent"] == "network_lookup"
+    assert out["tool_name"] == "network_lookup"

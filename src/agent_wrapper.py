@@ -132,6 +132,10 @@ NETWORK_LOOKUP_PATTERNS = [
     r".+ في أي شبكة",
     r"في اي شبكة .+",
     r".+ في اي شبكة",
+    r"في أي network .+",
+    r".+ في أي network",
+    r"في اي network .+",
+    r".+ في اي network",
     r"ما نوع المزود .+",
     r"في أي مدينة يقع .+",
 ]

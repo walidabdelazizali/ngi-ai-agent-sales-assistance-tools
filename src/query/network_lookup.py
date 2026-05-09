@@ -18,8 +18,13 @@ PROVIDER_QUERY_ALIASES = {
     "برجيل الشارقة": "Burjeel Specialty Hospital Sharjah",
     "burjeel abu dhabi": "Burjeel Hospital",
     "burjeel specialty sharjah": "Burjeel Specialty Hospital Sharjah",
-    "aster qusais": "Aster Hospital Al Qusais",
-    "aster al qusais": "Aster Hospital Al Qusais",
+    "aster qusais": "ASTER MEDICAL CENTRE AL QUSAIS",
+    "aster al qusais": "ASTER MEDICAL CENTRE AL QUSAIS",
+    "aster qsais": "ASTER MEDICAL CENTRE AL QUSAIS",
+    "mediclinic qusais": "MEDICLINIC AL QUSAIS",
+    "burjeel auh": "Burjeel Hospital",
+    "burjeel abu dhabi": "Burjeel Hospital",
+    "مستشفى burjeel": "Burjeel Hospital",
 }
 
 QUERY_NORMALIZATION_ALIASES = {
@@ -28,6 +33,21 @@ QUERY_NORMALIZATION_ALIASES = {
     "كاشلس": "direct billing",
     "ليمت": "annual limit",
     "ريفرال": "referral",
+    "برجيل": "burjeel",
+    "مستشفى برجيل": "burjeel hospital",
+    "مستشفي برجيل": "burjeel hospital",
+    "أستر": "aster",
+    "استر": "aster",
+    "ان ام سي": "nmc",
+    "رويال": "royal",
+    "ميديكلينيك": "mediclinic",
+    "ميدكلينيك": "mediclinic",
+    "القصيص": "qusais",
+    "قصيص": "qusais",
+    "auh": "abu dhabi",
+    "qsais": "qusais",
+    "br.": "branch",
+    "br ": "branch ",
 }
 
 
@@ -45,7 +65,8 @@ class NetworkLookup:
         normalized = (text or "").strip().lower()
         normalized = normalized.translate(str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789"))
         normalized = normalized.translate(str.maketrans("۰۱۲۳۴۵۶۷۸۹", "0123456789"))
-        for src, dst in QUERY_NORMALIZATION_ALIASES.items():
+        for src in sorted(QUERY_NORMALIZATION_ALIASES, key=len, reverse=True):
+            dst = QUERY_NORMALIZATION_ALIASES[src]
             normalized = normalized.replace(src, dst)
         normalized = re.sub(r"\s+", " ", normalized)
         return normalized.strip()
@@ -61,11 +82,23 @@ class NetworkLookup:
     @staticmethod
     def _apply_provider_aliases(text: str) -> str:
         q = (text or "").strip()
-        lowered = q.lower()
+        lowered = NetworkLookup._normalize_query_text(q)
         for alias, canonical in PROVIDER_QUERY_ALIASES.items():
             if alias in lowered:
                 return canonical
-        return q
+        return lowered
+
+    @staticmethod
+    def _format_ambiguous_message(candidates, lang="en"):
+        names = [str(x).strip() for x in (candidates or []) if str(x).strip()]
+        preview = ", ".join(names[:5])
+        if len(names) > 5:
+            preview += ", ..."
+        if not preview:
+            return "Ambiguous provider match." if lang == "en" else "مزود غير محدد (Ambiguous provider match)."
+        if lang == "ar":
+            return f"مزود غير محدد (Ambiguous provider match). أكثر من مزود مطابق: {preview}"
+        return f"Ambiguous provider match. More than one provider matched: {preview}"
 
     @staticmethod
     def _cleanup_provider_query(query):
@@ -241,8 +274,116 @@ class NetworkLookup:
         s = re.sub(r"[\s\t\n\r]+", " ", s)
         s = re.sub(r"^[^\w\d]+|[^\w\d]+$", "", s)  # strip simple punctuation at ends
         s = re.sub(r"[\.,;:!\-\(\)\[\]{}'\"]", "", s)  # remove simple punctuation inside
+        s = s.replace("auh", "abu dhabi")
+        s = s.replace("qsais", "qusais")
         s = re.sub(r" +", " ", s)  # collapse multiple spaces
         return s
+
+    def _resolve_provider(self, name):
+        """Return ('row', pd.Series) | ('ambiguous', [names]) | ('none', None)."""
+        name = self._apply_provider_aliases(name)
+        norm = self._normalize(name)
+
+        def rows_to_names(idxs):
+            names = []
+            for i in idxs:
+                n = str(self.df.iloc[i].get("provider_name", "")).strip()
+                if n and n not in names:
+                    names.append(n)
+            return names
+
+        # exact provider_name
+        if norm in self.provider_name_idx:
+            idxs = self.provider_name_idx[norm]
+            if len(idxs) == 1:
+                return ("row", self.df.iloc[idxs[0]])
+            return ("ambiguous", rows_to_names(idxs))
+
+        # exact google_name
+        if norm in self.google_name_idx:
+            idxs = self.google_name_idx[norm]
+            if len(idxs) == 1:
+                return ("row", self.df.iloc[idxs[0]])
+            return ("ambiguous", rows_to_names(idxs))
+
+        # brand-level ambiguity safety
+        brand_tokens = {"burjeel", "aster", "mediclinic", "nmc", "nmc royal"}
+        if norm in brand_tokens:
+            idxs = []
+            for idx, row in self.df.iterrows():
+                pn = self._normalize(row.get("provider_name", ""))
+                if norm in pn:
+                    idxs.append(idx)
+            uniq = rows_to_names(idxs)
+            if len(uniq) > 1:
+                return ("ambiguous", uniq)
+
+        # Try stripping trailing city
+        city_list = set(self.df["city"].dropna().str.lower().unique())
+        norm_parts = norm.split()
+        if len(norm_parts) > 2 and norm_parts[-1] in city_list:
+            norm_city_stripped = " ".join(norm_parts[:-1])
+            if norm_city_stripped in self.provider_name_idx:
+                idxs = self.provider_name_idx[norm_city_stripped]
+                if len(idxs) == 1:
+                    return ("row", self.df.iloc[idxs[0]])
+                return ("ambiguous", rows_to_names(idxs))
+
+        known_types = {"hospital", "pharmacy", "clinic", "medical", "center", "centre"}
+        known_cities = set(self.df["city"].dropna().str.lower().unique())
+        norm_tokens = norm.split()
+
+        ngrams = []
+        for n in range(len(norm_tokens), 0, -1):
+            for i in range(len(norm_tokens) - n + 1):
+                phrase = " ".join(norm_tokens[i:i+n])
+                ngrams.append(phrase)
+
+        matches = []
+        for idx, row in self.df.iterrows():
+            pn = self._normalize(row.get("provider_name", ""))
+            gn = self._normalize(row.get("google_name", ""))
+            for phrase in ngrams:
+                if phrase in known_types or phrase in known_cities:
+                    continue
+                if (f" {pn} " in f" {norm} " or f" {norm} " in f" {pn} ") or (f" {gn} " in f" {norm} " or f" {norm} " in f" {gn} "):
+                    matches.append(idx)
+                    break
+
+        if not matches:
+            for idx, row in self.df.iterrows():
+                pn = self._normalize(row.get("provider_name", ""))
+                if norm and norm in pn:
+                    matches.append(idx)
+
+        if not matches:
+            return ("none", None)
+
+        type_token = None
+        for t in norm_tokens:
+            if t in known_types:
+                type_token = t
+                break
+        if type_token:
+            matches = [i for i in matches if type_token in str(self.df.iloc[i].get("type", "")).lower()]
+            if not matches:
+                return ("none", None)
+
+        city_token = None
+        for t in norm_tokens:
+            if t in known_cities:
+                city_token = t
+                break
+        if city_token:
+            matches = [i for i in matches if city_token in str(self.df.iloc[i].get("city", "")).lower()]
+            if not matches:
+                return ("none", None)
+
+        uniq = rows_to_names(matches)
+        if len(uniq) == 1:
+            idx = matches[0]
+            return ("row", self.df.iloc[idx])
+        return ("ambiguous", uniq)
 
     @staticmethod
     def extract_provider_and_network_from_query(query):
@@ -281,103 +422,10 @@ class NetworkLookup:
         return query.strip(), None
 
     def find_provider(self, name):
-        name = self._apply_provider_aliases(name)
-        norm = self._normalize(name)
-        # 1. exact provider_name
-        if norm in self.provider_name_idx:
-            idxs = self.provider_name_idx[norm]
-            if len(idxs) == 1:
-                return self.df.iloc[idxs[0]]
-            return 'ambiguous' if len(idxs) > 1 else None
-        # 2. exact google_name
-        if norm in self.google_name_idx:
-            idxs = self.google_name_idx[norm]
-            if len(idxs) == 1:
-                return self.df.iloc[idxs[0]]
-            return 'ambiguous' if len(idxs) > 1 else None
-
-        # 2.5: Try stripping trailing city if present and retry
-        city_list = set(self.df["city"].dropna().str.lower().unique())
-        norm_parts = norm.split()
-        if len(norm_parts) > 2:
-            # Try removing last word if it matches a city
-            if norm_parts[-1] in city_list:
-                norm_city_stripped = " ".join(norm_parts[:-1])
-                if norm_city_stripped in self.provider_name_idx:
-                    idxs = self.provider_name_idx[norm_city_stripped]
-                    if len(idxs) == 1:
-                        return self.df.iloc[idxs[0]]
-                    return 'ambiguous' if len(idxs) > 1 else None
-
-        # --- Multi-word entity safe matching ---
-        # Known generic words to exclude as sole match
-        known_types = {"hospital", "pharmacy", "clinic", "medical", "center", "centre"}
-        known_cities = set(self.df["city"].dropna().str.lower().unique())
-        norm_tokens = norm.split()
-        # Build all n-grams (phrases) from the query, longest to shortest
-        ngrams = []
-        for n in range(len(norm_tokens), 0, -1):
-            for i in range(len(norm_tokens) - n + 1):
-                phrase = " ".join(norm_tokens[i:i+n])
-                ngrams.append(phrase)
-        matches = []
-        for idx, row in self.df.iterrows():
-            pn = self._normalize(row.get("provider_name", ""))
-            gn = self._normalize(row.get("google_name", ""))
-            row_type = str(row.get("type", "")).lower()
-            row_city = str(row.get("city", "")).lower()
-            # Only match if overlap is not a generic type word
-            for phrase in ngrams:
-                if phrase in known_types or phrase in known_cities:
-                    continue
-                # Accept if provider_name is a word-bound substring of query, or vice versa
-                if (f" {pn} " in f" {norm} " or f" {norm} " in f" {pn} ") or (f" {gn} " in f" {norm} " or f" {norm} " in f" {gn} "):
-                    matches.append(idx)
-                    break
-        # If no matches, fallback to unique_contains_fallback logic (for test coverage)
-        if not matches:
-            for idx, row in self.df.iterrows():
-                pn = self._normalize(row.get("provider_name", ""))
-                if norm in pn:
-                    matches.append(idx)
-        # If still no matches, not found
-        if not matches:
-            return None
-        # If type is in query, filter by type
-        type_token = None
-        for t in norm_tokens:
-            if t in known_types:
-                type_token = t
-                break
-        if type_token:
-            matches = [i for i in matches if type_token in str(self.df.iloc[i].get("type", "")).lower()]
-            if not matches:
-                return None
-        # If city is in query, filter by city
-        city_token = None
-        for t in norm_tokens:
-            if t in known_cities:
-                city_token = t
-                break
-        if city_token:
-            matches = [i for i in matches if city_token in str(self.df.iloc[i].get("city", "")).lower()]
-            if not matches:
-                return None
-        # Final decision
-        if len(matches) == 1:
-            return self.df.iloc[matches[0]]
-        if len(matches) > 1:
-            return 'ambiguous'
-        return None
-        # 4. substring/contains match in google_name only
-        google_matches = []
-        for idx, row in self.df.iterrows():
-            gn = self._normalize(row.get("google_name", ""))
-            if norm in gn:
-                google_matches.append(idx)
-        if len(google_matches) == 1:
-            return self.df.iloc[google_matches[0]]
-        if len(google_matches) > 1:
+        kind, payload = self._resolve_provider(name)
+        if kind == "row":
+            return payload
+        if kind == "ambiguous":
             return 'ambiguous'
         return None
 
@@ -482,11 +530,17 @@ class NetworkLookup:
             return "Provider not found."
         # in network? (English or Arabic generic)
         if re.search(r"is .+ in the network|هل .+ داخل الشبكة|هل .+ في الشبكة", query, re.IGNORECASE):
-            found = self.is_in_network(provider)
-            return f"YES: {norm_provider}" if found else f"NO: {norm_provider}"
+            details = self.provider_details(provider)
+            is_ar = bool(re.search(r"[\u0600-\u06FF]", query))
+            if details.get("ambiguous"):
+                return self._format_ambiguous_message(details.get("candidates", []), lang="ar" if is_ar else "en")
+            if not details.get("found"):
+                return f"NO: {norm_provider}"
+            return f"YES: {norm_provider}"
 
         # Minimal patch: handle network tiers, city, and type queries
         extracted_provider = self.extract_provider_from_query(query)
+        details_for_extracted = self.provider_details(extracted_provider) if extracted_provider else {"found": False}
         row = self.find_provider(extracted_provider)
         if isinstance(row, pd.Series):
             # 1. Which network tiers is X available in?
@@ -508,10 +562,18 @@ class NetworkLookup:
                 ptype = row.get("type", "")
                 display_provider = self._display_provider_name(extracted_provider)
                 return f"Type for {display_provider}: {ptype if ptype else 'Unknown'}"
+        elif details_for_extracted.get("ambiguous", False):
+            is_ar = bool(re.search(r"[\u0600-\u06FF]", query))
+            if re.search(r"which network tiers is .+ available in|which network tiers for .+|في أي شبكات", query, re.IGNORECASE):
+                return self._format_ambiguous_message(details_for_extracted.get("candidates", []), lang="ar" if is_ar else "en")
 
         # which network?
         if re.search(r"which network|ما هي الشبكات|في أي شبكة|في اي شبكة|in which network", query, re.IGNORECASE):
             provider_for_networks = extracted_provider if extracted_provider else provider
+            details_for_networks = self.provider_details(provider_for_networks)
+            if details_for_networks.get("ambiguous", False):
+                is_ar = bool(re.search(r"[\u0600-\u06FF]", query))
+                return self._format_ambiguous_message(details_for_networks.get("candidates", []), lang="ar" if is_ar else "en")
             nets = self.which_networks(provider_for_networks)
             display_provider = self._display_provider_name(provider_for_networks)
             return f"Networks for {display_provider}: {', '.join(nets) if nets else 'None'}"
@@ -524,16 +586,18 @@ class NetworkLookup:
         if d.get("found", False):
             return str(d)
         if d.get("ambiguous", False):
-            return "Ambiguous provider match."
+            is_ar = bool(re.search(r"[\u0600-\u06FF]", query))
+            return self._format_ambiguous_message(d.get("candidates", []), lang="ar" if is_ar else "en")
         return "Provider not found."
 
     def provider_in_network(self, provider_name, network_code):
         # Find the provider row (allow ambiguous for test fixture)
-        row = self.find_provider(provider_name)
-        if row is None:
+        kind, payload = self._resolve_provider(provider_name)
+        if kind == "none":
             return {"found": False}
-        if isinstance(row, str) and row == 'ambiguous':
-            return {"found": False, "ambiguous": True}
+        if kind == "ambiguous":
+            return {"found": False, "ambiguous": True, "candidates": payload}
+        row = payload
         # network_code must match a column
         col = network_code.lower()
         if col not in self.df.columns:
@@ -559,11 +623,12 @@ class NetworkLookup:
 
 
     def provider_details(self, name):
-        row = self.find_provider(name)
-        if row is None:
+        kind, payload = self._resolve_provider(name)
+        if kind == "none":
             return {"found": False}
-        if isinstance(row, str) and row == 'ambiguous':
-            return {"found": False, "ambiguous": True}
+        if kind == "ambiguous":
+            return {"found": False, "ambiguous": True, "candidates": payload}
+        row = payload
         if not hasattr(row, "get"):
             # Defensive: not a dict/Series, treat as not found
             return {"found": False}
