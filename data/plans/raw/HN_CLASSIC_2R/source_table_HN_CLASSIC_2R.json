@@ -1,0 +1,83 @@
+{
+  "plan_code": "HN_CLASSIC_2R",
+  "plan_name": "Classic 2R",
+  "source_plan_title": "Classic Plan-2R",
+  "product_family": "InHouse",
+  "network_type": "HealthNet",
+  "network_level": "Standard Plus",
+  "provider_network": "HN Standard Plus",
+  "region": "All",
+  "annual_limit": "AED 250,000",
+  "area_of_coverage": "Worldwide Excluding USA and Canada",
+  "room_type": "Private",
+  "specialist_access": "Direct",
+  "tpa": "NGI Healthnet",
+  "direct_billing": "Direct Billing Available",
+  "reimbursement_within_network": "Reimbursement is also possible but will be settled at 80% of the usual & customary rates of the selected Network.",
+  "reimbursement_outside_network": "Re-imbursement at 80% of actual costs, subject to being reasonable, or 80% of the usual & customary rates of the network, whichever is less.",
+  "pre_existing_chronic_conditions": {
+    "coverage": "Covered up to a limit of AED 150,000 per member per year",
+    "waiting_period": "No waiting period applies if evidence of continuity of coverage is provided; otherwise a waiting period of 6 months applies to the first scheme membership.",
+    "declaration_required": true
+  },
+  "inpatient_benefits": {
+    "room_and_board": "Private",
+    "non_urgent_tests_treatments_surgeries": "Covered; pre-approval required",
+    "cash_indemnity": "Covered on reimbursement up to AED 250 per night and maximum 10 nights",
+    "parent_accommodation_child_under_16": "Covered up to AED 300 per night",
+    "companion_accommodation_medical_necessity": "Covered up to AED 300 per night",
+    "emergency_road_ambulance": "100% Covered"
+  },
+  "outpatient_benefits": {
+    "consultation_copay": "20% up to AED 50",
+    "laboratory": "Hospital: Covered up to ABL with 20% Co Insurance on all OP Services; Clinics: Covered up to ABL with Nil Co Insurance",
+    "radiology": "Hospital: Covered up to ABL with 20% Co Insurance on all OP Services; Clinics: Covered up to ABL with Nil Co Insurance",
+    "physiotherapy": "20 sessions per member per annum",
+    "pharmacy_limit": "AED 10,000",
+    "pharmacy_copay": "10% Co Insurance",
+    "pharmacy_type": "Branded"
+  },
+  "additional_benefits": {
+    "dental_emergency": "Subject to 20% coinsurance",
+    "hearing_vision_emergency": "Subject to 20% coinsurance",
+    "vitamins": "Covered if medically necessary in case of deficiency or if prescribed by the treating physician",
+    "alternative_medicine": "Covered up to AED 2,000 with 20% Co Insurance",
+    "psychiatric_treatment_mental_health": "Covered up to AED 2,000 with 20% Coins",
+    "organ_transplant": "Covered up to AED 150,000",
+    "repatriation_mortal_remains": "Covered up to maximum AED 15,000 per person per annum, reimbursement basis with no co-pay",
+    "home_nursing": "Covered up to 10 weeks on reimbursement",
+    "economy_return_air_ticket": "100% Covered on Reimbursement",
+    "work_related_injuries_auh_only": "Not Covered",
+    "kidney_dialysis": "Covered up to AED 60,000 with 20% Co Insurance on all OP Services; applicable exclusively to Dubai visa holders only",
+    "mental_health_outpatient_counselling": "Covered up to AED 800 with 30% Co Insurance; applicable exclusively to Dubai visa holders only",
+    "second_medical_opinion": "Covered",
+    "dental_benefit": "Covered up to AED 2,000 with 20% Co Insurance"
+  },
+  "maternity": {
+    "inpatient": {
+      "coinsurance": "10%",
+      "normal_delivery_limit": "AED 12,500",
+      "c_section_complications_termination_limit": "AED 15,000"
+    },
+    "outpatient": {
+      "coinsurance": "10%",
+      "max_visits": "10 visits",
+      "antenatal_ultrasound_scans": "8 scans"
+    },
+    "newborn_cover": "Covered under mother's card up to AED 150,000 PPPY; cover for 30 days from birth"
+  },
+  "source_validation": {
+    "validated_from_document_content": true,
+    "filename_trusted": false,
+    "internal_plan_title": "Classic Plan-2R",
+    "internal_annual_limit": "AED 250,000",
+    "internal_provider_network": "HN Standard Plus",
+    "internal_area_of_coverage": "Worldwide Excluding USA and Canada",
+    "notes": "Use internal content markers as authority. Do not rely on the filename."
+  },
+  "approval_metadata": {
+    "approval_status": "pending_validation",
+    "tests_passed": false,
+    "customer_facing_enabled": false
+  }
+}

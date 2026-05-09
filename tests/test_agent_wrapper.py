@@ -453,3 +453,52 @@ def test_planless_arabic_shorthand_stays_unsupported(query):
     assert out["plan_name"] is None
     assert out["tool_name"] is None
 
+
+@pytest.mark.parametrize(
+    "query,expected_intent",
+    [
+        ("classic2 summary", "plan_summary"),
+        ("classic-2 summary", "plan_summary"),
+        ("Classic 02 summary", "plan_summary"),
+        ("classic2 limit", "plan_core"),
+        ("classic-2 limit", "plan_core"),
+        ("Classic 02 limit", "plan_core"),
+        ("classic2 limt", "plan_core"),
+        ("classic-2 cash less", "plan_core"),
+        ("classic2 cashless", "plan_core"),
+        ("Classic 2 coverage", "plan_core"),
+        ("Need annual limit for classic2", "plan_core"),
+        ("Need network for classic2", "plan_core"),
+        ("Need direct billing for classic2", "plan_core"),
+        ("Need referral status for classic2", "plan_core"),
+        ("HN_CLASSIC_2 summary", "plan_summary"),
+        ("HN Classic 2 limit", "plan_core"),
+    ],
+)
+def test_classic2_alias_and_shorthand_routing(query, expected_intent):
+    out = run_agent_wrapper(query)
+    assert out["ok"] is True
+    assert out["intent"] == expected_intent
+    assert out["plan_name"] == "Classic 2"
+    assert out["tool_name"] in ("get_plan_core", "get_plan_summary")
+
+
+@pytest.mark.parametrize(
+    "query,expected_intent",
+    [
+        ("Summarize Classic 2R", "plan_summary"),
+        ("classic2r limit", "plan_core"),
+        ("classic 2r limit", "plan_core"),
+        ("classic-2r limit", "plan_core"),
+        ("HN_CLASSIC_2R summary", "plan_summary"),
+        ("HN Classic 2R limit", "plan_core"),
+        ("شبكة كلاسيك 2R", "plan_core"),
+    ],
+)
+def test_classic2r_alias_and_routing(query, expected_intent):
+    out = run_agent_wrapper(query)
+    assert out["ok"] is True
+    assert out["intent"] == expected_intent
+    assert out["plan_name"] == "Classic 2R"
+    assert out["tool_name"] in ("get_plan_core", "get_plan_summary")
+

@@ -13,6 +13,10 @@ def test_is_enhanced_plan_classic2():
     assert is_enhanced_plan("Classic 3")
     assert is_enhanced_plan("hn_classic_3")
     assert is_enhanced_plan("hn classic 3")
+    assert is_enhanced_plan("Classic 2R")
+    assert is_enhanced_plan("classic2r")
+    assert is_enhanced_plan("hn_classic_2r")
+    assert is_enhanced_plan("hn classic 2r")
     assert not is_enhanced_plan("Remedy 03")
 
 def test_resolve_enhanced_plan_name_aliases():
@@ -22,6 +26,11 @@ def test_resolve_enhanced_plan_name_aliases():
     assert resolve_enhanced_plan_name("Classic 3") == "Classic 3"
     assert resolve_enhanced_plan_name("hn_classic_3") == "Classic 3"
     assert resolve_enhanced_plan_name("hn classic 3") == "Classic 3"
+    assert resolve_enhanced_plan_name("Classic 2R") == "Classic 2R"
+    assert resolve_enhanced_plan_name("classic2r") == "Classic 2R"
+    assert resolve_enhanced_plan_name("classic-2r") == "Classic 2R"
+    assert resolve_enhanced_plan_name("hn_classic_2r") == "Classic 2R"
+    assert resolve_enhanced_plan_name("hn classic 2r") == "Classic 2R"
     assert resolve_enhanced_plan_name("Remedy 03") is None
 
 def test_load_enhanced_plan_classic2():
@@ -47,6 +56,19 @@ def test_load_enhanced_plan_classic3():
     assert plan["network_name"] == "Standard"
     assert plan["annual_limit"] == "AED 250,000"
     assert plan["area_of_coverage"] == "UAE+Home country"
+    assert plan["direct_billing"] is True
+    assert plan["referral_required"] is False
+
+def test_load_enhanced_plan_classic2r():
+    plan = load_enhanced_plan("Classic 2R")
+    assert plan["plan_name"] == "Classic 2R"
+    assert plan["plan_code"] == "HN_CLASSIC_2R"
+    assert plan["approval_status"] == "approved"
+    assert plan["tests_passed"] is True
+    assert isinstance(plan["source_trace"], dict)
+    assert plan["network_name"] == "Standard Plus"
+    assert plan["annual_limit"] == "AED 250,000"
+    assert plan["area_of_coverage"] == "Worldwide Excluding USA and Canada"
     assert plan["direct_billing"] is True
     assert plan["referral_required"] is False
 
@@ -90,6 +112,29 @@ def test_tool_contract_classic3_core_and_summary_no_leak():
     assert summary["plan_name"] == "Classic 3"
     assert summary["plan_code"] == "HN_CLASSIC_3"
     assert summary["network_name"] == "Standard"
+    assert summary["summary_text"]
+
+def test_load_plan_classic2r_uses_enhanced_loader():
+    plan = load_plan("Classic 2R")
+    assert plan["plan_name"] == "Classic 2R"
+    assert plan["plan_code"] == "HN_CLASSIC_2R"
+    assert plan["approval_status"] == "approved"
+    for field, trace in plan["source_trace"].items():
+        assert trace.startswith("data/plans/raw/HN_CLASSIC_2R/source_table_HN_CLASSIC_2R.json:")
+        assert "output/" not in trace
+
+def test_tool_contract_classic2r_core_and_summary_no_leak():
+    core = get_plan_core("Classic 2R")
+    summary = get_plan_summary("Classic 2R")
+    forbidden = ["approval_status", "tests_passed", "source_trace"]
+    for k in forbidden:
+        assert k not in core
+        assert k not in summary
+    assert core["plan_name"] == "Classic 2R"
+    assert core["plan_code"] == "HN_CLASSIC_2R"
+    assert core["annual_limit"] == "AED 250,000"
+    assert summary["plan_name"] == "Classic 2R"
+    assert summary["plan_code"] == "HN_CLASSIC_2R"
     assert summary["summary_text"]
 
 def test_classic3_benefit_extraction_contract_values():

@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional
 from src.validation.plan_validator import normalize_plan, validate_plan_ready
 
-# Registry for enhanced plans (initial: Classic 2 only)
+# Registry for enhanced plans.
 ENHANCED_PLAN_REGISTRY = {
     "Classic 2": {
         "aliases": ["classic 2", "hn_classic_2", "hn classic 2"],
@@ -26,6 +26,20 @@ ENHANCED_PLAN_REGISTRY = {
         ],
         "plan_code": "HN_CLASSIC_3",
         "source_path": "data/plans/raw/HN_CLASSIC_3/source_table.json",
+        "parser": "parse_enhanced_plan",
+        "approved": True,
+    },
+    "Classic 2R": {
+        "aliases": [
+            "classic 2r",
+            "classic2r",
+            "classic-2r",
+            "hn_classic_2r",
+            "hn classic 2r",
+            "كلاسيك 2r",
+        ],
+        "plan_code": "HN_CLASSIC_2R",
+        "source_path": "data/plans/raw/HN_CLASSIC_2R/source_table_HN_CLASSIC_2R.json",
         "parser": "parse_enhanced_plan",
         "approved": True,
     },
@@ -70,6 +84,14 @@ def parse_enhanced_plan(raw, *, canonical_name: str, plan_code: str) -> dict:
         direct_billing_raw = raw_dict.get("direct_billing", "Direct Billing Available")
         annual_limit = raw_dict.get("annual_limit", "AED 250,000")
         area_of_coverage = raw_dict.get("area_of_coverage", "UAE+Home country")
+    elif canonical_name == "Classic 2R":
+        # Trust internal document markers in source content, not filename.
+        network_name = raw_dict.get("provider_network", "HN Standard Plus")
+        if network_name == "HN Standard Plus":
+            network_name = "Standard Plus"
+        direct_billing_raw = raw_dict.get("direct_billing", "Direct Billing Available")
+        annual_limit = raw_dict.get("annual_limit", "AED 250,000")
+        area_of_coverage = raw_dict.get("area_of_coverage", "Worldwide Excluding USA and Canada")
     else:
         raise ValueError(f"Unsupported enhanced plan parser mapping: {canonical_name}")
 

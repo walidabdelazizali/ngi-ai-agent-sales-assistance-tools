@@ -48,8 +48,21 @@ SUPPORTED_PLANS = {
     "ريميدي 06": "Remedy 06",
     # Classic 2 (plan_core only)
     "classic 2": "Classic 2",
+    "classic2": "Classic 2",
+    "classic-2": "Classic 2",
+    "classic 02": "Classic 2",
+    "hnclassic2": "Classic 2",
     "hn_classic_2": "Classic 2",
+    "hn-classic-2": "Classic 2",
     "hn classic 2": "Classic 2",
+    # Classic 2R
+    "classic 2r": "Classic 2R",
+    "classic2r": "Classic 2R",
+    "classic-2r": "Classic 2R",
+    "hn_classic_2r": "Classic 2R",
+    "hn-classic-2r": "Classic 2R",
+    "hn classic 2r": "Classic 2R",
+    "كلاسيك 2r": "Classic 2R",
     # Classic 3
     "classic 3": "Classic 3",
     "classic3": "Classic 3",
@@ -116,7 +129,8 @@ SUMMARY_PATTERNS = [
 def _extract_plan_name(text: str) -> Optional[str]:
     lowered = text.lower()
     found = []
-    for key, canonical in SUPPORTED_PLANS.items():
+    for key in sorted(SUPPORTED_PLANS.keys(), key=len, reverse=True):
+        canonical = SUPPORTED_PLANS[key]
         if key in lowered:
             found.append(canonical)
     if found:
@@ -126,7 +140,8 @@ def _extract_plan_name(text: str) -> Optional[str]:
 def _extract_all_plan_names(text: str) -> list[str]:
     lowered = text.lower()
     found = []
-    for key, canonical in SUPPORTED_PLANS.items():
+    for key in sorted(SUPPORTED_PLANS.keys(), key=len, reverse=True):
+        canonical = SUPPORTED_PLANS[key]
         if key in lowered and canonical not in found:
             found.append(canonical)
     return found
@@ -140,6 +155,16 @@ def _intent_from_query(text: str) -> Optional[str]:
             return "plan_core"
     # Classic 3 coverage phrasing is common in broker usage.
     if plan_name == "Classic 3" and any(token in lowered for token in ("coverage", "covered")):
+        return "plan_core"
+    # Keep Classic 2 coverage handling narrow to avoid broad unsupported/data-gap capture.
+    if plan_name == "Classic 2" and lowered.strip() in {
+        "classic 2 coverage",
+        "classic2 coverage",
+        "classic-2 coverage",
+        "classic 02 coverage",
+        "hn_classic_2 coverage",
+        "hn classic 2 coverage",
+    }:
         return "plan_core"
     # Comparison/recommendation intent
     rec_patterns = ["better", "recommend", "which one", "offer to client", "should i offer", "which should i offer", "which plan"]
