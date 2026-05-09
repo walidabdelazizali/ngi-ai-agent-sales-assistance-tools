@@ -47,6 +47,10 @@ SUPPORTED_PLANS = {
     "classic 2": "Classic 2",
     "hn_classic_2": "Classic 2",
     "hn classic 2": "Classic 2",
+    # Classic 3
+    "classic 3": "Classic 3",
+    "hn_classic_3": "Classic 3",
+    "hn classic 3": "Classic 3",
 }
 
 import re

@@ -79,3 +79,23 @@ def test_regression_safe():
         code, out, err = run_entrypoint(args)
         assert code == 0
         assert not err
+
+def test_classic3_summarize_json_routes_to_plan_summary():
+    code, out, err = run_entrypoint(["--json", "Summarize Classic 3"])
+    assert code == 0
+    assert not err
+    data = json.loads(out)
+    assert data["ok"] is True
+    assert data["intent"] == "plan_summary"
+    assert data["plan_name"] == "Classic 3"
+    assert data["tool_name"] == "get_plan_summary"
+
+def test_classic3_annual_limit_json_routes_to_plan_core():
+    code, out, err = run_entrypoint(["--json", "What is the annual limit for Classic 3?"])
+    assert code == 0
+    assert not err
+    data = json.loads(out)
+    assert data["ok"] is True
+    assert data["intent"] == "plan_core"
+    assert data["plan_name"] == "Classic 3"
+    assert data["tool_name"] == "get_plan_core"

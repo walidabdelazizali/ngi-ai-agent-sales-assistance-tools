@@ -362,3 +362,29 @@ def test_plan_comparison_blocked():
     assert out["data"] is None
     assert out["normalized"]["status"] in ("not_found", "error")
 
+def test_classic3_summary_routes():
+    out = run_agent_wrapper("Summarize Classic 3")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_summary"
+    assert out["plan_name"] == "Classic 3"
+    assert out["tool_name"] == "get_plan_summary"
+
+def test_classic3_annual_limit_routes():
+    out = run_agent_wrapper("What is the annual limit for Classic 3?")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_core"
+    assert out["plan_name"] == "Classic 3"
+    assert out["tool_name"] == "get_plan_core"
+
+def test_classic3_alias_hn_classic_3_routes():
+    out = run_agent_wrapper("Summarize HN_CLASSIC_3")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_summary"
+    assert out["plan_name"] == "Classic 3"
+
+def test_classic3_alias_hn_classic_3_spaced_routes():
+    out = run_agent_wrapper("What is the annual limit for HN Classic 3?")
+    assert out["ok"] is True
+    assert out["intent"] == "plan_core"
+    assert out["plan_name"] == "Classic 3"
+
