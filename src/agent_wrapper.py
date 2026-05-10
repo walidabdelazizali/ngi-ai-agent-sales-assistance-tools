@@ -361,6 +361,58 @@ def _extract_city_and_provider_type(text: str) -> tuple[Optional[str], Optional[
 
     return detected_city, detected_type
 
+# Patterns that signal a provider-in-plan membership query.
+# These must be checked BEFORE the PLAN_CORE_FIELDS loop because "network" is in that list.
+# All patterns are applied to the normalized (lowercased) query text.
+import re as _re
+_PROVIDER_MEMBERSHIP_PATTERNS = [
+    # "Is X in Remedy Y network?" / "Is X in Classic Y network?"
+    _re.compile(r"^is\s+(?!(?:direct\s+billing|annual\s+limit|network|limit|referral|maternity|dental|optical|vision|pharmacy|reimbursement|coverage|available|cashless|covered|provided|included|offered|accepted|the)\b)\S.+\s+in\s+(?:remedy|classic)\s*\S+\s+network\??$", _re.IGNORECASE),
+    # "Is X in Remedy Y?" (without trailing "network")
+    _re.compile(r"^is\s+(?!(?:direct\s+billing|annual\s+limit|network|limit|referral|maternity|dental|optical|vision|pharmacy|reimbursement|coverage|available|cashless|covered|provided|included|offered|accepted|the)\b)\S.+\s+in\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Arabic (raw): "هل X في شبكة Remedy Y؟" or "هل X داخل شبكة Remedy Y؟"
+    _re.compile(r"^هل\s+\S.+\s+(?:في شبكة|داخل شبكة|داخل)\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Arabic (raw): "هل X في Remedy Y؟" or "هل X داخل Remedy Y؟"
+    _re.compile(r"^هل\s+\S.+\s+(?:في|داخل)\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Arabic (normalized: شبكة → network): "هل X في network Remedy Y؟" or "هل X داخل network Remedy Y؟"
+    _re.compile(r"^هل\s+\S.+\s+(?:في|داخل)\s+network\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+]
+
+def _is_provider_membership_query(lowered_text: str) -> bool:
+    """Return True if the normalized query looks like a provider-in-plan membership check."""
+    for pat in _PROVIDER_MEMBERSHIP_PATTERNS:
+        if pat.match(lowered_text.strip()):
+            return True
+    return False
+
+# Ordered extractors: try to pull the provider name from a membership query.
+# Applied to raw query first, then to normalized query, stopping on first match.
+_MEMBERSHIP_PROVIDER_EXTRACTORS = [
+    # "Is PROVIDER in Remedy Y network?" / "Is PROVIDER in Classic Y network?"
+    _re.compile(r"^is\s+(.+?)\s+in\s+(?:remedy|classic)\s*\S+(?:\s+network)?\??$", _re.IGNORECASE),
+    # Arabic (raw): "هل PROVIDER في شبكة Plan؟" / "هل PROVIDER داخل شبكة Plan؟"
+    _re.compile(r"^هل\s+(.+?)\s+(?:في شبكة|داخل شبكة|في|داخل)\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Arabic (normalized: شبكة → network): "هل PROVIDER في network Plan؟"
+    _re.compile(r"^هل\s+(.+?)\s+(?:في|داخل)\s+network\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Shorthand: "PROVIDER Remedy N?" (last resort — least specific)
+    _re.compile(r"^(.+?)\s+(?:remedy|classic)\s*\S+(?:\s+network)?\??$", _re.IGNORECASE),
+]
+
+_PLAN_KEYWORD_RE = _re.compile(r"^(?:is|what|list|show|هل|كم|ما|اعرض|remedy|classic)\b", _re.IGNORECASE)
+
+def _extract_provider_from_membership_query(query: str) -> Optional[str]:
+    """Extract provider name from a provider-in-plan membership query (raw or normalized)."""
+    candidates = [query.strip(), _normalize_query_text(query).strip()]
+    for q in candidates:
+        for pat in _MEMBERSHIP_PROVIDER_EXTRACTORS:
+            m = pat.match(q)
+            if m:
+                prov = m.group(1).strip().strip("؟?.,:-")
+                # Reject if the extracted "provider" looks like a plan or routing keyword
+                if prov and not _PLAN_KEYWORD_RE.match(prov):
+                    return prov
+    return None
+
 def _intent_from_query(text: str) -> Optional[str]:
     lowered = _normalize_query_text(text)
     plan_name = _extract_plan_name(lowered)
@@ -395,6 +447,10 @@ def _intent_from_query(text: str) -> Optional[str]:
         return "plan_comparison"
     if _is_network_lookup_query(lowered) and not plan_name:
         return "network_lookup"
+    # Provider membership check: must run BEFORE PLAN_CORE_FIELDS loop because "network" is in PLAN_CORE_FIELDS.
+    # Detect "Is X in [plan] network?" and Arabic/shorthand equivalents.
+    if plan_name and _is_provider_membership_query(lowered):
+        return "plan_network_provider"
     # Plan core
     for field in PLAN_CORE_FIELDS:
         if field in lowered:
@@ -601,6 +657,90 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 "status": "ok",
                 "tool": "list_basic_plus_providers",
                 "answer": result,
+                "errors": [],
+            },
+        }
+    if intent == "plan_network_provider":
+        # Use plan_name already normalized by _extract_plan_name (e.g. "Remedy 06", not "Remedy 6").
+        # Extract provider from raw query via deterministic patterns; then call resolve_plan_network + provider_in_network.
+        provider = _extract_provider_from_membership_query(user_query)
+        is_arabic = bool(_re.search(r"[\u0600-\u06FF]", user_query))
+        if not provider:
+            msg = "Could not determine provider name from query." if not is_arabic else "تعذّر استخراج اسم المزود من الاستعلام."
+            return {
+                "ok": False,
+                "intent": "plan_network_provider",
+                "plan_name": plan_name,
+                "tool_name": None,
+                "data": None,
+                "message": msg,
+                "normalized": {"status": "not_found", "tool": None, "answer": None, "errors": [msg]},
+            }
+        from src.query.plan_network_lookup import resolve_plan_network
+        plan_info = resolve_plan_network(plan_name)
+        if not plan_info.get("found"):
+            msg = "Plan network mapping not available."
+            return {
+                "ok": False,
+                "intent": "plan_network_provider",
+                "plan_name": plan_name,
+                "tool_name": None,
+                "data": None,
+                "message": msg,
+                "normalized": {"status": "not_found", "tool": None, "answer": None, "errors": [msg]},
+            }
+        net_code = plan_info["medical_network"]
+        from src.query.network_lookup import get_network_lookup
+        lookup = get_network_lookup()
+        details = lookup.provider_in_network(provider, net_code)
+        if details.get("ambiguous"):
+            msg = "Ambiguous provider match. Please specify the full provider name." if not is_arabic else "مزود غير محدد (غامض). يرجى تحديد الاسم الكامل للمزود."
+            return {
+                "ok": False,
+                "intent": "plan_network_provider",
+                "plan_name": plan_name,
+                "tool_name": "provider_membership_lookup",
+                "data": None,
+                "message": msg,
+                "normalized": {"status": "not_found", "tool": "provider_membership_lookup", "answer": None, "errors": [msg]},
+            }
+        if not details.get("found"):
+            msg = "Provider not found." if not is_arabic else "المزود غير موجود."
+            return {
+                "ok": False,
+                "intent": "plan_network_provider",
+                "plan_name": plan_name,
+                "tool_name": "provider_membership_lookup",
+                "data": None,
+                "message": msg,
+                "normalized": {"status": "not_found", "tool": "provider_membership_lookup", "answer": None, "errors": [msg]},
+            }
+        in_net = details.get("in_network", False)
+        prov_name = (details.get("provider_name") or provider).upper()
+        canonical_plan = plan_info["plan_name"]
+        if is_arabic:
+            status_str = "داخل الشبكة" if in_net else "خارج الشبكة"
+            res_msg = (
+                f"[الشبكة]\nالمزود: {prov_name}\nالخطة: {canonical_plan}\n"
+                f"الشبكة المطلوبة: {net_code}\nالحالة: {status_str}"
+            )
+        else:
+            status_str = "In network" if in_net else "Out of network"
+            res_msg = (
+                f"[NETWORK]\nProvider: {prov_name}\nPlan: {canonical_plan}\n"
+                f"Required Network: {net_code}\nStatus: {status_str}"
+            )
+        return {
+            "ok": True,
+            "intent": "plan_network_provider",
+            "plan_name": plan_name,
+            "tool_name": "provider_membership_lookup",
+            "data": None,
+            "message": res_msg,
+            "normalized": {
+                "status": "ok",
+                "tool": "provider_membership_lookup",
+                "answer": res_msg,
                 "errors": [],
             },
         }

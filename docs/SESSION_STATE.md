@@ -17,6 +17,11 @@ stage2-live
 - Working tree was clean
 
 ## Today’s work
+1. Started Provider Membership Routing Fix sprint.
+2. Added focused regression coverage for provider membership routing through `run_agent_wrapper()`.
+3. Fixed intent routing so provider+plan membership queries no longer fall into `plan_core` summaries.
+4. Kept provider membership answers deterministic by using plan resolution plus provider network lookup, with safe ambiguity and not-found handling.
+5. Validated the fix with focused tests, full regression, and CLI evidence.
 1. Started Remedy 02–06 data stabilization.
 2. Added/considered SALES_CORE_FIELDS separately from REQUIRED_FIELDS.
 3. Detected critical Source Boundary issue:
@@ -112,12 +117,49 @@ stage2-live
    - CLI evidence verified: hospitals, clinics, pharmacies, labs, Arabic queries all producing structured output with deterministically verified providers
 6. Documentation: Created [docs/operational_usage/provider_list_usefulness_sprint_delta.md](docs/operational_usage/provider_list_usefulness_sprint_delta.md) with scope, changes, validation, and remaining limitations.
 
+## Operator Usage Pack: 55-Query Controlled Usage Sprint (COMPLETED)
+
+**Tag:** v-provider-list-usability-stable  
+**Baseline:** 780 passed, 2 skipped  
+**Date:** 2026-05-10
+
+### Results Summary
+- **Total queries:** 55
+- **GOOD:** 23 (41.8%)
+- **REVIEW:** 1 (1.8%)
+- **BLOCKED_OK:** 13 (23.6%)
+- **GAP:** 14 (25.5%)
+- **CRITICAL / Safety:** 0 (0%)
+- **Routing Issues (not safety):** 4 (7.3%) — provider lookup queries fall back to plan_core
+
+### Key Findings
+1. **Provider listing is working well** — all structured listing queries pass (8/10 in listing category)
+2. **Arabic/mixed-language support is solid** — Arabic listings: 80%; Mixed-language: 100%
+3. **Unknown city safe-blocking is correct** — all 5 unknown city queries safely blocked
+4. **Unsupported requests safely blocked** — all 5 unsupported type requests safely blocked
+5. **Provider lookup routing is broken** — Queries like "Is ASTER HOSPITAL in Remedy 5 network?" fall to plan_core, not provider membership check
+6. **Phrasing friction** — Shorthand (R5), dashes, and queries without explicit city fail (3/5 shorthand, 6/10 provider lookups)
+
+### No Safety Violations
+- No hallucination
+- No unsafe recommendations
+- No wrong provider/network claims
+- Pricing (AED) shown only in plan_core responses (by design)
+
+### Recommendation: SAFE FOR LIMITED INTERNAL USAGE with conditions
+1. Fix provider lookup routing (Critical before broad rollout)
+2. Document required query syntax for operators
+3. Add clarification prompts for missing city/plan
+
+### Full Report
+[docs/operational_usage/controlled_operator_usage_pack_report.md](docs/operational_usage/controlled_operator_usage_pack_report.md)  
+[docs/operational_usage/operator_usage_pack_50_results.json](docs/operational_usage/operator_usage_pack_50_results.json)
+
 ## Next Session Priority
-- (Optional) Broker Phrasing Expansion: Add safe routing for contextual free-form queries that improve phrasing tolerance without recommendation logic.
-- (Optional) Provider Dataset Review: Verify city/type coverage and document gaps.
-- (Optional) Extended Network Support: Add mappings for hn_premier, hn_advantage if needed.
-- OR: Continue with Source Boundary Lock patch if higher priority.
-- Current status: Sprint complete, baseline maintained, all usefulness tests green.
+1. **Fix provider lookup routing** — Provider membership queries fall to plan_core; implement/debug handler for "Is X in plan Y?" pattern (impact: +4 GOOD queries)
+2. **Add clarification prompts** — When city/plan missing from query, prompt operator with valid options (impact: reduces GAP from 25.5% to ~15%)
+3. **Document operator usage guide** — Required syntax templates, valid cities/types, plan codes (impact: onboarding and friction reduction)
+4. **Rerun pack after fixes** — Target: 60%+ GOOD
 
 ## End State
 - Deterministic insurance assistant is now usable via browser UI.

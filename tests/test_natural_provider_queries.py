@@ -423,3 +423,198 @@ class TestProviderListingUsefulness:
         assert "[PROVIDER LIST]" in msg
         assert "Count: 0" in msg
         assert "No matching providers found" in msg
+
+
+class TestProviderMembershipRouting:
+    """
+    Provider Membership Routing Fix Sprint.
+    Tests that provider + plan membership queries route to the correct handler
+    and never fall into generic plan_core summaries.
+    """
+
+    def _assert_membership_response(self, result, expected_intent="plan_network_provider"):
+        """Assert response is a valid structured provider membership answer."""
+        assert result.get("intent") == expected_intent, (
+            f"Expected intent={expected_intent!r}, got {result.get('intent')!r}"
+        )
+        assert result.get("ok") is True or result.get("ok") is False
+        msg = result.get("message", "")
+        # Must NOT return plan core fields (pricing, area, limit)
+        assert "Annual limit" not in msg, "plan_core pricing leaked into provider membership response"
+        assert "AED" not in msg, "pricing leaked into provider membership response"
+        assert "Area:" not in msg, "plan_core area of coverage leaked into provider membership response"
+
+    def _assert_membership_found(self, result, provider_fragment: str, plan_fragment: str):
+        """Assert provider membership was found in the correct plan network."""
+        self._assert_membership_response(result)
+        msg = result.get("message", "")
+        assert result.get("ok") is True
+        assert provider_fragment.upper() in msg.upper() or provider_fragment.lower() in msg.lower(), (
+            f"Provider {provider_fragment!r} not in response: {msg[:200]}"
+        )
+        assert plan_fragment in msg or plan_fragment.lower() in msg.lower(), (
+            f"Plan {plan_fragment!r} not in response: {msg[:200]}"
+        )
+        assert "Status:" in msg or "status" in msg.lower() or "in network" in msg.lower() or "داخل" in msg
+
+    # ------------------------------------------------------------------
+    # English structured patterns: "Is X in Remedy Y network?"
+    # ------------------------------------------------------------------
+
+    def test_is_accuracy_plus_in_remedy05_network(self):
+        """Is Accuracy Plus Medical Laboratory in Remedy 05 network?"""
+        result = run_agent_wrapper("Is Accuracy Plus Medical Laboratory in Remedy 05 network?")
+        self._assert_membership_found(result, "ACCURACY PLUS", "Remedy 05")
+
+    def test_is_accuracy_plus_in_remedy03_network(self):
+        """Is Accuracy Plus Medical Laboratory in Remedy 03 network?"""
+        result = run_agent_wrapper("Is Accuracy Plus Medical Laboratory in Remedy 03 network?")
+        # Remedy 03 uses hn_basic_plus too; ACCURACY PLUS is in it
+        self._assert_membership_found(result, "ACCURACY PLUS", "Remedy 03")
+
+    def test_is_medeor_hospital_in_remedy6_network(self):
+        """Is MEDEOR 24X7 HOSPITAL in Remedy 6 network? — MEDEOR is NOT in hn_basic_plus, so ok=False is correct."""
+        result = run_agent_wrapper("Is MEDEOR 24X7 HOSPITAL in Remedy 6 network?")
+        self._assert_membership_response(result)
+        # MEDEOR exists in the data but is not in hn_basic_plus; ok=False (out of network) is the correct answer.
+        msg = result.get("message", "")
+        assert result.get("ok") is False or "out of network" in msg.lower() or "not in" in msg.lower()
+
+    def test_is_hatta_hospital_in_remedy5_network(self):
+        """Is HATTA HOSPITAL in Remedy 5 network?"""
+        result = run_agent_wrapper("Is HATTA HOSPITAL in Remedy 5 network?")
+        self._assert_membership_found(result, "HATTA", "Remedy 05")
+
+    def test_is_cedars_in_remedy5_network(self):
+        """Is CEDARS JEBEL ALI in Remedy 5 network?"""
+        result = run_agent_wrapper("Is CEDARS JEBEL ALI INTERNATIONAL HOSPITAL in Remedy 5 network?")
+        self._assert_membership_found(result, "CEDARS", "Remedy 05")
+
+    # ------------------------------------------------------------------
+    # English "Is X in Remedy Y?" (without trailing "network")
+    # ------------------------------------------------------------------
+
+    def test_is_burjeel_in_remedy06_no_network_suffix(self):
+        """Is Burjeel in Remedy 06? - ambiguous provider but correct routing"""
+        result = run_agent_wrapper("Is Burjeel in Remedy 06?")
+        # Burjeel is in AMBIGUOUS_PROVIDER_TOKENS; should get ambiguous response (not plan_core)
+        self._assert_membership_response(result)
+        msg = result.get("message", "")
+        assert "ambiguous" in msg.lower() or "not found" in msg.lower() or result.get("ok") is False
+
+    # ------------------------------------------------------------------
+    # Arabic structured patterns: "هل X في شبكة Remedy Y؟"
+    # ------------------------------------------------------------------
+
+    def test_arabic_is_aster_in_remedy05_network(self):
+        """هل ASTER HOSPITAL في شبكة Remedy 05؟"""
+        result = run_agent_wrapper("هل ASTER HOSPITAL في شبكة Remedy 05؟")
+        # ASTER is in AMBIGUOUS_PROVIDER_TOKENS
+        self._assert_membership_response(result)
+        msg = result.get("message", "")
+        assert "ambiguous" in msg.lower() or "غير محدد" in msg or "not found" in msg.lower() or result.get("ok") is False
+
+    def test_arabic_is_accuracy_plus_in_remedy02(self):
+        """هل Accuracy Plus Medical Laboratory داخل شبكة Remedy 02؟"""
+        result = run_agent_wrapper("هل Accuracy Plus Medical Laboratory داخل شبكة Remedy 02؟")
+        self._assert_membership_response(result)
+        assert result.get("ok") is True
+        msg = result.get("message", "")
+        assert "ACCURACY PLUS" in msg.upper()
+
+    # ------------------------------------------------------------------
+    # Arabic informal patterns: "هل X داخل Remedy Y؟"
+    # ------------------------------------------------------------------
+
+    def test_arabic_informal_aster_in_remedy5(self):
+        """هل أستر داخل Remedy 5؟"""
+        result = run_agent_wrapper("هل أستر داخل Remedy 5؟")
+        self._assert_membership_response(result)
+        # أستر → aster → ambiguous
+        msg = result.get("message", "")
+        assert "ambiguous" in msg.lower() or "غير محدد" in msg or "not found" in msg.lower() or result.get("ok") is False
+
+    # ------------------------------------------------------------------
+    # Shorthand patterns: "Provider Plan?"
+    # ------------------------------------------------------------------
+
+    def test_shorthand_accuracy_plus_remedy03(self):
+
+        """Accuracy Plus Remedy 03? — shorthand pattern not detected, must be safe (no pricing)."""
+        result = run_agent_wrapper("Accuracy Plus Remedy 03?")
+        # Shorthand is not reliably detected without knowing the provider name set.
+        # What matters: no pricing leak, no crash.
+        msg = result.get("message", "")
+        assert "Annual limit" not in msg
+        assert "AED" not in msg
+        assert isinstance(result, dict)
+    def test_shorthand_aster_remedy5(self):
+
+        """ASTER Remedy 5? — shorthand pattern not detected, must be safe (no pricing)."""
+        result = run_agent_wrapper("ASTER Remedy 5?")
+        msg = result.get("message", "")
+        assert "Annual limit" not in msg
+        assert "AED" not in msg
+        assert isinstance(result, dict)
+    # ------------------------------------------------------------------
+    # Plan_core should NOT be returned for any of these
+    # ------------------------------------------------------------------
+
+    def test_plan_core_not_returned_for_membership_query(self):
+        """plan_core intent must not be returned for provider membership queries."""
+        membership_queries = [
+            "Is Accuracy Plus Medical Laboratory in Remedy 05 network?",
+            "Is HATTA HOSPITAL in Remedy 5 network?",
+            "هل Accuracy Plus Medical Laboratory داخل شبكة Remedy 02؟",
+        ]
+        for q in membership_queries:
+            result = run_agent_wrapper(q)
+            assert result.get("intent") != "plan_core", (
+                f"Query routed to plan_core (should be plan_network_provider): {q!r}"
+            )
+
+    # ------------------------------------------------------------------
+    # Provider without plan context: must stay conservative
+    # ------------------------------------------------------------------
+
+    def test_provider_without_plan_stays_conservative(self):
+        """Provider membership query without plan must stay conservative / not guess network."""
+        result = run_agent_wrapper("Is HATTA HOSPITAL in the network?")
+        # No plan specified, should NOT guess a plan, should return generic network lookup
+        # or safely ask for plan specification
+        assert result.get("intent") != "plan_core"
+        msg = result.get("message", "")
+        # Must not guess/hallucinate plan membership
+        assert "AED" not in msg
+        assert "Annual limit" not in msg
+
+    # ------------------------------------------------------------------
+    # Ambiguous providers must always be safe
+    # ------------------------------------------------------------------
+
+    def test_ambiguous_provider_aster_remains_safe_in_membership(self):
+        """ASTER (family name) in membership query must return ambiguous, never guess."""
+        result = run_agent_wrapper("Is Aster in Remedy 5 network?")
+        self._assert_membership_response(result)
+        msg = result.get("message", "")
+        # Should be ambiguous or not found, never a single specific provider answer
+        assert "ambiguous" in msg.lower() or "not found" in msg.lower() or result.get("ok") is False
+
+    def test_ambiguous_provider_burjeel_remains_safe(self):
+        """Burjeel in membership query must return ambiguous, never guess."""
+        result = run_agent_wrapper("Is Burjeel in Remedy 6 network?")
+        self._assert_membership_response(result)
+        msg = result.get("message", "")
+        assert "ambiguous" in msg.lower() or "not found" in msg.lower() or result.get("ok") is False
+
+    # ------------------------------------------------------------------
+    # Unknown provider safe block
+    # ------------------------------------------------------------------
+
+    def test_unknown_provider_in_remedy5_not_found(self):
+        """Completely unknown provider in Remedy 5 should return not found."""
+        result = run_agent_wrapper("Is Nonexistent XYZ Hospital in Remedy 5 network?")
+        self._assert_membership_response(result)
+        assert result.get("ok") is False
+        msg = result.get("message", "")
+        assert "not found" in msg.lower() or "provider" in msg.lower()
