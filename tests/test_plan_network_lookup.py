@@ -4,6 +4,11 @@ from src.query.plan_network_lookup import load_plan_network_mapping, resolve_pla
 
 
 APPROVED_PLAN_NETWORKS = {
+    "Prime 1": "hn_advantage_plus",
+    "Prime 2": "hn_standard_plus",
+    "Classic 1": "hn_advantage",
+    "Classic 1R": "hn_advantage",
+    "Classic 4": "hn_basic_plus",
     "Remedy 02": "hn_basic_plus",
     "Remedy 03": "hn_basic_plus",
     "Remedy 04": "hn_basic_plus",
@@ -31,6 +36,11 @@ def test_approved_plan_resolves_expected_network(plan_name, expected_network):
 @pytest.mark.parametrize(
     "plan_code,expected_network",
     [
+        ("HN_PRIME_1", "hn_advantage_plus"),
+        ("HN_PRIME_2", "hn_standard_plus"),
+        ("HN_CLASSIC_1", "hn_advantage"),
+        ("HN_CLASSIC_1R", "hn_advantage"),
+        ("HN_CLASSIC_4", "hn_basic_plus"),
         ("HN-REMEDY-2", "hn_basic_plus"),
         ("HN-REMEDY-3", "hn_basic_plus"),
         ("HN-REMEDY-4", "hn_basic_plus"),

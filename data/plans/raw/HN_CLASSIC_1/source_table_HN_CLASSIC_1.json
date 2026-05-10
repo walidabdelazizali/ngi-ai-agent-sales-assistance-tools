@@ -1,0 +1,27 @@
+{
+  "plan_code": "HN_CLASSIC_1",
+  "plan_name": "Classic 1",
+  "source_plan_title": "Classic Plan-1",
+  "network_type": "HealthNet",
+  "network_level": "Advantage",
+  "provider_network": "HN Advantage",
+  "annual_limit": "REVIEW: source document not available in repository",
+  "area_of_coverage": "REVIEW: source document not available in repository",
+  "direct_billing": false,
+  "referral_required": true,
+  "key_inpatient_benefits": "REVIEW: source document not available in repository",
+  "key_outpatient_benefits": "REVIEW: source document not available in repository",
+  "pharmacy": "BLOCKED: source document not available in repository",
+  "maternity": "BLOCKED: source document not available in repository",
+  "dental_optical": "BLOCKED: source document not available in repository",
+  "copays": "REVIEW: source document not available in repository",
+  "source_validation": {
+    "validated_from_document_content": false,
+    "notes": "Batch 1 structured catalog entry created from canonical mapping only; missing source fields marked REVIEW/BLOCKED."
+  },
+  "approval_metadata": {
+    "approval_status": "pending_validation",
+    "tests_passed": false,
+    "customer_facing_enabled": false
+  }
+}

@@ -17,6 +17,62 @@ stage2-live
 - Working tree was clean
 
 ## Today’s work
+1. Completed Classic 1R canonical data integration using authoritative structured source:
+	- `data/plans/raw/HN_CLASSIC_1R/source_table_HN_CLASSIC_1R.json`
+2. Replaced Classic 1R placeholder benefit fields with canonical mapped values in deterministic loader output (no architecture changes):
+	- annual limit, network, pharmacy, maternity, dental, mental health
+	- mapped canonical query-facing summaries: `pharmacy_cover_summary`, `maternity_cover`, `dental_cover_summary`, `mental_health_cover_summary`
+3. Kept other Batch 1 plans unchanged (`Prime 1`, `Prime 2`, `Classic 1`, `Classic 4`).
+4. Added Classic 1R integration tests in `tests/test_healthnet_catalog_batch1.py` for:
+	- annual limit
+	- network
+	- pharmacy
+	- maternity
+	- dental
+	- mental health
+	- source_trace presence
+5. Validation:
+	- `python -m pytest tests/test_healthnet_catalog_batch1.py -q` -> 29 passed
+	- `python -m pytest -q` -> 840 passed, 2 skipped
+6. CLI evidence:
+	- `Summarize Classic 1R` -> `ok=true`, `intent=plan_summary`, annual limit `AED 300,000`, network `Advantage`
+	- `What is the pharmacy benefit for Classic 1R?` -> safe `unsupported` response (existing wrapper query-intent boundary)
+	- `What is the maternity limit for Classic 1R?` -> `ok=true`, includes mapped maternity limit in `maternity_cover`
+7. Safety checks preserved:
+	- provider lookup remains deterministic (`Is HATTA HOSPITAL in Remedy 5 network?` -> `plan_network_provider`)
+	- comparison remains safe-blocked for unsupported pairs (`Compare Classic 1R and Classic 3` -> safe not_supported)
+1. Completed HealthNet Catalog Completion Sprint - Batch 1 (structured catalog only).
+2. Added enhanced-plan catalog entries for:
+	- Prime 1 (`HN_PRIME_1`)
+	- Prime 2 (`HN_PRIME_2`)
+	- Classic 1 (`HN_CLASSIC_1`)
+	- Classic 1R (`HN_CLASSIC_1R`)
+	- Classic 4 (`HN_CLASSIC_4`)
+3. Added Batch 1 source files under `data/plans/raw/`:
+	- `HN_PRIME_1/source_table_HN_PRIME_1.json`
+	- `HN_PRIME_2/source_table_HN_PRIME_2.json`
+	- `HN_CLASSIC_1/source_table_HN_CLASSIC_1.json`
+	- `HN_CLASSIC_1R/source_table_HN_CLASSIC_1R.json`
+	- `HN_CLASSIC_4/source_table_HN_CLASSIC_4.json`
+4. Implemented deterministic network mapping:
+	- Prime 1 -> `hn_advantage_plus`
+	- Prime 2 -> `hn_standard_plus`
+	- Classic 1 -> `hn_advantage`
+	- Classic 1R -> `hn_advantage`
+	- Classic 4 -> `hn_basic_plus`
+5. Updated network normalization to support `hn_advantage_plus` and `hn_advantage`.
+6. Missing/unavailable source fields were explicitly marked safe REVIEW/BLOCKED (no guessing):
+	- REVIEW: annual_limit, area_of_coverage, key_inpatient_benefits, key_outpatient_benefits, copays
+	- BLOCKED: pharmacy, maternity, dental_optical
+7. Added Batch 1 tests in `tests/test_healthnet_catalog_batch1.py` and updated existing enhanced/mapping tests.
+8. Validation:
+	- `python -m pytest tests/test_healthnet_catalog_batch1.py -q` -> 26 passed
+	- `python -m pytest tests/test_healthnet_catalog_batch1.py tests/test_enhanced_plan_loader.py tests/test_plan_network_lookup.py -q` -> 71 passed
+	- `python -m pytest tests/test_natural_provider_queries.py -q` -> 76 passed
+	- `python -m pytest -q` -> 837 passed, 2 skipped
+9. CLI evidence for summaries is green:
+	- Summarize Prime 1 / Prime 2 / Classic 1 / Classic 1R / Classic 4 all return `intent=plan_summary`, `ok=true`, with deterministic REVIEW markers where source content is unavailable.
+10. Added sprint delta report: `docs/operational_usage/healthnet_catalog_batch1_delta.md`.
 1. Fixed CRITICAL provider-query pricing leakage for dashed/provider-prefixed membership queries.
 2. Added exact regressions for:
 	- `NMC ROYAL HOSPITAL DXB - Remedy 5 - network?`

@@ -1,4 +1,9 @@
 plan_code,plan_name,medical_network
+HN_PRIME_1,Prime 1,hn_advantage_plus
+HN_PRIME_2,Prime 2,hn_standard_plus
+HN_CLASSIC_1,Classic 1,hn_advantage
+HN_CLASSIC_1R,Classic 1R,hn_advantage
+HN_CLASSIC_4,Classic 4,hn_basic_plus
 HN-REMEDY-2,Remedy 02,hn_basic_plus
 HN-REMEDY-3,Remedy 03,hn_basic_plus
 HN-REMEDY-4,Remedy 04,hn_basic_plus

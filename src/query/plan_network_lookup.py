@@ -8,6 +8,11 @@ from src.v2_plan_loader import load_clean_plan
 MAPPING_CSV = Path(__file__).parent.parent.parent / "data/plans/plan_network_mapping.csv"
 
 APPROVED_PLAN_CODES = {
+    "Prime 1": "HN_PRIME_1",
+    "Prime 2": "HN_PRIME_2",
+    "Classic 1": "HN_CLASSIC_1",
+    "Classic 1R": "HN_CLASSIC_1R",
+    "Classic 4": "HN_CLASSIC_4",
     "Remedy 02": "HN-REMEDY-2",
     "Remedy 03": "HN-REMEDY-3",
     "Remedy 04": "HN-REMEDY-4",
@@ -19,6 +24,11 @@ APPROVED_PLAN_CODES = {
 }
 
 APPROVED_PLAN_LOADERS = {
+    "Prime 1": "enhanced",
+    "Prime 2": "enhanced",
+    "Classic 1": "enhanced",
+    "Classic 1R": "enhanced",
+    "Classic 4": "enhanced",
     "Remedy 02": "clean",
     "Remedy 03": "clean",
     "Remedy 04": "clean",
@@ -45,8 +55,21 @@ def _normalize_network_code(network_name: Optional[str]) -> Optional[str]:
     lowered = (network_name or "").strip().lower()
     if not lowered:
         return None
-    if lowered in {"hn_basic_plus", "hn_basic", "hn_premier", "hn_elite", "hn_standard_plus", "hn_standard"}:
+    if lowered in {
+        "hn_basic_plus",
+        "hn_basic",
+        "hn_premier",
+        "hn_elite",
+        "hn_standard_plus",
+        "hn_standard",
+        "hn_advantage",
+        "hn_advantage_plus",
+    }:
         return lowered
+    if "advantage plus" in lowered:
+        return "hn_advantage_plus"
+    if lowered == "advantage" or lowered.startswith("hn advantage") or "advantage network" in lowered:
+        return "hn_advantage"
     if "basic plus" in lowered:
         return "hn_basic_plus"
     if "standard plus" in lowered:

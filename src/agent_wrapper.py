@@ -75,6 +75,48 @@ SUPPORTED_PLANS = {
     "كلاسيك 3": "Classic 3",
     "كلاسيك 03": "Classic 3",
     "كلاسيك3": "Classic 3",
+    # Prime 1
+    "prime 1": "Prime 1",
+    "prime1": "Prime 1",
+    "prime-1": "Prime 1",
+    "hn_prime_1": "Prime 1",
+    "hn-prime-1": "Prime 1",
+    "hn prime 1": "Prime 1",
+    # Prime 2
+    "prime 2": "Prime 2",
+    "prime2": "Prime 2",
+    "prime-2": "Prime 2",
+    "hn_prime_2": "Prime 2",
+    "hn-prime-2": "Prime 2",
+    "hn prime 2": "Prime 2",
+    # Classic 1
+    "classic 1": "Classic 1",
+    "classic1": "Classic 1",
+    "classic-1": "Classic 1",
+    "classic 01": "Classic 1",
+    "hn_classic_1": "Classic 1",
+    "hn-classic-1": "Classic 1",
+    "hn classic 1": "Classic 1",
+    "كلاسيك 1": "Classic 1",
+    "كلاسيك 01": "Classic 1",
+    # Classic 1R
+    "classic 1r": "Classic 1R",
+    "classic1r": "Classic 1R",
+    "classic-1r": "Classic 1R",
+    "hn_classic_1r": "Classic 1R",
+    "hn-classic-1r": "Classic 1R",
+    "hn classic 1r": "Classic 1R",
+    "كلاسيك 1r": "Classic 1R",
+    # Classic 4
+    "classic 4": "Classic 4",
+    "classic4": "Classic 4",
+    "classic-4": "Classic 4",
+    "classic 04": "Classic 4",
+    "hn_classic_4": "Classic 4",
+    "hn-classic-4": "Classic 4",
+    "hn classic 4": "Classic 4",
+    "كلاسيك 4": "Classic 4",
+    "كلاسيك 04": "Classic 4",
 }
 
 import re
