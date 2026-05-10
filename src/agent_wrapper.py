@@ -263,6 +263,43 @@ NETWORK_LABELS = {
     "hn_basic": "HN Basic",
 }
 
+PLAN_FIELD_HINTS = [
+    "annual limit", "network", "network name",
+    "pharmacy", "pharmacy benefit", "pharmacy cover", "drugs",
+    "maternity", "maternity limit", "pregnancy",
+    "dental", "dental cover",
+    "mental health", "mental health cover",
+]
+
+PLAN_FIELD_ALIAS_TO_FIELD = [
+    ("mental health cover", "mental_health_cover_summary"),
+    ("mental health", "mental_health_cover_summary"),
+    ("pharmacy benefit", "pharmacy_cover_summary"),
+    ("pharmacy cover", "pharmacy_cover_summary"),
+    ("maternity limit", "maternity_cover"),
+    ("dental cover", "dental_cover_summary"),
+    ("network name", "network_name"),
+    ("annual limit", "annual_limit"),
+    ("pharmacy", "pharmacy_cover_summary"),
+    ("maternity", "maternity_cover"),
+    ("dental", "dental_cover_summary"),
+    ("network", "network_name"),
+    ("limit", "annual_limit"),
+]
+
+
+def _is_plan_field_query(text: str) -> bool:
+    lowered = _normalize_query_text(text)
+    return any(hint in lowered for hint in PLAN_FIELD_HINTS)
+
+
+def _extract_plan_field_name(text: str) -> Optional[str]:
+    lowered = _normalize_query_text(text)
+    for alias, field_name in PLAN_FIELD_ALIAS_TO_FIELD:
+        if alias in lowered:
+            return field_name
+    return None
+
 
 def _normalize_query_text(text: str) -> str:
     normalized = (text or "").lower().translate(ARABIC_INDIC_DIGITS).translate(EXT_ARABIC_INDIC_DIGITS)
@@ -472,10 +509,9 @@ def _intent_from_query(text: str) -> Optional[str]:
     plan_name = _extract_plan_name(lowered)
     if _is_recommendation_style_comparison_query(lowered):
         return "recommendation_style_comparison"
-    # Special-case: route explicit "maternity limit" with plan to plan_core
-    if "maternity limit" in lowered:
-        if plan_name:
-            return "plan_core"
+    # Keep legacy Remedy 02 maternity behavior on plan_core.
+    if "maternity limit" in lowered and plan_name == "Remedy 02":
+        return "plan_core"
     # Classic 3 coverage phrasing is common in broker usage.
     if plan_name == "Classic 3" and any(token in lowered for token in ("coverage", "covered")):
         return "plan_core"
@@ -505,6 +541,9 @@ def _intent_from_query(text: str) -> Optional[str]:
     # Detect "Is X in [plan] network?" and Arabic/shorthand equivalents.
     if plan_name and _is_provider_membership_query(lowered):
         return "plan_network_provider"
+    # Deterministic plan field query (benefit/core), routed before plan_core summary formatting.
+    if plan_name == "Classic 1R" and _is_plan_field_query(lowered):
+        return "plan_field"
     # Plan core
     for field in PLAN_CORE_FIELDS:
         if field in lowered:
@@ -798,6 +837,80 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 "errors": [],
             },
         }
+    if intent == "plan_field":
+        from src.query.plan_query import get_plan_field
+
+        field_name = _extract_plan_field_name(user_query)
+        if not field_name:
+            unsupported_msg = "Sorry, this query is not supported or not available."
+            return {
+                "ok": False,
+                "intent": "unsupported",
+                "plan_name": plan_name,
+                "tool_name": None,
+                "data": None,
+                "message": unsupported_msg,
+                "normalized": {
+                    "status": "not_found",
+                    "tool": None,
+                    "answer": None,
+                    "errors": [unsupported_msg],
+                },
+            }
+
+        payload = get_plan_field(plan_name, field_name)
+        if (not payload.get("ok")) and plan_name == "Classic 1R" and field_name in {
+            "dental_cover_summary",
+            "mental_health_cover_summary",
+        }:
+            from src.tools.enhanced_plan_loader import load_enhanced_plan
+
+            plan_data = load_enhanced_plan(plan_name)
+            fallback_value = plan_data.get(field_name)
+            if fallback_value:
+                label = "Dental Cover" if field_name == "dental_cover_summary" else "Mental Health Cover"
+                payload = {
+                    "ok": True,
+                    "plan_name": plan_name,
+                    "field": field_name,
+                    "label": label,
+                    "value": fallback_value,
+                    "formatted": fallback_value,
+                }
+        if payload.get("ok"):
+            label = payload.get("label", payload.get("field", "Field"))
+            formatted = payload.get("formatted", payload.get("value", "Not available"))
+            msg = f"{label}: {formatted}"
+            return {
+                "ok": True,
+                "intent": "plan_field",
+                "plan_name": plan_name,
+                "tool_name": "get_plan_field",
+                "data": payload,
+                "message": msg,
+                "normalized": {
+                    "status": "ok",
+                    "tool": "get_plan_field",
+                    "answer": payload,
+                    "errors": [],
+                },
+            }
+
+        unsupported_msg = payload.get("formatted") or payload.get("value") or "No deterministic answer is available for that query yet."
+        return {
+            "ok": False,
+            "intent": "unsupported",
+            "plan_name": plan_name,
+            "tool_name": None,
+            "data": None,
+            "message": unsupported_msg,
+            "normalized": {
+                "status": "not_found",
+                "tool": None,
+                "answer": None,
+                "errors": [unsupported_msg],
+            },
+        }
     if intent == "network_lookup":
         from src.query.network_lookup import get_network_lookup
         lookup = get_network_lookup()
@@ -997,7 +1110,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             }
         }
     # If no supported plan or no supported intent, always return unsupported-query message
-    if not plan_name or intent not in ("plan_core", "reimbursement_rules", "plan_summary"):
+    if not plan_name or intent not in ("plan_core", "reimbursement_rules", "plan_summary", "plan_field"):
         msg = (
             "Sorry, this query is not supported or not available. Please specify a supported plan or question."
             if not is_arabic else

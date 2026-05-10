@@ -3,6 +3,7 @@ import pytest
 from src.query.plan_network_lookup import resolve_plan_network
 from src.query.plan_query import load_plan
 from src.tool_contract import get_plan_summary
+from src.agent_wrapper import run_agent_wrapper
 from src.tools.enhanced_plan_loader import (
     ENHANCED_PLAN_REGISTRY,
     is_enhanced_plan,
@@ -124,3 +125,27 @@ def test_classic1r_source_trace_presence_for_benefit_fields():
     for field in required:
         assert trace.get(field)
         assert trace[field].startswith("data/plans/raw/HN_CLASSIC_1R/source_table_HN_CLASSIC_1R.json:")
+
+
+@pytest.mark.parametrize(
+    "query,expected_fragments",
+    [
+        ("What is the pharmacy benefit for Classic 1R?", ["pharmacy", "aed 10,000", "10%"]),
+        ("What is the maternity limit for Classic 1R?", ["maternity", "aed 15,000"]),
+        ("Does Classic 1R cover dental?", ["dental", "aed 2,500", "20%"]),
+        ("What is the mental health cover for Classic 1R?", ["mental", "aed 3,000", "20%"]),
+        ("What is the annual limit for Classic 1R?", ["annual", "aed 300,000"]),
+        ("What is the network for Classic 1R?", ["network", "advantage"]),
+    ],
+)
+def test_classic1r_benefit_queries_route_to_deterministic_answers(query, expected_fragments):
+    result = run_agent_wrapper(query)
+    assert result.get("ok") is True
+    assert result.get("intent") != "unsupported"
+    msg = (result.get("message") or "").lower()
+    # Must not leak full plan summary when a specific benefit is requested.
+    if "pharmacy" in query.lower() or "maternity" in query.lower() or "dental" in query.lower() or "mental" in query.lower():
+        assert "area:" not in msg
+        assert "direct billing:" not in msg
+    for frag in expected_fragments:
+        assert frag in msg
