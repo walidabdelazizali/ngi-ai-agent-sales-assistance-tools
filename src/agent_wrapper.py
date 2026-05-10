@@ -370,6 +370,12 @@ _PROVIDER_MEMBERSHIP_PATTERNS = [
     _re.compile(r"^is\s+(?!(?:direct\s+billing|annual\s+limit|network|limit|referral|maternity|dental|optical|vision|pharmacy|reimbursement|coverage|available|cashless|covered|provided|included|offered|accepted|the)\b)\S.+\s+in\s+(?:remedy|classic)\s*\S+\s+network\??$", _re.IGNORECASE),
     # "Is X in Remedy Y?" (without trailing "network")
     _re.compile(r"^is\s+(?!(?:direct\s+billing|annual\s+limit|network|limit|referral|maternity|dental|optical|vision|pharmacy|reimbursement|coverage|available|cashless|covered|provided|included|offered|accepted|the)\b)\S.+\s+in\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # "Provider X in Remedy Y network?"
+    _re.compile(r"^provider\s+\S.+\s+in\s+(?:remedy|classic)\s*\S+\s+network\??$", _re.IGNORECASE),
+    # "X - Remedy Y - network?"
+    _re.compile(r"^(?!(?:what|summarize|summary|annual\s+limit|network|direct\s+billing|referral)\b)\S.+\s*-\s*(?:remedy|classic)\s*\S+\s*-\s*network\??$", _re.IGNORECASE),
+    # "X Remedy Y network?"
+    _re.compile(r"^(?!(?:what|summarize|summary|annual\s+limit|network|direct\s+billing|referral)\b)\S.+\s+(?:remedy|classic)\s*\S+\s+network\??$", _re.IGNORECASE),
     # Arabic (raw): "هل X في شبكة Remedy Y؟" or "هل X داخل شبكة Remedy Y؟"
     _re.compile(r"^هل\s+\S.+\s+(?:في شبكة|داخل شبكة|داخل)\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
     # Arabic (raw): "هل X في Remedy Y؟" or "هل X داخل Remedy Y؟"
@@ -390,6 +396,12 @@ def _is_provider_membership_query(lowered_text: str) -> bool:
 _MEMBERSHIP_PROVIDER_EXTRACTORS = [
     # "Is PROVIDER in Remedy Y network?" / "Is PROVIDER in Classic Y network?"
     _re.compile(r"^is\s+(.+?)\s+in\s+(?:remedy|classic)\s*\S+(?:\s+network)?\??$", _re.IGNORECASE),
+    # "Provider PROVIDER in Remedy Y network?"
+    _re.compile(r"^provider\s+(.+?)\s+in\s+(?:remedy|classic)\s*\S+\s+network\??$", _re.IGNORECASE),
+    # "PROVIDER - Remedy Y - network?"
+    _re.compile(r"^(.+?)\s*-\s*(?:remedy|classic)\s*\S+\s*-\s*network\??$", _re.IGNORECASE),
+    # "PROVIDER Remedy Y network?"
+    _re.compile(r"^(.+?)\s+(?:remedy|classic)\s*\S+\s+network\??$", _re.IGNORECASE),
     # Arabic (raw): "هل PROVIDER في شبكة Plan؟" / "هل PROVIDER داخل شبكة Plan؟"
     _re.compile(r"^هل\s+(.+?)\s+(?:في شبكة|داخل شبكة|في|داخل)\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
     # Arabic (normalized: شبكة → network): "هل PROVIDER في network Plan؟"

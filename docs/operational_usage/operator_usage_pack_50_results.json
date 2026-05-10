@@ -93,21 +93,21 @@
     "seq": 10,
     "query": "Is ASTER HOSPITAL in Remedy 5 network?",
     "query_type": "provider_lookup",
-    "ok": true,
-    "intent": "plan_core",
-    "category": "CRITICAL",
-    "reason": "Unexpected pricing information leaked",
-    "message_preview": "Plan: NGI Healthnet \u2013Remedy 05 | Code: HN-REMEDY-5 | \u0627\u0644\u0634\u0628\u0643\u0629: HN Basic Plus | Annual limit: AED. 150,000 | Ar"
+    "ok": false,
+    "intent": "plan_network_provider",
+    "category": "GAP",
+    "reason": "Failed lookup: Ambiguous provider match. Please specify the full provider name.",
+    "message_preview": "Ambiguous provider match. Please specify the full provider name."
   },
   {
     "seq": 11,
     "query": "Is Accuracy Plus Medical Laboratory in Remedy 05 network?",
     "query_type": "provider_lookup",
     "ok": true,
-    "intent": "plan_core",
-    "category": "CRITICAL",
-    "reason": "Unexpected pricing information leaked",
-    "message_preview": "Plan: NGI Healthnet \u2013Remedy 05 | Code: HN-REMEDY-5 | \u0627\u0644\u0634\u0628\u0643\u0629: HN Basic Plus | Annual limit: AED. 150,000 | Ar"
+    "intent": "plan_network_provider",
+    "category": "GOOD",
+    "reason": "Structured provider lookup",
+    "message_preview": "[NETWORK] | Provider: ACCURACY PLUS MEDICAL LABORATORY | Plan: Remedy 05 | Required Network: hn_basic_plus"
   },
   {
     "seq": 12,
@@ -233,11 +233,11 @@
     "seq": 24,
     "query": "\u0647\u0644 ASTER HOSPITAL \u0641\u064a \u0634\u0628\u0643\u0629 Remedy 05\u061f",
     "query_type": "arabic_provider_lookup",
-    "ok": true,
-    "intent": "plan_core",
-    "category": "GOOD",
-    "reason": "Structured plan core response",
-    "message_preview": "Plan: NGI Healthnet \u2013Remedy 05 | Code: HN-REMEDY-5 | \u0627\u0644\u0634\u0628\u0643\u0629: HN Basic Plus | Annual limit: AED. 150,000 | Ar"
+    "ok": false,
+    "intent": "plan_network_provider",
+    "category": "GAP",
+    "reason": "Unexpected failure: \u0645\u0632\u0648\u062f \u063a\u064a\u0631 \u0645\u062d\u062f\u062f (\u063a\u0627\u0645\u0636). \u064a\u0631\u062c\u0649 \u062a\u062d\u062f\u064a\u062f \u0627\u0644\u0627\u0633\u0645 \u0627\u0644\u0643\u0627\u0645\u0644 \u0644\u0644\u0645\u0632\u0648\u062f.",
+    "message_preview": "\u0645\u0632\u0648\u062f \u063a\u064a\u0631 \u0645\u062d\u062f\u062f (\u063a\u0627\u0645\u0636). \u064a\u0631\u062c\u0649 \u062a\u062d\u062f\u064a\u062f \u0627\u0644\u0627\u0633\u0645 \u0627\u0644\u0643\u0627\u0645\u0644 \u0644\u0644\u0645\u0632\u0648\u062f."
   },
   {
     "seq": 25,
@@ -274,10 +274,10 @@
     "query": "\u0647\u0644 \u0645\u0633\u062a\u0634\u0641\u0649 CEDARS \u0641\u064a Remedy 5\u061f",
     "query_type": "arabic_provider_lookup",
     "ok": false,
-    "intent": "plan_network_city_type",
+    "intent": "plan_network_provider",
     "category": "GAP",
-    "reason": "Unexpected failure: City is unknown, unclear, or unsupported. Please specify one of: Dubai, Abu Dhab",
-    "message_preview": "City is unknown, unclear, or unsupported. Please specify one of: Dubai, Abu Dhabi, Sharjah, Ajman."
+    "reason": "Unexpected failure: \u0627\u0644\u0645\u0632\u0648\u062f \u063a\u064a\u0631 \u0645\u0648\u062c\u0648\u062f.",
+    "message_preview": "\u0627\u0644\u0645\u0632\u0648\u062f \u063a\u064a\u0631 \u0645\u0648\u062c\u0648\u062f."
   },
   {
     "seq": 29,

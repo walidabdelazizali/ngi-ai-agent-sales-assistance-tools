@@ -17,6 +17,16 @@ stage2-live
 - Working tree was clean
 
 ## Today’s work
+1. Fixed CRITICAL provider-query pricing leakage for dashed/provider-prefixed membership queries.
+2. Added exact regressions for:
+	- `NMC ROYAL HOSPITAL DXB - Remedy 5 - network?`
+	- `Provider 24HOUR PHARMACY in Remedy 6 network?`
+3. Hardened provider-membership routing in [src/agent_wrapper.py](src/agent_wrapper.py) so provider-style queries with plan + network keywords route before `plan_core`.
+4. Preserved normal plan-core routing for factual plan questions like network, summary, and annual limit.
+5. Validation after fix:
+	- [tests/test_natural_provider_queries.py](tests/test_natural_provider_queries.py): 76 passed
+	- full regression: 801 passed, 2 skipped
+	- CLI verification for both former CRITICAL queries now returns `intent=plan_network_provider` with safe `Provider not found.` responses and no pricing leakage.
 1. Started Provider Membership Routing Fix sprint.
 2. Added focused regression coverage for provider membership routing through `run_agent_wrapper()`.
 3. Fixed intent routing so provider+plan membership queries no longer fall into `plan_core` summaries.

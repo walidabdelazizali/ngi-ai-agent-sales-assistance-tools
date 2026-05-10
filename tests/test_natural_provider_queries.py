@@ -457,6 +457,14 @@ class TestProviderMembershipRouting:
         )
         assert "Status:" in msg or "status" in msg.lower() or "in network" in msg.lower() or "داخل" in msg
 
+    def _assert_provider_query_safe(self, result):
+        """Provider-style query must never leak plan_core pricing or summary fields."""
+        assert result.get("intent") != "plan_core"
+        msg = result.get("message", "")
+        assert "AED" not in msg
+        assert "Annual limit" not in msg
+        assert result.get("intent") in ("plan_network_provider", "unsupported", "network_lookup", "plan_network_city_type", None)
+
     # ------------------------------------------------------------------
     # English structured patterns: "Is X in Remedy Y network?"
     # ------------------------------------------------------------------
@@ -618,3 +626,26 @@ class TestProviderMembershipRouting:
         assert result.get("ok") is False
         msg = result.get("message", "")
         assert "not found" in msg.lower() or "provider" in msg.lower()
+
+    def test_critical_dash_style_provider_query_never_leaks_pricing(self):
+        result = run_agent_wrapper("NMC ROYAL HOSPITAL DXB - Remedy 5 - network?")
+        self._assert_provider_query_safe(result)
+
+    def test_critical_provider_prefix_query_never_leaks_pricing(self):
+        result = run_agent_wrapper("Provider 24HOUR PHARMACY in Remedy 6 network?")
+        self._assert_provider_query_safe(result)
+
+
+class TestPlanCorePreservation:
+    def test_network_question_stays_plan_core(self):
+        result = run_agent_wrapper("What is the network for Remedy 5?")
+        assert result["intent"] == "plan_core"
+
+    def test_summary_question_stays_plan_summary(self):
+        result = run_agent_wrapper("Summarize Remedy 5")
+        assert result["intent"] == "plan_summary"
+
+    def test_annual_limit_question_stays_plan_core(self):
+        result = run_agent_wrapper("What is the annual limit for Remedy 5?")
+        assert result["intent"] == "plan_core"
+        assert "Annual limit" in result.get("message", "") or "AED" in result.get("message", "")
