@@ -264,7 +264,9 @@ NETWORK_LABELS = {
 }
 
 PLAN_FIELD_HINTS = [
-    "annual limit", "network", "network name",
+    "annual limit", "limit",  # Core field
+    "network", "network name",  # Network
+    "area", "area of coverage",  # Core field
     "pharmacy", "pharmacy benefit", "pharmacy cover", "drugs",
     "maternity", "maternity limit", "pregnancy",
     "dental", "dental cover",
@@ -280,10 +282,12 @@ PLAN_FIELD_ALIAS_TO_FIELD = [
     ("dental cover", "dental_cover_summary"),
     ("network name", "network_name"),
     ("annual limit", "annual_limit"),
+    ("area of coverage", "area_of_coverage"),
     ("pharmacy", "pharmacy_cover_summary"),
     ("maternity", "maternity_cover"),
     ("dental", "dental_cover_summary"),
     ("network", "network_name"),
+    ("area", "area_of_coverage"),
     ("limit", "annual_limit"),
 ]
 
