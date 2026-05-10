@@ -78,6 +78,59 @@ import unicodedata
 NETWORK_CSV = Path("runtime_data/networks/network_list_normalized.csv")
 
 class NetworkLookup:
+    CITY_ALIASES = {
+        "dubai": "Dubai",
+        "دبي": "Dubai",
+        "abu dhabi": "Abu Dhabi",
+        "abudhabi": "Abu Dhabi",
+        "abu-dhabi": "Abu Dhabi",
+        "ابوظبي": "Abu Dhabi",
+        "أبوظبي": "Abu Dhabi",
+        "ابو ظبي": "Abu Dhabi",
+        "أبو ظبي": "Abu Dhabi",
+        "sharjah": "Sharjah",
+        "الشارقة": "Sharjah",
+        "شارقة": "Sharjah",
+        "ajman": "Ajman",
+        "عجمان": "Ajman",
+    }
+
+    PROVIDER_TYPE_ALIASES = {
+        "hospital": "hospital",
+        "hospitals": "hospital",
+        "مستشفى": "hospital",
+        "مستشفيات": "hospital",
+        "clinic": "clinic",
+        "clinics": "clinic",
+        "عيادة": "clinic",
+        "عيادات": "clinic",
+        "pharmacy": "pharmacy",
+        "pharmacies": "pharmacy",
+        "صيدلية": "pharmacy",
+        "صيدليات": "pharmacy",
+        "lab": "lab",
+        "labs": "lab",
+        "laboratory": "lab",
+        "laboratories": "lab",
+        "diagnostic center": "lab",
+        "diagnostic centers": "lab",
+        "مختبر": "lab",
+        "مختبرات": "lab",
+        "تحليل": "lab",
+        "تحاليل": "lab",
+        "medical center": "clinic",
+        "medical centers": "clinic",
+        "مركز طبي": "clinic",
+        "مراكز طبية": "clinic",
+    }
+
+    PROVIDER_TYPE_FILTERS = {
+        "hospital": ("HOSPITAL",),
+        "clinic": ("CLINIC", "MEDICAL CENTER"),
+        "pharmacy": ("PHARMACY",),
+        "lab": ("DIAGNOSTIC CENTER", "LABORATORY"),
+    }
+
     @staticmethod
     def _normalize_query_text(text: str) -> str:
         normalized = (text or "").strip().lower()
@@ -104,6 +157,16 @@ class NetworkLookup:
             if lowered == NetworkLookup._normalize_query_text(alias):
                 return canonical
         return lowered
+
+    @staticmethod
+    def canonical_city(city: str):
+        lowered = NetworkLookup._normalize_query_text(city or "")
+        return NetworkLookup.CITY_ALIASES.get(lowered)
+
+    @staticmethod
+    def canonical_provider_type(provider_type: str):
+        lowered = NetworkLookup._normalize_query_text(provider_type or "")
+        return NetworkLookup.PROVIDER_TYPE_ALIASES.get(lowered)
 
     @staticmethod
     def _format_ambiguous_message(candidates, lang="en"):
@@ -148,6 +211,59 @@ class NetworkLookup:
             return m.group(1).strip().title()
         # Otherwise, return original
         return NetworkLookup._apply_provider_aliases(query.strip())
+
+    def list_providers_in_network(self, network_code, city, provider_type, limit=25):
+        available_values = ("✔", "✓", "yes", "y", "true", "1")
+        network_col = (network_code or "").strip().lower()
+        if network_col not in self.df.columns:
+            return {
+                "ok": False,
+                "error": "unsupported_network",
+                "network_code": network_col,
+            }
+
+        canonical_city = self.canonical_city(city)
+        if not canonical_city:
+            return {
+                "ok": False,
+                "error": "unknown_city",
+                "supported_cities": ["Dubai", "Abu Dhabi", "Sharjah", "Ajman"],
+            }
+
+        canonical_type = self.canonical_provider_type(provider_type)
+        if not canonical_type:
+            return {
+                "ok": False,
+                "error": "unsupported_provider_type",
+                "supported_provider_types": ["hospital", "clinic", "pharmacy", "lab"],
+            }
+
+        type_tokens = self.PROVIDER_TYPE_FILTERS[canonical_type]
+        df = self.df[self.df[network_col].apply(lambda v: str(v).strip() in available_values)]
+        df = df[df["city"].str.strip().str.upper() == canonical_city.upper()]
+        df = df[df["type"].str.upper().apply(lambda t: any(token in t for token in type_tokens))]
+
+        provider_names = sorted({str(name).strip() for name in df["provider_name"] if str(name).strip()})
+
+        # Keep only provider names that can be re-resolved deterministically to this network.
+        verified = []
+        for name in provider_names:
+            details = self.provider_in_network(name, network_col)
+            if details.get("found") and details.get("in_network"):
+                verified.append(name)
+
+        shown = verified[: max(1, int(limit))]
+
+        return {
+            "ok": True,
+            "network_code": network_col,
+            "city": canonical_city,
+            "provider_type": canonical_type,
+            "count": len(verified),
+            "providers": shown,
+            "truncated": len(shown) < len(verified),
+        }
+
     def list_basic_plus_providers(self, city=None, provider_type=None, lang="en", label_override=None):
         """
         List all providers in HN Basic Plus, optionally filtered by city and type.
@@ -290,7 +406,7 @@ class NetworkLookup:
         s = re.sub(r"[؟?]$", "", s)
         s = re.sub(r"[\s\t\n\r]+", " ", s)
         s = re.sub(r"^[^\w\d]+|[^\w\d]+$", "", s)  # strip simple punctuation at ends
-        s = re.sub(r"[\.,;:!\-\(\)\[\]{}'\"]", "", s)  # remove simple punctuation inside
+        s = re.sub(r"[\.,;:!\-–—‑\(\)\[\]{}'\"]", "", s)  # remove simple punctuation inside
         s = s.replace("auh", "abu dhabi")
         s = s.replace("qsais", "qusais")
         s = re.sub(r" +", " ", s)  # collapse multiple spaces

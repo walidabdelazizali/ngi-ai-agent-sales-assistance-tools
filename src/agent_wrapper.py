@@ -165,6 +165,62 @@ NETWORK_LOOKUP_PATTERNS = [
     r"في أي مدينة يقع .+",
 ]
 
+CITY_ALIASES = {
+    "dubai": "Dubai",
+    "دبي": "Dubai",
+    "abu dhabi": "Abu Dhabi",
+    "abudhabi": "Abu Dhabi",
+    "abu-dhabi": "Abu Dhabi",
+    "ابوظبي": "Abu Dhabi",
+    "أبوظبي": "Abu Dhabi",
+    "ابو ظبي": "Abu Dhabi",
+    "أبو ظبي": "Abu Dhabi",
+    "sharjah": "Sharjah",
+    "الشارقة": "Sharjah",
+    "شارقة": "Sharjah",
+    "ajman": "Ajman",
+    "عجمان": "Ajman",
+}
+
+PROVIDER_TYPE_ALIASES = {
+    "hospital": "hospital",
+    "hospitals": "hospital",
+    "مستشفى": "hospital",
+    "مستشفيات": "hospital",
+    "clinic": "clinic",
+    "clinics": "clinic",
+    "medical center": "clinic",
+    "medical centers": "clinic",
+    "عيادة": "clinic",
+    "عيادات": "clinic",
+    "مركز طبي": "clinic",
+    "مراكز طبية": "clinic",
+    "pharmacy": "pharmacy",
+    "pharmacies": "pharmacy",
+    "صيدلية": "pharmacy",
+    "صيدليات": "pharmacy",
+    "lab": "lab",
+    "labs": "lab",
+    "laboratory": "lab",
+    "laboratories": "lab",
+    "diagnostic center": "lab",
+    "diagnostic centers": "lab",
+    "مختبر": "lab",
+    "مختبرات": "lab",
+    "تحليل": "lab",
+    "تحاليل": "lab",
+}
+
+NETWORK_LABELS = {
+    "hn_basic_plus": "HN Basic Plus",
+    "hn_standard_plus": "HN Standard Plus",
+    "hn_standard": "HN Standard",
+    "hn_premier": "HN Premier",
+    "hn_advantage": "HN Advantage",
+    "hn_exclusive": "HN Exclusive",
+    "hn_basic": "HN Basic",
+}
+
 
 def _normalize_query_text(text: str) -> str:
     normalized = (text or "").lower().translate(ARABIC_INDIC_DIGITS).translate(EXT_ARABIC_INDIC_DIGITS)
@@ -287,6 +343,24 @@ def _extract_all_plan_names(text: str) -> list[str]:
             found.append(canonical)
     return found
 
+
+def _extract_city_and_provider_type(text: str) -> tuple[Optional[str], Optional[str]]:
+    lowered = _normalize_query_text(text)
+    detected_city = None
+    detected_type = None
+
+    for alias, canonical in sorted(CITY_ALIASES.items(), key=lambda item: len(item[0]), reverse=True):
+        if alias in lowered:
+            detected_city = canonical
+            break
+
+    for alias, canonical in sorted(PROVIDER_TYPE_ALIASES.items(), key=lambda item: len(item[0]), reverse=True):
+        if alias in lowered:
+            detected_type = canonical
+            break
+
+    return detected_city, detected_type
+
 def _intent_from_query(text: str) -> Optional[str]:
     lowered = _normalize_query_text(text)
     plan_name = _extract_plan_name(lowered)
@@ -360,6 +434,9 @@ def _intent_from_query(text: str) -> Optional[str]:
         or any(t in lowered for t in type_words_arabic)
     ) and any(c in lowered for c in city_words) and plan_name:
         return "plan_network_city_type"
+    # If plan and city cues are present with a generic providers ask, route for safe clarification.
+    if plan_name and any(c in lowered for c in city_words) and any(p in lowered for p in ["provider", "providers", "مزود", "مزودين", "مزوّد"]):
+        return "plan_network_city_type"
     # Alias patterns for existing supported queries (no output/logic change)
     # e.g. "Dubai providers Remedy 6", "Providers in Dubai Remedy 6", "Remedy 6 Dubai providers", etc.
     city_aliases = ["dubai", "abu dhabi", "sharjah"]
@@ -410,132 +487,12 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
 
     # New: plan_network_city_type intent
     if intent == "plan_network_city_type":
-        # Extract city and provider type
-        import re
-        # Extract provider type (first match, map plural to singular for lookup)
-        type_map = {
-            "hospitals": "hospital",
-            "hospital": "hospital",
-            "clinics": "clinic",
-            "clinic": "clinic",
-            "pharmacies": "pharmacy",
-            "pharmacy": "pharmacy",
-            "medical centers": "medical center",
-            "medical center": "medical center",
-            "laboratories": "laboratory",
-            "laboratory": "laboratory",
-            "labs": "lab",
-            "lab": "lab",
-            "diagnostic centers": "diagnostic center",
-            "diagnostic center": "diagnostic center",
-            "مستشفيات": "hospital",
-            "مستشفى": "hospital",
-            "عيادات": "clinic",
-            "عيادة": "clinic",
-            "صيدليات": "pharmacy",
-            "صيدلية": "pharmacy",
-            "مختبرات": "lab",
-            "مختبر": "lab",
-            "تحاليل": "lab",
-            "تحليل": "lab",
-        }
-        provider_type = None
-        lowered_query = _normalize_query_text(user_query)
-        for t in type_map:
-            if t in lowered_query:
-                provider_type = type_map[t]
-                break
-        # Extract city (word after 'in' or 'available in' or 'في')
-        city = None
-        m = re.search(r"in ([A-Za-z\u0621-\u064A ]+)", lowered_query, re.IGNORECASE)
-        if m:
-            city = m.group(1).strip().split()[0]
-        else:
-            m = re.search(r"available in ([A-Za-z\u0621-\u064A ]+)", lowered_query, re.IGNORECASE)
-            if m:
-                city = m.group(1).strip().split()[0]
-            else:
-                m = re.search(r"في ([A-Za-z\u0621-\u064A ]+)", lowered_query, re.IGNORECASE)
-                if m:
-                    city = m.group(1).strip().split()[0]
-        # Get plan network
-        from src.v2_plan_loader import load_clean_plan
-        try:
-            plan_data = load_clean_plan(plan_name)
-            network_name = None
-            for k in ["network", "network_name", "الشبكة"]:
-                if k in plan_data and plan_data[k]:
-                    network_name = plan_data[k]
-                    break
-            if not network_name:
-                msg = "Network not defined for this plan"
-                return {
-                    "ok": False,
-                    "intent": intent,
-                    "plan_name": plan_name,
-                    "tool_name": None,
-                    "data": None,
-                    "message": msg,
-                    "normalized": {
-                        "status": "not_found",
-                        "tool": None,
-                        "answer": None,
-                        "errors": [msg]
-                    }
-                }
-            # Only support HN Basic Plus for now (minimal patch)
-            if "basic plus" not in network_name.lower():
-                msg = f"Network '{network_name}' not supported for provider listing"
-                return {
-                    "ok": False,
-                    "intent": intent,
-                    "plan_name": plan_name,
-                    "tool_name": None,
-                    "data": None,
-                    "message": msg,
-                    "normalized": {
-                        "status": "not_found",
-                        "tool": None,
-                        "answer": None,
-                        "errors": [msg]
-                    }
-                }
-            from src.query.network_lookup import get_network_lookup
-            lookup = get_network_lookup()
-            result = lookup.list_basic_plus_providers(city=city, provider_type=provider_type)
-            # Output hardening: Remove [NETWORK] and standardize heading for supported cities/categories
-            if intent == "plan_network_city_type" and plan_name in ("Remedy 06", "Remedy 6") and city and provider_type:
-                lines = result.splitlines()
-                # Remove [NETWORK] if present
-                if lines and lines[0].strip().startswith("[NETWORK]"):
-                    lines = lines[1:]
-                # Standardize heading for Sharjah hospitals
-                if city.lower() == "sharjah" and provider_type == "hospital":
-                    heading = f"Sharjah hospitals (HN Basic Plus) for Remedy 6:"
-                    improved = [heading] + lines[1:] if len(lines) > 1 else [heading]
-                    result = "\n".join(improved)
-                # Standardize heading for Dubai/Abu Dhabi diagnostic providers (already clean, but ensure no [NETWORK])
-                elif city.lower() in ("dubai", "abu", "abu dhabi") and provider_type in ("lab", "diagnostic center"):
-                    city_heading = "Abu Dhabi" if city.lower().startswith("abu") else city.title()
-                    heading = f"{city_heading} diagnostic providers (HN Basic Plus) for Remedy 6:"
-                    improved = [heading] + lines[1:] if len(lines) > 1 else [heading]
-                    result = "\n".join(improved)
-            return {
-                "ok": True,
-                "intent": intent,
-                "plan_name": plan_name,
-                "tool_name": "list_basic_plus_providers",
-                "data": None,
-                "message": result,
-                "normalized": {
-                    "status": "ok",
-                    "tool": "list_basic_plus_providers",
-                    "answer": result,
-                    "errors": []
-                }
-            }
-        except Exception as e:
-            msg = f"Error: {e}"
+        from src.query.network_lookup import get_network_lookup
+        from src.query.plan_network_lookup import resolve_plan_network
+
+        city, provider_type = _extract_city_and_provider_type(user_query)
+        if not city:
+            msg = "City is unknown, unclear, or unsupported. Please specify one of: Dubai, Abu Dhabi, Sharjah, Ajman."
             return {
                 "ok": False,
                 "intent": intent,
@@ -544,12 +501,109 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 "data": None,
                 "message": msg,
                 "normalized": {
-                    "status": "error",
+                    "status": "not_found",
                     "tool": None,
                     "answer": None,
-                    "errors": [msg]
-                }
+                    "errors": [msg],
+                },
             }
+
+        if not provider_type:
+            msg = "Provider type is unclear or unsupported. Supported types: hospital, clinic, pharmacy, lab."
+            return {
+                "ok": False,
+                "intent": intent,
+                "plan_name": plan_name,
+                "tool_name": None,
+                "data": None,
+                "message": msg,
+                "normalized": {
+                    "status": "not_found",
+                    "tool": None,
+                    "answer": None,
+                    "errors": [msg],
+                },
+            }
+
+        mapping = resolve_plan_network(plan_name or "")
+        if not mapping.get("found"):
+            msg = "Plan network mapping not available."
+            return {
+                "ok": False,
+                "intent": intent,
+                "plan_name": plan_name,
+                "tool_name": None,
+                "data": None,
+                "message": msg,
+                "normalized": {
+                    "status": "not_found",
+                    "tool": None,
+                    "answer": None,
+                    "errors": [msg],
+                },
+            }
+
+        network_code = mapping["medical_network"]
+        lookup = get_network_lookup()
+        listing = lookup.list_providers_in_network(network_code=network_code, city=city, provider_type=provider_type, limit=25)
+
+        if not listing.get("ok"):
+            if listing.get("error") == "unknown_city":
+                msg = "City is unknown, unclear, or unsupported. Please specify one of: Dubai, Abu Dhabi, Sharjah, Ajman."
+            elif listing.get("error") == "unsupported_provider_type":
+                msg = "Provider type is unclear or unsupported. Supported types: hospital, clinic, pharmacy, lab."
+            else:
+                msg = "Provider listing is not available for the resolved network."
+            return {
+                "ok": False,
+                "intent": intent,
+                "plan_name": plan_name,
+                "tool_name": None,
+                "data": None,
+                "message": msg,
+                "normalized": {
+                    "status": "not_found",
+                    "tool": None,
+                    "answer": None,
+                    "errors": [msg],
+                },
+            }
+
+        display_network = NETWORK_LABELS.get(network_code, network_code.replace("_", " ").title())
+        count = listing["count"]
+        lines = [
+            "[PROVIDER LIST]",
+            f"Plan: {plan_name}",
+            f"Resolved Network: {network_code} ({display_network})",
+            f"City: {city}",
+            f"Provider Type: {provider_type}",
+            f"Count: {count}",
+        ]
+
+        if count == 0:
+            lines.append("No matching providers found for this plan/network/city/provider type.")
+        else:
+            lines.append("Providers:")
+            for name in listing["providers"]:
+                lines.append(f"- {name}")
+            if listing.get("truncated"):
+                lines.append("Showing first 25 providers only.")
+
+        result = "\n".join(lines)
+        return {
+            "ok": True,
+            "intent": intent,
+            "plan_name": plan_name,
+            "tool_name": "list_basic_plus_providers",
+            "data": None,
+            "message": result,
+            "normalized": {
+                "status": "ok",
+                "tool": "list_basic_plus_providers",
+                "answer": result,
+                "errors": [],
+            },
+        }
     if intent == "network_lookup":
         from src.query.network_lookup import get_network_lookup
         lookup = get_network_lookup()

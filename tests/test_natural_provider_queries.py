@@ -311,3 +311,115 @@ class TestProviderQueryBoundaryConditions:
         """Only provider type, no plan should be unsupported."""
         result = run_agent_wrapper("hospitals available")
         assert result["ok"] is False or result["intent"] in (None, "unsupported")
+
+
+class TestProviderListingUsefulness:
+    """Usefulness and safety assertions for plan -> network -> city -> type listings."""
+
+    @staticmethod
+    def _extract_provider_lines(message: str):
+        return [line[2:].strip() for line in message.splitlines() if line.startswith("- ") and line[2:].strip()]
+
+    @staticmethod
+    def _extract_count(message: str):
+        for line in message.splitlines():
+            if line.startswith("Count:"):
+                value = line.split(":", 1)[1].strip().split()[0]
+                return int(value)
+        return None
+
+    def _assert_clean_listing_shape(self, result, plan_name, network_code, city, provider_type_label):
+        assert result["ok"] is True
+        msg = result["message"]
+        assert "[PROVIDER LIST]" in msg
+        assert f"Plan: {plan_name}" in msg
+        assert f"Resolved Network: {network_code}" in msg
+        assert f"City: {city}" in msg
+        assert f"Provider Type: {provider_type_label}" in msg
+        assert "Count:" in msg
+        assert "hnm_code" not in msg.lower()
+        assert "group_name" not in msg.lower()
+        assert "tel_no" not in msg.lower()
+        assert "location" not in msg.lower()
+        assert "google_name" not in msg.lower()
+
+    def test_hospitals_remedy5_dubai_useful_output(self):
+        result = run_agent_wrapper("hospitals in Remedy 5 in Dubai")
+        self._assert_clean_listing_shape(result, "Remedy 05", "hn_basic_plus", "Dubai", "hospital")
+        count = self._extract_count(result["message"])
+        assert count is not None and count > 0
+
+    def test_clinics_remedy6_sharjah_useful_output(self):
+        result = run_agent_wrapper("clinics in Remedy 6 in Sharjah")
+        self._assert_clean_listing_shape(result, "Remedy 06", "hn_basic_plus", "Sharjah", "clinic")
+        count = self._extract_count(result["message"])
+        assert count is not None and count > 0
+
+    def test_pharmacies_remedy5_dubai_useful_output(self):
+        result = run_agent_wrapper("pharmacies in Remedy 5 in Dubai")
+        self._assert_clean_listing_shape(result, "Remedy 05", "hn_basic_plus", "Dubai", "pharmacy")
+        count = self._extract_count(result["message"])
+        assert count is not None and count > 0
+
+    def test_labs_remedy6_abudhabi_useful_output(self):
+        result = run_agent_wrapper("labs in Remedy 6 in Abu Dhabi")
+        self._assert_clean_listing_shape(result, "Remedy 06", "hn_basic_plus", "Abu Dhabi", "lab")
+        count = self._extract_count(result["message"])
+        assert count is not None and count > 0
+
+    @pytest.mark.parametrize(
+        "query,plan_name,network_code,city,ptype",
+        [
+            ("مستشفيات Remedy 5 في دبي؟", "Remedy 05", "hn_basic_plus", "Dubai", "hospital"),
+            ("عيادات Remedy 6 في الشارقة؟", "Remedy 06", "hn_basic_plus", "Sharjah", "clinic"),
+            ("pharmacies في Remedy 5 دبي", "Remedy 05", "hn_basic_plus", "Dubai", "pharmacy"),
+        ],
+    )
+    def test_arabic_and_mixed_queries_useful_output(self, query, plan_name, network_code, city, ptype):
+        result = run_agent_wrapper(query)
+        self._assert_clean_listing_shape(result, plan_name, network_code, city, ptype)
+
+    def test_unknown_city_safe_response(self):
+        result = run_agent_wrapper("hospitals in Remedy 5 in Atlantis")
+        assert result["ok"] is False
+        assert "city" in result["message"].lower()
+        assert "clarify" in result["message"].lower() or "unknown" in result["message"].lower()
+
+    def test_unsupported_provider_type_safe_response(self):
+        result = run_agent_wrapper("optical providers in Remedy 5 in Dubai")
+        assert result["ok"] is False
+        assert "provider type" in result["message"].lower()
+        assert "supported" in result["message"].lower()
+
+    def test_provider_lines_stay_within_resolved_network(self):
+        from src.query.network_lookup import get_network_lookup
+        from src.query.plan_network_lookup import resolve_plan_network
+
+        result = run_agent_wrapper("hospitals in Remedy 5 in Dubai")
+        assert result["ok"] is True
+        providers = self._extract_provider_lines(result["message"])
+        mapping = resolve_plan_network("Remedy 05")
+        assert mapping["found"]
+        network_code = mapping["medical_network"]
+
+        lookup = get_network_lookup()
+        checked = 0
+        for provider in providers[:20]:
+            details = lookup.provider_in_network(provider, network_code)
+            assert details.get("found") is True
+            assert details.get("in_network") is True
+            checked += 1
+        assert checked > 0
+
+    def test_no_match_message_is_safe_and_structured(self):
+        result = run_agent_wrapper("labs in Remedy 6 in Fujairah")
+        assert result["ok"] is False or result["ok"] is True
+        msg = result["message"]
+        # If handled as unknown city clarification, it's safe.
+        if result["ok"] is False:
+            assert "city" in msg.lower()
+            return
+        # If handled as empty listing, must stay structured and safe.
+        assert "[PROVIDER LIST]" in msg
+        assert "Count: 0" in msg
+        assert "No matching providers found" in msg

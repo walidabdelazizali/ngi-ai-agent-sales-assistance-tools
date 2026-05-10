@@ -93,10 +93,31 @@ stage2-live
 	- BLOCKED_OK: 13 -> 13
 	- GAP: 5 -> 5
 
+### Provider List Usefulness Sprint (COMPLETED)
+1. Discovered: Provider listing queries (e.g., "hospitals in Remedy 5 in Dubai") were returning generic "[NETWORK]\nNo matching providers found" despite providers being available in deterministic lookup layer.
+2. Root cause: City/type extraction fell through to fallback code; wrapper was not integrating deterministic listing API.
+3. Implemented:
+   - Added `list_providers_in_network()` method in [src/query/network_lookup.py](src/query/network_lookup.py) with city/type canonicalization, provider re-verification filtering, and safe error handling
+   - Enhanced `plan_network_city_type` handler in [src/agent_wrapper.py](src/agent_wrapper.py) to use authoritative plan-network mapping and call deterministic listing API
+   - Added helper `_extract_city_and_provider_type()` to normalize city and provider type aliases (English/Arabic)
+   - Structured output format: `[PROVIDER LIST]` heading with plan, resolved network, city, type, count, and deterministically verified provider list
+4. Added 11 new comprehensive usefulness tests in [tests/test_natural_provider_queries.py](tests/test_natural_provider_queries.py):
+   - Covering English, Arabic, and mixed-language queries
+   - Covering clinic→medical center mapping, lab→diagnostic center mapping
+   - Covering unknown city safe clarification and unsupported type blocking
+   - Covering provider re-resolution deterministic verification
+5. Validation:
+   - Full regression: **780 passed, 2 skipped** (up from 769 baseline; +11 new usefulness tests)
+   - Focused test suite: 55 passed
+   - CLI evidence verified: hospitals, clinics, pharmacies, labs, Arabic queries all producing structured output with deterministically verified providers
+6. Documentation: Created [docs/operational_usage/provider_list_usefulness_sprint_delta.md](docs/operational_usage/provider_list_usefulness_sprint_delta.md) with scope, changes, validation, and remaining limitations.
+
 ## Next Session Priority
-- Source Boundary Lock: Patch load_plan() in [src/query/plan_query.py](src/query/plan_query.py) to remove dependency on legacy output/*.json.
-- Do not delete output files yet.
-- Do not continue Sales Core work until source boundary is secure.
+- (Optional) Broker Phrasing Expansion: Add safe routing for contextual free-form queries that improve phrasing tolerance without recommendation logic.
+- (Optional) Provider Dataset Review: Verify city/type coverage and document gaps.
+- (Optional) Extended Network Support: Add mappings for hn_premier, hn_advantage if needed.
+- OR: Continue with Source Boundary Lock patch if higher priority.
+- Current status: Sprint complete, baseline maintained, all usefulness tests green.
 
 ## End State
 - Deterministic insurance assistant is now usable via browser UI.
