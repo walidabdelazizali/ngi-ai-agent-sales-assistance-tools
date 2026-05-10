@@ -346,8 +346,19 @@ def _intent_from_query(text: str) -> Optional[str]:
         "lab", "labs",
         "diagnostic center", "diagnostic centers"
     ]
+    type_words_arabic = [
+        "مستشفى", "مستشفيات",
+        "عيادة", "عيادات",
+        "صيدلية", "صيدليات",
+        "مركز طبي", "مراكز طبية",
+        "مختبر", "مختبرات",
+        "تحليل", "تحاليل",
+    ]
     # Standard pattern
-    if any(t in lowered for t in type_words) and any(c in lowered for c in city_words) and plan_name:
+    if (
+        any(t in lowered for t in type_words)
+        or any(t in lowered for t in type_words_arabic)
+    ) and any(c in lowered for c in city_words) and plan_name:
         return "plan_network_city_type"
     # Alias patterns for existing supported queries (no output/logic change)
     # e.g. "Dubai providers Remedy 6", "Providers in Dubai Remedy 6", "Remedy 6 Dubai providers", etc.
@@ -416,25 +427,35 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             "labs": "lab",
             "lab": "lab",
             "diagnostic centers": "diagnostic center",
-            "diagnostic center": "diagnostic center"
+            "diagnostic center": "diagnostic center",
+            "مستشفيات": "hospital",
+            "مستشفى": "hospital",
+            "عيادات": "clinic",
+            "عيادة": "clinic",
+            "صيدليات": "pharmacy",
+            "صيدلية": "pharmacy",
+            "مختبرات": "lab",
+            "مختبر": "lab",
+            "تحاليل": "lab",
+            "تحليل": "lab",
         }
         provider_type = None
-        lowered_query = user_query.lower()
+        lowered_query = _normalize_query_text(user_query)
         for t in type_map:
             if t in lowered_query:
                 provider_type = type_map[t]
                 break
         # Extract city (word after 'in' or 'available in' or 'في')
         city = None
-        m = re.search(r"in ([A-Za-z\u0621-\u064A ]+)", user_query, re.IGNORECASE)
+        m = re.search(r"in ([A-Za-z\u0621-\u064A ]+)", lowered_query, re.IGNORECASE)
         if m:
             city = m.group(1).strip().split()[0]
         else:
-            m = re.search(r"available in ([A-Za-z\u0621-\u064A ]+)", user_query, re.IGNORECASE)
+            m = re.search(r"available in ([A-Za-z\u0621-\u064A ]+)", lowered_query, re.IGNORECASE)
             if m:
                 city = m.group(1).strip().split()[0]
             else:
-                m = re.search(r"في ([A-Za-z\u0621-\u064A ]+)", user_query, re.IGNORECASE)
+                m = re.search(r"في ([A-Za-z\u0621-\u064A ]+)", lowered_query, re.IGNORECASE)
                 if m:
                     city = m.group(1).strip().split()[0]
         # Get plan network

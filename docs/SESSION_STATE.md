@@ -337,3 +337,132 @@ stage2-live
 - Remain in freeze mode.
 - Monitor operational usage patterns for provider edge cases (REVIEW cases represent safe ambiguity/alias handling, not regressions).
 - Any follow-on work must preserve determinism and pass full pytest (710 baseline).
+
+## Latest Work Session (Controlled Internal Pilot Sprint - Day 1)
+
+### Controlled Internal Pilot (Real Operational Logging)
+1. Created pilot evidence files:
+	- [docs/operational_usage/controlled_internal_pilot_log.md](docs/operational_usage/controlled_internal_pilot_log.md)
+	- [docs/operational_usage/controlled_internal_pilot_summary.md](docs/operational_usage/controlled_internal_pilot_summary.md)
+2. Ran supervised Day 1 pilot pack (30 real operational queries) with required daily mix:
+	- provider/network: 10
+	- Arabic/mixed: 5
+	- plan core: 5
+	- comparison/safe-block: 5
+	- free operational: 5
+3. Day 1 observed outcomes:
+	- GOOD: 11
+	- REVIEW: 15
+	- BLOCKED_OK: 4
+	- GAP: 0
+	- CRITICAL: 0
+4. Safety outcome:
+	- No unsafe provider guessing observed.
+	- Recommendation/pricing/advisory unsafe prompts were blocked in tested cases.
+	- Pilot remains safe to continue under controlled internal usage.
+5. Validation:
+	- Full regression after pilot logging: 710 passed, 2 skipped.
+
+## Next Session Priority
+- Continue pilot Day 2+ with same strict scope and logging template.
+- Focus on REVIEW reductions via documentation/routing guidance only (no feature expansion).
+- Keep CRITICAL at 0; stop immediately if any CRITICAL appears.
+
+---
+
+## Controlled Internal Pilot Sprint — Days 3 & 4 (2026-05-10)
+
+### Checkpoint
+- Branch: stage2-live
+- Stable commit: ca2d548
+- Tag: v-provider-hallucination-containment-1
+- Tests: 710 passed, 2 skipped (confirmed after each day)
+
+### Day 3 Results
+- Total queries: 30
+- GOOD: 13 | REVIEW: 11 | BLOCKED_OK: 6 | GAP: 0 | CRITICAL: 0
+- Top friction: Provider routing miss (Mediclinic Deira, Cleveland Clinic, Danat Al Emarat, Burjeel Medical City)
+- Arabic plan_core working well (3/3 GOOD)
+- Arabic city-qualified provider query (برجيل أبوظبي) not routed
+- Shorthand codes (c3) not recognized
+
+### Day 4 Results
+- Total queries: 30
+- GOOD: 15 | REVIEW: 12 | BLOCKED_OK: 3 | GAP: 0 | CRITICAL: 0
+- Top friction: Provider routing miss for variant names (LLH, Al Noor, Zulekha, NMC Specialty, Burjeel Day Surgery)
+- Notable: Arabic comparison (قارن classic 3 و classic 2) returned full factual comparison — strong positive signal
+- Notable: "Summary of Classic 2 for my client" correctly routed — broker phrasing improving
+- Shorthand c2r still not recognized
+
+### Cumulative Pilot (120 queries across Days 1-4)
+- GOOD: 53 (44.17%) | REVIEW: 50 (41.67%) | BLOCKED_OK: 17 (14.17%) | GAP: 0 | CRITICAL: 0
+- Zero hallucination, zero recommendation leakage, zero pricing exposure across all 120 queries
+
+### Final Verdict
+- CONTINUE CONTROLLED INTERNAL PILOT — NOT YET READY FOR BROKER USAGE
+- Safety is solid. Provider routing gap requires operator phrasing guide before expansion.
+- Required before broker usage: publish phrasing guide + additional provider-focused pilot day
+
+### Files Updated
+- docs/operational_usage/controlled_internal_pilot_log.md (Days 3-4 appended)
+- docs/operational_usage/controlled_internal_pilot_summary.md (Day 3 + Day 4 + Final Assessment)
+
+---
+
+## Latest Work Session (Provider/Network Usability Sprint)
+
+### Natural Query Hardening
+1. Hardened natural provider-list routing in [src/agent_wrapper.py](src/agent_wrapper.py):
+	- Added Arabic provider-type detection for `plan_network_city_type`.
+	- Added Arabic provider-type mapping for deterministic listing requests.
+	- Switched city extraction in that path to normalized query text.
+2. Verified that previously unsupported Arabic natural listing queries now route safely:
+	- `مستشفيات Remedy 5 في دبي؟` -> `plan_network_city_type`
+	- `عيادات Remedy 6 في الشارقة؟` -> `plan_network_city_type`
+3. Preserved ambiguity-safe provider lookup behavior:
+	- `Is Burjeel in the network?` still returns ambiguity instead of guessing.
+4. Validation:
+	- Focused suite: 44 passed in `tests/test_natural_provider_queries.py`
+	- Full regression: 754 passed, 2 skipped
+5. Evidence report added:
+	- [docs/operational_usage/provider_network_usability_sprint_delta.md](docs/operational_usage/provider_network_usability_sprint_delta.md)
+
+## Next Session Priority
+- Expand provider-list usefulness via dataset/city/type coverage, not fuzzy routing.
+- Keep deterministic ambiguity handling unchanged.
+- Preserve full pytest baseline (754 passed, 2 skipped).
+
+---
+
+## Latest Work Session (Plan-Network Mapping Authority Check)
+
+### Mapping Authority Closure
+1. Verified authoritative network sources by plan family:
+	- Remedy 02-06 via `src/v2_plan_loader.py` (`load_clean_plan`) -> HN Basic Plus.
+	- Classic 2/2R/3 via `src/tools/enhanced_plan_loader.py` (`load_enhanced_plan`) -> Standard Plus / Standard.
+2. Hardened deterministic mapping resolution in [src/query/plan_network_lookup.py](src/query/plan_network_lookup.py):
+	- `resolve_plan_network()` now resolves approved plans from authoritative loaders first.
+	- CSV remains as fallback for unknown/non-approved names.
+	- Added `source` metadata and CSV mismatch signaling (`csv_mismatch`) for auditability.
+3. Corrected stale mapping file [data/plans/plan_network_mapping.csv](data/plans/plan_network_mapping.csv):
+	- Remedy 03/04/05 corrected to `hn_basic_plus`.
+	- Added missing rows: Remedy 06, Classic 2, Classic 2R, Classic 3.
+	- Current CSV contains all 8 approved plans.
+4. Added authority-focused regression coverage in [tests/test_plan_network_lookup.py](tests/test_plan_network_lookup.py):
+	- Approved plan-name and plan-code expectations.
+	- Stale-CSV resistance checks.
+	- Missing-row fallback protection checks.
+	- Total suite now 22 tests for this area.
+5. Updated stale router expectations in [tests/test_router_plan_network_queries.py](tests/test_router_plan_network_queries.py):
+	- Remedy 03 now expects `hn_basic_plus` and in-network status for Accuracy Plus.
+6. Validation:
+	- `tests/test_plan_network_lookup.py`: 22 passed.
+	- `tests/test_router_plan_network_queries.py`: 11 passed.
+	- Full regression: **769 passed, 2 skipped**.
+7. Evidence report added:
+	- [docs/operational_usage/plan_network_mapping_authority_delta.md](docs/operational_usage/plan_network_mapping_authority_delta.md)
+
+## Next Session Priority
+- Keep plan->network mapping deterministic and source-anchored (authoritative first, CSV fallback only).
+- Continue provider-list usefulness work through dataset/city/type coverage, not fuzzy routing.
+- Preserve full pytest baseline (769 passed, 2 skipped).
