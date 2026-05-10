@@ -270,3 +270,70 @@ stage2-live
 ## Next Session Priority
 - Keep freeze mode in effect and process only narrow, evidence-backed changes.
 - Any change request must preserve deterministic boundaries and pass full pytest.
+
+## Latest Work Session (Full System Adversarial Validation Sprint)
+
+### Hostile 500-Query Validation Evidence
+1. Added adversarial validation runner and analytics tooling:
+	- [scripts/run_adversarial_validation_500.py](scripts/run_adversarial_validation_500.py)
+2. Added guard tests for pack integrity and comparison validation expectations:
+	- [tests/test_adversarial_validation_500.py](tests/test_adversarial_validation_500.py)
+3. Generated required adversarial artifacts:
+	- [docs/operational_usage/adversarial_validation_500_pack.md](docs/operational_usage/adversarial_validation_500_pack.md)
+	- [docs/operational_usage/adversarial_validation_500_results.md](docs/operational_usage/adversarial_validation_500_results.md)
+	- [docs/operational_usage/adversarial_validation_500_delta.md](docs/operational_usage/adversarial_validation_500_delta.md)
+	- [docs/operational_usage/adversarial_validation_critical_findings.md](docs/operational_usage/adversarial_validation_critical_findings.md)
+4. Executed full hostile validation run (500 queries, each replayed once for consistency):
+	- GOOD: 202
+	- REVIEW: 104
+	- BLOCKED_OK: 176
+	- GAP: 0
+	- CRITICAL: 18
+5. Safety audit outcome:
+	- Recommendation leakage detected: Yes (1 critical case)
+	- Provider hallucination-like behavior detected: Yes (10 critical cases)
+	- Plan-fact inconsistency signals detected: Yes (5 critical cases)
+	- Pricing/underwriting hallucination detected: No
+	- Unsupported enhanced benefit exposure detected: No
+6. Determinism check:
+	- Replay mismatches: 0
+	- Stable outputs: 500/500
+7. Full regression validation after tooling/docs updates:
+	- [python -m pytest -q] result: 708 passed
+
+## Latest Work Session (Provider Hallucination Containment Sprint)
+
+### Provider Hallucination CRITICAL Reduction: 10 → 0
+1. Implemented strict provider resolution logic in [src/query/network_lookup.py](src/query/network_lookup.py):
+	- Exact case-insensitive alias matching only (removed fuzzy prefix/n-gram fallback).
+	- Explicit ambiguity escalation for city/type/tier queries on ambiguous provider families.
+	- Deterministic-only resolution paths; unknown providers return safe "Provider not found." messages.
+2. Hardened ambiguity-safe messaging:
+	- Burjeel/Royal/Aster family names now explicitly escalate ambiguity with candidate list instead of guessing.
+	- Arabic queries (e.g., `هل مستشفى برجيل داخل الشبكة؟`) now handled consistently with English.
+	- Mixed queries (e.g., `Burjeel Hospital في أي شبكة`) now escalate ambiguity same as English.
+3. Updated test expectations in [tests/test_network_search_hardening.py](tests/test_network_search_hardening.py):
+	- 5 tests updated to expect ambiguity-safe behavior for Burjeel/family-name queries.
+	- All 5 now pass.
+4. Added new containment regression suite: [tests/test_provider_hallucination_containment.py](tests/test_provider_hallucination_containment.py).
+	- 10 tests covering all prior CRITICAL provider hallucination cases.
+	- All 10 pass post-containment.
+5. Deprecated fuzzy-match-dependent tests in [tests/test_network_lookup.py](tests/test_network_lookup.py):
+	- `test_unique_contains_fallback` (skipped: requires n-gram fuzzy matching).
+	- `test_burjeel_hospital_abu_dhabi_found` (skipped: requires fuzzy suffix match).
+6. Evidence and validation:
+	- Replayed 81-query provider-focused adversarial subset.
+	- Before: 10 CRITICAL provider_hallucination cases.
+	- After: **0 CRITICAL** (14 GOOD, 50 REVIEW, 17 BLOCKED_OK).
+	- Replay consistency: 100% (81/81 identical on rerun).
+	- Generated report: [docs/operational_usage/provider_hallucination_containment_delta.md](docs/operational_usage/provider_hallucination_containment_delta.md)
+7. Full system validation:
+	- pytest: **710 passed, 2 skipped**.
+	- All containment acceptance criteria satisfied.
+	- No feature expansion, no architecture drift.
+	- Deterministic assistant remains frozen.
+
+## Next Session Priority
+- Remain in freeze mode.
+- Monitor operational usage patterns for provider edge cases (REVIEW cases represent safe ambiguity/alias handling, not regressions).
+- Any follow-on work must preserve determinism and pass full pytest (710 baseline).
