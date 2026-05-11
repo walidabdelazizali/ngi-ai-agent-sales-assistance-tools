@@ -127,6 +127,33 @@ stage2-live
 
 ## Latest Work Session
 
+### DAY 1 — Supervised Internal Operator Usage Mode (COMPLETED)
+1. Ran supervised internal operator usage evaluation pack focused on:
+	- Real operator phrasing
+	- Arabic/English/mixed-language usability
+	- Provider listing and membership behavior
+	- Safe clarification behavior
+	- Boundary enforcement and deterministic consistency
+2. Generated structured evidence artifact:
+	- [runtime_data/day1_supervised_operator_usage_results.json](runtime_data/day1_supervised_operator_usage_results.json)
+3. Pack profile and outcomes:
+	- Total queries: 69
+	- GOOD: 42 (60.9%)
+	- REVIEW: 6 (8.7%)
+	- BLOCKED_OK: 21 (30.4%)
+	- GAP: 0 (0.0%)
+	- CRITICAL: 0 (0.0%)
+4. Success criteria check:
+	- GOOD >= 60%: PASS
+	- GAP <= 10%: PASS
+	- CRITICAL = 0: PASS
+5. Key observations:
+	- Arabic/mixed listing and core phrasing remained strong and deterministic
+	- Recommendation/comparison boundaries remained safely blocked
+	- Remaining friction is REVIEW-grade (provider ambiguity/not-found and a small routing mismatch), not safety-critical
+6. Added Day 1 operational evidence report:
+	- [docs/operational_usage/day1_supervised_operator_usage_mode.md](docs/operational_usage/day1_supervised_operator_usage_mode.md)
+
 ### Arabic & Mixed-Language Operator Hardening (COMPLETED)
 1. Reviewed operator friction evidence from:
 	- [runtime_data/classic1r_operator_pack_results.json](runtime_data/classic1r_operator_pack_results.json)
