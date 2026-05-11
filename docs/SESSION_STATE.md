@@ -127,6 +127,37 @@ stage2-live
 
 ## Latest Work Session
 
+### Arabic & Mixed-Language Operator Hardening (COMPLETED)
+1. Reviewed operator friction evidence from:
+	- [runtime_data/classic1r_operator_pack_results.json](runtime_data/classic1r_operator_pack_results.json)
+	- [docs/operational_usage/classic1r_operator_usage_pack.md](docs/operational_usage/classic1r_operator_usage_pack.md)
+2. Added tests-first coverage in [tests/test_arabic_operator_hardening.py](tests/test_arabic_operator_hardening.py) for:
+	- Arabic pharmacy queries
+	- Arabic maternity queries
+	- Arabic network queries
+	- Mixed-language shorthand provider listing
+	- Arabic listing without city -> safe clarification
+	- Unsupported Arabic recommendation-style comparison
+3. Implemented minimal deterministic normalization/routing hardening in [src/agent_wrapper.py](src/agent_wrapper.py):
+	- Narrow Arabic field hints/aliases for existing Classic 1R fields only (`حد الصيدلية`, `الولادة`, `الحمل`, `تغطية الحمل`, `الحد السنوي`, `شبكة`)
+	- Mixed-language shorthand provider listing routing for plan+provider-type with strict provider-list cues
+	- Alias-boundary matching for city/type extraction to avoid broad/fuzzy over-matching
+4. Preserved safety boundaries:
+	- No recommendation expansion
+	- No new plans
+	- No provider/network fuzzy guessing
+	- No pricing leakage path introduced
+5. Validation:
+	- `python -m pytest -q tests/test_arabic_operator_hardening.py` -> 6 passed
+	- task `pytest Arabic and owner query tests` -> 76 passed
+	- `python -m pytest -q` -> 850 passed, 4 skipped
+6. Ran focused Arabic/mixed 20-query operator pack and saved evidence:
+	- [runtime_data/arabic_operator_hardening_pack_results.json](runtime_data/arabic_operator_hardening_pack_results.json)
+	- Summary: GOOD 18 (90.0%), REVIEW 1 (5.0%), BLOCKED_OK 1 (5.0%), GAP 0 (0.0%), CRITICAL 0
+7. Added sprint delta report:
+	- [docs/operational_usage/arabic_operator_hardening_delta.md](docs/operational_usage/arabic_operator_hardening_delta.md)
+
+
 ### Review-driven Hardening Sprint
 1. Extracted REVIEW and GAP rows from professional simulation results.
 2. Created [docs/operational_usage/professional_simulation_review_actions.md](docs/operational_usage/professional_simulation_review_actions.md) with action classification.

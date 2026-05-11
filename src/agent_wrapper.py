@@ -271,6 +271,9 @@ PLAN_FIELD_HINTS = [
     "maternity", "maternity limit", "pregnancy",
     "dental", "dental cover",
     "mental health", "mental health cover",
+    "الحد السنوي", "شبكة",
+    "صيدلية", "الصيدلية", "حد الصيدلية",
+    "الولادة", "الحمل", "تغطية الحمل",
 ]
 
 PLAN_FIELD_ALIAS_TO_FIELD = [
@@ -278,14 +281,22 @@ PLAN_FIELD_ALIAS_TO_FIELD = [
     ("mental health", "mental_health_cover_summary"),
     ("pharmacy benefit", "pharmacy_cover_summary"),
     ("pharmacy cover", "pharmacy_cover_summary"),
+    ("حد الصيدلية", "pharmacy_cover_summary"),
+    ("الصيدلية", "pharmacy_cover_summary"),
+    ("صيدلية", "pharmacy_cover_summary"),
     ("maternity limit", "maternity_cover"),
+    ("تغطية الحمل", "maternity_cover"),
+    ("الولادة", "maternity_cover"),
+    ("الحمل", "maternity_cover"),
     ("dental cover", "dental_cover_summary"),
     ("network name", "network_name"),
+    ("الحد السنوي", "annual_limit"),
     ("annual limit", "annual_limit"),
     ("area of coverage", "area_of_coverage"),
     ("pharmacy", "pharmacy_cover_summary"),
     ("maternity", "maternity_cover"),
     ("dental", "dental_cover_summary"),
+    ("شبكة", "network_name"),
     ("network", "network_name"),
     ("area", "area_of_coverage"),
     ("limit", "annual_limit"),
@@ -433,12 +444,12 @@ def _extract_city_and_provider_type(text: str) -> tuple[Optional[str], Optional[
     detected_type = None
 
     for alias, canonical in sorted(CITY_ALIASES.items(), key=lambda item: len(item[0]), reverse=True):
-        if alias in lowered:
+        if _contains_alias(lowered, alias):
             detected_city = canonical
             break
 
     for alias, canonical in sorted(PROVIDER_TYPE_ALIASES.items(), key=lambda item: len(item[0]), reverse=True):
-        if alias in lowered:
+        if _contains_alias(lowered, alias):
             detected_type = canonical
             break
 
@@ -511,6 +522,7 @@ def _extract_provider_from_membership_query(query: str) -> Optional[str]:
 def _intent_from_query(text: str) -> Optional[str]:
     lowered = _normalize_query_text(text)
     plan_name = _extract_plan_name(lowered)
+    detected_city, detected_type = _extract_city_and_provider_type(lowered)
     if _is_recommendation_style_comparison_query(lowered):
         return "recommendation_style_comparison"
     # Keep legacy Remedy 02 maternity behavior on plan_core.
@@ -548,6 +560,15 @@ def _intent_from_query(text: str) -> Optional[str]:
     # Deterministic plan field query (benefit/core), routed before plan_core summary formatting.
     if plan_name == "Classic 1R" and _is_plan_field_query(lowered):
         return "plan_field"
+    # Deterministic provider listing shorthand routing for plan + provider type phrasing.
+    # City can be omitted when listing intent cues are explicit to trigger safe clarification.
+    provider_listing_cues = (
+        "hospitals", "clinics", "labs", "pharmacies", "medical centers", "providers",
+        "مستشفيات", "عيادات", "مختبرات", "تحاليل", "صيدليات", "مراكز طبية", "مزود", "مزودين", "مزوّد",
+    )
+    has_provider_listing_cue = any(cue in lowered for cue in provider_listing_cues)
+    if plan_name and detected_type and (detected_city or has_provider_listing_cue):
+        return "plan_network_city_type"
     # Plan core
     for field in PLAN_CORE_FIELDS:
         if field in lowered:

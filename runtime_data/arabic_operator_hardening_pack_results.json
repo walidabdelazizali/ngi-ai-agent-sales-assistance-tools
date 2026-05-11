@@ -1,0 +1,217 @@
+{
+  "summary": {
+    "total": 20,
+    "GOOD": 18,
+    "REVIEW": 1,
+    "BLOCKED_OK": 1,
+    "GAP": 0,
+    "CRITICAL": 0,
+    "good_percent": 90.0,
+    "gap_percent": 0.0,
+    "target_good_ge_60": true,
+    "target_gap_le_10": true,
+    "target_critical_eq_0": true
+  },
+  "results": [
+    {
+      "query": "حد الصيدلية Classic 1R",
+      "expected_intent": "plan_field",
+      "note": "Arabic pharmacy shorthand",
+      "actual_intent": "plan_field",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 1R",
+      "message_preview": "Pharmacy Cover: Covered: True | Annual limit: AED 10,000 | Copay: 10% | Type: Branded"
+    },
+    {
+      "query": "الولادة Classic 1R",
+      "expected_intent": "plan_field",
+      "note": "Arabic maternity shorthand",
+      "actual_intent": "plan_field",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 1R",
+      "message_preview": "Maternity Cover: Inpatient copay: 10%; Normal delivery: AED 15,000; C-section: AED 15,000; Outpatient copay: 10%; Max visits: 12; Newborn: 30 days up to AED 150,000 PPPY"
+    },
+    {
+      "query": "شبكة Classic 1R",
+      "expected_intent": "plan_field",
+      "note": "Arabic network shorthand",
+      "actual_intent": "plan_field",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 1R",
+      "message_preview": "Network: Advantage"
+    },
+    {
+      "query": "classic 1r limit",
+      "expected_intent": "plan_field",
+      "note": "English shorthand",
+      "actual_intent": "plan_field",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 1R",
+      "message_preview": "Annual Limit: AED 300,000"
+    },
+    {
+      "query": "maternity classic 1r",
+      "expected_intent": "plan_field",
+      "note": "Mixed shorthand",
+      "actual_intent": "plan_field",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 1R",
+      "message_preview": "Maternity Cover: Inpatient copay: 10%; Normal delivery: AED 15,000; C-section: AED 15,000; Outpatient copay: 10%; Max visits: 12; Newborn: 30 days up to AED 150,000 PPPY"
+    },
+    {
+      "query": "dental classic 1r",
+      "expected_intent": "plan_field",
+      "note": "Mixed shorthand",
+      "actual_intent": "plan_field",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 1R",
+      "message_preview": "Dental Cover: Covered: True | Annual limit: AED 2,500 | Copay: 20%"
+    },
+    {
+      "query": "ملخص classic 1r",
+      "expected_intent": "plan_summary",
+      "note": "Arabic/English summary",
+      "actual_intent": "plan_summary",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 1R",
+      "message_preview": "Plan: Classic 1R\nCode: HN_CLASSIC_1R\nNetwork: Advantage\nAnnual limit: AED 300,000\nArea: Worldwide Excluding USA and Canada\nDirect billing: Yes\nReferral required: No"
+    },
+    {
+      "query": "ما هو الحد السنوي classic 1r",
+      "expected_intent": "plan_field",
+      "note": "Arabic annual limit",
+      "actual_intent": "plan_field",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 1R",
+      "message_preview": "Annual Limit: AED 300,000"
+    },
+    {
+      "query": "remedy 5 hospitals dubai",
+      "expected_intent": "plan_network_city_type",
+      "note": "Mixed listing shorthand",
+      "actual_intent": "plan_network_city_type",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Remedy 05",
+      "message_preview": "[PROVIDER LIST]\nPlan: Remedy 05\nResolved Network: hn_basic_plus (HN Basic Plus)\nCity: Dubai\nProvider Type: hospital\nCount: 14\nProviders:\n- ARMADA ONE DAY SURGICAL CENTER DMCC\n- ASTER DAY SURGERY CENTRE LLC\n- ASTER HOSPIT"
+    },
+    {
+      "query": "hospitals remedy 6 dubai",
+      "expected_intent": "plan_network_city_type",
+      "note": "Order-variant listing shorthand",
+      "actual_intent": "plan_network_city_type",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Remedy 06",
+      "message_preview": "[PROVIDER LIST]\nPlan: Remedy 06\nResolved Network: hn_basic_plus (HN Basic Plus)\nCity: Dubai\nProvider Type: hospital\nCount: 14\nProviders:\n- ARMADA ONE DAY SURGICAL CENTER DMCC\n- ASTER DAY SURGERY CENTRE LLC\n- ASTER HOSPIT"
+    },
+    {
+      "query": "مستشفيات remedy 6",
+      "expected_intent": "plan_network_city_type",
+      "note": "Arabic listing missing city",
+      "actual_intent": "plan_network_city_type",
+      "ok": false,
+      "category": "REVIEW",
+      "plan": "Remedy 06",
+      "message_preview": "City is unknown, unclear, or unsupported. Please specify one of: Dubai, Abu Dhabi, Sharjah, Ajman."
+    },
+    {
+      "query": "عيادات remedy 5 في ابوظبي",
+      "expected_intent": "plan_network_city_type",
+      "note": "Arabic city alias",
+      "actual_intent": "plan_network_city_type",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Remedy 05",
+      "message_preview": "[PROVIDER LIST]\nPlan: Remedy 05\nResolved Network: hn_basic_plus (HN Basic Plus)\nCity: Abu Dhabi\nProvider Type: clinic\nCount: 174\nProviders:\n- A B C PLUS MEDICAL CENTER\n- A L D MEDICAL CLINIC - SOLE PROPRIETORSHIP L.L.C\n-"
+    },
+    {
+      "query": "صيدليات remedy 6 في دبي",
+      "expected_intent": "plan_network_city_type",
+      "note": "Arabic pharmacies listing",
+      "actual_intent": "plan_network_city_type",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Remedy 06",
+      "message_preview": "[PROVIDER LIST]\nPlan: Remedy 06\nResolved Network: hn_basic_plus (HN Basic Plus)\nCity: Dubai\nProvider Type: pharmacy\nCount: 811\nProviders:\n- 24HOUR PHARMACY CO. L.L.C\n- 800 PHARMA FZ-LLC\n- 800 PHARMA PHARMACY LLC\n- 800 PH"
+    },
+    {
+      "query": "labs remedy 2 dubai",
+      "expected_intent": "plan_network_city_type",
+      "note": "English labs listing",
+      "actual_intent": "plan_network_city_type",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Remedy 02",
+      "message_preview": "[PROVIDER LIST]\nPlan: Remedy 02\nResolved Network: hn_basic_plus (HN Basic Plus)\nCity: Dubai\nProvider Type: lab\nCount: 23\nProviders:\n- AIRIS IMAGING AND DIAGNOSTIC CENTER LLC\n- AL BORJ LABORATORY\n- AL DIYAFA MEDICAL DIAGN"
+    },
+    {
+      "query": "شبكة classic 2",
+      "expected_intent": "plan_core",
+      "note": "Arabic network for Classic 2",
+      "actual_intent": "plan_core",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 2",
+      "message_preview": "Plan: Classic 2\nCode: HN_CLASSIC_2\nالشبكة: Standard Plus\nAnnual limit: AED 250,000\nArea: Worldwide Excluding USA and Canada\nDirect billing: Yes\nReferral required: No"
+    },
+    {
+      "query": "classic 3 referral",
+      "expected_intent": "plan_core",
+      "note": "Classic 3 shorthand core",
+      "actual_intent": "plan_core",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 3",
+      "message_preview": "Plan: Classic 3\nCode: HN_CLASSIC_3\nالشبكة: Standard\nAnnual limit: AED 250,000\nArea: UAE+Home country\nDirect billing: Yes\nReferral required: No"
+    },
+    {
+      "query": "network remedy 03",
+      "expected_intent": "plan_core",
+      "note": "Remedy core network shorthand",
+      "actual_intent": "plan_core",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Remedy 03",
+      "message_preview": "Plan: NGI Healthnet –Remedy 03\nCode: HN-REMEDY-3\nالشبكة: HN Basic Plus\nAnnual limit: AED. 150,000\nArea: UAE & Indian Sub-continent & South East Asia (Excluding Hong Kong & Singapore) for Elective & Emergency Treatments. "
+    },
+    {
+      "query": "ايه افضل classic 1r ولا classic 3",
+      "expected_intent": "unsupported",
+      "note": "Arabic recommendation-style unsupported",
+      "actual_intent": "unsupported",
+      "ok": false,
+      "category": "BLOCKED_OK",
+      "plan": "Classic 1R",
+      "message_preview": "عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم."
+    },
+    {
+      "query": "قارن classic 2 و classic 3",
+      "expected_intent": "plan_comparison",
+      "note": "Arabic comparison alias",
+      "actual_intent": "plan_comparison",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Classic 2 vs Classic 3",
+      "message_preview": "مقارنة بين Classic 2 و Classic 3:\nالحد السنوي: Classic 2: AED 250,000 | Classic 3: AED 250,000\nالدفع المباشر: Classic 2: Yes | Classic 3: Yes\nالإحالة: Classic 2: No | Classic 3: No\nنطاق التغطية: Classic 2: Worldwide Excl"
+    },
+    {
+      "query": "مقارنة remedy 5 و remedy 6",
+      "expected_intent": "plan_comparison",
+      "note": "Arabic comparison alias",
+      "actual_intent": "plan_comparison",
+      "ok": true,
+      "category": "GOOD",
+      "plan": "Remedy 05 vs Remedy 06",
+      "message_preview": "مقارنة بين Remedy 05 و Remedy 06:\nالحد السنوي: Remedy 05: AED. 150,000 | Remedy 06: AED. 150,000\nالصيدلة: Remedy 05: Maximum AED 7,500/year (including co-pay). 20% payable by member on each prescription. Any medication i"
+    }
+  ]
+}
