@@ -1,27 +1,42 @@
 {
   "plan_code": "HN_PRIME_2",
-  "plan_name": "Prime 2",
-  "source_plan_title": "Prime Plan-2",
-  "network_type": "HealthNet",
-  "network_level": "Standard Plus",
-  "provider_network": "HN Standard Plus",
-  "annual_limit": "REVIEW: source document not available in repository",
-  "area_of_coverage": "REVIEW: source document not available in repository",
-  "direct_billing": false,
-  "referral_required": true,
-  "key_inpatient_benefits": "REVIEW: source document not available in repository",
-  "key_outpatient_benefits": "REVIEW: source document not available in repository",
-  "pharmacy": "BLOCKED: source document not available in repository",
-  "maternity": "BLOCKED: source document not available in repository",
-  "dental_optical": "BLOCKED: source document not available in repository",
-  "copays": "REVIEW: source document not available in repository",
-  "source_validation": {
-    "validated_from_document_content": false,
-    "notes": "Batch 1 structured catalog entry created from canonical mapping only; missing source fields marked REVIEW/BLOCKED."
-  },
-  "approval_metadata": {
-    "approval_status": "pending_validation",
-    "tests_passed": false,
-    "customer_facing_enabled": false
+  "plan_name": "Prime Plan-2",
+  "network_name": "HN Premier",
+  "annual_limit": "AED 500,000",
+  "area_of_coverage": "Worldwide",
+  "direct_billing": true,
+  "referral_required": false,
+  "tpa": "NGI Healthnet",
+
+  "room_and_board": "Private",
+  "consultation_copay": "20% up to AED 100",
+  "laboratory": "100% Covered",
+  "radiology": "100% Covered",
+  "physiotherapy_sessions": "20 sessions per member per annum",
+
+  "pharmacy_limit": "AED 15,000",
+  "pharmacy_coinsurance": "Nil",
+
+  "dental_limit": "AED 3,500",
+  "dental_coinsurance": "20%",
+
+  "maternity_normal_delivery_limit": "AED 18,000",
+  "maternity_c_section_limit": "AED 18,000",
+  "maternity_complication_limit": "AED 150,000",
+
+  "mental_health_limit": "AED 800",
+  "mental_health_coinsurance": "30%",
+
+  "organ_transplant_limit": "AED 150,000",
+
+  "approval_status": "approved",
+
+  "source_trace": {
+    "annual_limit": "Prime Plan-2 quotation",
+    "network_name": "Prime Plan-2 quotation",
+    "area_of_coverage": "Prime Plan-2 quotation",
+    "pharmacy_limit": "Prime Plan-2 quotation",
+    "dental_limit": "Prime Plan-2 quotation",
+    "maternity_limits": "Prime Plan-2 quotation"
   }
 }

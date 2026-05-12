@@ -863,3 +863,60 @@ if agent_result.get("ok"):
 - **Safety Impact**: display_answer now properly gated; no unintended leakage
 - **Operational Impact**: Zero friction; no patches needed beyond the single fix applied
 - **Recommendation**: Proceed with supervised internal usage; collect feedback over 1-2 weeks
+
+---
+
+## END OF DAY — OPERATIONAL STATE CHECKPOINT
+
+**Date**: Day 2 Session 2 (Complete)  
+**Status**: ✓ **STABLE AND READY FOR SUPERVISED INTERNAL USAGE**
+
+### Deliverables Completed
+1. ✅ Controlled writing layer (`src/output_packaging.py`) — 37 tests green
+2. ✅ API integration (`output_mode` parameter in `POST /ask`) — 50 API tests green
+3. ✅ Operator validation pack (10 questions, 33 modes) — 33/33 PASS
+4. ✅ Supervised usage pack (25 questions) — 21 GOOD, 4 REVIEW, 0 GAP
+5. ✅ Patch applied (`src/api/app.py` display_answer leak fixed)
+6. ✅ Full regression maintained — 899 passed, 2 skipped
+
+### Operational Validation Summary
+- **Plan info queries**: 100% pass (annual limits, networks, coverage)
+- **Intent routing**: 100% accuracy
+- **Safety boundaries**: All enforced (no pricing, no recommendations, no leakage)
+- **Provider lookups**: Working correctly; ambiguity and not-found cases handled deterministically
+- **Arabic support**: Working for core queries and network lookups
+- **Error handling**: All deterministic, safe, no crashes
+
+### REVIEW Cases Analysis (4 Total — All Expected)
+All REVIEW cases are deterministic boundary conditions:
+1. Provider ambiguity (ASTER — multiple hospitals with similar names) — **Expected, handled correctly**
+2. Provider not found (BURJEEL, NMC ROYAL not in dataset) — **Expected, deterministic response**
+
+**Conclusion**: No operational friction. No repeated errors. System working as designed.
+
+### Architecture Preserved
+- ✅ Deterministic core = source of truth
+- ✅ Writing layer = presentation-only, explicit and opt-in
+- ✅ No RAG, no vector DB, no autonomous reasoning
+- ✅ No hallucination, no pricing leakage, no unsafe recommendations
+
+### Stable Release Tags
+- v-controlled-writing-layer-v1
+- v-writing-layer-operator-validated
+- v-supervised-usage-pack-stable
+
+### Current Baseline
+- **Tests**: 899 passed, 2 skipped
+- **Working tree**: Clean
+- **API stability**: Full feature validation complete
+
+### Next Phase Guidance
+**Real Supervised Internal Operator Usage** (1–2 weeks)
+- Capture: GOOD / REVIEW / GAP only
+- Patch only if: repeated deterministic operational friction appears
+- Focus: Operational reliability and trust accumulation
+- Do NOT: Add features, introduce RAG, widen architecture, chase artificial GOOD %
+
+---
+
+**Session End**: Day 2 Session 2 complete. System ready for supervised internal deployment.
