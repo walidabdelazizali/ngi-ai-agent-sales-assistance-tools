@@ -257,11 +257,43 @@ _BENEFIT_KEY_MAP: dict[str, str] = {
     # canonical key → data field
     "annual_limit": "annual_limit",
     "network": "network_name",
+    "network_name": "network_name",
     "copay": "copay",          # may be absent; safe fallback applies
     "pharmacy": "pharmacy_cover",
+    "pharmacy_cover_summary": "pharmacy_cover",
     "maternity": "maternity_cover",
+    "maternity_cover": "maternity_cover",
     "dental": "dental_cover",
+    "dental_cover_summary": "dental_cover",
 }
+
+
+def _normalize_benefit_key(benefit_key: Optional[str]) -> str:
+    """Map a field name, label, or alias to a supported benefit key."""
+    raw = (benefit_key or "").strip().lower().replace("-", " ")
+    if not raw:
+        return ""
+    if raw in _BENEFIT_TEMPLATES:
+        return raw
+
+    alias_map = {
+        "annual limit": "annual_limit",
+        "annual_limit": "annual_limit",
+        "network name": "network",
+        "network": "network",
+        "copay": "copay",
+        "copayment": "copay",
+        "pharmacy cover": "pharmacy",
+        "pharmacy cover summary": "pharmacy",
+        "pharmacy_cover_summary": "pharmacy",
+        "maternity cover": "maternity",
+        "maternity cover summary": "maternity",
+        "maternity_cover": "maternity",
+        "dental cover": "dental",
+        "dental cover summary": "dental",
+        "dental_cover_summary": "dental",
+    }
+    return alias_map.get(raw, raw)
 
 
 def benefit_explanation(agent_response: dict, benefit_key: str) -> str:
@@ -277,7 +309,7 @@ def benefit_explanation(agent_response: dict, benefit_key: str) -> str:
     except ValueError:
         return _SAFE_REFUSAL
 
-    bkey = (benefit_key or "").strip().lower()
+    bkey = _normalize_benefit_key(benefit_key)
     if bkey not in _BENEFIT_TEMPLATES:
         return (
             f"The benefit '{benefit_key}' is not supported for explanation. "
@@ -345,13 +377,18 @@ def format_output(
             f"Supported modes: {', '.join(sorted(SUPPORTED_MODES))}."
         )
 
+    inferred_benefit_key = benefit_key
+    if m == "benefit_explanation" and not inferred_benefit_key:
+        data = _extract_data(agent_response)
+        inferred_benefit_key = data.get("field") or data.get("label")
+
     try:
         if m == "whatsapp_summary":
             return whatsapp_summary(agent_response)
         if m == "email_summary":
             return email_summary(agent_response, recipient_name=recipient_name)
         if m == "benefit_explanation":
-            return benefit_explanation(agent_response, benefit_key or "")
+            return benefit_explanation(agent_response, inferred_benefit_key or "")
     except Exception:
         return _SAFE_REFUSAL
 

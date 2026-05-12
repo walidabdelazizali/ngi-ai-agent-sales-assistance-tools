@@ -2,15 +2,19 @@
 Minimal FastAPI app exposing the insurance assistant for local integration (e.g., n8n).
 """
 
+from typing import Optional
+
 from fastapi import FastAPI, status
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 from src.agent_adapter import handle_user_query
+from src.output_packaging import format_output
 
 app = FastAPI(title="Insurance Assistant API", version="1.0.0")
 
 class AskRequest(BaseModel):
     question: str
+    output_mode: Optional[str] = None
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -261,11 +265,25 @@ def ask(request: AskRequest):
     try:
         agent_result = handle_user_query(q, output_mode="dict")
         display_answer = None
+        requested_mode = (request.output_mode or "").strip().lower()
+        supported_modes = {"whatsapp_summary", "email_summary", "benefit_explanation"}
+
+        if requested_mode and requested_mode not in supported_modes:
+            return {
+                "status": "error",
+                "question": q,
+                "display_answer": None,
+                "answer": agent_result,
+                "error": f"Invalid output_mode: {request.output_mode}. Supported: 'whatsapp_summary', 'email_summary', 'benefit_explanation'.",
+            }
+
         # Always return status_code=200 and valid structure, even for blocked plans
         if agent_result.get("ok"):
             intent = agent_result.get("intent")
             data = agent_result.get("data")
-            if intent == "plan_summary" and data and isinstance(data, dict) and data.get("summary_text"):
+            if requested_mode in supported_modes and intent in {"plan_core", "plan_summary", "plan_field", "plan_comparison"}:
+                display_answer = format_output(agent_result, requested_mode)
+            elif intent == "plan_summary" and data and isinstance(data, dict) and data.get("summary_text"):
                 display_answer = data["summary_text"]
             elif agent_result.get("message"):
                 display_answer = agent_result["message"]
