@@ -920,3 +920,31 @@ All REVIEW cases are deterministic boundary conditions:
 ---
 
 **Session End**: Day 2 Session 2 complete. System ready for supervised internal deployment.
+
+---
+
+## CLASSIC 1 INTEGRATION CHECKPOINT
+
+**Date**: Day 2 Session 3 (Complete)  
+**Status**: ✓ **CLASSIC 1 DETERMINISTIC SUPPORT ADDED**
+
+### Deliverables Completed
+1. ✅ Added Classic 1 canonical mapping through the existing enhanced loader path.
+2. ✅ Added Classic Plan-1 alias support to resolve deterministically to Classic 1.
+3. ✅ Projected locked structured Classic 1 fields into canonical outputs without using runtime/output/legacy sources.
+4. ✅ Added focused Classic 1 regression coverage for summary, network, annual limit, area, pharmacy, maternity, leakage, and comparison boundaries.
+5. ✅ Full regression validated — 950 passed, 2 skipped.
+
+### Operational Notes
+- Network resolves to Advantage.
+- Annual limit resolves to AED 300,000.
+- Area resolves to Worldwide Excluding USA and Canada.
+- Pharmacy and maternity summaries preserve Nil copay details.
+- Special OP note from the locked source object is preserved in canonical plan data.
+
+### Session Outcome
+- Deterministic output only.
+- No architecture drift.
+- No runtime/generated data sources introduced.
+- Output boundary remains enforced.
+

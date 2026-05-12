@@ -23,8 +23,8 @@ def test_summarize_classic_plan_1_alias():
     out = run_agent_wrapper("Summarize Classic Plan-1")
     assert out["ok"] is True
     assert out["intent"] == "plan_summary"
-    assert out["plan_name"] == "Prime 1"
-    assert out["data"]["plan_code"] == "HN_PRIME_1"
+    assert out["plan_name"] == "Classic 1"
+    assert out["data"]["plan_code"] == "HN_CLASSIC_1"
 
 
 def test_network_lookup_prime_1_advantage_plus():

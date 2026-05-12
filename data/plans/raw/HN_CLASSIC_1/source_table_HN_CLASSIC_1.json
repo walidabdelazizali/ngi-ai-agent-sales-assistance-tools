@@ -5,23 +5,108 @@
   "network_type": "HealthNet",
   "network_level": "Advantage",
   "provider_network": "HN Advantage",
-  "annual_limit": "REVIEW: source document not available in repository",
-  "area_of_coverage": "REVIEW: source document not available in repository",
-  "direct_billing": false,
-  "referral_required": true,
-  "key_inpatient_benefits": "REVIEW: source document not available in repository",
-  "key_outpatient_benefits": "REVIEW: source document not available in repository",
-  "pharmacy": "BLOCKED: source document not available in repository",
-  "maternity": "BLOCKED: source document not available in repository",
-  "dental_optical": "BLOCKED: source document not available in repository",
-  "copays": "REVIEW: source document not available in repository",
-  "source_validation": {
-    "validated_from_document_content": false,
-    "notes": "Batch 1 structured catalog entry created from canonical mapping only; missing source fields marked REVIEW/BLOCKED."
+  "annual_limit": "AED 300,000",
+  "area_of_coverage": "Worldwide Excluding USA and Canada",
+  "tpa": "NGI Healthnet",
+  "direct_billing": true,
+  "referral_required": false,
+  "pre_existing_conditions": {
+    "covered": true,
+    "limit": "AED 150,000 per member per year",
+    "waiting_period": "6 months if no continuity evidence"
   },
+  "inpatient": {
+    "room_and_board": "Private",
+    "surgeries": "Covered",
+    "cash_indemnity": {
+      "covered": true,
+      "limit": "AED 300 per night",
+      "max_nights": 10
+    },
+    "parent_accommodation": "AED 350 per night",
+    "companion_accommodation": "AED 350 per night",
+    "ambulance": "100% Covered"
+  },
+  "outpatient": {
+    "consultation": {
+      "copay": "20%",
+      "limit": "AED 50"
+    },
+    "laboratory": "100% Covered",
+    "radiology": "100% Covered",
+    "physiotherapy_sessions": 20
+  },
+  "pharmacy": {
+    "covered": true,
+    "annual_limit": "AED 10,000",
+    "copay": "Nil",
+    "type": "Branded"
+  },
+  "maternity": {
+    "inpatient": {
+      "copay": "Nil",
+      "normal_delivery_limit": "AED 15,000",
+      "c_section_limit": "AED 15,000",
+      "life_threatening_complication_limit": "AED 150,000"
+    },
+    "outpatient": {
+      "copay": "Nil",
+      "max_visits": 12,
+      "ultrasound_scans": 8
+    },
+    "newborn_cover": {
+      "covered": true,
+      "duration": "30 days",
+      "limit": "AED 150,000 PPPY"
+    }
+  },
+  "dental": {
+    "covered": true,
+    "annual_limit": "AED 2,500",
+    "copay": "20%"
+  },
+  "alternative_medicine": {
+    "covered": true,
+    "annual_limit": "AED 2,000",
+    "copay": "20%"
+  },
+  "mental_health": {
+    "covered": true,
+    "annual_limit": "AED 3,000",
+    "copay": "20%"
+  },
+  "mental_health_outpatient_counselling": {
+    "covered": true,
+    "annual_limit": "AED 800",
+    "copay": "30%"
+  },
+  "organ_transplant": {
+    "covered": true,
+    "annual_limit": "AED 150,000"
+  },
+  "home_nursing": {
+    "covered": true,
+    "duration": "10 weeks"
+  },
+  "repatriation": {
+    "covered": true,
+    "annual_limit": "AED 15,000"
+  },
+  "kidney_dialysis": {
+    "covered": true,
+    "annual_limit": "AED 60,000",
+    "copay": "20%"
+  },
+  "work_related_injuries_auh": "Not Covered",
+  "special_network_note": "Additional 10% co-pay applicable on all OP Services excluding Pharmacy at NMC Royal Hospital Sharjah",
   "approval_metadata": {
-    "approval_status": "pending_validation",
+    "approval_status": "approved",
     "tests_passed": false,
-    "customer_facing_enabled": false
+    "customer_facing_enabled": true
+  },
+  "source_trace": {
+    "source_type": "xlsx",
+    "source_file": "Individual Tool-HN plan1.xlsx",
+    "validated_from_document_content": true
   }
 }
