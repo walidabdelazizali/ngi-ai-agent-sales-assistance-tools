@@ -80,8 +80,8 @@ def test_classic_1_summary_no_internal_leakage():
 def test_comparison_boundary_classic_1_with_prime_1():
     out = run_agent_wrapper("Compare Classic 1 and Prime 1")
     assert out["intent"] == "plan_comparison"
-    assert out["ok"] is False
-    assert "not supported" in (out.get("message") or "").lower()
+    assert out["ok"] is True
+    assert out["tool_name"] == "compare_enhanced_plans"
 
 
 def test_comparison_boundary_classic_1_with_classic_2():

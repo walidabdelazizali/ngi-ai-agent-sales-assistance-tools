@@ -1019,6 +1019,41 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
                 }
             }
         plan1, plan2 = plans
+        if frozenset({plan1, plan2}) == frozenset({"Classic 1", "Prime 1"}):
+            from src.tools.enhanced_catalog_comparison import compare_enhanced_plans
+
+            enhanced_cmp = compare_enhanced_plans(plan1, plan2)
+            if enhanced_cmp.get("ok"):
+                return {
+                    "ok": True,
+                    "intent": "plan_comparison",
+                    "plan_name": f"{plan1} vs {plan2}",
+                    "tool_name": "compare_enhanced_plans",
+                    "data": None,
+                    "message": enhanced_cmp["message"],
+                    "normalized": {
+                        "status": "ok",
+                        "tool": "compare_enhanced_plans",
+                        "answer": None,
+                        "errors": [],
+                    },
+                }
+            blocked_msg = enhanced_cmp.get("message") or "Comparison is not available because one or more approved comparison fields are missing."
+            return {
+                "ok": False,
+                "intent": "plan_comparison",
+                "plan_name": f"{plan1} vs {plan2}",
+                "tool_name": "compare_enhanced_plans",
+                "data": None,
+                "message": blocked_msg,
+                "normalized": {
+                    "status": "not_found",
+                    "tool": "compare_enhanced_plans",
+                    "answer": None,
+                    "errors": [blocked_msg],
+                },
+            }
+
         def _comparison_not_available():
             msg = (
                 "Sorry, comparison is not supported or not available for one or both plans."

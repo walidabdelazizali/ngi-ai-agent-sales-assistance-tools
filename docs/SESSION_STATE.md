@@ -16,6 +16,17 @@ stage2-live
 - Manual operator validation pack: **33/33 PASS** (10 questions, 10 modes, 100% clean)
 - Patch applied: display_answer ONLY rendered when explicit formatted mode requested AND intent approved
 
+## Today's work (Enhanced Catalog Comparison Layer - Phase 1 Re-implementation)
+1. Re-implemented deterministic approved-only comparison path for Classic 1 vs Prime 1.
+2. Added `src/tools/enhanced_catalog_comparison.py` with strict required-field gate and deterministic blocked message when requirements are not met.
+3. Updated `src/agent_wrapper.py` to route only the Phase-1 pair to `compare_enhanced_plans`; all other enhanced comparisons remain safely blocked.
+4. Added `tests/test_enhanced_catalog_comparison.py` covering:
+	- success path for supported phrase variants
+	- deterministic content checks (Advantage/Advantage Plus)
+	- no pricing/recommendation wording
+	- missing-field and unapproved gating blocks
+5. Updated `tests/test_classic1_canonical.py` for the now-supported Classic 1 vs Prime 1 boundary behavior.
+
 ## Today's work (Day 2 Session 2 — Writing Layer Finalization)
 1. Completed Classic 1R canonical data integration using authoritative structured source:
 	- `data/plans/raw/HN_CLASSIC_1R/source_table_HN_CLASSIC_1R.json`
