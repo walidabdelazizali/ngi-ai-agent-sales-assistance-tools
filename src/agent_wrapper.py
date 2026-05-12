@@ -456,6 +456,11 @@ def _extract_city_and_provider_type(text: str) -> tuple[Optional[str], Optional[
     return detected_city, detected_type
 
 # Patterns that signal a provider-in-plan membership query.
+# Provider type modifiers that are not supported as listing filters.
+# When one of these words appears alongside a recognized type, the listing query is unsupported.
+_UNSUPPORTED_LISTING_MODIFIERS = frozenset({"dental", "optical", "vision"})
+
+# Patterns that signal a provider-in-plan membership query.
 # These must be checked BEFORE the PLAN_CORE_FIELDS loop because "network" is in that list.
 # All patterns are applied to the normalized (lowercased) query text.
 import re as _re
@@ -476,6 +481,9 @@ _PROVIDER_MEMBERSHIP_PATTERNS = [
     _re.compile(r"^هل\s+\S.+\s+(?:في|داخل)\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
     # Arabic (normalized: شبكة → network): "هل X في network Remedy Y؟" or "هل X داخل network Remedy Y؟"
     _re.compile(r"^هل\s+\S.+\s+(?:في|داخل)\s+network\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Mixed (no هل): "PROVIDER في شبكة Plan" e.g. "ACCURACY PLUS في شبكة Remedy 05؟"
+    # (applied after normalization: شبكة → network)
+    _re.compile(r"^(?!(?:هل|is|provider|what)\b)\S.+\s+في\s+network\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
 ]
 
 def _is_provider_membership_query(lowered_text: str) -> bool:
@@ -500,6 +508,10 @@ _MEMBERSHIP_PROVIDER_EXTRACTORS = [
     _re.compile(r"^هل\s+(.+?)\s+(?:في شبكة|داخل شبكة|في|داخل)\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
     # Arabic (normalized: شبكة → network): "هل PROVIDER في network Plan؟"
     _re.compile(r"^هل\s+(.+?)\s+(?:في|داخل)\s+network\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Mixed (no هل): "PROVIDER في network Plan؟" (normalized: شبكة → network)
+    _re.compile(r"^(.+?)\s+في\s+network\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Mixed (no هل): "PROVIDER في شبكة Plan؟" (raw Arabic form, before normalization)
+    _re.compile(r"^(.+?)\s+في\s+شبكة\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
     # Shorthand: "PROVIDER Remedy N?" (last resort — least specific)
     _re.compile(r"^(.+?)\s+(?:remedy|classic)\s*\S+(?:\s+network)?\??$", _re.IGNORECASE),
 ]
@@ -567,6 +579,10 @@ def _intent_from_query(text: str) -> Optional[str]:
         "مستشفيات", "عيادات", "مختبرات", "تحاليل", "صيدليات", "مراكز طبية", "مزود", "مزودين", "مزوّد",
     )
     has_provider_listing_cue = any(cue in lowered for cue in provider_listing_cues)
+    # Block unsupported type modifiers (dental, optical, vision) even when a generic type is matched.
+    # e.g. "dental clinics" matched as type=clinic, but dental filtering is not supported.
+    if plan_name and detected_type and any(mod in lowered for mod in _UNSUPPORTED_LISTING_MODIFIERS):
+        return "unsupported"
     if plan_name and detected_type and (detected_city or has_provider_listing_cue):
         return "plan_network_city_type"
     # Plan core

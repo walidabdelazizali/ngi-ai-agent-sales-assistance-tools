@@ -25,6 +25,10 @@ PROVIDER_QUERY_ALIASES = {
     "burjeel auh": "Burjeel Hospital",
     "burjeel abu dhabi": "Burjeel Hospital",
     "مستشفى burjeel": "Burjeel Hospital",
+    # NMC Royal DXB: "DXB" disambiguates the Dubai branch deterministically (one CSV row).
+    "nmc royal hospital dxb": "NMC ROYAL HOSPITAL LLC(DXB)",
+    # ACCURACY PLUS: only one canonical match in the CSV ("ACCURACY PLUS MEDICAL LABORATORY").
+    "accuracy plus": "ACCURACY PLUS MEDICAL LABORATORY",
 }
 
 # Tokens that are intentionally treated as ambiguous family-level provider references.
