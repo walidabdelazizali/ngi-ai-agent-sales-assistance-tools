@@ -127,6 +127,55 @@ stage2-live
 
 ## Latest Work Session
 
+### CONTROLLED AI WRITING LAYER V1 (COMPLETED)
+1. Created `src/output_packaging.py` — pure formatting module, no LLM calls, no fact inference.
+	- `whatsapp_summary(agent_response)` — compact single-screen WhatsApp-style output
+	- `email_summary(agent_response, recipient_name=None)` — professional email-style output
+	- `benefit_explanation(agent_response, benefit_key)` — per-benefit plain-language description
+	- `format_output(agent_response, mode, ...)` — single entry-point dispatcher
+	- Supported benefit keys: `annual_limit`, `network`, `copay`, `pharmacy`, `maternity`, `dental`
+2. Safety enforcement in every function:
+	- ok=False → always returns safe refusal string
+	- Unsupported intent (e.g. network_lookup) → safe refusal
+	- Internal/source_trace/debug/review fields → blocked from output
+	- None / "not available" fields → omitted (not rendered)
+	- No facts invented, no LLM, no pricing inferred
+3. Added `tests/test_writing_layer.py` with 37 focused tests covering:
+	- Safe refusal on ok=False
+	- Safe refusal on unsupported intent
+	- No internal field leakage
+	- No unsupported recommendations
+	- Graceful fallback when facts are missing
+	- Positive output for all three modes (Remedy 05, Classic 1R, plan_field response)
+	- format_output dispatcher + invalid mode/key handling
+4. Validation:
+	- `python -m pytest tests/test_writing_layer.py -v` -> 37 passed in 1.88s
+	- `python -m pytest -q` -> **895 passed, 2 skipped** (baseline was 858; +37 new, 0 regressions)
+
+### DAY 2 — REVIEW Friction Triage Mode (COMPLETED)
+1. Reviewed the 6 Day 1 REVIEW cases from [runtime_data/day1_supervised_operator_usage_results.json](runtime_data/day1_supervised_operator_usage_results.json).
+2. Applied the smallest safe deterministic fixes for:
+	- `Provider NMC ROYAL HOSPITAL DXB in Remedy 5 network?` -> exact alias to `NMC ROYAL HOSPITAL LLC(DXB)`
+	- `ACCURACY PLUS في شبكة Remedy 05؟` -> mixed Arabic provider-membership routing plus exact alias to `ACCURACY PLUS MEDICAL LABORATORY`
+	- `dental clinics Remedy 6 Sharjah` -> unsupported listing modifier blocked instead of generic clinic listing
+3. Intentionally deferred the remaining ambiguity/friction cases because broad inference would be risky:
+	- `Is ASTER HOSPITAL in Remedy 5 network?`
+	- `هل ASTER HOSPITAL في شبكة Remedy 05؟`
+	- `Is 24HOUR PHARMACY in Remedy 6 network?`
+4. Added focused regression coverage in [tests/test_day2_review_triage.py](tests/test_day2_review_triage.py).
+5. Validation:
+	- `python -m pytest tests/test_day2_review_triage.py tests/test_arabic_operator_hardening.py -v` -> 12 passed
+	- `python -m pytest -q tests/test_arabic_operator_hardening.py tests/test_classic2r_baseline.py::test_classic2r_unsupported_benefits_blocked tests/test_safety_boundary_recommendation_comparison.py::test_enhanced_baseline_unsupported_benefit_still_blocked tests/test_answer_consistency.py::test_answer_consistency[Is\ direct\ billing\ available\ in\ Remedy\ 02?] tests/test_approved_plan_business_questions.py::test_approved_plan_business_questions` -> 13 passed
+	- `python -m pytest -q` -> 858 passed, 2 skipped
+6. Day 1 pack rerun after triage:
+	- GOOD: 44 (63.8%)
+	- REVIEW: 3
+	- BLOCKED_OK: 22
+	- GAP: 0
+	- CRITICAL: 0
+7. Added Day 2 delta report:
+	- [docs/operational_usage/day2_review_friction_triage_delta.md](docs/operational_usage/day2_review_friction_triage_delta.md)
+
 ### DAY 1 — Supervised Internal Operator Usage Mode (COMPLETED)
 1. Ran supervised internal operator usage evaluation pack focused on:
 	- Real operator phrasing
