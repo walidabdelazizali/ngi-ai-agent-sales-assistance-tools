@@ -5,7 +5,7 @@ from src.query.plan_network_lookup import load_plan_network_mapping, resolve_pla
 
 APPROVED_PLAN_NETWORKS = {
     "Prime 1": "hn_advantage_plus",
-    "Prime 2": "hn_standard_plus",
+    "Prime 2": "hn_premier",
     "Classic 1": "hn_advantage",
     "Classic 1R": "hn_advantage",
     "Classic 4": "hn_basic_plus",
@@ -37,7 +37,7 @@ def test_approved_plan_resolves_expected_network(plan_name, expected_network):
     "plan_code,expected_network",
     [
         ("HN_PRIME_1", "hn_advantage_plus"),
-        ("HN_PRIME_2", "hn_standard_plus"),
+        ("HN_PRIME_2", "hn_premier"),
         ("HN_CLASSIC_1", "hn_advantage"),
         ("HN_CLASSIC_1R", "hn_advantage"),
         ("HN_CLASSIC_4", "hn_basic_plus"),

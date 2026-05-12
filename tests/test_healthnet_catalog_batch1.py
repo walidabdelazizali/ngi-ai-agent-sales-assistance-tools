@@ -13,7 +13,7 @@ from src.tools.enhanced_plan_loader import (
 
 BATCH1_PLANS = [
     ("Prime 1", "HN_PRIME_1", "hn_advantage_plus", "data/plans/raw/HN_PRIME_1/source_table_HN_PRIME_1.json"),
-    ("Prime 2", "HN_PRIME_2", "hn_standard_plus", "data/plans/raw/HN_PRIME_2/source_table_HN_PRIME_2.json"),
+    ("Prime 2", "HN_PRIME_2", "hn_premier", "data/plans/raw/HN_PRIME_2/source_table_HN_PRIME_2.json"),
     ("Classic 1", "HN_CLASSIC_1", "hn_advantage", "data/plans/raw/HN_CLASSIC_1/source_table_HN_CLASSIC_1.json"),
     ("Classic 1R", "HN_CLASSIC_1R", "hn_advantage", "data/plans/raw/HN_CLASSIC_1R/source_table_HN_CLASSIC_1R.json"),
     ("Classic 4", "HN_CLASSIC_4", "hn_basic_plus", "data/plans/raw/HN_CLASSIC_4/source_table_HN_CLASSIC_4.json"),

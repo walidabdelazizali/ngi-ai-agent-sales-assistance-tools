@@ -15,6 +15,13 @@ SUPPORTED_PLANS = {
     "hn-remedy-5": "Remedy 05",
     "ريميدي 5": "Remedy 05",
     "ريميدي 05": "Remedy 05",
+    # Prime Plan-2 support
+    "prime 2": "Prime 2",
+    "prime2": "Prime 2",
+    "prime-2": "Prime 2",
+    "hn_prime_2": "Prime 2",
+    "hn-prime-2": "Prime 2",
+    "hn prime 2": "Prime 2",
 }
 
 PLAN_CORE_FIELDS = [
@@ -86,10 +93,10 @@ def execute_planned_query(user_query: str, output_mode: str = "dict") -> Union[D
                 "plan_name": None,
                 "tool_name": None,
                 "data": None,
-                "message": plan["reason"] + " Supported plans: Remedy 04, Remedy 05. Supported intents: plan_core, reimbursement_rules, plan_summary."
+                "message": plan["reason"] + " Supported plans: Remedy 04, Remedy 05, Prime 2. Supported intents: plan_core, reimbursement_rules, plan_summary."
             }
         elif output_mode == "text":
-            return f"Intent: unsupported\nMessage: {plan['reason']} Supported plans: Remedy 04, Remedy 05. Supported intents: plan_core, reimbursement_rules, plan_summary."
+            return f"Intent: unsupported\nMessage: {plan['reason']} Supported plans: Remedy 04, Remedy 05, Prime 2. Supported intents: plan_core, reimbursement_rules, plan_summary."
         else:
             return {
                 "ok": False,

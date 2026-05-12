@@ -86,6 +86,8 @@ SUPPORTED_PLANS = {
     "prime 2": "Prime 2",
     "prime2": "Prime 2",
     "prime-2": "Prime 2",
+    "prime plan 2": "Prime 2",
+    "prime plan-2": "Prime 2",
     "hn_prime_2": "Prime 2",
     "hn-prime-2": "Prime 2",
     "hn prime 2": "Prime 2",
