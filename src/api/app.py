@@ -278,15 +278,12 @@ def ask(request: AskRequest):
             }
 
         # Always return status_code=200 and valid structure, even for blocked plans
+        # display_answer is ONLY populated when an explicit supported output_mode is requested
+        # AND the intent is in the approved formatter set. All other cases return null.
         if agent_result.get("ok"):
             intent = agent_result.get("intent")
-            data = agent_result.get("data")
             if requested_mode in supported_modes and intent in {"plan_core", "plan_summary", "plan_field", "plan_comparison"}:
                 display_answer = format_output(agent_result, requested_mode)
-            elif intent == "plan_summary" and data and isinstance(data, dict) and data.get("summary_text"):
-                display_answer = data["summary_text"]
-            elif agent_result.get("message"):
-                display_answer = agent_result["message"]
         return {
             "status": "ok" if agent_result.get("ok") else "error",
             "question": q,

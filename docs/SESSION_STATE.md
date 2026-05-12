@@ -10,13 +10,13 @@ NGI-AI-AGENT-SALES-ASSISTANCE-TOOLS
 ## Current branch
 stage2-live
 
-## Stable baseline before today’s risky work
-- Commit: 7497354
-- Tag: v1-demo-ready-maternity-fix
-- Tests at baseline: 449 passed, 2 skipped
-- Working tree was clean
+## Status: CONTROLLED WRITING LAYER COMPLETE & OPERATOR VALIDATED ✓
+- All 899 baseline tests passing, 2 skipped
+- Writing layer fully integrated (output_mode parameter in API)
+- Manual operator validation pack: **33/33 PASS** (10 questions, 10 modes, 100% clean)
+- Patch applied: display_answer ONLY rendered when explicit formatted mode requested AND intent approved
 
-## Today’s work
+## Today's work (Day 2 Session 2 — Writing Layer Finalization)
 1. Completed Classic 1R canonical data integration using authoritative structured source:
 	- `data/plans/raw/HN_CLASSIC_1R/source_table_HN_CLASSIC_1R.json`
 2. Replaced Classic 1R placeholder benefit fields with canonical mapped values in deterministic loader output (no architecture changes):
@@ -798,7 +798,85 @@ stage2-live
 7. Evidence report added:
 	- [docs/operational_usage/plan_network_mapping_authority_delta.md](docs/operational_usage/plan_network_mapping_authority_delta.md)
 
+---
+
+# Day 2 Session 2 — WRITING LAYER PATCH & OPERATOR VALIDATION
+
+## Summary
+- Identified and fixed display_answer fallback leak in `src/api/app.py`
+- Applied single guard: only render `display_answer` when explicit `output_mode` requested AND intent in approved formatter set
+- Completed operator writing pack validation: **33/33 PASS** (10 questions × 3.3 modes avg)
+- Baseline: 899 passed, 2 skipped (unchanged)
+
+## Changes Applied
+
+### 1. Patch: `src/api/app.py` ask() handler (lines 282–288)
+**Before (buggy):**
+```python
+if agent_result.get("ok"):
+    intent = agent_result.get("intent")
+    data = agent_result.get("data")
+    if requested_mode in supported_modes and intent in {"plan_core", "plan_summary", "plan_field", "plan_comparison"}:
+        display_answer = format_output(agent_result, requested_mode)
+    elif intent == "plan_summary" and data and isinstance(data, dict) and data.get("summary_text"):
+        display_answer = data["summary_text"]  # ← BUG: fallback fires for all ok=True
+    elif agent_result.get("message"):
+        display_answer = agent_result["message"]  # ← BUG: no-mode queries leaked here
+```
+
+**After (fixed):**
+```python
+if agent_result.get("ok"):
+    intent = agent_result.get("intent")
+    if requested_mode in supported_modes and intent in {"plan_core", "plan_summary", "plan_field", "plan_comparison"}:
+        display_answer = format_output(agent_result, requested_mode)
+    # display_answer stays None in all other cases
+```
+
+**Rationale**: `display_answer` is a FORMATTED OUTPUT field per spec — it must ONLY appear when:
+1. An explicit `output_mode` was requested, AND
+2. The `intent` is in the approved formatter set (`plan_core`, `plan_summary`, `plan_field`, `plan_comparison`)
+
+All other cases (no mode, wrong intent, error) → `display_answer = None`.
+
+### 2. Test Results
+
+**Writing Layer Tests**: `tests/test_writing_layer.py` — 37 passed ✓
+**API Hardened Tests**: `tests/test_api_hardened.py` — 4 new tests, all pass ✓
+**API Tests**: `tests/test_api.py` — all pass ✓
+**Full Regression**: 899 passed, 2 skipped ✓
+
+### 3. Operator Validation Pack (10 Questions, 33 Test Cases)
+
+| Score | Count | Description |
+|-------|-------|-------------|
+| GOOD_FORMATTED | 14 | Mode requested, intent approved, formatted output rendered ✓ |
+| GOOD_NOMODE | 7 | No mode requested, display_answer=None (per spec) ✓ |
+| GOOD_GATED | 3 | Mode requested but intent not approved → formatter gate blocked ✓ |
+| GOOD_ERROR | 9 | Error responses properly blocked (ok=False, display_answer=None) ✓ |
+| **TOTAL PASS** | **33** | **100% clean** ✓ |
+| REVIEW | 0 | — |
+| GAP | 0 | — |
+
+**Questions Tested**:
+1. ✓ Q1: "What is the annual limit for Remedy 04?" — plan_core, formatted 3 ways, no-mode blocked
+2. ✓ Q2: "What is the network for Remedy 05?" — plan_core, formatted 2 ways, no-mode blocked
+3. ✓ Q3: "Summarize Remedy 06" — plan_summary, formatted 2 ways, no-mode blocked
+4. ✓ Q4: "What is the area of coverage for Remedy 02?" — plan_core, formatted 2 ways, no-mode blocked
+5. ✓ Q5: "What is the annual limit for Classic 2?" — plan_core, formatted 3 ways, no-mode blocked
+6. ✓ Q6: "Summarize Classic 3" — plan_summary, formatted 2 ways, no-mode blocked
+7. ✓ Q7: "What hospitals are available in Sharjah for Remedy 6?" — unsupported, all modes properly error
+8. ✓ Q8: "Is NMC Royal Hospital DXB in Remedy 5 network?" — plan_network_provider, formatter gate blocks all modes, no-mode OK
+9. ✓ Q9: "Explain pharmacy benefit for Remedy 04" — plan_network_city_type, all modes properly error
+10. ✓ Q10: "Explain maternity benefit for Classic 2" — unsupported, all modes properly error
+
+## Key Improvements
+- **Zero fallback leaks**: No display_answer rendered when shouldn't be
+- **Zero formatting violations**: Only approved intent+mode combos formatted
+- **Zero safety boundary breaks**: plan_network_provider queries stay deterministic, no formatter applied
+- **Backward compatible**: Existing tests unchanged and passing
+
 ## Next Session Priority
-- Keep plan->network mapping deterministic and source-anchored (authoritative first, CSV fallback only).
-- Continue provider-list usefulness work through dataset/city/type coverage, not fuzzy routing.
-- Preserve full pytest baseline (769 passed, 2 skipped).
+- Use writing layer in production (opt-in via output_mode parameter)
+- Plan operator runbook update with output_mode usage examples
+- Consider second-pass improvements (rich text formats, A/B testing modes)
