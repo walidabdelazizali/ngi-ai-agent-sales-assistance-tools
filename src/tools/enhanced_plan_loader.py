@@ -48,6 +48,9 @@ ENHANCED_PLAN_REGISTRY = {
             "prime 1",
             "prime1",
             "prime-1",
+            "classic plan-1",
+            "classic plan 1",
+            "classic-1",
             "hn_prime_1",
             "hn-prime-1",
             "hn prime 1",
@@ -108,6 +111,8 @@ ENHANCED_PLAN_REGISTRY = {
             "classic 4",
             "classic4",
             "classic-4",
+            "classic plan-4",
+            "classic plan 4",
             "classic 04",
             "hn_classic_4",
             "hn-classic-4",
@@ -212,6 +217,182 @@ def parse_enhanced_plan(raw, *, canonical_name: str, plan_code: str) -> dict:
         "direct_billing": direct_billing,
         "referral_required": referral_required,
     }
+
+    if canonical_name == "Prime 1":
+        # Prime 1 is mapped from Classic Plan-1 locked structured object.
+        tier = raw_dict.get("network_tier") or network_name
+        if isinstance(tier, str) and tier.startswith("HN "):
+            tier = tier.replace("HN ", "", 1)
+        canonical["network_tier"] = tier
+        canonical["network_name"] = tier or canonical["network_name"]
+
+        annual_obj = raw_dict.get("annual_limit")
+        if isinstance(annual_obj, dict):
+            val = annual_obj.get("value")
+            ccy = annual_obj.get("currency", "AED")
+            if val is not None:
+                canonical["annual_limit"] = f"{ccy} {int(val):,}"
+
+        outpatient = raw_dict.get("outpatient", {})
+        consultation = outpatient.get("consultation_copay", {})
+        if isinstance(consultation, dict):
+            pct = consultation.get("coinsurance_percent")
+            mx = consultation.get("max_per_visit")
+            ccy = consultation.get("currency", "AED")
+            if pct is not None and mx is not None:
+                canonical["consultation_copay"] = f"{pct}% up to {ccy} {int(mx):,}"
+
+        pharmacy = outpatient.get("pharmacy", {})
+        if isinstance(pharmacy, dict):
+            plim = pharmacy.get("annual_limit")
+            pccy = pharmacy.get("currency", "AED")
+            pcopay = pharmacy.get("coinsurance_percent")
+            if plim is not None:
+                canonical["pharmacy_limit"] = f"{pccy} {int(plim):,}"
+            if pcopay is not None:
+                canonical["pharmacy_copay"] = f"{pcopay}%"
+                canonical["pharmacy_coinsurance"] = f"{pcopay}%"
+            if plim is not None or pcopay is not None:
+                canonical["pharmacy_cover_summary"] = (
+                    f"Annual limit: {canonical.get('pharmacy_limit', 'Not available')} | "
+                    f"Copay: {canonical.get('pharmacy_copay', 'Not available')}"
+                )
+
+        physio = outpatient.get("physiotherapy", {})
+        if isinstance(physio, dict):
+            sessions = physio.get("sessions_per_year")
+            if sessions is not None:
+                canonical["physiotherapy_sessions"] = f"{sessions} sessions per year"
+
+        maternity = raw_dict.get("maternity", {})
+        if isinstance(maternity, dict):
+            mccy = maternity.get("currency", "AED")
+            normal = maternity.get("inpatient_normal_delivery_limit")
+            csec = maternity.get("inpatient_c_section_limit")
+            if normal is not None:
+                canonical["maternity_normal_delivery_limit"] = f"{mccy} {int(normal):,}"
+            if csec is not None:
+                canonical["maternity_c_section_limit"] = f"{mccy} {int(csec):,}"
+            if normal is not None or csec is not None:
+                canonical["maternity_cover"] = (
+                    f"Normal delivery: {canonical.get('maternity_normal_delivery_limit', 'Not available')}; "
+                    f"C-section: {canonical.get('maternity_c_section_limit', 'Not available')}"
+                )
+
+        dental = raw_dict.get("dental", {})
+        if isinstance(dental, dict):
+            dlim = dental.get("annual_limit")
+            dccy = dental.get("currency", "AED")
+            dcopay = dental.get("coinsurance_percent")
+            if dlim is not None:
+                canonical["dental_limit"] = f"{dccy} {int(dlim):,}"
+            if dcopay is not None:
+                canonical["dental_coinsurance"] = f"{dcopay}%"
+
+        additional = raw_dict.get("additional_benefits", {})
+        if isinstance(additional, dict):
+            mental = additional.get("mental_health_inpatient_outpatient", {})
+            if isinstance(mental, dict) and mental.get("annual_limit") is not None:
+                canonical["mental_health_limit"] = f"{mental.get('currency', 'AED')} {int(mental.get('annual_limit')):,}"
+            transplant = additional.get("organ_transplant", {})
+            if isinstance(transplant, dict) and transplant.get("annual_limit") is not None:
+                canonical["organ_transplant_limit"] = f"{transplant.get('currency', 'AED')} {int(transplant.get('annual_limit')):,}"
+            dialysis = additional.get("kidney_dialysis", {})
+            if isinstance(dialysis, dict) and dialysis.get("annual_limit") is not None:
+                canonical["dialysis_limit"] = f"{dialysis.get('currency', 'AED')} {int(dialysis.get('annual_limit')):,}"
+
+    if canonical_name == "Classic 4":
+        # Classic 4 is mapped from Classic Plan-4 locked structured object.
+        tier = raw_dict.get("network_tier") or network_name
+        if isinstance(tier, str) and tier.startswith("HN "):
+            tier = tier.replace("HN ", "", 1)
+        canonical["network_tier"] = tier
+        canonical["network_name"] = tier or canonical["network_name"]
+
+        annual_obj = raw_dict.get("annual_limit")
+        if isinstance(annual_obj, dict):
+            val = annual_obj.get("value")
+            ccy = annual_obj.get("currency", "AED")
+            if val is not None:
+                canonical["annual_limit"] = f"{ccy} {int(val):,}"
+
+        # Preserve strict source wording to avoid accidental scope leakage.
+        if raw_dict.get("area_of_coverage"):
+            canonical["area_of_coverage"] = str(raw_dict.get("area_of_coverage"))
+
+        outpatient = raw_dict.get("outpatient", {})
+        consultation = outpatient.get("consultation_copay", {})
+        if isinstance(consultation, dict):
+            pct = consultation.get("coinsurance_percent")
+            mx = consultation.get("max_per_visit")
+            ccy = consultation.get("currency", "AED")
+            if pct is not None and mx is not None:
+                canonical["consultation_copay"] = f"{pct}% up to {ccy} {int(mx):,}"
+
+        pharmacy = outpatient.get("pharmacy", {})
+        if isinstance(pharmacy, dict):
+            plim = pharmacy.get("annual_limit")
+            pccy = pharmacy.get("currency", "AED")
+            pcopay = pharmacy.get("coinsurance_percent")
+            if plim is not None:
+                canonical["pharmacy_limit"] = f"{pccy} {int(plim):,}"
+            if pcopay is not None:
+                canonical["pharmacy_copay"] = f"{pcopay}%"
+                canonical["pharmacy_coinsurance"] = f"{pcopay}%"
+            if plim is not None or pcopay is not None:
+                canonical["pharmacy_cover_summary"] = (
+                    f"Annual limit: {canonical.get('pharmacy_limit', 'Not available')} | "
+                    f"Copay: {canonical.get('pharmacy_copay', 'Not available')}"
+                )
+
+        physio = outpatient.get("physiotherapy", {})
+        if isinstance(physio, dict):
+            sessions = physio.get("sessions_per_year")
+            if sessions is not None:
+                canonical["physiotherapy_sessions"] = f"{sessions} sessions per year"
+
+        maternity = raw_dict.get("maternity", {})
+        if isinstance(maternity, dict):
+            mccy = maternity.get("currency", "AED")
+            normal = maternity.get("normal_delivery_limit")
+            csec = maternity.get("c_section_limit")
+            if normal is not None:
+                canonical["maternity_normal_delivery_limit"] = f"{mccy} {int(normal):,}"
+            if csec is not None:
+                canonical["maternity_c_section_limit"] = f"{mccy} {int(csec):,}"
+            if normal is not None or csec is not None:
+                canonical["maternity_cover"] = (
+                    f"Normal delivery: {canonical.get('maternity_normal_delivery_limit', 'Not available')}; "
+                    f"C-section: {canonical.get('maternity_c_section_limit', 'Not available')}"
+                )
+
+        dental = raw_dict.get("dental", {})
+        if isinstance(dental, dict):
+            dlim = dental.get("annual_limit")
+            dccy = dental.get("currency", "AED")
+            dcopay = dental.get("coinsurance_percent")
+            if dlim is not None:
+                canonical["dental_limit"] = f"{dccy} {int(dlim):,}"
+            if dcopay is not None:
+                canonical["dental_coinsurance"] = f"{dcopay}%"
+
+        additional = raw_dict.get("additional_benefits", {})
+        if isinstance(additional, dict):
+            mental = additional.get("mental_health", {})
+            if isinstance(mental, dict) and mental.get("annual_limit") is not None:
+                canonical["mental_health_limit"] = f"{mental.get('currency', 'AED')} {int(mental.get('annual_limit')):,}"
+            transplant = additional.get("organ_transplant", {})
+            if isinstance(transplant, dict) and transplant.get("annual_limit") is not None:
+                canonical["organ_transplant_limit"] = f"{transplant.get('currency', 'AED')} {int(transplant.get('annual_limit')):,}"
+            dialysis = additional.get("kidney_dialysis", {})
+            if isinstance(dialysis, dict) and dialysis.get("annual_limit") is not None:
+                canonical["dialysis_limit"] = f"{dialysis.get('currency', 'AED')} {int(dialysis.get('annual_limit')):,}"
+            alt_med = additional.get("alternative_medicine", {})
+            if isinstance(alt_med, dict) and alt_med.get("annual_limit") is not None:
+                canonical["alternative_medicine_limit"] = f"{alt_med.get('currency', 'AED')} {int(alt_med.get('annual_limit')):,}"
+            home_nursing = additional.get("home_nursing", {})
+            if isinstance(home_nursing, dict) and home_nursing.get("duration_weeks") is not None:
+                canonical["home_nursing_duration"] = f"{int(home_nursing.get('duration_weeks'))} weeks"
 
     if canonical_name == "Classic 1R":
         # Canonical field projections used by deterministic owner queries.

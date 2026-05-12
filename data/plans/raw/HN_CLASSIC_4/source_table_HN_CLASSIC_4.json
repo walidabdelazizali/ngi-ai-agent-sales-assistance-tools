@@ -1,27 +1,123 @@
 {
+  "plan_name": "Classic Plan-4",
   "plan_code": "HN_CLASSIC_4",
-  "plan_name": "Classic 4",
-  "source_plan_title": "Classic Plan-4",
-  "network_type": "HealthNet",
-  "network_level": "Basic Plus",
-  "provider_network": "HN Basic Plus",
-  "annual_limit": "REVIEW: source document not available in repository",
-  "area_of_coverage": "REVIEW: source document not available in repository",
-  "direct_billing": false,
-  "referral_required": true,
-  "key_inpatient_benefits": "REVIEW: source document not available in repository",
-  "key_outpatient_benefits": "REVIEW: source document not available in repository",
-  "pharmacy": "BLOCKED: source document not available in repository",
-  "maternity": "BLOCKED: source document not available in repository",
-  "dental_optical": "BLOCKED: source document not available in repository",
-  "copays": "REVIEW: source document not available in repository",
-  "source_validation": {
-    "validated_from_document_content": false,
-    "notes": "Batch 1 structured catalog entry created from canonical mapping only; missing source fields marked REVIEW/BLOCKED."
+  "network_name": "HN Basic Plus",
+  "network_tier": "Basic Plus",
+  "annual_limit": {
+    "value": 150000,
+    "currency": "AED"
   },
-  "approval_metadata": {
-    "approval_status": "pending_validation",
-    "tests_passed": false,
-    "customer_facing_enabled": false
-  }
+  "area_of_coverage": "UAE + Home Country",
+  "tpa": "NGI Healthnet",
+  "direct_billing": true,
+  "referral_required": false,
+  "pre_existing_conditions": {
+    "covered": true,
+    "limit": 150000,
+    "currency": "AED",
+    "waiting_period_months": 6,
+    "continuity_of_coverage_waives_waiting": true
+  },
+  "inpatient": {
+    "room_and_board": "Private",
+    "cash_indemnity": {
+      "covered": true,
+      "limit_per_night": 250,
+      "max_nights": 10,
+      "currency": "AED"
+    },
+    "parent_accommodation": {
+      "covered": true,
+      "limit_per_night": 150,
+      "currency": "AED"
+    },
+    "ambulance": {
+      "covered": true,
+      "coverage_percent": 100
+    }
+  },
+  "outpatient": {
+    "consultation_copay": {
+      "coinsurance_percent": 20,
+      "max_per_visit": 50,
+      "currency": "AED"
+    },
+    "laboratory": {
+      "covered": true
+    },
+    "radiology": {
+      "covered": true
+    },
+    "physiotherapy": {
+      "sessions_per_year": 20
+    },
+    "pharmacy": {
+      "covered": true,
+      "annual_limit": 10000,
+      "currency": "AED",
+      "coinsurance_percent": 0
+    }
+  },
+  "additional_benefits": {
+    "alternative_medicine": {
+      "covered": true,
+      "annual_limit": 1500,
+      "currency": "AED",
+      "coinsurance_percent": 20
+    },
+    "mental_health": {
+      "covered": true,
+      "annual_limit": 1500,
+      "currency": "AED",
+      "coinsurance_percent": 20
+    },
+    "organ_transplant": {
+      "covered": true,
+      "annual_limit": 150000,
+      "currency": "AED"
+    },
+    "repatriation": {
+      "covered": true,
+      "annual_limit": 10000,
+      "currency": "AED"
+    },
+    "home_nursing": {
+      "covered": true,
+      "duration_weeks": 6
+    },
+    "kidney_dialysis": {
+      "covered": true,
+      "annual_limit": 60000,
+      "currency": "AED",
+      "coinsurance_percent": 20
+    },
+    "second_medical_opinion": true
+  },
+  "dental": {
+    "covered": true,
+    "annual_limit": 1500,
+    "currency": "AED",
+    "coinsurance_percent": 20
+  },
+  "maternity": {
+    "normal_delivery_limit": 10000,
+    "c_section_limit": 10000,
+    "currency": "AED",
+    "coinsurance_percent": 0,
+    "outpatient_visits": 8,
+    "newborn_cover_days": 30,
+    "newborn_cover_limit": 150000
+  },
+  "approval_status": "approved",
+  "source_trace": {
+    "source_type": "uploaded_plan_scan",
+    "source_plan_title": "Classic Plan-4",
+    "mapped_plan_code": "HN_CLASSIC_4"
+  },
+  "tests_passed": false,
+  "notes": [
+    "Canonical mapping: HN_CLASSIC_4 → Basic Plus",
+    "Lower-tier enhanced/basic-plus structure compared to Prime plans",
+    "Area limited to UAE + Home Country"
+  ]
 }

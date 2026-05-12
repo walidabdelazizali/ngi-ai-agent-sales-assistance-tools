@@ -1,27 +1,161 @@
 {
+  "plan_name": "Classic Plan-1",
   "plan_code": "HN_PRIME_1",
-  "plan_name": "Prime 1",
-  "source_plan_title": "Prime Plan-1",
-  "network_type": "HealthNet",
-  "network_level": "Advantage Plus",
-  "provider_network": "HN Advantage Plus",
-  "annual_limit": "REVIEW: source document not available in repository",
-  "area_of_coverage": "REVIEW: source document not available in repository",
-  "direct_billing": false,
-  "referral_required": true,
-  "key_inpatient_benefits": "REVIEW: source document not available in repository",
-  "key_outpatient_benefits": "REVIEW: source document not available in repository",
-  "pharmacy": "BLOCKED: source document not available in repository",
-  "maternity": "BLOCKED: source document not available in repository",
-  "dental_optical": "BLOCKED: source document not available in repository",
-  "copays": "REVIEW: source document not available in repository",
-  "source_validation": {
-    "validated_from_document_content": false,
-    "notes": "Batch 1 structured catalog entry created from canonical mapping only; missing source fields marked REVIEW/BLOCKED."
+  "network_name": "HN Advantage",
+  "network_tier": "Advantage Plus",
+  "annual_limit": {
+    "value": 300000,
+    "currency": "AED"
   },
-  "approval_metadata": {
-    "approval_status": "pending_validation",
-    "tests_passed": false,
-    "customer_facing_enabled": false
-  }
+  "area_of_coverage": "Worldwide Excluding USA and Canada",
+  "tpa": "NGI Healthnet",
+  "direct_billing": true,
+  "referral_required": false,
+  "pre_existing_conditions": {
+    "covered": true,
+    "limit": 150000,
+    "currency": "AED",
+    "waiting_period_months": 6,
+    "continuity_of_coverage_waives_waiting": true,
+    "medical_underwriting_required": true
+  },
+  "inpatient": {
+    "room_and_board": "Private",
+    "non_urgent_preapproval_required": true,
+    "cash_indemnity": {
+      "covered": true,
+      "limit_per_night": 300,
+      "max_nights": 10,
+      "currency": "AED"
+    },
+    "parent_accommodation": {
+      "covered": true,
+      "limit_per_night": 350,
+      "currency": "AED"
+    },
+    "ambulance": {
+      "covered": true,
+      "coverage_percent": 100
+    }
+  },
+  "outpatient": {
+    "consultation_copay": {
+      "coinsurance_percent": 20,
+      "max_per_visit": 50,
+      "currency": "AED"
+    },
+    "laboratory": {
+      "covered": true,
+      "coinsurance_percent": 0
+    },
+    "radiology": {
+      "covered": true,
+      "coinsurance_percent": 0,
+      "preapproval_required_for": [
+        "MRI",
+        "CT Scan",
+        "Endoscopy"
+      ]
+    },
+    "physiotherapy": {
+      "sessions_per_year": 20,
+      "preapproval_required": true
+    },
+    "pharmacy": {
+      "covered": true,
+      "annual_limit": 10000,
+      "currency": "AED",
+      "coinsurance_percent": 0,
+      "type": "Branded"
+    }
+  },
+  "preventive_benefits": {
+    "vaccinations": true,
+    "influenza_vaccine": "Once per annum",
+    "diabetes_screening": true,
+    "adult_pneumococcal_vaccine": true,
+    "shingrix_vaccine": true
+  },
+  "additional_benefits": {
+    "alternative_medicine": {
+      "covered": true,
+      "annual_limit": 2000,
+      "currency": "AED",
+      "coinsurance_percent": 20
+    },
+    "mental_health_inpatient_outpatient": {
+      "covered": true,
+      "annual_limit": 3000,
+      "currency": "AED",
+      "coinsurance_percent": 20
+    },
+    "mental_health_outpatient_counselling": {
+      "covered": true,
+      "annual_limit": 800,
+      "currency": "AED",
+      "coinsurance_percent": 30
+    },
+    "organ_transplant": {
+      "covered": true,
+      "annual_limit": 150000,
+      "currency": "AED"
+    },
+    "repatriation": {
+      "covered": true,
+      "annual_limit": 15000,
+      "currency": "AED"
+    },
+    "home_nursing": {
+      "covered": true,
+      "duration_weeks": 10
+    },
+    "second_medical_opinion": true,
+    "kidney_dialysis": {
+      "covered": true,
+      "annual_limit": 60000,
+      "currency": "AED",
+      "coinsurance_percent": 20
+    }
+  },
+  "dental": {
+    "covered": true,
+    "annual_limit": 2500,
+    "currency": "AED",
+    "coinsurance_percent": 20
+  },
+  "maternity": {
+    "inpatient_normal_delivery_limit": 15000,
+    "inpatient_c_section_limit": 15000,
+    "currency": "AED",
+    "coinsurance_percent": 0,
+    "newborn_cover_limit": 150000,
+    "newborn_cover_days": 30,
+    "antenatal_ultrasounds": 8
+  },
+  "personal_accident_cover": {
+    "primary_and_spouse": {
+      "ad_and_d": 50000,
+      "ptd": 50000,
+      "common_carrier_ad": 100000,
+      "amr": 5000,
+      "currency": "AED"
+    },
+    "children": {
+      "ad_and_d": 50000,
+      "amr": 2500,
+      "currency": "AED"
+    }
+  },
+  "approval_status": "approved",
+  "source_trace": {
+    "source_type": "uploaded_plan_scan",
+    "source_plan_title": "Classic Plan-1",
+    "mapped_plan_code": "HN_PRIME_1"
+  },
+  "tests_passed": false,
+  "notes": [
+    "HN Advantage mapped to Advantage Plus canonical network tier.",
+    "Additional 10% OP co-pay applies at NMC Royal Hospital Sharjah excluding pharmacy.",
+    "Work related injuries for AUH only are not covered."
+  ]
 }

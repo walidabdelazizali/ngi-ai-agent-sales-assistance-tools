@@ -20,6 +20,7 @@ def test_is_enhanced_plan_classic2():
     assert is_enhanced_plan("Prime 1")
     assert is_enhanced_plan("prime1")
     assert is_enhanced_plan("HN_PRIME_1")
+    assert is_enhanced_plan("Classic Plan-1")
     assert is_enhanced_plan("Prime 2")
     assert is_enhanced_plan("prime2")
     assert is_enhanced_plan("HN_PRIME_2")
@@ -32,6 +33,7 @@ def test_is_enhanced_plan_classic2():
     assert is_enhanced_plan("Classic 4")
     assert is_enhanced_plan("classic4")
     assert is_enhanced_plan("hn_classic_4")
+    assert is_enhanced_plan("Classic Plan-4")
     assert not is_enhanced_plan("Remedy 03")
 
 def test_resolve_enhanced_plan_name_aliases():
@@ -48,6 +50,7 @@ def test_resolve_enhanced_plan_name_aliases():
     assert resolve_enhanced_plan_name("hn classic 2r") == "Classic 2R"
     assert resolve_enhanced_plan_name("Prime 1") == "Prime 1"
     assert resolve_enhanced_plan_name("hn_prime_1") == "Prime 1"
+    assert resolve_enhanced_plan_name("Classic Plan-1") == "Prime 1"
     assert resolve_enhanced_plan_name("Prime 2") == "Prime 2"
     assert resolve_enhanced_plan_name("hn_prime_2") == "Prime 2"
     assert resolve_enhanced_plan_name("Classic 1") == "Classic 1"
@@ -56,6 +59,7 @@ def test_resolve_enhanced_plan_name_aliases():
     assert resolve_enhanced_plan_name("hn_classic_1r") == "Classic 1R"
     assert resolve_enhanced_plan_name("Classic 4") == "Classic 4"
     assert resolve_enhanced_plan_name("hn_classic_4") == "Classic 4"
+    assert resolve_enhanced_plan_name("Classic Plan-4") == "Classic 4"
     assert resolve_enhanced_plan_name("Remedy 03") is None
 
 def test_load_enhanced_plan_classic2():
