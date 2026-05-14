@@ -8,13 +8,125 @@ def test_home_page_serves_ui():
     resp = client.get("/")
     assert resp.status_code == 200
     assert "text/html" in resp.headers.get("content-type", "")
-    assert "Local Insurance Assistant" in resp.text
+    assert "NGI AI Sales Assistant" in resp.text
+
+
+def test_home_provider_city_dropdown_is_controlled():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    html = resp.text
+    assert '<select id="providerCity">' in html
+    assert 'id="providerCity" type="text"' not in html
+    for city in [
+        "Dubai",
+        "Sharjah",
+        "Abu Dhabi",
+        "Ajman",
+        "Al Ain",
+        "Ras Al Khaimah",
+        "Fujairah",
+        "Umm Al Quwain",
+    ]:
+        assert f'<option value="{city}">{city}</option>' in html
+
+
+def test_home_provider_area_dropdown_phase1_is_controlled():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    html = resp.text
+
+    assert '<select id="providerArea" disabled>' in html
+    assert '<option value="">Select Area (Optional)</option>' in html
+    assert "const areaOptionsByCity = " in html
+    # Cities must be present as keys
+    assert '"Dubai"' in html
+    assert '"Sharjah"' in html
+    assert '"Abu Dhabi"' in html
+    assert '"Ajman"' in html
+    # Key operational Sharjah areas must appear in the dropdown (dynamic from CSV)
+    assert "Rolla" in html
+    assert "Muwaileh" in html
+    # Key Dubai areas must appear
+    assert "Al Barsha" in html
+    assert "Business Bay" in html
+
+
+def test_home_provider_query_templates_are_deterministic_with_optional_area():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    html = resp.text
+    assert "let query = 'List ' + type + ' providers in ' + city + ' for ' + plan;" in html
+    assert "query = 'List ' + type + ' providers in ' + area + ' ' + city + ' for ' + plan;" in html
+    assert "providerCityEl.addEventListener('change', refreshAreaOptions);" in html
+
+
+def test_home_productivity_polish_controls_present():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    html = resp.text
+
+    assert 'class="panel sticky-search"' in html
+    assert 'Usage Intelligence' in html
+    assert 'Pinned Searches' in html
+    assert 'Top Repeated Searches' in html
+    assert 'Query Categories' in html
+    assert 'id="clearRecentBtn"' in html
+    assert 'id="clearPinnedBtn"' in html
+    assert 'Clear Recent Searches' in html
+    assert 'id="copyResponseBtn"' in html
+    assert 'id="copyFeedback"' in html
+    assert 'id="providerTypeChips"' in html
+    assert 'data-provider-type="hospital"' in html
+    assert 'data-provider-type="clinic"' in html
+    assert 'data-provider-type="pharmacy"' in html
+    assert 'data-provider-type="lab"' in html
+
+
+def test_home_plan_dropdowns_are_controlled_with_required_plans():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    html = resp.text
+
+    assert '<select id="planName">' in html
+    assert '<select id="providerPlan">' in html
+    assert '<select id="planA">' in html
+    assert '<select id="planB">' in html
+
+    assert 'id="planName" type="text"' not in html
+    assert 'id="providerPlan" type="text"' not in html
+    assert 'id="planA" type="text"' not in html
+    assert 'id="planB" type="text"' not in html
+
+    for plan in [
+        "Classic 1",
+        "Classic 1R",
+        "Classic 2",
+        "Classic 2R",
+        "Classic 3",
+        "Classic 4",
+        "Prime 1",
+        "Prime 2",
+        "Remedy 2",
+        "Remedy 3",
+        "Remedy 4",
+        "Remedy 5",
+        "Remedy 6",
+    ]:
+        assert f'<option value="{plan}">{plan}</option>' in html
+
+
+def test_home_plan_query_templates_are_unchanged():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    html = resp.text
+    assert "const query = 'Summarize ' + planName;" in html
+    assert "const query = 'Compare ' + planA + ' vs ' + planB;" in html
 
 def test_ask_smoke():
     resp = client.post("/ask", json={"question": "Hello"})
     assert resp.status_code == 200
     data = resp.json()
-    expected_keys = {"status", "question", "answer", "error", "display_answer"}
+    expected_keys = {"status", "question", "answer", "error", "display_answer", "recent_searches", "usage_state"}
     assert set(data.keys()).issubset(expected_keys)
     # Accept status == "error" for unsupported queries, but require valid structure
     assert data["question"] == "Hello"
@@ -55,7 +167,7 @@ def test_ask_unsupported():
     resp = client.post("/ask", json={"question": q})
     assert resp.status_code == 200
     data = resp.json()
-    expected_keys = {"status", "question", "answer", "error", "display_answer"}
+    expected_keys = {"status", "question", "answer", "error", "display_answer", "recent_searches", "usage_state"}
     assert set(data.keys()).issubset(expected_keys)
     assert data["status"] in ("error", "not_found")
     # answer can be None or a safe fallback
@@ -139,3 +251,76 @@ def test_ask_approval_gate_skips_formatter(monkeypatch):
     assert data["status"] == "error"
     assert data["display_answer"] is None
     assert data["error"] == "blocked"
+
+
+def test_recent_searches_tracks_only_successful_queries(monkeypatch):
+    import src.api.app as api_app
+
+    api_app._RECENT_SUCCESSFUL_QUERIES.clear()
+
+    def fake_handle_user_query(q, output_mode="dict"):
+        if q == "unsupported gibberish":
+            return {
+                "ok": False,
+                "intent": "unsupported",
+                "plan_name": None,
+                "tool_name": None,
+                "data": None,
+                "message": "not supported",
+                "normalized": {"status": "not_found", "tool": None, "answer": None, "errors": ["not supported"]},
+            }
+        return {
+            "ok": True,
+            "intent": "plan_summary",
+            "plan_name": "Remedy 03",
+            "tool_name": "plan_summary",
+            "data": {},
+            "message": "ok",
+            "normalized": {"status": "ok", "tool": "plan_summary", "answer": "ok", "errors": []},
+        }
+
+    monkeypatch.setattr(api_app, "handle_user_query", fake_handle_user_query)
+
+    first = client.post("/ask", json={"question": "Summarize Remedy 03"})
+    second = client.post("/ask", json={"question": "Compare Classic 1 vs Prime 1"})
+    third = client.post("/ask", json={"question": "unsupported gibberish"})
+
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert third.status_code == 200
+
+    second_recent = second.json()["recent_searches"]
+    assert second_recent == ["Compare Classic 1 vs Prime 1", "Summarize Remedy 03"]
+
+    third_recent = third.json()["recent_searches"]
+    assert third_recent == second_recent
+
+
+def test_recent_searches_keeps_last_ten(monkeypatch):
+    import src.api.app as api_app
+
+    api_app._RECENT_SUCCESSFUL_QUERIES.clear()
+
+    def fake_success(*args, **kwargs):
+        return {
+            "ok": True,
+            "intent": "plan_summary",
+            "plan_name": "Remedy 03",
+            "tool_name": "plan_summary",
+            "data": {},
+            "message": "ok",
+            "normalized": {"status": "ok", "tool": "plan_summary", "answer": "ok", "errors": []},
+        }
+
+    monkeypatch.setattr(api_app, "handle_user_query", fake_success)
+
+    latest = None
+    for i in range(12):
+        latest = client.post("/ask", json={"question": f"Summarize Plan {i}"})
+
+    assert latest is not None
+    payload = latest.json()
+    recent = payload["recent_searches"]
+    assert len(recent) == 10
+    assert recent[0] == "Summarize Plan 11"
+    assert recent[-1] == "Summarize Plan 2"

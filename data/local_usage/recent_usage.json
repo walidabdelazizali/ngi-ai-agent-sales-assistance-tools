@@ -1,0 +1,53 @@
+{
+  "recent_queries": [
+    "Summarize Plan 11",
+    "Summarize Plan 10",
+    "Summarize Plan 9",
+    "Summarize Plan 8",
+    "Summarize Plan 7",
+    "Summarize Plan 6",
+    "Summarize Plan 5",
+    "Summarize Plan 4",
+    "Summarize Plan 3",
+    "Summarize Plan 2",
+    "Summarize Plan 1",
+    "Summarize Plan 0",
+    "Compare Classic 1 vs Prime 1",
+    "Summarize Remedy 03",
+    "What is the annual limit for Remedy 04?",
+    "اعطني ملخص لخطة ريميدي 03",
+    "List hospital providers in Al Bada Dubai for Classic 1"
+  ],
+  "pinned_queries": [],
+  "top_queries": {
+    "Hello": 25,
+    "اعطني ملخص لخطة ريميدي 03": 25,
+    "unsupported gibberish": 26,
+    "What is the annual limit for Remedy 04?": 39,
+    "Provider 24HOUR PHARMACY in Remedy 6 network?": 13,
+    "Summarize Remedy 03": 13,
+    "Compare Classic 1 vs Prime 1": 13,
+    "Summarize Plan 0": 13,
+    "Summarize Plan 1": 13,
+    "Summarize Plan 2": 13,
+    "Summarize Plan 3": 13,
+    "Summarize Plan 4": 13,
+    "Summarize Plan 5": 13,
+    "Summarize Plan 6": 13,
+    "Summarize Plan 7": 13,
+    "Summarize Plan 8": 13,
+    "Summarize Plan 9": 13,
+    "Summarize Plan 10": 13,
+    "Summarize Plan 11": 13,
+    "List hospital providers in Al Bada Dubai for Classic 1": 1
+  },
+  "last_city": "Dubai",
+  "last_plan": "Remedy 03",
+  "query_categories": {
+    "unsupported": 64,
+    "plan_summary": 207,
+    "plan_core": 26,
+    "plan_network_provider": 13,
+    "plan_network_city_type": 1
+  }
+}

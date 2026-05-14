@@ -176,6 +176,7 @@ NORMALIZATION_REPLACEMENTS = {
     "الشبكة": "network",
     "شبكه": "network",
     "شبكة": "network",
+    "برايم": "prime",
 }
 
 NETWORK_LOOKUP_PATTERNS = [
@@ -231,6 +232,54 @@ CITY_ALIASES = {
     "عجمان": "Ajman",
 }
 
+AREA_OPTIONS_BY_CITY = {
+    "Dubai": ["Al Barsha", "Al Barsha South", "Business Bay", "Dubai Marina", "Dubai Silicon Oasis", "Dubai South", "Jumeirah Village Circle"],
+    "Sharjah": ["Al Nahda", "Al Nahda 1", "Muwaileh", "Al Sharq"],
+    "Abu Dhabi": ["Khalifa City", "Al Reem", "Al Bateen", "Muroor Road", "Rawdhat Abu Dhabi"],
+    "Ajman": ["Al Jurf", "Rumaila"],
+}
+
+AREA_NORMALIZATION_ALIASES = {
+    # Sharjah
+    "al nahda": "Al Nahda",
+    "al nahda 1": "Al Nahda 1",
+    "al nahda st": "Al Nahda",
+    "al nahda sharjah": "Al Nahda",
+    "al nahda shj": "Al Nahda",
+    "nahda": "Al Nahda",
+    "muwaileh": "Muwaileh",
+    "muweilah": "Muwaileh",
+    "muwaileh commercial": "Muwaileh",
+    "muwaileh commercial al zahia": "Muwaileh",
+    "al sharq": "Al Sharq",
+    # Dubai
+    "al barsha 1": "Al Barsha",
+    "al barsha 2": "Al Barsha",
+    "barsha": "Al Barsha",
+    "barsha south": "Al Barsha South",
+    "business bay": "Business Bay",
+    "marina": "Dubai Marina",
+    "dso": "Dubai Silicon Oasis",
+    "silicon oasis": "Dubai Silicon Oasis",
+    "dubai south": "Dubai South",
+    "jvc": "Jumeirah Village Circle",
+    "jumeirah village circle": "Jumeirah Village Circle",
+    # Abu Dhabi
+    "khalifa city": "Khalifa City",
+    "al reem": "Al Reem",
+    "al reem island": "Al Reem",
+    "al bateen": "Al Bateen",
+    "muroor road": "Muroor Road",
+    "muroor": "Muroor Road",
+    "rawdhat": "Rawdhat Abu Dhabi",
+    "rawdhat abu dhabi": "Rawdhat Abu Dhabi",
+    # Ajman
+    "al jurf": "Al Jurf",
+    "al jurf 3": "Al Jurf",
+    "jurf": "Al Jurf",
+    "rumaila": "Rumaila",
+}
+
 PROVIDER_TYPE_ALIASES = {
     "hospital": "hospital",
     "hospitals": "hospital",
@@ -269,6 +318,9 @@ NETWORK_LABELS = {
     "hn_exclusive": "HN Exclusive",
     "hn_basic": "HN Basic",
 }
+
+# Temporary diagnostics switch for deterministic area matching visibility.
+DEBUG_AREA_MATCHING = False
 
 PLAN_FIELD_HINTS = [
     "annual limit", "limit",  # Core field
@@ -333,10 +385,19 @@ def _normalize_query_text(text: str) -> str:
     normalized = re.sub(r"كلاسيك\s*([0-9]+)\s*r", r"كلاسيك \1r", normalized)
     normalized = re.sub(r"كلاسيك\s*([0-9]+)", r"كلاسيك \1", normalized)
     normalized = re.sub(r"ريميدي\s*([0-9]+)", r"ريميدي \1", normalized)
+    # Explicit shorthand/typo hardening from observed operator usage.
+    normalized = re.sub(r"ريمدي\s*([0-9]+)", r"remedy \1", normalized)
+    normalized = re.sub(r"رمدي\s*([0-9]+)", r"remedy \1", normalized)
+    normalized = re.sub(r"كلاسك\s*([0-9]+)\s*r", r"classic \1r", normalized)
+    normalized = re.sub(r"كلاسك\s*([0-9]+)", r"classic \1", normalized)
+    normalized = re.sub(r"برايم\s*([0-9]+)", r"prime \1", normalized)
     # Minimal Arabic plan alias normalization for mixed routing.
     normalized = re.sub(r"\bريميدي\b", "remedy", normalized)
     normalized = re.sub(r"\bريمدي\b", "remedy", normalized)
+    normalized = re.sub(r"\bرمدي\b", "remedy", normalized)
     normalized = re.sub(r"\bكلاسيك\b", "classic", normalized)
+    normalized = re.sub(r"\bكلاسك\b", "classic", normalized)
+    normalized = re.sub(r"\bبرايم\b", "prime", normalized)
     for src, dst in NORMALIZATION_REPLACEMENTS.items():
         normalized = normalized.replace(src, dst)
     # Minimal separator normalization for comparison parsing.
@@ -462,6 +523,39 @@ def _extract_city_and_provider_type(text: str) -> tuple[Optional[str], Optional[
 
     return detected_city, detected_type
 
+
+def _canonical_area_for_city(area_text: str, city: str) -> Optional[str]:
+    lowered = _normalize_query_text(area_text)
+    if not lowered:
+        return None
+
+    if lowered in AREA_NORMALIZATION_ALIASES:
+        return AREA_NORMALIZATION_ALIASES[lowered]
+
+    for area in AREA_OPTIONS_BY_CITY.get(city, []):
+        if lowered == _normalize_query_text(area):
+            return area
+
+    # Not in known list — return raw area text so CSV-level normalization validates it
+    return area_text.strip() if area_text.strip() else None
+
+
+def _extract_area_for_city(text: str, city: Optional[str]) -> Optional[str]:
+    if not city:
+        return None
+
+    lowered = _normalize_query_text(text)
+    city_token = _normalize_query_text(city)
+    if not city_token:
+        return None
+
+    pattern = rf"\bin\s+(.+?)\s+{re.escape(city_token)}\b"
+    m = re.search(pattern, lowered)
+    if not m:
+        return None
+
+    return _canonical_area_for_city(m.group(1).strip(), city)
+
 # Patterns that signal a provider-in-plan membership query.
 # Provider type modifiers that are not supported as listing filters.
 # When one of these words appears alongside a recognized type, the listing query is unsupported.
@@ -491,6 +585,16 @@ _PROVIDER_MEMBERSHIP_PATTERNS = [
     # Mixed (no هل): "PROVIDER في شبكة Plan" e.g. "ACCURACY PLUS في شبكة Remedy 05؟"
     # (applied after normalization: شبكة → network)
     _re.compile(r"^(?!(?:هل|is|provider|what)\b)\S.+\s+في\s+network\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Mixed (no هل): "PROVIDER ضمن شبكة Plan"
+    _re.compile(r"^(?!(?:هل|is|provider|what)\b)\S.+\s+ضمن\s+network\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    # English broker phrasing: covered/available/direct-billing under a plan.
+    _re.compile(r"^is\s+\S.+\s+covered\s+(?:in|under)\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    _re.compile(r"^is\s+\S.+\s+available\s+under\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    _re.compile(r"^is\s+\S.+\s+direct\s+billing\s+(?:in|under)\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    # Arabic broker phrasing: يشمله / ضمن الشبكة / موجود بالشبكة with explicit plan.
+    _re.compile(r"^هل\s+\S.+\s+يشمله\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    _re.compile(r"^هل\s+\S.+\s+(?:في|داخل|ضمن)\s+network\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    _re.compile(r"^هل\s+\S.+\s+موجود\s+ب(?:network|الشبكة)\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
 ]
 
 def _is_provider_membership_query(lowered_text: str) -> bool:
@@ -519,6 +623,16 @@ _MEMBERSHIP_PROVIDER_EXTRACTORS = [
     _re.compile(r"^(.+?)\s+في\s+network\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
     # Mixed (no هل): "PROVIDER في شبكة Plan؟" (raw Arabic form, before normalization)
     _re.compile(r"^(.+?)\s+في\s+شبكة\s+(?:remedy|classic)\s*\S+\??$", _re.IGNORECASE),
+    # Mixed (no هل): "PROVIDER ضمن network Plan؟" (normalized)
+    _re.compile(r"^(.+?)\s+ضمن\s+network\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    # English broker phrasing: "Is PROVIDER covered/available under PLAN?"
+    _re.compile(r"^is\s+(.+?)\s+(?:covered\s+(?:in|under)|available\s+under|direct\s+billing\s+(?:in|under))\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    # Arabic broker phrasing: "هل PROVIDER يشمله PLAN؟"
+    _re.compile(r"^هل\s+(.+?)\s+يشمله\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    # Arabic broker phrasing: "هل PROVIDER ضمن/في/داخل الشبكة PLAN؟" (normalized شبكة->network)
+    _re.compile(r"^هل\s+(.+?)\s+(?:في|داخل|ضمن)\s+network\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
+    # Arabic broker phrasing: "هل PROVIDER موجود بالشبكة PLAN؟"
+    _re.compile(r"^هل\s+(.+?)\s+موجود\s+ب(?:network|الشبكة)\s+(?:remedy|classic|prime)\s*\S+\??$", _re.IGNORECASE),
     # Shorthand: "PROVIDER Remedy N?" (last resort — least specific)
     _re.compile(r"^(.+?)\s+(?:remedy|classic)\s*\S+(?:\s+network)?\??$", _re.IGNORECASE),
 ]
@@ -688,6 +802,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
         from src.query.plan_network_lookup import resolve_plan_network
 
         city, provider_type = _extract_city_and_provider_type(user_query)
+        area = _extract_area_for_city(user_query, city)
         if not city:
             msg = "City is unknown, unclear, or unsupported. Please specify one of: Dubai, Abu Dhabi, Sharjah, Ajman."
             return {
@@ -742,7 +857,14 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
 
         network_code = mapping["medical_network"]
         lookup = get_network_lookup()
-        listing = lookup.list_providers_in_network(network_code=network_code, city=city, provider_type=provider_type, limit=25)
+        listing = lookup.list_providers_in_network(
+            network_code=network_code,
+            city=city,
+            provider_type=provider_type,
+            area=area,
+            limit=25,
+            debug_area_matching=DEBUG_AREA_MATCHING,
+        )
 
         if not listing.get("ok"):
             if listing.get("error") == "unknown_city":
@@ -777,14 +899,49 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             f"Count: {count}",
         ]
 
+        if area:
+            lines.insert(4, f"Area: {area}")
+
+        if area and listing.get("area_filter_applied"):
+            lines.append("Area Match Mode: ACTIVE")
+            lines.append(f"Matched Providers Count: {count}")
+
+        if area and listing.get("area_fallback_to_city"):
+            lines.append("Area Match Mode: CITY FALLBACK")
+            lines.append("Exact area-filtered providers were not found.")
+            lines.append(f"Showing broader {city} city-level providers instead.")
+
         if count == 0:
             lines.append("No matching providers found for this plan/network/city/provider type.")
         else:
             lines.append("Providers:")
             for name in listing["providers"]:
-                lines.append(f"- {name}")
+                details = lookup.provider_details(name)
+                area_value = str(details.get("area", "")).strip() if isinstance(details, dict) else ""
+                if area_value:
+                    lines.append(f"- {name} [{area_value}]")
+                else:
+                    lines.append(f"- {name}")
             if listing.get("truncated"):
                 lines.append("Showing first 25 providers only.")
+
+        if area and DEBUG_AREA_MATCHING and isinstance(listing.get("area_debug"), dict):
+            dbg = listing["area_debug"]
+            lines.append("")
+            lines.append("[AREA DEBUG]")
+            lines.append(f"Raw Area Query: {dbg.get('raw_area_query', '')}")
+            lines.append(f"Normalized Area Query: {dbg.get('normalized_area_query', '')}")
+            lines.append("")
+            lines.append("Expanded Alias Terms:")
+            for alias in dbg.get("expanded_alias_terms", []):
+                lines.append(f"- {alias}")
+            lines.append("")
+            lines.append("Provider Area Checks:")
+            for entry in dbg.get("provider_area_checks", []):
+                lines.append(f"- Provider: {entry.get('provider', '')}")
+                lines.append(f"  Raw Area: {entry.get('raw_area', '')}")
+                lines.append(f"  Normalized: {entry.get('normalized_area', '')}")
+                lines.append(f"  Matched: {'YES' if entry.get('matched') else 'NO'}")
 
         result = "\n".join(lines)
         return {

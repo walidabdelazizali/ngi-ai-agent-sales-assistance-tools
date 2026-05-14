@@ -1,3 +1,41 @@
+# SESSION STATE
+
+## Current Phase
+- Phase A Sprint 3: Provider lookup ergonomics and operator-speed improvements — COMPLETE
+
+## Stable Tag
+- stable-internal-mini-ragless-insurance-assistant
+
+## Architecture Rules
+- Keep deterministic Q&A behavior first.
+- Keep provider search and plan comparison flows stable.
+- Preserve existing local UI and current API contract.
+- No architecture drift, no expansion beyond bounded task scope.
+
+## Current Focus
+- Keep provider area handling operationally aligned between UI selectors and deterministic provider results.
+
+## Known Operational Friction
+- Area naming variants across data rows can cause operator confusion if UI options drift from runtime output labels.
+- Mixed city casing in source data requires strict case-insensitive filtering discipline.
+
+## Current UI Components
+- Local web UI home screen.
+- Provider search form.
+- Plan comparison query form.
+- Results display with deterministic textual output.
+
+## Do Not Introduce
+- RAG or vector database components.
+- Recommendation engines or ranking logic.
+- Hallucination-prone generative behavior.
+- Autonomous orchestration or background agent systems.
+- New endpoints, routing changes, or business-logic rewrites.
+
+## Success Criteria
+- Deterministic insurance assistant behavior remains stable.
+- Provider search + comparison search + local UI continue to work without behavioral regression.
+- No architecture/runtime changes introduced during operational governance updates.
 
 
 
@@ -15,6 +53,47 @@ stage2-live
 - Writing layer fully integrated (output_mode parameter in API)
 - Manual operator validation pack: **33/33 PASS** (10 questions, 10 modes, 100% clean)
 - Patch applied: display_answer ONLY rendered when explicit formatted mode requested AND intent approved
+
+## Today's work (Operational Local UI Hardening)
+1. Completed SAFE AREA FILTERING HARDENING (deterministic only) for provider listing flow.
+2. Added minimal area extraction in [src/agent_wrapper.py](src/agent_wrapper.py) for provider-listing intent with controlled city-aware canonicalization.
+3. Added deterministic optional area filtering in [src/query/network_lookup.py](src/query/network_lookup.py):
+	- area normalization aliases (small hardcoded Phase-2 set)
+	- contains/equality deterministic matching against provider `area` field
+	- safe fallback to city-level results when area-filtered results are zero
+	- fallback metadata (`area_filter_applied`, `area_fallback_to_city`) for wrapper messaging
+4. Added trust-preserving fallback message in provider listing output when area filtering yields zero matches:
+	- `No exact area-filtered providers found.`
+	- `Showing city-level providers instead.`
+5. Added focused regression tests in [tests/test_safe_area_filtering_hardening.py](tests/test_safe_area_filtering_hardening.py) covering:
+	- normalized area alias matching
+	- deterministic area narrowing
+	- safe fallback behavior
+	- city-only behavior unchanged
+6. Validation:
+	- `pytest tests/test_safe_area_filtering_hardening.py -q` -> 4 passed
+	- `pytest tests/test_api.py tests/test_api_hardened.py -q` -> 20 passed
+	- `pytest tests/test_arabic_owner_query.py tests/test_owner_query.py -q` -> 76 passed
+	- `pytest tests/test_agent_wrapper.py::test_plan_network_city_type_pharmacies_in_sharjah_remedy6 tests/test_agent_wrapper.py::test_plan_network_city_type_hospitals_in_sharjah_remedy6 -q` -> 2 passed
+
+## Today's work (Operational Local UI Hardening)
+1. Completed OPERATIONAL LOCAL UI HARDENING (no architecture expansion) in [src/api/app.py](src/api/app.py):
+	- Upgraded local UI title to `NGI AI Sales Assistant`.
+	- Added operational command-center blocks: Recent Searches, Plan Quick Search, Provider Search, Comparison Search.
+	- Kept existing `GET /` and `POST /ask` routes and deterministic backend usage unchanged.
+	- Added lightweight in-memory recent successful query list (`last 10`) with clickable rerun from UI.
+	- Added deterministic query constructors in UI only:
+	  - `Summarize <PLAN_NAME>`
+	  - `List <TYPE> providers in <CITY> for <PLAN>`
+	  - `Compare <PLAN_A> vs <PLAN_B>`
+	- Preserved output safety boundaries, refusal behavior, and approval-gated formatter behavior.
+2. Updated API/UI regression tests in [tests/test_api_hardened.py](tests/test_api_hardened.py):
+	- Home page title assertion updated.
+	- Response shape updated for `recent_searches` field.
+	- Added focused tests for recent-search success-only tracking and max-10 retention.
+3. Validation:
+	- `pytest tests/test_api.py tests/test_api_hardened.py` -> 15 passed
+	- `pytest tests/test_arabic_owner_query.py tests/test_owner_query.py` -> 76 passed
 
 ## Today's work (Enhanced Catalog Comparison Layer - Phase 1 Re-implementation)
 1. Re-implemented deterministic approved-only comparison path for Classic 1 vs Prime 1.

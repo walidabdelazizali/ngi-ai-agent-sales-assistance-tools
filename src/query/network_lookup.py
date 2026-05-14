@@ -27,6 +27,16 @@ PROVIDER_QUERY_ALIASES = {
     "مستشفى burjeel": "Burjeel Hospital",
     # NMC Royal DXB: "DXB" disambiguates the Dubai branch deterministically (one CSV row).
     "nmc royal hospital dxb": "NMC ROYAL HOSPITAL LLC(DXB)",
+    "nmc royal dxb": "NMC ROYAL HOSPITAL LLC(DXB)",
+    "nmc dxb": "NMC ROYAL HOSPITAL LLC(DXB)",
+    # SGH shorthand and common broker wording.
+    "sgh": "SAUDI GERMAN HOSPITAL",
+    "saudi german": "SAUDI GERMAN HOSPITAL",
+    "saudi german hosp": "SAUDI GERMAN HOSPITAL",
+    "saudi german hospital": "SAUDI GERMAN HOSPITAL",
+    # Aster Qusais shorthand variants.
+    "aster qusais dxb": "ASTER MEDICAL CENTRE AL QUSAIS",
+    "aster al qusais dxb": "ASTER MEDICAL CENTRE AL QUSAIS",
     # ACCURACY PLUS: only one canonical match in the CSV ("ACCURACY PLUS MEDICAL LABORATORY").
     "accuracy plus": "ACCURACY PLUS MEDICAL LABORATORY",
 }
@@ -135,6 +145,102 @@ class NetworkLookup:
         "lab": ("DIAGNOSTIC CENTER", "LABORATORY"),
     }
 
+    AREA_OPTIONS_BY_CITY = {
+        "Dubai": ["Al Barsha", "Al Barsha South", "Business Bay", "Dubai Marina", "Dubai Silicon Oasis", "Dubai South", "Jumeirah Village Circle"],
+        "Sharjah": ["Al Nahda", "Al Nahda 1", "Muwaileh", "Al Sharq"],
+        "Abu Dhabi": ["Khalifa City", "Al Reem", "Al Bateen", "Muroor Road", "Rawdhat Abu Dhabi"],
+        "Ajman": ["Al Jurf", "Rumaila"],
+    }
+
+    AREA_ALIASES = {
+        # --- Sharjah ---
+        "al nahda": ["al nahda", "al nahda 1", "al nahda st", "nahda", "al nahda sharjah", "al nahda shj", "al nahdha", "al nahba", "al nahba"],
+        "muwaileh": ["muwaileh", "muweilah", "muwailah", "muwaila", "muwaileh commercial", "muwaileh commercial al zahia", "muwaillah", "muwalieh", "muweileh", "muweillah", "muweliah", "muweliah commercial", "mjuweilah"],
+        "rolla": ["rolla", "rolla mall", "rolla sharjah", "rolla square", "al rolla", "al ghuwair rolla"],
+        "al majaz": ["al majaz", "al majaz 1", "al majaz 2", "al majaz 3", "al majaz-1", "al majaz-3", "al majaz1", "almajaz 2", "almajaz1", "al majaaz 3", "al majaz no-2", "majaz 2", "majaz 3", "majaz-2"],
+        "al khan": ["al khan", "al khan street", "al khan industrial area-3", "al khan industrial area 3", "khalidhiya al khan"],
+        "al tawoon": ["al tawoon", "al tawoon street", "al taawun", "al taawun sharjah", "al taawun rd", "al taawun roundabout", "al tawun", "al tawoun", "al tawuun", "al tawooun"],
+        "al zahra": ["al zahra", "al zahia", "al zahia city centre", "zahia city centre", "al zahia uptown", "city centre al zahia"],
+        "abu shagara": ["abu shagara", "abu shagarah", "abu shaghara", "abu shagharah", "abu-shagara", "abushagara", "abu shagara sharjah", "abu-shagara sharjah"],
+        "al qasimiya": ["al qasimiya", "al qassimia", "al qasimia", "al qasimi", "al-qasimiya", "qasimiya sharjah", "al qasmiah", "al qassemiya", "al qasmia immigration road"],
+        "al butina": ["al butina", "buteena", "buteena area", "butina", "buteena", "abutina"],
+        "abu shagara": ["abu shagara", "abu shagarah", "abu shaghara", "abu shagharah", "abu-shagara", "abushagara"],
+        "al buhaira": ["al buhaira", "al buhairah", "buhaira", "buhaira corniche", "buhaira cornich", "buhairah corniche", "buhairah cornish", "buheirah corniche", "al buhaira cornich"],
+        "al soor": ["al soor"],
+        "al wahda": ["al wahda", "al wahda street"],
+        "al ghuwair": ["al ghuwair", "al ghuwair arooba"],
+        "al fayha": ["al fayha"],
+        "industrial area": ["industrial area", "industrial area 2", "industrial area 3", "industrial area 4", "industrial area 5", "industrial area 10", "industrial area 11", "industrial area 12", "ind area 2"],
+        "al musallah": ["al musallah", "al musallainside grand mall"],
+        "al shahba": ["al shahba", "al shahba - zawaya walk", "al shahbah area", "shahba", "shahba area"],
+        "al nasseriya": ["al nasseriya", "al nasserya", "nasseriya", "nasriya", "nasserya"],
+        "al sharq": ["al sharq", "al sharq street"],
+        # --- Dubai ---
+        "al barsha": ["al barsha", "barsha", "barsha 1", "barsha 2", "al barsha 1", "al barsha 2"],
+        "al barsha south": ["al barsha south", "barsha south"],
+        "business bay": ["business bay"],
+        "dubai marina": ["dubai marina", "marina"],
+        "dubai silicon oasis": ["dubai silicon oasis", "dso", "silicon oasis", "dubai silicon oasis (dso)"],
+        "dubai south": ["dubai south"],
+        "jumeirah village circle": ["jumeirah village circle", "jvc", "jumaira village circle", "jumeira vllage"],
+        # --- Abu Dhabi ---
+        "khalifa city": ["khalifa city"],
+        "al reem": ["al reem", "al reem island"],
+        "al bateen": ["al bateen"],
+        "muroor road": ["muroor road", "muroor"],
+        "rawdhat abu dhabi": ["rawdhat abu dhabi", "rawdhat"],
+        # --- Ajman ---
+        "al jurf": ["al jurf", "al jurf 3", "jurf"],
+        "rumaila": ["rumaila"],
+    }
+
+    AREA_CANONICAL_MAP = {
+        alias: key
+        for key, aliases in AREA_ALIASES.items()
+        for alias in aliases
+    }
+
+    AREA_DISPLAY_LABELS = {
+        # Sharjah
+        "al nahda": "Al Nahda",
+        "muwaileh": "Muwaileh",
+        "rolla": "Rolla",
+        "al majaz": "Al Majaz",
+        "al khan": "Al Khan",
+        "al tawoon": "Al Tawoon",
+        "al zahra": "Al Zahra",
+        "abu shagara": "Abu Shagara",
+        "al qasimiya": "Al Qasimiya",
+        "al butina": "Al Butina",
+        "al buhaira": "Al Buhaira",
+        "al soor": "Al Soor",
+        "al wahda": "Al Wahda",
+        "al ghuwair": "Al Ghuwair",
+        "al fayha": "Al Fayha",
+        "industrial area": "Industrial Area",
+        "al musallah": "Al Musallah",
+        "al shahba": "Al Shahba",
+        "al nasseriya": "Al Nasseriya",
+        "al sharq": "Al Sharq",
+        # Dubai
+        "al barsha": "Al Barsha",
+        "al barsha south": "Al Barsha South",
+        "business bay": "Business Bay",
+        "dubai marina": "Dubai Marina",
+        "dubai silicon oasis": "Dubai Silicon Oasis",
+        "dubai south": "Dubai South",
+        "jumeirah village circle": "Jumeirah Village Circle",
+        # Abu Dhabi
+        "khalifa city": "Khalifa City",
+        "al reem": "Al Reem",
+        "al bateen": "Al Bateen",
+        "muroor road": "Muroor Road",
+        "rawdhat abu dhabi": "Rawdhat Abu Dhabi",
+        # Ajman
+        "al jurf": "Al Jurf",
+        "rumaila": "Rumaila",
+    }
+
     @staticmethod
     def _normalize_query_text(text: str) -> str:
         normalized = (text or "").strip().lower()
@@ -171,6 +277,90 @@ class NetworkLookup:
     def canonical_provider_type(provider_type: str):
         lowered = NetworkLookup._normalize_query_text(provider_type or "")
         return NetworkLookup.PROVIDER_TYPE_ALIASES.get(lowered)
+
+    @staticmethod
+    def _normalize_area_text(area: str) -> str:
+        normalized = NetworkLookup._normalize_query_text(area or "")
+        normalized = unicodedata.normalize("NFKC", normalized)
+        normalized = re.sub(r"[^\w\s]", " ", normalized)
+        normalized = re.sub(r"_+", " ", normalized)
+        normalized = re.sub(r"\s+", " ", normalized)
+        return normalized.strip()
+
+    @staticmethod
+    def _canonical_area_key(area: str) -> str:
+        normalized = NetworkLookup._normalize_area_text(area or "")
+        if not normalized:
+            return ""
+        return NetworkLookup.AREA_CANONICAL_MAP.get(normalized, normalized)
+
+    @staticmethod
+    def canonical_area(area: str, city: str | None = None):
+        key = NetworkLookup._canonical_area_key(area or "")
+        if not key:
+            return None
+
+        display = NetworkLookup.AREA_DISPLAY_LABELS.get(key)
+        if display:
+            if city and display in NetworkLookup.AREA_OPTIONS_BY_CITY.get(city, []):
+                return display
+            if not city:
+                return display
+
+        if city:
+            for known in NetworkLookup.AREA_OPTIONS_BY_CITY.get(city, []):
+                if key == NetworkLookup._canonical_area_key(known):
+                    return known
+            return None
+
+        return area.strip() if isinstance(area, str) else None
+
+    def _area_matches(self, row_area: str, requested_area: str, city: str) -> bool:
+        row_norm = self._canonical_area_key(row_area or "")
+        req_norm = self._canonical_area_key(requested_area or "")
+        if not row_norm or not req_norm:
+            return False
+        return row_norm == req_norm or req_norm in row_norm or row_norm in req_norm
+
+    def _area_alias_terms(self, requested_area: str, city: str | None = None) -> list[str]:
+        lowered = self._canonical_area_key(requested_area or "")
+        if not lowered:
+            return []
+
+        aliases = self.AREA_ALIASES.get(lowered, [lowered])
+
+        # Preserve deterministic order and remove duplicates.
+        out = []
+        seen = set()
+        for alias in aliases:
+            norm_alias = self._normalize_area_text(alias)
+            if norm_alias and norm_alias not in seen:
+                out.append(norm_alias)
+                seen.add(norm_alias)
+        return out
+
+    def get_distinct_area_options(self, city: str) -> list[str]:
+        """Return deduplicated canonical display labels for all AREA values for a city.
+
+        Uses the city-insensitive match identical to list_providers_in_network.
+        Deduplication: multiple raw AREA spellings that share a canonical key produce
+        a single display label (from AREA_DISPLAY_LABELS, else title-cased key).
+        """
+        canonical_city = self.canonical_city(city)
+        if not canonical_city:
+            return []
+        city_df = self.df[self.df["city"].str.strip().str.upper() == canonical_city.upper()]
+        raw_areas = {v.strip() for v in city_df["area"] if v.strip()}
+
+        seen_keys: dict[str, str] = {}  # canonical_key -> display_label
+        for area in sorted(raw_areas):
+            key = self._canonical_area_key(area)
+            if not key or key in seen_keys:
+                continue
+            label = self.AREA_DISPLAY_LABELS.get(key) or key.title()
+            seen_keys[key] = label
+
+        return sorted(seen_keys.values())
 
     @staticmethod
     def _format_ambiguous_message(candidates, lang="en"):
@@ -216,7 +406,7 @@ class NetworkLookup:
         # Otherwise, return original
         return NetworkLookup._apply_provider_aliases(query.strip())
 
-    def list_providers_in_network(self, network_code, city, provider_type, limit=25):
+    def list_providers_in_network(self, network_code, city, provider_type, area=None, limit=25, debug_area_matching=False):
         available_values = ("✔", "✓", "yes", "y", "true", "1")
         network_col = (network_code or "").strip().lower()
         if network_col not in self.df.columns:
@@ -247,6 +437,48 @@ class NetworkLookup:
         df = df[df["city"].str.strip().str.upper() == canonical_city.upper()]
         df = df[df["type"].str.upper().apply(lambda t: any(token in t for token in type_tokens))]
 
+        requested_area = (area or "").strip()
+        area_filter_applied = False
+        area_fallback_to_city = False
+        effective_area = None
+        area_debug = None
+
+        if requested_area:
+            canonical_requested_area = self.canonical_area(requested_area, city=canonical_city) or requested_area
+            alias_terms = self._area_alias_terms(canonical_requested_area, city=canonical_city)
+
+            if debug_area_matching:
+                checks = []
+                for _, row in df.head(10).iterrows():
+                    provider_name = str(row.get("provider_name", "")).strip()
+                    row_area_raw = str(row.get("area", "")).strip()
+                    row_area_norm = self._canonical_area_key(row_area_raw)
+                    matched = self._area_matches(row_area_raw, canonical_requested_area, canonical_city)
+                    checks.append(
+                        {
+                            "provider": provider_name,
+                            "raw_area": row_area_raw,
+                            "normalized_area": row_area_norm,
+                            "matched": bool(matched),
+                        }
+                    )
+
+                area_debug = {
+                    "raw_area_query": requested_area,
+                    "normalized_area_query": self._normalize_query_text(canonical_requested_area),
+                    "expanded_alias_terms": alias_terms,
+                    "provider_area_checks": checks,
+                }
+
+            area_df = df[df["area"].apply(lambda val: self._area_matches(str(val), canonical_requested_area, canonical_city))]
+            if not area_df.empty:
+                df = area_df
+                area_filter_applied = True
+                effective_area = canonical_requested_area
+            else:
+                area_fallback_to_city = True
+                effective_area = canonical_requested_area
+
         provider_names = sorted({str(name).strip() for name in df["provider_name"] if str(name).strip()})
 
         # Keep only provider names that can be re-resolved deterministically to this network.
@@ -263,6 +495,10 @@ class NetworkLookup:
             "network_code": network_col,
             "city": canonical_city,
             "provider_type": canonical_type,
+            "requested_area": effective_area,
+            "area_filter_applied": area_filter_applied,
+            "area_fallback_to_city": area_fallback_to_city,
+            "area_debug": area_debug,
             "count": len(verified),
             "providers": shown,
             "truncated": len(shown) < len(verified),
@@ -758,6 +994,7 @@ class NetworkLookup:
             "provider_name": row.get("provider_name", ""),
             "google_name": row.get("google_name", ""),
             "city": row.get("city", ""),
+            "area": row.get("area", ""),
             "type": row.get("type", ""),
             "available_network_tiers": available,
             "found": True

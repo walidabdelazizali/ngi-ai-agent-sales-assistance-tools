@@ -4,6 +4,7 @@ Tests for Arabic, English, and mixed-language queries.
 Validates deterministic safety: no hallucination, no guessing, safe ambiguity handling.
 """
 import pytest
+import re
 from pathlib import Path
 from src.agent_wrapper import run_agent_wrapper, _intent_from_query, _extract_plan_name
 
@@ -318,7 +319,17 @@ class TestProviderListingUsefulness:
 
     @staticmethod
     def _extract_provider_lines(message: str):
-        return [line[2:].strip() for line in message.splitlines() if line.startswith("- ") and line[2:].strip()]
+        providers = []
+        for line in message.splitlines():
+            if not line.startswith("- "):
+                continue
+            item = line[2:].strip()
+            if not item:
+                continue
+            # Provider readability may append " [AREA]"; keep deterministic provider checks name-only.
+            item = re.sub(r"\s+\[[^\]]+\]\s*$", "", item)
+            providers.append(item)
+        return providers
 
     @staticmethod
     def _extract_count(message: str):
