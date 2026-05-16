@@ -7972,5 +7972,257 @@
     "result_type": "plan_summary",
     "retry_count": 29,
     "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:49+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 59,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:50+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 59,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:55+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 60,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:55+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 60,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:55+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 61,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:55+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 122,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:55+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 123,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:55+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 124,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:56+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 125,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:56+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 14,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:56+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 126,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 30,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 126,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 31,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 42,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 62,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:57+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:58+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:58+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:58+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:58+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:58+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T21:53:58+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 30,
+    "classification": "REVIEW"
   }
 ]

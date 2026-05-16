@@ -2,7 +2,7 @@
 Agent Adapter: Minimal deterministic integration surface for agent system.
 """
 from typing import Any, Dict, Union
-from src.agent_wrapper import run_agent_wrapper
+from src.agent_wrapper import _build_unsupported_response, run_agent_wrapper
 
 # Human-readable formatting logic (aligns with entrypoint)
 def _format_human_readable(result: dict) -> str:
@@ -247,6 +247,10 @@ def _format_human_readable(result: dict) -> str:
 def _is_structured_fallback(answer: Any) -> bool:
     return bool(getattr(answer, "is_fallback", False))
 
+
+def _is_structured_unsupported(result: Any) -> bool:
+    return bool(getattr(result, "is_unsupported", False))
+
 def handle_user_query(user_query: str, output_mode: str = "dict") -> Union[Dict[str, Any], str]:
     # --- Unified business_answer routing ---
     from src.query.business_answer import answer_business_query
@@ -255,17 +259,21 @@ def handle_user_query(user_query: str, output_mode: str = "dict") -> Union[Dict[
     if _is_structured_fallback(answer):
         from src.agent_wrapper import run_agent_wrapper
         result = run_agent_wrapper(user_query)
+        if _is_structured_unsupported(result):
+            if output_mode == "dict":
+                return result
+            elif output_mode == "text":
+                return result.get("message", "This plan is not available for customer-facing answers.")
+            else:
+                return _build_unsupported_response(
+                    message=f"Invalid output_mode: {output_mode}. Supported: 'dict', 'text'."
+                )
         # If blocked (ok=False), always return a safe fallback with valid structure
         if not result.get("ok"):
-            fallback = {
-                "ok": False,
-                "intent": result.get("intent", "unsupported"),
-                "plan_name": result.get("plan_name"),
-                "tool_name": result.get("tool_name"),
-                "data": None,
-                "message": result.get("message", "This plan is not available for customer-facing answers."),
-                "normalized": result.get("normalized", {})
-            }
+            fallback = _build_unsupported_response(
+                message=result.get("message", "This plan is not available for customer-facing answers."),
+                plan_name=result.get("plan_name"),
+            )
             if output_mode == "dict":
                 return fallback
             elif output_mode == "text":
@@ -326,24 +334,14 @@ def handle_user_query(user_query: str, output_mode: str = "dict") -> Union[Dict[
                     "message": ans
                 }
             # Fallback: treat as unsupported
-            return {
-                "ok": False,
-                "intent": "unsupported",
-                "plan_name": None,
-                "tool_name": None,
-                "data": None,
-                "message": "No supported plan or answer for this query. Please ask about Remedy 02-06 or supported features."
-            }
+            return _build_unsupported_response(
+                message="No supported plan or answer for this query. Please ask about Remedy 02-06 or supported features."
+            )
         if output_mode == "dict":
             return parse_structured_answer(answer)
         elif output_mode == "text":
             return answer
         else:
-            return {
-                "ok": False,
-                "intent": "unsupported",
-                "plan_name": None,
-                "tool_name": None,
-                "data": None,
-                "message": f"Invalid output_mode: {output_mode}. Supported: 'dict', 'text'."
-            }
+            return _build_unsupported_response(
+                message=f"Invalid output_mode: {output_mode}. Supported: 'dict', 'text'."
+            )

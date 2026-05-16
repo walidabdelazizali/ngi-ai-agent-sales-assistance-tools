@@ -15,6 +15,38 @@ No AI, LLM, RAG, or fuzzy logic.
 from typing import Dict, Any, Optional
 from src.tool_contract import get_plan_core, get_reimbursement_rules, get_plan_summary
 
+
+class UnsupportedResponse(dict):
+    """Internal-only unsupported envelope that preserves dict compatibility."""
+
+    is_unsupported = True
+
+
+def _build_unsupported_response(
+    *,
+    message: str,
+    plan_name: Optional[str] = None,
+    tool_name: Optional[str] = None,
+    normalized_errors: Optional[list[str]] = None,
+    normalized_status: str = "not_found",
+) -> UnsupportedResponse:
+    return UnsupportedResponse(
+        {
+            "ok": False,
+            "intent": "unsupported",
+            "plan_name": plan_name,
+            "tool_name": tool_name,
+            "data": None,
+            "message": message,
+            "normalized": {
+                "status": normalized_status,
+                "tool": None,
+                "answer": None,
+                "errors": normalized_errors if normalized_errors is not None else [message],
+            },
+        }
+    )
+
 SUPPORTED_PLANS = {
     # Remedy 02
     "remedy 02": "Remedy 02",
@@ -794,20 +826,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             if not is_arabic
             else "اختيار الخطة بصيغة التوصية غير مدعوم في المساعد الحتمي. يرجى استخدام صيغة مقارنة factual مثل: قارن بين X و Y."
         )
-        return {
-            "ok": False,
-            "intent": "unsupported",
-            "plan_name": None,
-            "tool_name": None,
-            "data": None,
-            "message": msg,
-            "normalized": {
-                "status": "not_found",
-                "tool": None,
-                "answer": None,
-                "errors": [msg]
-            }
-        }
+        return _build_unsupported_response(message=msg)
 
     # New: plan_network_city_type intent
     if intent == "plan_network_city_type":
@@ -1061,20 +1080,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
         field_name = _extract_plan_field_name(user_query)
         if not field_name:
             unsupported_msg = "Sorry, this query is not supported or not available."
-            return {
-                "ok": False,
-                "intent": "unsupported",
-                "plan_name": plan_name,
-                "tool_name": None,
-                "data": None,
-                "message": unsupported_msg,
-                "normalized": {
-                    "status": "not_found",
-                    "tool": None,
-                    "answer": None,
-                    "errors": [unsupported_msg],
-                },
-            }
+            return _build_unsupported_response(message=unsupported_msg, plan_name=plan_name)
 
         payload = get_plan_field(plan_name, field_name)
         if (not payload.get("ok")) and plan_name == "Classic 1R" and field_name in {
@@ -1115,20 +1121,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             }
 
         unsupported_msg = payload.get("formatted") or payload.get("value") or "No deterministic answer is available for that query yet."
-        return {
-            "ok": False,
-            "intent": "unsupported",
-            "plan_name": plan_name,
-            "tool_name": None,
-            "data": None,
-            "message": unsupported_msg,
-            "normalized": {
-                "status": "not_found",
-                "tool": None,
-                "answer": None,
-                "errors": [unsupported_msg],
-            },
-        }
+        return _build_unsupported_response(message=unsupported_msg, plan_name=plan_name)
     if intent == "network_lookup":
         from src.query.network_lookup import get_network_lookup
         lookup = get_network_lookup()
@@ -1371,21 +1364,7 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
             if not is_arabic else
             "عذراً، هذا الاستفسار غير مدعوم أو غير متاح. يرجى تحديد خطة أو سؤال مدعوم."
         )
-        resp = {
-            "ok": False,
-            "intent": "unsupported",
-            "plan_name": plan_name,
-            "tool_name": None,
-            "data": None,
-            "message": msg,
-            "normalized": {
-                "status": "not_found",
-                "tool": None,
-                "answer": None,
-                "errors": [msg]
-            }
-        }
-        return resp
+        return _build_unsupported_response(message=msg, plan_name=plan_name)
     from src.validation.plan_validator import normalize_plan, validate_plan_ready
     import re
     def _strip_internal_metadata(d):

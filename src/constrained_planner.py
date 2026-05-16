@@ -3,6 +3,7 @@ Constrained Planner: Deterministic intent/plan classifier for agent system.
 """
 from typing import Dict, Any, Optional, Union
 from src.agent_adapter import handle_user_query
+from src.agent_wrapper import _build_unsupported_response
 
 SUPPORTED_PLANS = {
     "remedy 04": "Remedy 04",
@@ -87,24 +88,14 @@ def execute_planned_query(user_query: str, output_mode: str = "dict") -> Union[D
     if not plan["ok"]:
         # Return a safe unsupported envelope in the requested output mode
         if output_mode == "dict":
-            return {
-                "ok": False,
-                "intent": "unsupported",
-                "plan_name": None,
-                "tool_name": None,
-                "data": None,
-                "message": plan["reason"] + " Supported plans: Remedy 04, Remedy 05, Prime 2. Supported intents: plan_core, reimbursement_rules, plan_summary."
-            }
+            return _build_unsupported_response(
+                message=plan["reason"] + " Supported plans: Remedy 04, Remedy 05, Prime 2. Supported intents: plan_core, reimbursement_rules, plan_summary."
+            )
         elif output_mode == "text":
             return f"Intent: unsupported\nMessage: {plan['reason']} Supported plans: Remedy 04, Remedy 05, Prime 2. Supported intents: plan_core, reimbursement_rules, plan_summary."
         else:
-            return {
-                "ok": False,
-                "intent": "unsupported",
-                "plan_name": None,
-                "tool_name": None,
-                "data": None,
-                "message": f"Invalid output_mode: {output_mode}. Supported: 'dict', 'text'."
-            }
+            return _build_unsupported_response(
+                message=f"Invalid output_mode: {output_mode}. Supported: 'dict', 'text'."
+            )
     # Supported: delegate to adapter
     return handle_user_query(user_query, output_mode)
