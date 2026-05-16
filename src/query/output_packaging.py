@@ -1,3 +1,14 @@
+from warnings import warn
+
+
+def _warn_legacy_query_formatter() -> None:
+    warn(
+        "src.query.output_packaging is deprecated for production formatting; use src.output instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+
+
 # Deterministic WhatsApp client message formatter
 def format_whatsapp_client_message(obj, mode, *, greeting="Hello,", closing="Would you like to proceed?"):
     """
@@ -9,6 +20,7 @@ def format_whatsapp_client_message(obj, mode, *, greeting="Hello,", closing="Wou
     - closing: str (default "Would you like to proceed?")
     Returns: str (client-ready WhatsApp message)
     """
+    _warn_legacy_query_formatter()
     allowed_modes = {"summary", "comparison", "recommendation"}
     if mode not in allowed_modes:
         return "Sorry, a client-ready message is not available for this request."
@@ -74,6 +86,7 @@ def format_plan_output(plan_name, format_type, language="en"):
     """
     Deterministically package a plan summary for a given channel/format.
     """
+    _warn_legacy_query_formatter()
     if format_type not in _SUPPORTED_FORMATS:
         return _fallback(language)
     summary = summarize_plan(plan_name)
@@ -93,6 +106,7 @@ def format_comparison_output(plan_a, plan_b, format_type, language="en"):
     """
     Deterministically package a comparison for a given channel/format.
     """
+    _warn_legacy_query_formatter()
     if format_type not in _SUPPORTED_FORMATS:
         return _fallback(language)
     comp = explain_plan_comparison(plan_a, plan_b, language=language, mode="executive")
@@ -114,6 +128,7 @@ def answer_packaged_query(text):
     """
     Deterministic router for packaged output queries (English/Arabic).
     """
+    _warn_legacy_query_formatter()
     t = text.strip().lower()
     # WhatsApp short
     if any(x in t for x in ["whatsapp-ready", "whatsapp short", "ملخص واتساب"]):

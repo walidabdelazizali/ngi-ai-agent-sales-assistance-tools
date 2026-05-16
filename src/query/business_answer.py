@@ -1,5 +1,11 @@
 # --- Lead qualification helpers ---
 import re
+
+
+class StructuredFallbackAnswer(str):
+    """Internal-only fallback signal that preserves string behavior."""
+
+    is_fallback = True
 def _has_lead_qualification_intent(text: str, lang: str) -> bool:
     t = text.strip().lower()
     if lang == "ar":
@@ -665,5 +671,5 @@ def answer_business_query(text: str) -> str:
 
 def _fallback(language: str) -> str:
     if language == "ar":
-        return "عذراً، لا يمكن إعطاء إجابة حتمية لهذا السؤال."
-    return "No deterministic answer is available for that query yet."
+        return StructuredFallbackAnswer("عذراً، لا يمكن إعطاء إجابة حتمية لهذا السؤال.")
+    return StructuredFallbackAnswer("No deterministic answer is available for that query yet.")

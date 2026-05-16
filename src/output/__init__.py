@@ -1,24 +1,12 @@
 """
-src/output/__init__.py — Unified export/output formatting layer.
+src/output/__init__.py - Unified export/output formatting authority.
 
-Central dispatcher for all output modes:
-- whatsapp_summary
-- arabic_summary
-- compact_summary
-- comparison_summary
-- email_summary (legacy from output_packaging)
-- benefit_explanation (legacy from output_packaging)
-
-All formatters are deterministic, safe-fallback enabled, and operationally hardened.
+Central dispatcher for all production output modes under src/output.
 """
 
-from typing import Any, Optional, Union
+from typing import Optional
 
-from src.output.shared_helpers import (
-    _SAFE_REFUSAL,
-    assert_approved,
-    detect_language,
-)
+from src.output.shared_helpers import _SAFE_REFUSAL, detect_language
 from src.output.whatsapp_formatter import whatsapp_summary
 from src.output.arabic_formatter import (
     arabic_plan_summary,
@@ -26,14 +14,8 @@ from src.output.arabic_formatter import (
     arabic_comparison_summary,
 )
 from src.output.compact_formatter import compact_summary
-from src.output.comparison_formatter import english_comparison_summary, comparison_summary
-
-# Re-export legacy formatters from original output_packaging
-from src.output_packaging import (
-    email_summary,
-    benefit_explanation,
-    _SAFE_REFUSAL as LEGACY_SAFE_REFUSAL,
-)
+from src.output.comparison_formatter import comparison_summary
+from src.output.legacy_modes import email_summary, benefit_explanation
 
 
 # Supported output modes

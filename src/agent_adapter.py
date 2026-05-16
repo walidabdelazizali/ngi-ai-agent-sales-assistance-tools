@@ -243,12 +243,16 @@ def _format_human_readable(result: dict) -> str:
     else:
         return format_english()
 
+
+def _is_structured_fallback(answer: Any) -> bool:
+    return bool(getattr(answer, "is_fallback", False))
+
 def handle_user_query(user_query: str, output_mode: str = "dict") -> Union[Dict[str, Any], str]:
     # --- Unified business_answer routing ---
     from src.query.business_answer import answer_business_query
     answer = answer_business_query(user_query)
-    # If fallback, use legacy agent for structured output
-    if ("no deterministic answer" in answer.lower()) or ("عذراً" in answer):
+    # If fallback, use legacy agent for structured output.
+    if _is_structured_fallback(answer):
         from src.agent_wrapper import run_agent_wrapper
         result = run_agent_wrapper(user_query)
         # If blocked (ok=False), always return a safe fallback with valid structure
