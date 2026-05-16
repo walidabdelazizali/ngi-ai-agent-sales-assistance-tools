@@ -82,6 +82,15 @@ def test_home_productivity_polish_controls_present():
     assert 'data-provider-type="lab"' in html
 
 
+def test_home_output_mode_mapping_keeps_arabic_compact_local():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    html = resp.text
+    assert "if (mode === 'whatsapp') return 'whatsapp_summary';" in html
+    assert "if (mode === 'arabic') return null;" in html
+    assert "if (mode === 'compact') return null;" in html
+
+
 def test_home_plan_dropdowns_are_controlled_with_required_plans():
     resp = client.get("/")
     assert resp.status_code == 200
@@ -205,6 +214,42 @@ def test_ask_formatted_output_mode_preserves_raw_answer():
     assert fmt_data["display_answer"]
     assert "Remedy 04" in fmt_data["display_answer"]
     assert fmt_data["display_answer"] != raw_data["display_answer"]
+
+
+def test_ask_arabic_mode_is_accepted_without_formatter_failure():
+    q = "What is the annual limit for Remedy 04?"
+    resp = client.post("/ask", json={"question": q, "output_mode": "arabic_summary"})
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["status"] == "ok"
+    assert data["answer"]["ok"] is True
+    # Arabic mode is a UI-side transform and should not invoke unsupported formatter paths.
+    assert data["display_answer"] is None
+    assert data["error"] is None
+
+
+def test_ask_compact_mode_is_accepted_without_formatter_failure():
+    q = "What is the annual limit for Remedy 04?"
+    resp = client.post("/ask", json={"question": q, "output_mode": "compact_summary"})
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["status"] == "ok"
+    assert data["answer"]["ok"] is True
+    assert data["display_answer"] is None
+    assert data["error"] is None
+
+
+def test_ask_comparison_whatsapp_mode_keeps_full_deterministic_message():
+    resp = client.post("/ask", json={"question": "Compare Classic 2 vs Classic 3", "output_mode": "whatsapp_summary"})
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["answer"]["ok"] is True
+    assert data["answer"]["intent"] == "plan_comparison"
+    # Comparison should remain on deterministic comparison message, not formatter collapse.
+    assert data["display_answer"] is None
+    msg = str(data["answer"].get("message") or "")
+    assert "Comparison between Classic 2 and Classic 3" in msg
+    assert "Annual Limit:" in msg
 
 
 def test_ask_invalid_output_mode_blocked():

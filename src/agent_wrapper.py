@@ -506,6 +506,15 @@ def _extract_all_plan_names(text: str) -> list[str]:
     return found
 
 
+def _is_single_plan_reference_query(text: str) -> bool:
+    """Return True when the query is only a standalone supported plan token."""
+    lowered = _normalize_query_text(text)
+    if not lowered:
+        return False
+    stripped = lowered.strip().strip("؟?.,:;!-")
+    return stripped in SUPPORTED_PLANS
+
+
 def _extract_city_and_provider_type(text: str) -> tuple[Optional[str], Optional[str]]:
     lowered = _normalize_query_text(text)
     detected_city = None
@@ -677,6 +686,10 @@ def _intent_from_query(text: str) -> Optional[str]:
     # Comparison intent
     if _extract_comparison_plans(lowered):
         return "plan_comparison"
+    # Deterministic shorthand normalization for isolated plan references.
+    # Examples: "Classic 3", "Prime 1", "Remedy 5" -> "Summarize <Plan>" behavior.
+    if plan_name and _is_single_plan_reference_query(text):
+        return "plan_summary"
     # If two supported plans are mentioned with explicit comparison phrasing, treat as comparison.
     all_plans = _extract_all_plan_names(lowered)
     if _has_comparison_alias(lowered) and all_plans:
@@ -1213,9 +1226,11 @@ def run_agent_wrapper(user_query: str) -> Dict[str, Any]:
 
         def _comparison_not_available():
             msg = (
-                "Sorry, comparison is not supported or not available for one or both plans."
+                "Sorry, comparison is not supported or not available for one or both plans. "
+                "Currently supported enhanced comparison pairs are: Classic 1 vs Prime 1, and Classic 2 vs Classic 3."
                 if not is_arabic else
-                "ط¹ط°ط±ط§ظ‹طŒ ط§ظ„ظ…ظ‚ط§ط±ظ†ط© ط؛ظٹط± ظ…ط¯ط¹ظˆظ…ط© ط£ظˆ ط؛ظٹط± ظ…طھط§ط­ط© ظ„ط®ط·ط© ط£ظˆ ط£ظƒط«ط±."
+                "عذراً، المقارنة غير مدعومة أو غير متاحة لخطة أو أكثر. "
+                "أزواج المقارنة المعززة المدعومة حالياً هي: Classic 1 مقابل Prime 1، و Classic 2 مقابل Classic 3."
             )
             return {
                 "ok": False,

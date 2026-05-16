@@ -11,7 +11,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 from src.agent_adapter import handle_user_query
 from src.operational_usage import get_operational_usage_store
-from src.output_packaging import format_output
+from src.output import format_output
 from src.query.network_lookup import get_network_lookup
 from src.runtime_hardening import (
     RuntimeHardeningStore,
@@ -1188,6 +1188,7 @@ def home() -> HTMLResponse:
         const mobileProvidersBtn = document.getElementById('mobileProvidersBtn');
         const mobileWhatsappBtn = document.getElementById('mobileWhatsappBtn');
         const mobileArabicBtn = document.getElementById('mobileArabicBtn');
+        const mobileActionBar = document.getElementById('mobileActionBar');
         const dbgQueryEl = document.getElementById('dbgQuery');
         const dbgModeEl = document.getElementById('dbgMode');
         const dbgFormatterEl = document.getElementById('dbgFormatter');
@@ -1323,11 +1324,13 @@ def home() -> HTMLResponse:
         }
 
         function outputModeForUiMode(mode) {
-            if (mode === 'detailed') return 'detailed';
+            // Keep detailed mode on raw deterministic answer path (no formatter call).
+            if (mode === 'detailed') return null;
             if (mode === 'whatsapp') return 'whatsapp_summary';
-            if (mode === 'arabic') return 'arabic_summary';
-            if (mode === 'compact') return 'compact_summary';
-            return 'detailed';
+            // Arabic/compact are local presentation transforms, not backend formatter modes.
+            if (mode === 'arabic') return null;
+            if (mode === 'compact') return null;
+            return null;
         }
 
         function classifyCardType(intent, question) {
@@ -1341,8 +1344,18 @@ def home() -> HTMLResponse:
 
         function chooseRenderedText(mode, payload) {
             const answer = payload && payload.answer ? payload.answer : {};
+            const intent = String(answer.intent || '').toLowerCase();
             const raw = String(answer.message || payload.error || '');
             const formatted = String(payload.display_answer || '');
+            // Preserve full deterministic comparison body; never collapse it via formatter output.
+            if (intent === 'plan_comparison') {
+                if (mode === 'compact') return compactText(raw);
+                if (mode === 'arabic') {
+                    if (hasArabic(raw)) return normalizeArabicSpacing(raw);
+                    return raw;
+                }
+                return raw;
+            }
             if (mode === 'detailed') return formatted || raw;
             if (mode === 'whatsapp') return formatted || raw;
             if (mode === 'compact') return formatted || compactText(raw);
@@ -1492,6 +1505,17 @@ def home() -> HTMLResponse:
             }
         }
 
+        function refreshMobileActionVisibility() {
+            const isMobile = window.innerWidth <= 700;
+            _setActionVisible(mobileActionBar, isMobile);
+            if (!isMobile) {
+                return;
+            }
+            const rules = actionRulesForContext(_lastResultContext || { type: 'unsupported' });
+            _setActionVisible(mobileWhatsappBtn, rules.whatsapp);
+            _setActionVisible(mobileArabicBtn, rules.arabic);
+        }
+
         function compactText(text) {
             const lines = String(text || '').split(/\\r?\\n/).map(function (line) { return line.trim(); }).filter(Boolean);
             return lines.slice(0, 5).join('\\n');
@@ -1581,9 +1605,41 @@ def home() -> HTMLResponse:
             const lines = String(message || '').split(/\\r?\\n/).map(function (line) { return line.trim(); }).filter(Boolean);
             const providerLines = [];
             const nonProviderLines = [];
+
+            function isProviderDiagnosticLine(line) {
+                const lowered = String(line || '').toLowerCase();
+                if (!lowered) {
+                    return false;
+                }
+                return (
+                    lowered === '[provider list]' ||
+                    lowered === '[area debug]' ||
+                    lowered === 'providers:' ||
+                    lowered === 'provider area checks:' ||
+                    lowered.startsWith('resolved network:') ||
+                    lowered.startsWith('area match mode:') ||
+                    lowered.startsWith('matched providers count:') ||
+                    lowered.startsWith('raw area query:') ||
+                    lowered.startsWith('normalized area query:') ||
+                    lowered.startsWith('expanded alias terms:') ||
+                    lowered.startsWith('showing first 25 providers only') ||
+                    lowered.startsWith('provider:') ||
+                    lowered.startsWith('- provider:')
+                );
+            }
+
             for (const line of lines) {
+                if (isProviderDiagnosticLine(line)) {
+                    continue;
+                }
                 if (/^[-*•]/.test(line) || /^\d+[\.)]/.test(line)) {
-                    providerLines.push(line.replace(/^[-*•]\s*/, '').replace(/^\d+[\.)]\s*/, ''));
+                    const normalizedProvider = line
+                        .replace(/^[-*•]\s*/, '')
+                        .replace(/^\d+[\.)]\s*/, '')
+                        .trim();
+                    if (normalizedProvider && !providerLines.includes(normalizedProvider)) {
+                        providerLines.push(normalizedProvider);
+                    }
                 } else {
                     nonProviderLines.push(line);
                 }
@@ -1631,6 +1687,12 @@ def home() -> HTMLResponse:
             };
 
             for (const line of lines) {
+                if (isProviderResult && (/^[-*•]/.test(line) || /^\d+[\.)]/.test(line))) {
+                    continue;
+                }
+                if (isProviderResult && /^(\[provider list\]|resolved network:|providers:|area match mode:|matched providers count:|showing first 25 providers only)/i.test(line)) {
+                    continue;
+                }
                 const label = _chunkLabelForLine(line, intent, isProviderResult);
                 if (label && chunks[label]) {
                     chunks[label].push(line);
@@ -2017,12 +2079,24 @@ def home() -> HTMLResponse:
 
             const formatterByKind = {
                 whatsapp: 'whatsapp_summary',
-                arabic: 'arabic_summary',
-                compact: 'compact_summary',
             };
             const question = String(_lastQuestion || questionEl.value || '').trim();
             if (!question) {
                 return { label: labels[exportKind] || 'Response', text: currentText };
+            }
+
+            if (exportKind === 'arabic') {
+                return {
+                    label: labels.arabic,
+                    text: hasArabic(currentText) ? normalizeArabicSpacing(currentText) : currentText,
+                };
+            }
+
+            if (exportKind === 'compact') {
+                return {
+                    label: labels.compact,
+                    text: compactText(currentText),
+                };
             }
 
             const rendered = await fetchFormattedText(question, formatterByKind[exportKind]);
@@ -2450,11 +2524,17 @@ def home() -> HTMLResponse:
                 _lastRenderedText = answerVal.textContent;
                 _lastResultContext = buildResultContext('', { answer: { ok: false, intent: 'unsupported' } }, { providerLines: [], isProviderResult: false });
                 applyActionVisibility(_lastResultContext);
+                refreshMobileActionVisibility();
                 _lastDurationMs = 0;
                 resetCopyPreview();
                 updateTelemetry('', uiMode, outputMode || 'None', 'REVIEW');
                 return;
             }
+
+            // Clear stale action state while new result is loading.
+            _lastResultContext = buildResultContext('', { answer: { ok: false, intent: 'unsupported' } }, { providerLines: [], isProviderResult: false });
+            applyActionVisibility(_lastResultContext);
+            refreshMobileActionVisibility();
 
             askBtn.disabled = true;
             askBtn.textContent = 'Searching...';
@@ -2496,6 +2576,7 @@ def home() -> HTMLResponse:
                 const extracted = extractResultFacts(trimmed, payload, message);
                 _lastResultContext = buildResultContext(trimmed, payload, extracted);
                 applyActionVisibility(_lastResultContext);
+                refreshMobileActionVisibility();
                 renderProviderCards(extracted.providerLines);
                 renderResponseChunks(message, intent, extracted.isProviderResult);
                 _lastPayload = payload;
@@ -2536,6 +2617,7 @@ def home() -> HTMLResponse:
                 _lastRenderedText = answerVal.textContent;
                 _lastResultContext = buildResultContext(trimmed, { answer: { ok: false, intent: 'unsupported' } }, { providerLines: [], isProviderResult: false });
                 applyActionVisibility(_lastResultContext);
+                refreshMobileActionVisibility();
                 _lastDurationMs = Date.now() - startedAtMs;
                 resetCopyPreview();
                 updateTelemetry(trimmed, uiMode, outputMode || 'None', 'REVIEW');
@@ -2617,6 +2699,7 @@ def home() -> HTMLResponse:
             persistUiState();
             submitUsageAction('track_response_mode', _lastQuestion || questionEl.value, { usage_value: responseModeEl.value });
         });
+        window.addEventListener('resize', refreshMobileActionVisibility);
         planNameEl.addEventListener('change', function () { persistUiState(); });
         planAEl.addEventListener('change', function () { persistUiState(); });
         planBEl.addEventListener('change', function () { persistUiState(); });
@@ -2886,6 +2969,7 @@ def home() -> HTMLResponse:
         setDiagnosticsVisibility(false);
         setUsageVisibility(false);
         applyActionVisibility(_lastResultContext);
+        refreshMobileActionVisibility();
         resetCopyPreview();
         updateTelemetry('', activeMode(), outputModeForUiMode(activeMode()) || 'None', '-');
         compareForm.addEventListener('submit', async function (e) {
@@ -3108,7 +3192,7 @@ def ask(request: AskRequest):
         display_answer = None
         formatting_time_ms = 0
         requested_mode = (request.output_mode or "").strip().lower()
-        supported_modes = {
+        accepted_modes = {
             "detailed",
             "whatsapp_summary",
             "arabic_summary",
@@ -3116,8 +3200,13 @@ def ask(request: AskRequest):
             "email_summary",
             "benefit_explanation",
         }
+        formatter_modes = {
+            "whatsapp_summary",
+            "email_summary",
+            "benefit_explanation",
+        }
 
-        if requested_mode and requested_mode not in supported_modes:
+        if requested_mode and requested_mode not in accepted_modes:
             _USAGE_STORE.log_friction(q, {"ok": False, "intent": "unsupported", "status": "error", "message": f"Invalid output_mode: {request.output_mode}"}, retry_count=int(_USAGE_STORE.load_state().get("top_queries", {}).get(q, 0)))
             usage_state = _USAGE_STORE.ui_snapshot()
             _record_runtime_observability_event(
@@ -3155,7 +3244,9 @@ def ask(request: AskRequest):
         if agent_result.get("ok"):
             _remember_successful_query(q)
             intent = agent_result.get("intent")
-            if requested_mode in supported_modes and intent in {"plan_core", "plan_summary", "plan_field", "plan_comparison"}:
+            # Comparison and local presentation modes (arabic/compact/detailed)
+            # intentionally stay on deterministic raw rendering.
+            if requested_mode in formatter_modes and intent in {"plan_core", "plan_summary", "plan_field"}:
                 formatting_started = time.perf_counter()
                 display_answer = format_output(agent_result, requested_mode)
                 formatting_time_ms = int((time.perf_counter() - formatting_started) * 1000)

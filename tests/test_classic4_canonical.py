@@ -94,3 +94,13 @@ def test_comparison_boundary_classic_4_with_classic_3():
     assert out["intent"] == "plan_comparison"
     assert out["ok"] is False
     assert "not supported" in (out.get("message") or "").lower()
+
+
+def test_comparison_boundary_classic_4_arabic_message_is_readable_and_guided():
+    out = run_agent_wrapper("قارن كلاسيك 4 و برايم 1")
+    assert out["intent"] == "plan_comparison"
+    assert out["ok"] is False
+    msg = out.get("message") or ""
+    assert "المقارنة" in msg
+    assert "Classic 2 مقابل Classic 3" in msg
+    assert "ط¹ط°ط±ط§" not in msg

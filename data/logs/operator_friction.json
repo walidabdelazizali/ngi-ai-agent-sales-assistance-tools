@@ -4237,5 +4237,2966 @@
     "result_type": "unsupported",
     "retry_count": 0,
     "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:33+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 36,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:33+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 36,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:33+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 36,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:33+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 55,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:33+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 56,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:33+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 57,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:34+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "plan_network_provider",
+    "result_type": "plan_network_provider",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:34+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 57,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:34+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:34+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:34+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 37,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:35+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 18,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:44+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 37,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:12:44+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 37,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:01+00:00",
+    "original_query": "Summarize Remedy 3",
+    "normalized_query": "summarize remedy 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 4,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:02+00:00",
+    "original_query": "Summarize Remedy 3",
+    "normalized_query": "summarize remedy 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 5,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:03+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:04+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:05+00:00",
+    "original_query": "List hospital providers in Dubai for Classic 1",
+    "normalized_query": "list hospital providers in dubai for classic 1",
+    "detected_intent": "plan_network_city_type",
+    "result_type": "plan_network_city_type",
+    "retry_count": 7,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:07+00:00",
+    "original_query": "What is the network for Classic 1?",
+    "normalized_query": "what is the network for classic 1?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 3,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:07+00:00",
+    "original_query": "List hospital providers in Dubai for Classic 1",
+    "normalized_query": "list hospital providers in dubai for classic 1",
+    "detected_intent": "plan_network_city_type",
+    "result_type": "plan_network_city_type",
+    "retry_count": 8,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:07+00:00",
+    "original_query": "What is the network for Classic 1?",
+    "normalized_query": "what is the network for classic 1?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 4,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:08+00:00",
+    "original_query": "unsupported random phrase for ops observation",
+    "normalized_query": "unsupported random phrase for ops observation",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:09+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 58,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:10+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 59,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:11+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 60,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:27+00:00",
+    "original_query": "Summarize Remedy 3",
+    "normalized_query": "summarize remedy 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 6,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:27+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:28+00:00",
+    "original_query": "List hospital providers in Dubai for Classic 1",
+    "normalized_query": "list hospital providers in dubai for classic 1",
+    "detected_intent": "plan_network_city_type",
+    "result_type": "plan_network_city_type",
+    "retry_count": 9,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:28+00:00",
+    "original_query": "What is the network for Classic 1?",
+    "normalized_query": "what is the network for classic 1?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 5,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:28+00:00",
+    "original_query": "unsupported random phrase for ops observation",
+    "normalized_query": "unsupported random phrase for ops observation",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 1,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:28+00:00",
+    "original_query": "Summarize Remedy 3",
+    "normalized_query": "summarize remedy 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 7,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:13:28+00:00",
+    "original_query": "Summarize Remedy 3",
+    "normalized_query": "summarize remedy 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 8,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:25+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 38,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:25+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 38,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:25+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 38,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:25+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 61,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:25+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 62,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:25+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 63,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:26+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "plan_network_provider",
+    "result_type": "plan_network_provider",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:26+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 63,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:26+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:26+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 27,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:26+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 39,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:26+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:27+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 19,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:36+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 39,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:36+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 39,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:48+00:00",
+    "original_query": "unsupported transition check alpha",
+    "normalized_query": "unsupported transition check alpha",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:49+00:00",
+    "original_query": "Summarize Remedy 3",
+    "normalized_query": "summarize remedy 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 9,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:50+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 28,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:51+00:00",
+    "original_query": "unsupported transition check beta",
+    "normalized_query": "unsupported transition check beta",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:18:53+00:00",
+    "original_query": "List hospital providers in Dubai for Classic 1",
+    "normalized_query": "list hospital providers in dubai for classic 1",
+    "detected_intent": "plan_network_city_type",
+    "result_type": "plan_network_city_type",
+    "retry_count": 10,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:21:38+00:00",
+    "original_query": "unsupported transition check alpha",
+    "normalized_query": "unsupported transition check alpha",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 1,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:21:39+00:00",
+    "original_query": "Summarize Remedy 3",
+    "normalized_query": "summarize remedy 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 10,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:21:40+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 29,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:21:41+00:00",
+    "original_query": "unsupported transition check beta",
+    "normalized_query": "unsupported transition check beta",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 1,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:21:43+00:00",
+    "original_query": "List hospital providers in Dubai for Classic 1",
+    "normalized_query": "list hospital providers in dubai for classic 1",
+    "detected_intent": "plan_network_city_type",
+    "result_type": "plan_network_city_type",
+    "retry_count": 11,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:22:06+00:00",
+    "original_query": "unsupported maintenance polish check",
+    "normalized_query": "unsupported maintenance polish check",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:22:06+00:00",
+    "original_query": "Summarize Remedy 3",
+    "normalized_query": "summarize remedy 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 11,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:22:06+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 30,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:22:07+00:00",
+    "original_query": "List hospital providers in Dubai for Classic 1",
+    "normalized_query": "list hospital providers in dubai for classic 1",
+    "detected_intent": "plan_network_city_type",
+    "result_type": "plan_network_city_type",
+    "retry_count": 12,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:22:08+00:00",
+    "original_query": "What is the network for Classic 1?",
+    "normalized_query": "what is the network for classic 1?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 6,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:22:08+00:00",
+    "original_query": "unsupported maintenance mobile check",
+    "normalized_query": "unsupported maintenance mobile check",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:22:08+00:00",
+    "original_query": "Summarize Remedy 3",
+    "normalized_query": "summarize remedy 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 12,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:26:39+00:00",
+    "original_query": "Compare Classic 2 vs Classic 4",
+    "normalized_query": "compare classic 2 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 3,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:27:21+00:00",
+    "original_query": "Compare Classic 2 vs Classic 4",
+    "normalized_query": "compare classic 2 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 4,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:28:14+00:00",
+    "original_query": "Compare Classic 1 vs Classic 3",
+    "normalized_query": "compare classic 1 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:28:16+00:00",
+    "original_query": "Compare Classic 1 vs Classic 3",
+    "normalized_query": "compare classic 1 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 1,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:28:23+00:00",
+    "original_query": "Compare Classic 1 vs Classic 4",
+    "normalized_query": "compare classic 1 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:28:29+00:00",
+    "original_query": "Compare Classic 3 vs Classic 4",
+    "normalized_query": "compare classic 3 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:28:30+00:00",
+    "original_query": "Compare Classic 3 vs Classic 4",
+    "normalized_query": "compare classic 3 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 1,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:28:56+00:00",
+    "original_query": "Compare Classic 3 vs ريميدي4",
+    "normalized_query": "compare classic 3 vs ريميدي4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 0,
+    "classification": "GAP"
+  },
+  {
+    "timestamp": "2026-05-15T23:29:15+00:00",
+    "original_query": "Compare Classic 3 vs ريميدي4",
+    "normalized_query": "compare classic 3 vs ريميدي4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 1,
+    "classification": "GAP"
+  },
+  {
+    "timestamp": "2026-05-15T23:29:24+00:00",
+    "original_query": "Classic 3",
+    "normalized_query": "classic 3",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:29:26+00:00",
+    "original_query": "Classic 3",
+    "normalized_query": "classic 3",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 1,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:29:27+00:00",
+    "original_query": "Classic 3",
+    "normalized_query": "classic 3",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 2,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:29:43+00:00",
+    "original_query": "Classic 4",
+    "normalized_query": "classic 4",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:29:52+00:00",
+    "original_query": "Classic 2",
+    "normalized_query": "classic 2",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:30:02+00:00",
+    "original_query": "Compare Classic 3 vs ريميدي4",
+    "normalized_query": "compare classic 3 vs ريميدي4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 2,
+    "classification": "GAP"
+  },
+  {
+    "timestamp": "2026-05-15T23:30:04+00:00",
+    "original_query": "Compare Classic 3 vs ريميدي4",
+    "normalized_query": "compare classic 3 vs ريميدي4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 3,
+    "classification": "GAP"
+  },
+  {
+    "timestamp": "2026-05-15T23:30:26+00:00",
+    "original_query": "Compare Classic 3 vs Classic 4",
+    "normalized_query": "compare classic 3 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 2,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:30:28+00:00",
+    "original_query": "Compare Classic 3 vs Classic 4",
+    "normalized_query": "compare classic 3 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 3,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:44:59+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 40,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:44:59+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 40,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:44:59+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 40,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:44:59+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 64,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:44:59+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 65,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:44:59+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 66,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:00+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "plan_network_provider",
+    "result_type": "plan_network_provider",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 66,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 31,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 41,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:01+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 20,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:02+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 41,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:45:02+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 41,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:50:30+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 1,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:50:51+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 2,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:51:29+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 3,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:51:32+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 4,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:51:37+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 5,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:51:41+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 6,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:52:05+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 7,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:52:32+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 8,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:52:35+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 9,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:53:04+00:00",
+    "original_query": "Summarize Classic 1",
+    "normalized_query": "summarize classic 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 10,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:56:13+00:00",
+    "original_query": "Compare Classic 3 vs Classic 4",
+    "normalized_query": "compare classic 3 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 4,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:56:25+00:00",
+    "original_query": "Compare Classic 3 vs Classic 4",
+    "normalized_query": "compare classic 3 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 5,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:56:52+00:00",
+    "original_query": "Compare Classic 1 vs Classic 3",
+    "normalized_query": "compare classic 1 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 2,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:56:54+00:00",
+    "original_query": "Compare Classic 1 vs Classic 3",
+    "normalized_query": "compare classic 1 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 3,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-15T23:57:03+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 1,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:57:12+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 2,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-15T23:58:44+00:00",
+    "original_query": "Compare Classic 2 vs Classic 4",
+    "normalized_query": "compare classic 2 vs classic 4",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 5,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:36+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 42,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:36+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 42,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:36+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 42,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:36+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 67,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:36+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 68,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:36+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 69,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:36+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 70,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:36+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 3,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:36+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 71,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:37+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "plan_network_provider",
+    "result_type": "plan_network_provider",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:37+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 71,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:37+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:37+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 32,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 43,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:38+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 21,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:39+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 43,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T00:03:39+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 43,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:06:09+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 4,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:06:10+00:00",
+    "original_query": "Compare Classic 4 vs Classic 3",
+    "normalized_query": "compare classic 4 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 0,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T00:06:11+00:00",
+    "original_query": "List hospital providers in Dubai for Classic 1",
+    "normalized_query": "list hospital providers in dubai for classic 1",
+    "detected_intent": "plan_network_city_type",
+    "result_type": "plan_network_city_type",
+    "retry_count": 13,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:06:11+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 72,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:06:12+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 73,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:06:12+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 74,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:06:13+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 75,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:42+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 5,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:43+00:00",
+    "original_query": "Compare Classic 4 vs Classic 3",
+    "normalized_query": "compare classic 4 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 1,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:44+00:00",
+    "original_query": "List hospital providers in Dubai for Classic 1",
+    "normalized_query": "list hospital providers in dubai for classic 1",
+    "detected_intent": "plan_network_city_type",
+    "result_type": "plan_network_city_type",
+    "retry_count": 14,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:44+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 76,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:44+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 77,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:45+00:00",
+    "original_query": "اعطني ملخص Remedy 03",
+    "normalized_query": "اعطني ملخص remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 1,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:45+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 78,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:56+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 79,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:56+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 80,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T00:09:56+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 81,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:52+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 44,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:52+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 44,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:52+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 44,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:52+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 82,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:52+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 83,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:52+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 84,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:53+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 85,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:53+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 6,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:53+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 86,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "plan_network_provider",
+    "result_type": "plan_network_provider",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 86,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 33,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 45,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:54+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:55+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:55+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 22,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:55+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 45,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:01:55+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 45,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:14+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 46,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:14+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 46,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:14+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 46,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:14+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 87,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:15+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 88,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:15+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 89,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:15+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 90,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:15+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 7,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:15+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 91,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "plan_network_provider",
+    "result_type": "plan_network_provider",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 91,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 34,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 47,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:17+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:18+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:18+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:18+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:18+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:18+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:18+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:18+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 23,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:48+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 47,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:48+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 47,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:48+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 48,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:48+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 92,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:49+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 93,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:49+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 94,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:49+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 95,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:49+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 8,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:49+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 96,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:51+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "plan_network_provider",
+    "result_type": "plan_network_provider",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:51+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 96,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:51+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:51+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 35,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:51+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 49,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:52+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 24,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:53+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 48,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:04:53+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 48,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:36+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 49,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:36+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 49,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:58+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 50,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:58+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 50,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:58+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 50,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:59+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 97,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:59+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 98,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:59+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 99,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:59+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 100,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:59+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 9,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:06:59+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 101,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "plan_network_provider",
+    "result_type": "plan_network_provider",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 101,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 36,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 51,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:01+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:02+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:02+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:02+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:02+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:07:02+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 25,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:46+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 51,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:47+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 51,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:47+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 52,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:47+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 102,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:47+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 103,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:47+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 104,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:47+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "plan_core",
+    "result_type": "plan_core",
+    "retry_count": 105,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:47+00:00",
+    "original_query": "Compare Classic 2 vs Classic 3",
+    "normalized_query": "compare classic 2 vs classic 3",
+    "detected_intent": "plan_comparison",
+    "result_type": "plan_comparison",
+    "retry_count": 10,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:47+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "error",
+    "retry_count": 106,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:49+00:00",
+    "original_query": "Provider 24HOUR PHARMACY in Remedy 6 network?",
+    "normalized_query": "provider 24hour pharmacy in remedy 6 network?",
+    "detected_intent": "plan_network_provider",
+    "result_type": "plan_network_provider",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:49+00:00",
+    "original_query": "What is the annual limit for Remedy 04?",
+    "normalized_query": "what is the annual limit for remedy 04?",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 106,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:49+00:00",
+    "original_query": "Summarize Remedy 03",
+    "normalized_query": "summarize remedy 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:49+00:00",
+    "original_query": "Compare Classic 1 vs Prime 1",
+    "normalized_query": "compare classic 1 vs prime 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 37,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:49+00:00",
+    "original_query": "unsupported gibberish",
+    "normalized_query": "unsupported gibberish",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 53,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:49+00:00",
+    "original_query": "Summarize Plan 0",
+    "normalized_query": "summarize plan 0",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:49+00:00",
+    "original_query": "Summarize Plan 1",
+    "normalized_query": "summarize plan 1",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 2",
+    "normalized_query": "summarize plan 2",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 3",
+    "normalized_query": "summarize plan 3",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 4",
+    "normalized_query": "summarize plan 4",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 5",
+    "normalized_query": "summarize plan 5",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 6",
+    "normalized_query": "summarize plan 6",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 7",
+    "normalized_query": "summarize plan 7",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 8",
+    "normalized_query": "summarize plan 8",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 9",
+    "normalized_query": "summarize plan 9",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 10",
+    "normalized_query": "summarize plan 10",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:50+00:00",
+    "original_query": "Summarize Plan 11",
+    "normalized_query": "summarize plan 11",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 26,
+    "classification": "REVIEW"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:51+00:00",
+    "original_query": "Hello",
+    "normalized_query": "hello",
+    "detected_intent": "unsupported",
+    "result_type": "unsupported",
+    "retry_count": 52,
+    "classification": "BLOCKED"
+  },
+  {
+    "timestamp": "2026-05-16T14:08:51+00:00",
+    "original_query": "اعطني ملخص لخطة ريميدي 03",
+    "normalized_query": "اعطني ملخص لخطة ريميدي 03",
+    "detected_intent": "plan_summary",
+    "result_type": "plan_summary",
+    "retry_count": 52,
+    "classification": "REVIEW"
   }
 ]

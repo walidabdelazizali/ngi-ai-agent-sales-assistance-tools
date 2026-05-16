@@ -455,6 +455,22 @@ def test_planless_arabic_shorthand_stays_unsupported(query):
 
 
 @pytest.mark.parametrize(
+    "query,expected_plan",
+    [
+        ("Classic 3", "Classic 3"),
+        ("Prime 1", "Prime 1"),
+        ("Remedy 5", "Remedy 05"),
+    ],
+)
+def test_single_plan_shorthand_routes_to_summary(query, expected_plan):
+    out = run_agent_wrapper(query)
+    assert out["ok"] is True
+    assert out["intent"] == "plan_summary"
+    assert out["plan_name"] == expected_plan
+    assert out["tool_name"] == "get_plan_summary"
+
+
+@pytest.mark.parametrize(
     "query,expected_intent",
     [
         ("classic2 summary", "plan_summary"),
