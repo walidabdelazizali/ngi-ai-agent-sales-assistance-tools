@@ -15,6 +15,18 @@
 ## Current Focus
 - Keep provider area handling operationally aligned between UI selectors and deterministic provider results.
 
+## Today's work (Normalization Authority Consolidation Sprint)
+1. Centralized canonical query normalization in [src/agent_wrapper.py](src/agent_wrapper.py) via `normalize_query()` while preserving the existing `_normalize_query_text()` behavior.
+2. Delegated runtime telemetry normalization in [src/runtime_hardening.py](src/runtime_hardening.py) to the wrapper authority to remove the separate lower/strip normalization path.
+3. Added regression coverage in [tests/test_normalization_authority.py](tests/test_normalization_authority.py) for:
+	- wrapper/runtime normalization equivalence
+	- idempotent canonical normalization
+	- raw vs normalized routing stability for comparison, provider, plan, and unsupported queries
+4. Validation:
+	- `pytest tests/test_normalization_authority.py tests/test_arabic_mixed_normalization.py tests/test_arabic_mixed_routing.py -q` -> 22 passed
+	- `pytest tests/test_api_hardened.py tests/test_provider_hallucination_containment.py tests/test_v2_plan_compare.py tests/test_output_packaging.py tests/test_formatter_authority_freeze.py tests/test_fallback_authority.py tests/test_unsupported_authority.py tests/test_normalization_authority.py -q` -> 78 passed
+	- `pytest tests/test_arabic_owner_query.py tests/test_provider_dataset_coverage.py tests/test_network_lookup_armada_regression.py -q` -> 21 passed
+
 ## Known Operational Friction
 - Area naming variants across data rows can cause operator confusion if UI options drift from runtime output labels.
 - Mixed city casing in source data requires strict case-insensitive filtering discipline.

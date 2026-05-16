@@ -441,6 +441,10 @@ def _normalize_query_text(text: str) -> str:
     return " ".join(normalized.split())
 
 
+def normalize_query(text: str) -> str:
+    return _normalize_query_text(text)
+
+
 def _has_comparison_alias(text: str) -> bool:
     lowered = _normalize_query_text(text)
     return any(alias in lowered for alias in COMPARISON_ALIASES)

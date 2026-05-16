@@ -7,6 +7,7 @@ from pathlib import Path
 from threading import Lock
 from typing import Any
 
+from src.agent_wrapper import normalize_query as canonical_normalize_query
 from src.query.network_lookup import get_network_lookup
 
 
@@ -35,7 +36,7 @@ def _now_iso() -> str:
 
 
 def normalize_query(text: str) -> str:
-    return re.sub(r"\s+", " ", str(text or "").strip().lower()).strip()
+    return canonical_normalize_query(text)
 
 
 def _safe_load_json(path: Path, default: Any) -> Any:
